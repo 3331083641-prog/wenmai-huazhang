@@ -1,0 +1,18 @@
+# IMPORTANT:
+# Install torch/torchvision separately for your CUDA version before installing
+# this file. Examples:
+#   CUDA 12.1:
+#     python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#   CUDA 11.8:
+#     python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#
+# The packages below are the non-PyTorch InstantStyle runtime dependencies.
+diffusers>=0.28.0
+transformers
+accelerate
+safetensors
+huggingface_hub
+Pillow
+
+torch
+torchvision
