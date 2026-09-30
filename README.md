@@ -13,6 +13,16 @@
 
 ## 功能
 
+## 演示与下载
+
+[比赛演示视频、应用方案与源码包](https://github.com/3331083641-prog/wenmai-huazhang/releases/tag/v1.0.0)展示完整的真实操作流程。视频包含主题与参考图输入、风格及负向约束、Qwen Image 生成、本地 Qwen3-VL 解读、CultureCard、文创预览和实际下载。
+
+![开源项目二维码](docs/images/project_qr.png)
+
+二维码由 [python-qrcode](https://github.com/lincolnloop/python-qrcode) 生成，直接指向本仓库。它提供源码入口，应用需按下文说明在本机运行。
+
+## 功能说明
+
 | 环节 | 已实现功能 |
 |---|---|
 | 风格选择 | 朱仙镇木版年画、汴绣纹样、宋画青绿山水、青花瓷纹样、中国剪纸 |
