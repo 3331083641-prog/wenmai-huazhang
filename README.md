@@ -11,11 +11,9 @@
 
 ![真实智能生成工作台](docs/images/workspace.png)
 
-## 功能
-
 ## 演示与下载
 
-[比赛演示视频、应用方案与源码包](https://github.com/3331083641-prog/wenmai-huazhang/releases/tag/v1.0.0)展示完整的真实操作流程。视频包含主题与参考图输入、风格及负向约束、Qwen Image 生成、本地 Qwen3-VL 解读、CultureCard、文创预览和实际下载。
+[比赛演示视频、应用方案与源码包](https://github.com/3331083641-prog/wenmai-huazhang/releases/tag/v1.0.0)展示完整的真实操作流程。4分25秒演示包含主题与参考图输入、风格及负向约束、Qwen Image 生成、本地 Qwen3-VL 解读、CultureCard、文创预览和实际下载。
 
 ![开源项目二维码](docs/images/project_qr.png)
 
