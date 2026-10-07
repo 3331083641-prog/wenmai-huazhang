@@ -33,6 +33,20 @@
 
 风格影响强度通过 Prompt 对视觉特征的强调程度实现。文创输出是效果预览文件。基础图像与视觉模型均由第三方提供，项目实现文化资料组织、交互、服务集成及应用工作流。
 
+## 五类风格的真实作品与文化说明卡
+
+以下参考图、生成作品及 CultureCard 来自本项目的真实工作流。五种风格分别使用公开参考图进行图生图，生成结果再交由本地 Qwen3-VL 解读；每张文化说明卡均从应用界面单独导出。图片来源和许可记录见[参考图来源说明](docs/examples/reference_sources.md)。
+
+| 风格 | 参考输入 | Qwen Image 3.0 生成作品 | CultureCard |
+|---|---|---|---|
+| 朱仙镇木版年画 | [原图](docs/examples/zhuxianzhen/reference.jpg)<br><img src="docs/examples/zhuxianzhen/reference.jpg" width="120" alt="朱仙镇年画参考图"> | [作品](docs/examples/zhuxianzhen/generated.png)<br><img src="docs/examples/zhuxianzhen/generated.png" width="120" alt="朱仙镇年画生成作品"> | [文化卡](docs/examples/zhuxianzhen/culture_card.png)<br><img src="docs/examples/zhuxianzhen/culture_card.png" width="120" alt="朱仙镇年画 CultureCard"> |
+| 汴绣纹样 | [原图](docs/examples/bianxiu/reference.jpg)<br><img src="docs/examples/bianxiu/reference.jpg" width="120" alt="汴绣参考图"> | [作品](docs/examples/bianxiu/generated.png)<br><img src="docs/examples/bianxiu/generated.png" width="120" alt="汴绣生成作品"> | [文化卡](docs/examples/bianxiu/culture_card.png)<br><img src="docs/examples/bianxiu/culture_card.png" width="120" alt="汴绣 CultureCard"> |
+| 宋画青绿山水 | [原图](docs/examples/songhua/reference.jpg)<br><img src="docs/examples/songhua/reference.jpg" width="120" alt="宋画参考图"> | [作品](docs/examples/songhua/generated.png)<br><img src="docs/examples/songhua/generated.png" width="120" alt="宋画生成作品"> | [文化卡](docs/examples/songhua/culture_card.png)<br><img src="docs/examples/songhua/culture_card.png" width="120" alt="宋画 CultureCard"> |
+| 青花瓷纹样 | [原图](docs/examples/qinghua/reference.jpg)<br><img src="docs/examples/qinghua/reference.jpg" width="120" alt="青花瓷参考图"> | [作品](docs/examples/qinghua/generated.png)<br><img src="docs/examples/qinghua/generated.png" width="120" alt="青花瓷生成作品"> | [文化卡](docs/examples/qinghua/culture_card.png)<br><img src="docs/examples/qinghua/culture_card.png" width="120" alt="青花瓷 CultureCard"> |
+| 中国剪纸 | [原图](docs/examples/jianzhi/reference.jpg)<br><img src="docs/examples/jianzhi/reference.jpg" width="120" alt="剪纸参考图"> | [作品](docs/examples/jianzhi/generated.png)<br><img src="docs/examples/jianzhi/generated.png" width="120" alt="剪纸生成作品"> | [文化卡](docs/examples/jianzhi/culture_card.png)<br><img src="docs/examples/jianzhi/culture_card.png" width="120" alt="剪纸 CultureCard"> |
+
+完整的原尺寸文件及本次生成说明见 [`docs/examples`](docs/examples/README.md)。素材各自遵循来源许可，不随项目代码采用的 MIT 许可改变。
+
 ## 技术结构
 
 ```mermaid
