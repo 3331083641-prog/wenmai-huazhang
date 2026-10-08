@@ -55,6 +55,8 @@
 
 浏览器验收脚本：`scripts/verify_aic_browser.py`、`verify_unconfigured_runtime.py`、`verify_static_showcase.py`；可选开发验收需要本机Playwright和Edge。产品运行不要求Playwright。
 
+轻量测试使用项目后端虚拟环境运行：`backend\venv\Scripts\python.exe -m unittest discover -s tests -p test_aic_delivery.py`，最终复核20项通过。系统Python未安装后端依赖，不能直接用系统Python替代该测试命令。
+
 ## 运行截图
 
 ![当前工作台](images/aic/workspace.png)
@@ -78,4 +80,10 @@
 
 ## 同步与部署记录
 
-本节将在main推送与GitHub Pages部署完成后填入实际提交及部署核验结果，不将待完成步骤描述为成功。
+- 实现提交：`26f34ebb3b95b3ed8e174188d7d452ed2fcadffb`。已通过快进合并进入main并成功推送；远端main SHA与本机一致。
+- [GitHub Pages部署运行](https://github.com/3331083641-prog/wenmai-huazhang/actions/runs/37763565130)：实际完成，结论success。
+- [评委在线浏览入口](https://3331083641-prog.github.io/wenmai-huazhang/#/gallery)：已用浏览器访问部署后的真实网站，首页、风格库、五组案例、关于、应用场景的图片全部加载成功；五张文化卡可见，兔子作品进入文创页面并实际下载PNG成功，无页面脚本错误。
+- 在线验收主动阻断`/health`和`/generate`，保存案例仍正常浏览；在线工作台明确显示浏览模式，不伪装实时推理。
+- Windows启动器已按默认方式启动并打开浏览器；验收结束后停止本次启动的两个进程。原有8000端口服务与共享Ollama 11434端口仍在运行。
+- 提交前已检查Git Diff及暂存内容，未包含私有配置、密钥、Base64请求体、依赖目录或本地缓存。原有未追踪本地文件未被批量加入。
+- README、案例图片、CultureCard、素材来源和运行截图已随实现提交同步；旧iCAN Release及历史提交保持原状。本报告补充部署结果的提交另行记录于Git历史。
