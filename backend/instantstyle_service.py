@@ -51,6 +51,7 @@ def _configure_project_caches() -> None:
 
 
 def _load_local_env(env_path: Path) -> None:
+    env_path = Path(os.getenv('WENMAI_ENV_FILE') or env_path)
     _configure_project_caches()
     if load_dotenv is not None:
         load_dotenv(env_path, override=True)

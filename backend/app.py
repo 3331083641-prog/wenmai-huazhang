@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any, Optional
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,6 +21,7 @@ class GenerateRequest(BaseModel):
     styleStrength: float = Field(default=0.65, ge=0, le=1.5)
     compositionMode: str = Field(default="portrait")
     negativePrompt: Optional[str] = Field(default=None)
+    subjectLock: Optional[str] = Field(default=None, max_length=120)
     uploadedImage: Optional[str] = Field(default=None)
     generationProvider: Optional[str] = Field(default=None, pattern="^(dashscope_qwen_image|instantstyle)$")
 
@@ -53,6 +55,8 @@ app.add_middleware(
 
 app.mount("/outputs", StaticFiles(directory=str(OUTPUT_DIR)), name="outputs")
 app.mount("/style_refs", StaticFiles(directory=str(STYLE_REFS_DIR)), name="style_refs")
+
+app.mount("/examples", StaticFiles(directory=str(Path(__file__).resolve().parents[1] / "docs/examples")), name="examples")
 
 service = GenerationService()
 

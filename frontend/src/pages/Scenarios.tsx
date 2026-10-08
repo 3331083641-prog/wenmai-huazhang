@@ -48,7 +48,7 @@ const SceneMockup = ({ id }: { id: string }) => {
 
             {/* Giant Screen */}
             <div className="w-[85%] aspect-video bg-black rounded shadow-[0_0_50px_rgba(255,255,255,0.1)] border border-gray-800 flex overflow-hidden relative z-10 transform perspective-[1000px] rotateX-[2deg]">
-                <img src="/songhua.png" className="w-full h-full object-cover opacity-90 mix-blend-screen" alt="" />
+                <img src={import.meta.env.BASE_URL + "songhua.png"} className="w-full h-full object-cover opacity-90 mix-blend-screen" alt="" />
                 {/* Screen Glow */}
                 <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] pointer-events-none"></div>
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay pointer-events-none"></div>
@@ -78,25 +78,25 @@ const SceneMockup = ({ id }: { id: string }) => {
             {/* Top Shelf Canvas Bag */}
             <div className="absolute top-[8%] left-10 w-24 aspect-[3/4] bg-white rounded shadow-md z-10 flex flex-col items-center justify-end pb-2 transform -rotate-2">
                 <div className="w-1/2 h-4 border-t-[3px] border-x-[3px] border-[#D4C3AC] rounded-t-[0.5rem] absolute -top-4"></div>
-                <img src="/zhuxianzhen.png" className="w-[85%] aspect-square object-cover opacity-90" alt="" />
+                <img src={import.meta.env.BASE_URL + "zhuxianzhen.png"} className="w-[85%] aspect-square object-cover opacity-90" alt="" />
             </div>
 
             {/* Top Shelf Postcards */}
             <div className="absolute top-[20%] right-16 w-32 h-12 bg-white rounded shadow-sm z-10 p-1 flex gap-1">
-               <img src="/qinghua.png" className="w-1/2 h-full object-cover" alt="" />
-               <img src="/jianzhi.png" className="w-1/2 h-full object-cover" alt="" />
+               <img src={import.meta.env.BASE_URL + "qinghua.png"} className="w-1/2 h-full object-cover" alt="" />
+               <img src={import.meta.env.BASE_URL + "jianzhi.png"} className="w-1/2 h-full object-cover" alt="" />
             </div>
 
             {/* Middle shelf Box */}
             <div className="absolute top-[42%] left-1/3 w-32 aspect-video bg-[#fafafa] rounded shadow-lg z-10 border border-[#e0e0e0] flex items-center justify-center p-2 transform rotate-2">
-               <img src="/songhua.png" className="w-full h-full object-cover" alt="" />
+               <img src={import.meta.env.BASE_URL + "songhua.png"} className="w-full h-full object-cover" alt="" />
             </div>
 
             {/* Middle shelf Cup/Coaster */}
             <div className="absolute top-[50%] right-24 w-12 h-16 bg-white rounded shadow-md z-10">
                 <div className="w-full h-4 bg-gray-100 rounded-t border-b border-gray-200"></div>
                 <div className="p-1.5 h-full flex items-center">
-                    <img src="/bianxiu.png" className="w-full aspect-square rounded-full object-cover border border-primary/20" alt="" />
+                    <img src={import.meta.env.BASE_URL + "bianxiu.png"} className="w-full aspect-square rounded-full object-cover border border-primary/20" alt="" />
                 </div>
             </div>
 
@@ -123,7 +123,7 @@ const SceneMockup = ({ id }: { id: string }) => {
 
                 {/* Content Image */}
                 <div className="w-full aspect-square bg-gray-100 mt-2 relative overflow-hidden rounded-md">
-                   <img src="/jianzhi.png" className="w-full h-full object-cover" alt="" />
+                   <img src={import.meta.env.BASE_URL + "jianzhi.png"} className="w-full h-full object-cover" alt="" />
                 </div>
 
                 {/* Engagement Bar */}
@@ -156,10 +156,10 @@ const SceneMockup = ({ id }: { id: string }) => {
 
              {/* Background Float Elements */}
              <div className="absolute top-6 -right-6 w-32 aspect-[3/4] bg-white p-2 shadow-xl rounded transform rotate-12 z-0 border border-black/5">
-                <img src="/zhuxianzhen.png" className="w-full h-full object-cover opacity-80" alt="" />
+                <img src={import.meta.env.BASE_URL + "zhuxianzhen.png"} className="w-full h-full object-cover opacity-80" alt="" />
              </div>
              <div className="absolute -bottom-4 left-4 w-24 aspect-[3/4] bg-white p-2 shadow-xl rounded transform -rotate-12 z-0 border border-black/5">
-                <img src="/bianxiu.png" className="w-full h-full object-cover opacity-80" alt="" />
+                <img src={import.meta.env.BASE_URL + "bianxiu.png"} className="w-full h-full object-cover opacity-80" alt="" />
              </div>
         </div>
        );

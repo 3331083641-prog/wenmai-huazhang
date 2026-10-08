@@ -1,6 +1,7 @@
 ﻿from __future__ import annotations
 
 import base64
+import os
 import colorsys
 import re
 from datetime import datetime
@@ -19,7 +20,7 @@ from style_config import UPLOAD_DIR, ensure_runtime_dirs
 
 
 if load_dotenv is not None:
-    load_dotenv(Path(__file__).resolve().parent / ".env", override=True, encoding="utf-8-sig")
+    load_dotenv(Path(os.getenv('WENMAI_ENV_FILE') or Path(__file__).resolve().parent / ".env"), override=True, encoding="utf-8-sig")
 
 DATA_URL_RE = re.compile(r"^data:(?P<mime>image/[a-zA-Z0-9.+-]+);base64,(?P<data>.+)$", re.DOTALL)
 MAX_REFERENCE_IMAGE_BYTES = 10 * 1024 * 1024

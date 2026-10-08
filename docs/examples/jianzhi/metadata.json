@@ -1,0 +1,67 @@
+{
+  "styleId": "jianzhi",
+  "styleName": "中国剪纸",
+  "referenceSubject": "一只赤狐，保留尖耳、狐狸面部、四肢和蓬松长尾轮廓",
+  "artworkTitle": "剪影灵狐",
+  "referenceSource": "用户提供的 ChatGPT 生成主体参考图（原始白底图）",
+  "sourceFilename": "ChatGPT 图像 2026年10月8日 08_48_50-5.png",
+  "referenceFilename": "reference.png",
+  "referenceSha256": "073ba9165c03050b705a702f097a62824a1706caef6d8bdbf6e7e959934d7f73",
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "styleStrength": 0.65,
+  "compositionMode": "object",
+  "outputType": "poster",
+  "negativePrompt": "仙鹤，鸟类，其他动物，人物，写实照片，文字，水印，模糊，断裂剪纸结构",
+  "inputImageCount": 1,
+  "generatedAt": "2026-10-08T09:18:27.2528696+08:00",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": 1,
+  "analysisSource": "qwen3_vl",
+  "visionProvider": "ollama_local",
+  "visionModel": "qwen3-vl:4b-instruct-q4_K_M",
+  "cultureCardAnalysisSource": "qwen3_vl_on_generated_image",
+  "outputImageCount": 1,
+  "generatedSha256": "84f8208fa4b24e26dc51a5f8b12ac4577f332b88f63a3f8ec75e40676bc237c2",
+  "generatedBytes": 1479519,
+  "visionAnalysis": {
+    "title": "剪影灵狐",
+    "theme_summary": "红纸剪影赤狐立于花境，呈现传统剪纸的民俗美感与动物神韵。",
+    "composition": "赤狐居中立姿，四周花卉对称环绕，形成完整边框式构图。",
+    "style_interpretation": "剪纸以红白强烈对比呈现，狐形毛发纹理清晰，花卉纹样繁复，整体具民间工艺的利落线条与吉祥寓意。",
+    "culture_interpretation": "赤狐立于繁花环抱之中，毛发与花瓣均以镂空勾勒，显出动静相宜的民俗气韵。花鸟相映，暗合民间祈福纳吉之愿，狐眼凝神，似有灵性，赋予画面温润而灵动的观感余韵。红纸剪影不言而喻地唤起节庆窗花的欢愉，让寻常动物升华为传统符号。",
+    "observed_subjects": [
+      "赤狐",
+      "花卉装饰"
+    ],
+    "dominant_colors": [
+      "红色",
+      "白色"
+    ],
+    "visual_features": [
+      "镂空结构",
+      "红白对比",
+      "对称布局",
+      "毛发细节",
+      "花鸟图案"
+    ],
+    "recommended_scenes": [
+      "节庆窗花",
+      "文创书签"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionAnalysisRuntime": {
+    "provider": "ollama_local",
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "input_image_count": 1,
+    "input_image_bytes": 1479519,
+    "prompt_eval_count": 1738,
+    "eval_count": 326
+  },
+  "cultureCardGeneratedSha256": "84f8208fa4b24e26dc51a5f8b12ac4577f332b88f63a3f8ec75e40676bc237c2",
+  "cultureCardSha256": "8bed973f3fe8b46c6c14014d5d0d06493ca79eeedf2f9dc1a88590a14fae17e6",
+  "cultureCardExport": "Application CultureCard download button, Playwright browser, PNG"
+}

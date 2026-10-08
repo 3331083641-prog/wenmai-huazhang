@@ -1,0 +1,86 @@
+{
+  "styleId": "zhuxianzhen",
+  "styleName": "朱仙镇木版年画",
+  "referenceSubject": "一只狸花猫，清晰保留猫的面部、虎斑纹、四肢和上扬长尾",
+  "artworkTitle": "瑞猫迎春",
+  "theme": "《瑞猫迎春》。让狸花猫成为画面唯一动物主体，转化为鲜明的朱仙镇木版年画。采用朱砂红、明黄、松石绿、墨黑的高对比大色块，粗黑刀刻式轮廓、平面化形体、清楚可见的木版套色错版肌理和传统年画边饰；猫的虎斑纹转译为有节奏的版画线刻，四周可用祥云、牡丹与海水纹围合，形成饱满、对称、民俗装饰性构图。必须一眼看出是套色木版年画而非数码厚涂或写实插画。",
+  "referenceSource": "用户提供的 ChatGPT 生成主体参考图（原始白底图）",
+  "sourceFilename": "ChatGPT 图像 2026年10月8日 08_48_43-1.png",
+  "referenceFilename": "reference.png",
+  "referenceSha256": "4d53069744d334658501fa7efbb66cacdab072a865804297da3cf8f02ec3b96b",
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "styleStrength": 1.0,
+  "compositionMode": "object",
+  "outputType": "poster",
+  "negativePrompt": "仙鹤，鹤，其他鸟类，其他动物，人物，门神人物，摄影写实毛发，油画厚涂，柔焦渐变，文字，乱码，水印，模糊，畸形猫，多条尾巴，裁切主体",
+  "inputImageCount": 1,
+  "generatedAt": "2026-10-08T10:34:33.3055447+08:00",
+  "generationAttempt": "one approved style-strength retry",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": 1,
+  "analysisSource": "qwen3_vl",
+  "visionProvider": "ollama_local",
+  "visionModel": "qwen3-vl:4b-instruct-q4_K_M",
+  "cultureCardAnalysisSource": "qwen3_vl_on_generated_image",
+  "generationHistory": [
+    {
+      "generation": "initial",
+      "generatedAt": "2026-10-08T09:14:15.1885762+08:00",
+      "model": "qwen-image-3.0",
+      "styleStrength": 0.65,
+      "referenceImageUsed": true,
+      "modelInputImageCount": 1,
+      "generatedSha256": "816703de24e983207094ed00b4f1fc715b5cf08a0bb11b03a90ae90c512388e9",
+      "analysisSource": "qwen3_vl"
+    }
+  ],
+  "outputImageCount": 1,
+  "generatedSha256": "c60c729716874c73278c36e112b10e059e2e0c905359cfdae9ab6eca3ad1f953",
+  "generatedBytes": 2220259,
+  "visionAnalysis": {
+    "title": "瑞猫迎春",
+    "theme_summary": "狸花猫居中，牡丹祥云围护，寓意吉祥迎春，传统年画风格。",
+    "composition": "中心对称构图，猫居中，边饰围合，上下左右均衡分布纹样。",
+    "style_interpretation": "画面具朱仙镇木版年画典型特征，粗黑轮廓与套色肌理清晰，构图饱满对称，色彩浓烈鲜明，无数码渲染痕迹，视觉节奏强烈而传统。",
+    "culture_interpretation": "猫立于红地，眼眸澄澈，身披虎斑纹，与牡丹、祥云并置，形成‘瑞兽护春’的视觉呼应。朱红与明黄的强烈对比，强化节庆喜庆氛围。画面传递出传统年节对吉祥之物的礼赞，是民俗信仰与视觉符号的结合体。",
+    "observed_subjects": [
+      "狸花猫",
+      "牡丹花",
+      "祥云纹",
+      "海水纹",
+      "吉祥横幅"
+    ],
+    "dominant_colors": [
+      "朱红",
+      "明黄",
+      "松石绿",
+      "墨黑"
+    ],
+    "visual_features": [
+      "粗黑刀刻式轮廓",
+      "木版套色错版肌理",
+      "平面化形体",
+      "吉祥纹样围合",
+      "红黄绿高对比色块"
+    ],
+    "recommended_scenes": [
+      "节庆主题海报",
+      "民俗文创"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionAnalysisRuntime": {
+    "provider": "ollama_local",
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "input_image_count": 1,
+    "input_image_bytes": 2220259,
+    "prompt_eval_count": 1969,
+    "eval_count": 362
+  },
+  "cultureCardGeneratedSha256": "c60c729716874c73278c36e112b10e059e2e0c905359cfdae9ab6eca3ad1f953",
+  "cultureCardSha256": "0e36a41a68c0e71e0002ccc77697b26c7cfd3816d9a7849b173cb5dddf80d93b",
+  "cultureCardExport": "Application CultureCard download button, Playwright browser, PNG"
+}

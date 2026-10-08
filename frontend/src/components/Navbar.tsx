@@ -6,6 +6,7 @@ import { Leaf, Menu, X } from 'lucide-react';
 const NAV_ITEMS = [
   { name: '首页', path: '/' },
   { name: '风格库', path: '/styles' },
+  { name: '真实案例', path: '/gallery' },
   { name: '智能生成', path: '/creator' },
   { name: '文创转化', path: '/products' },
   { name: '应用场景', path: '/scenarios' },
@@ -25,7 +26,7 @@ export default function Navbar() {
           <Leaf className="w-6 h-6" />
           <span className="font-serif font-bold text-xl tracking-wider">纹脉华章</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-5">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.path}

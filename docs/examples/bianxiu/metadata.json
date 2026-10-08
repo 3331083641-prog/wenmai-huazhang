@@ -1,0 +1,59 @@
+{
+  "theme": "绣兔牡丹：以参考图中的白兔为唯一主要动物，保持左向侧坐姿、长耳、眼睛、身体和四肢轮廓。把整只兔子重新表现为传统汴绣丝线织绣作品，不保留摄影皮毛。每个部位可见精细有方向的针脚，白色绣线带柔和丝光，兔耳粉色渐变绣线。加入少量粉红牡丹与青绿枝叶，花瓣、叶片同样以层层绣线表现。米白绢地、明确织物经纬和手工刺绣凹凸质感，主体居中完整、清雅有层次。",
+  "styleName": "汴绣纹样",
+  "styleStrength": 1.0,
+  "compositionMode": "object",
+  "outputType": "poster",
+  "subjectLock": "一只白兔，左向侧坐、长耳、白色身体、完整四肢；主体不是鸟或仙鹤",
+  "negativePrompt": "写实动物摄影，普通油画，水彩画，平涂插画，鸟，仙鹤，其他动物，多只兔子，文字，题字，水印，logo，二维码，畸形，多余肢体，裁切耳朵",
+  "styleId": "bianxiu",
+  "referenceSubject": "白兔",
+  "artworkTitle": "绣兔牡丹",
+  "referenceSource": "2026-10-08 经用户授权，以旧兔子作品的主体姿态为参考，通过 Codex 内置 imagegen 生成白底写实风格兔子素材；不是相机实拍，不声明 CC0。",
+  "referenceSha256": "9c723c4c6afa05e9fc588d05be1ad018f97e27f88925f50ecd43862f776e7223",
+  "generatedSha256": "a6c54cc28fcc87528ab7fb697186fa8193c7e093400b70fd27310f47ac6b6fb1",
+  "generatedBytes": 1862571,
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "generatedAt": "2026-10-08T15:01:29.542719+08:00",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": 1,
+  "analysisSource": "qwen3_vl",
+  "visionAnalysis": {
+    "title": "绣兔牡丹",
+    "theme_summary": "绣兔与牡丹纹样结合，体现传统刺绣工艺之美。",
+    "composition": "白兔居中侧坐，牡丹枝叶环绕，构图平衡和谐。",
+    "style_interpretation": "汴绣针法细密，丝线呈现自然光泽，牡丹与白兔以层层绣线表现，织物经纬清晰，整体温润雅致，富有手工工艺的立体感。",
+    "culture_interpretation": "白兔温顺侧坐，耳内粉红渐变，牡丹花枝繁叶茂，针线层叠饱满，共同构筑静谧柔美之境。牡丹之盛放与兔之安然，暗合传统刺绣中‘物我相融’之趣，亦呼应刘禹锡‘真国色’的审美高度，传递含蓄而丰盈的生命意趣。",
+    "observed_subjects": [
+      "白兔",
+      "牡丹",
+      "枝叶"
+    ],
+    "dominant_colors": [
+      "米白",
+      "粉红",
+      "青绿"
+    ],
+    "visual_features": [
+      "丝线质感",
+      "细密针脚",
+      "渐变色彩",
+      "凹凸肌理",
+      "经纬纹理"
+    ],
+    "recommended_scenes": [
+      "文创海报",
+      "明信片"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionProvider": "ollama_local",
+  "visionModel": "qwen3-vl:4b-instruct-q4_K_M",
+  "cultureCardAnalysisSource": "qwen3_vl_on_generated_image",
+  "cultureCardGeneratedSha256": "a6c54cc28fcc87528ab7fb697186fa8193c7e093400b70fd27310f47ac6b6fb1",
+  "cultureCardSha256": "313f9d83b20b2d3856ed5142c37fa4da2b80ab91c8fc2c2eab101c30c402e272",
+  "cultureCardExport": "Application CultureCard download button, Playwright browser, PNG"
+}

@@ -37,7 +37,7 @@ export const STYLES: StyleData[] = [
   {
     id: 'zhuxianzhen',
     name: '朱仙镇木版年画',
-    img: '/zhuxianzhen.png',
+    img: import.meta.env.BASE_URL + 'zhuxianzhen.png',
     category: '非遗木版年画',
     shortDescription: '以套色印刷、醒目轮廓和吉祥题材为视觉参考，侧重节庆装饰氛围。',
     visualFeatures: ['朱红与明黄', '醒目轮廓', '饱满构图', '吉祥纹样'],
@@ -55,7 +55,7 @@ export const STYLES: StyleData[] = [
   {
     id: 'bianxiu',
     name: '汴绣纹样',
-    img: '/bianxiu.png',
+    img: import.meta.env.BASE_URL + 'bianxiu.png',
     category: '传统刺绣工艺',
     shortDescription: '以细密针脚、丝线质感和花鸟题材作为视觉参考，呈现层次丰富的装饰效果。',
     visualFeatures: ['细密线条', '柔和设色', '花卉纹样', '丝线质感'],
@@ -73,7 +73,7 @@ export const STYLES: StyleData[] = [
   {
     id: 'songhua',
     name: '宋画青绿山水',
-    img: '/songhua.png',
+    img: import.meta.env.BASE_URL + 'songhua.png',
     category: '传统绘画风格',
     shortDescription: '参考宋代青绿山水的设色与构图，以石青石绿、层峦和留白组织画面。',
     visualFeatures: ['石青石绿', '层峦构图', '山水留白', '卷轴意境'],
@@ -91,7 +91,7 @@ export const STYLES: StyleData[] = [
   {
     id: 'qinghua',
     name: '青花瓷纹样',
-    img: '/qinghua.png',
+    img: import.meta.env.BASE_URL + 'qinghua.png',
     category: '传统器物装饰',
     shortDescription: '以青白配色、钴蓝纹样和缠枝花卉等器物装饰元素作为视觉参考。',
     visualFeatures: ['青白配色', '钴蓝纹样', '缠枝花卉', '器物留白'],
@@ -109,7 +109,7 @@ export const STYLES: StyleData[] = [
   {
     id: 'jianzhi',
     name: '中国剪纸',
-    img: '/jianzhi.png',
+    img: import.meta.env.BASE_URL + 'jianzhi.png',
     category: '民间剪纸艺术',
     shortDescription: '以阴阳正负形、连贯线条与镂空效果作为民间剪纸的视觉参考。',
     visualFeatures: ['正负形关系', '镂空结构', '对称纹样', '连贯线条'],

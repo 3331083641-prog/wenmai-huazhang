@@ -25,7 +25,7 @@ export default function About() {
       <div className="mb-16 text-center">
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary">
           <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-          2026 iCAN大学生创新创业大赛 · AI应用创新挑战赛 · 软件赛道
+          传统文化视觉创作 · 文化理解 · 文创应用
         </div>
         <h1 className="mb-6 font-serif text-4xl font-bold text-primary md:text-5xl">关于纹脉华章</h1>
         <p className="mx-auto max-w-4xl text-base leading-8 text-ink/75 md:text-lg">

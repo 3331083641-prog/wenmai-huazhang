@@ -1,0 +1,69 @@
+{
+  "styleId": "qinghua",
+  "styleName": "青花瓷纹样",
+  "referenceSubject": "一只展开双翅的蝴蝶，保留对称翅形、触角和身体",
+  "artworkTitle": "青花蝶韵",
+  "referenceSource": "用户提供的 ChatGPT 生成主体参考图（原始白底图）",
+  "sourceFilename": "ChatGPT 图像 2026年10月8日 08_48_48-4.png",
+  "referenceFilename": "reference.png",
+  "referenceSha256": "3f7e740dc1ef17b2f4b84f45e1d59d072d8cfc4e46eaf6f35df3ea39cb1d6fdd",
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "styleStrength": 0.65,
+  "compositionMode": "object",
+  "outputType": "poster",
+  "negativePrompt": "仙鹤，鸟类，其他动物，花瓶，瓷器主体，人物，文字，水印，模糊，畸形结构",
+  "inputImageCount": 1,
+  "generatedAt": "2026-10-08T09:17:33.9376568+08:00",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": 1,
+  "analysisSource": "qwen3_vl",
+  "visionProvider": "ollama_local",
+  "visionModel": "qwen3-vl:4b-instruct-q4_K_M",
+  "cultureCardAnalysisSource": "qwen3_vl_on_generated_image",
+  "outputImageCount": 1,
+  "generatedSha256": "a6f9755e3627794706fd5c20034caaf7e639ad351bcf7e95a0115268203375e0",
+  "generatedBytes": 1237284,
+  "visionAnalysis": {
+    "title": "青花蝶韵",
+    "theme_summary": "青花瓷纹样化蝶，以对称翅形为主体，纹饰繁复而雅致。",
+    "composition": "蝴蝶居画面中央，双翅展开对称，背景纯白，焦点集中。",
+    "style_interpretation": "青花瓷纹样以蝴蝶为载体，纹饰缠绕如藤蔓，白地蓝彩相映，呈现瓷器特有的凝重与温润，细节处透出传统工艺的精致与秩序。",
+    "culture_interpretation": "蝶翼上缠枝纹如水波流转，白点如星子点缀，与青花瓷釉面的温润相映。纹样层层叠叠，似在讲述生命之韵律与器物之恒久。蓝白之间，不喧不闹，静穆如初，唤起观者对古典美学的沉静回望。",
+    "observed_subjects": [
+      "蝴蝶",
+      "青花纹样",
+      "蓝白配色"
+    ],
+    "dominant_colors": [
+      "深蓝",
+      "白",
+      "浅灰"
+    ],
+    "visual_features": [
+      "蓝白分明",
+      "纹样密集",
+      "翅脉清晰",
+      "触角细长",
+      "边缘点状装饰"
+    ],
+    "recommended_scenes": [
+      "杯垫图案",
+      "明信片"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionAnalysisRuntime": {
+    "provider": "ollama_local",
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "input_image_count": 1,
+    "input_image_bytes": 1237284,
+    "prompt_eval_count": 1886,
+    "eval_count": 331
+  },
+  "cultureCardGeneratedSha256": "a6f9755e3627794706fd5c20034caaf7e639ad351bcf7e95a0115268203375e0",
+  "cultureCardSha256": "678321237edacab3d93139cd5d7b534c2e0267c0f46c084e85c482d4b34d0c78",
+  "cultureCardExport": "Application CultureCard download button, Playwright browser, PNG"
+}

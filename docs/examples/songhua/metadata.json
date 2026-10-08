@@ -1,0 +1,71 @@
+{
+  "styleId": "songhua",
+  "styleName": "宋画青绿山水",
+  "referenceSubject": "双层古典楼阁",
+  "artworkTitle": "云鹤临水楼",
+  "theme": "青绿群山之间，参考图中的双层古典楼阁临水而立，保留楼阁的木构屋檐与双层形制，仙鹤掠过云间，松树与祥云点缀画面，清雅留白，横向山水构图",
+  "referenceSource": "用户提供的 AI 生成建筑参考图（ChatGPT 图像）；图示为宋式建筑创作参考，不声称为宋代文物实物照片。",
+  "referenceSha256": "bd41b78ebd6ea6620985da5160fd30fb0f34a89fb0afdaca25d3e2671835489d",
+  "generatedSha256": "66168d87a7d25588bdb32b7d1de1c14ca2d67b3943aefabf2ce8faa80b0edd48",
+  "generatedBytes": 1722884,
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "styleStrength": 0.65,
+  "compositionMode": "landscape",
+  "outputType": "postcard",
+  "negativePrompt": "现代建筑，现代服饰，文字，水印，模糊，畸形",
+  "generatedAt": "2026-09-30T22:28:33+08:00",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": null,
+  "generationEvidence": "Archived project generation response; output and reference copied without modification.",
+  "analysisSource": "qwen3_vl",
+  "visionAnalysis": {
+    "title": "松鹤临水楼",
+    "theme_summary": "青绿山水间楼阁临水，仙鹤翩跹，松石相映，意境清雅。",
+    "composition": "楼阁居中偏右，山峦环抱，云雾弥漫，松树左下，仙鹤穿云。",
+    "style_interpretation": "宋画青绿山水的设色技法与构图逻辑，以云雾留白营造空间层次，楼阁与山川形成视觉重心，松鹤意象强化清逸之境。",
+    "culture_interpretation": "松枝斜倚岸石，仙鹤掠云而过，二者动静相宜，呼应王维‘明月松间照’的静谧意境。楼阁临水，云雾萦绕，似邀人入画中游，引人沉思自然与人居之和谐共处，余韵静谧悠长，不言而喻。",
+    "observed_subjects": [
+      "双层楼阁",
+      "仙鹤",
+      "青绿山峦",
+      "松树",
+      "云雾"
+    ],
+    "dominant_colors": [
+      "青绿",
+      "灰褐",
+      "白",
+      "浅蓝"
+    ],
+    "visual_features": [
+      "青绿设色层峦",
+      "双层楼阁木构",
+      "云雾留白空间",
+      "仙鹤展翼飞掠",
+      "松枝斜出岸石"
+    ],
+    "recommended_scenes": [
+      "数字展陈",
+      "文化主题海报"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionProvider": "ollama_local",
+  "visionModel": "qwen3-vl:4b-instruct-q4_K_M",
+  "cultureCardAnalysisSource": "qwen3_vl_on_generated_image",
+  "selectionNote": "User requested reuse of the previous genuine video case on 2026-10-08; not newly generated.",
+  "visionAnalysisRuntime": {
+    "provider": "ollama_local",
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "input_image_count": 1,
+    "input_image_bytes": 1722884,
+    "prompt_eval_count": 1862,
+    "eval_count": 364
+  },
+  "cultureCardGeneratedSha256": "66168d87a7d25588bdb32b7d1de1c14ca2d67b3943aefabf2ce8faa80b0edd48",
+  "cultureCardSha256": "8c4810b7124733372906bb3bf7a7a761ff97471d4a553e0ccead08c0df27f1e3",
+  "cultureCardExport": "Application CultureCard download button, Playwright browser, PNG"
+}

@@ -50,6 +50,7 @@ def style_strength_text(raw_strength: object) -> tuple[float, str]:
 
 def build_enhanced_prompt(payload: Mapping[str, object], style: StyleConfig) -> str:
     theme = _clean_text(str(payload.get("theme") or ""), "传统文化主题创作")
+    subject_lock = _clean_text(str(payload.get("subjectLock") or ""))[:120]
     style_name = _clean_text(str(payload.get("styleName") or ""), style.name)
     output = get_output_preset(str(payload.get("outputType") or "poster"))
     composition = get_composition_preset(str(payload.get("compositionMode") or "portrait"))
@@ -78,7 +79,17 @@ def build_enhanced_prompt(payload: Mapping[str, object], style: StyleConfig) -> 
             f"画幅方向 {image_analysis.get('composition')}。"
         )
 
+    subject_instruction = ""
+    if subject_lock:
+        subject_instruction = (
+            f"最高优先级主体约束：画面唯一主要主体为“{subject_lock}”。"
+            "必须保留该主体在参考图中可见的身份、关键外形和姿态；不得替换、删除、混合成其他主体。"
+            "传统风格只改变主体的绘画技法、纹样、色彩和材质表现，不改变主体身份；"
+            "风格库中的花鸟、瑞兽等装饰题材不得覆盖此主体约束。"
+        )
+
     return (
+        f"{subject_instruction}"
         f"核心主题：{theme}。"
         f"所选传统文化视觉风格：{style_name}（{style.name}）。"
         f"风格来源：{style.culture_source}。"

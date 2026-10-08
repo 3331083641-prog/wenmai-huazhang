@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
 import { ImagePlus, Download, ArrowRight, Wand2, RefreshCw, RotateCw, Crop, ZoomIn, ZoomOut, Check } from 'lucide-react';
@@ -11,8 +11,8 @@ const GENERATION_STEPS = [
   "正在整理主题与参考图...",
   "正在整理风格生成提示词...",
   "正在调用生成引擎...",
-  "正在保存生成作品...",
-  "正在整理文化风格说明...",
+  "正在等待生成结果...",
+  "生成与文化分析进行中，请稍候...",
   "完成"
 ];
 
@@ -44,7 +44,9 @@ export default function AICreator() {
   const navigate = useNavigate();
   const initialStyle = searchParams.get('style') || 'zhuxianzhen';
   
+  const [savedExample, setSavedExample] = useState(false);
   const [prompt, setPrompt] = useState('一名大学生站在开封古城门前，微笑着挥手，身后是宋代城楼与祥云纹样...');
+  const [subjectLock, setSubjectLock] = useState('');
   const [negativePrompt, setNegativePrompt] = useState('');
   const [selectedStyle, setSelectedStyle] = useState(initialStyle);
   const [outputType, setOutputType] = useState('poster');
@@ -89,6 +91,8 @@ export default function AICreator() {
            const parsed = JSON.parse(saved);
            if (parsed && parsed.imageUrl) {
               setHistoryImages([parsed.imageUrl]);
+              setSavedExample(parsed.savedExample === true);
+              if (parsed.referencePreviewUrl) setPreviewUrl(parsed.referencePreviewUrl);
               const restoredPayload: GeneratePayload = {
                 theme: parsed.theme || '传统文化主题创作',
                 style: parsed.style || 'zhuxianzhen',
@@ -97,6 +101,7 @@ export default function AICreator() {
                 styleStrength: typeof parsed.styleStrength === 'number' ? parsed.styleStrength : 0.65,
                 compositionMode: parsed.compositionMode || 'portrait',
                 negativePrompt: parsed.negativePrompt || null,
+                subjectLock: parsed.subjectLock || null,
                 uploadedImage: null,
                 generationProvider: 'dashscope_qwen_image',
               };
@@ -104,6 +109,7 @@ export default function AICreator() {
               // users do not see one style selected while another style is shown.
               setPrompt(restoredPayload.theme);
               setNegativePrompt(restoredPayload.negativePrompt || '');
+              setSubjectLock(restoredPayload.subjectLock || '');
               setSelectedStyle(restoredPayload.style);
               setOutputType(restoredPayload.outputType);
               setComposition(restoredPayload.compositionMode);
@@ -139,7 +145,7 @@ export default function AICreator() {
   useEffect(() => {
     let cancelled = false;
     setBackendStatus('checking');
-    checkBackendHealth()
+    (import.meta.env.VITE_STATIC_SHOWCASE === 'true' ? Promise.reject(new Error('在线浏览模式：实时生成请下载项目后在本机启动。')) : checkBackendHealth())
       .then((health) => {
         if (cancelled) return;
         setBackendHealth(health);
@@ -264,6 +270,7 @@ export default function AICreator() {
        realProviderError: nextResult.realProviderError || null,
        createdAt,
        negativePrompt: payload.negativePrompt,
+       subjectLock: payload.subjectLock || null,
     };
     localStorage.setItem('wenmai_latest_result', JSON.stringify(resultToSave));
   };
@@ -272,6 +279,7 @@ export default function AICreator() {
     if (generationLockRef.current) return;
     generationLockRef.current = true;
     setIsGenerating(true);
+    setSavedExample(false);
     setHasResult(false);
     setResultData(null);
     setResultImage('');
@@ -294,6 +302,7 @@ export default function AICreator() {
     }, 1500);
 
     try {
+        if (import.meta.env.VITE_STATIC_SHOWCASE === 'true') throw new Error('在线浏览模式不执行实时推理。请下载源码，在本机配置个人 API Key 后运行。');
         const health = await checkBackendHealth();
         setBackendHealth(health);
         setBackendStatus('connected');
@@ -305,6 +314,7 @@ export default function AICreator() {
             styleStrength: styleStrength / 100,
             compositionMode: composition,
             negativePrompt: negativePrompt || null,
+            subjectLock: subjectLock.trim() || null,
             uploadedImage: uploadedImageBase64,
             generationProvider: 'dashscope_qwen_image',
         };
@@ -381,7 +391,7 @@ export default function AICreator() {
          {/* Left Workspace */}
          <div className="lg:w-[50%] flex flex-col border-r border-primary/10 bg-white">
             <div className="h-20 bg-rice-paper relative overflow-hidden flex items-center px-6 border-b border-primary/10">
-               <div className="absolute inset-0 bg-[url('/songhua.png')] bg-cover bg-center opacity-10 filter sepia"></div>
+               <div className="absolute inset-0 bg-cover bg-center opacity-10 filter sepia" style={{backgroundImage: `url(${import.meta.env.BASE_URL}songhua.png)`}}></div>
                <h2 className="text-xl font-serif text-primary relative z-10 flex items-center gap-2">
                  <Wand2 className="w-5 h-5 text-gold" /> 
                  国风智能创作工作台
@@ -397,13 +407,19 @@ export default function AICreator() {
                  ) : (
                    <div className="text-primary">
                      后端未连接
-                     <div className="text-[10px] text-ink/60">启动：D:\wenmai-huazhang\scripts\start_backend.bat</div>
+                     <div className="text-[10px] text-ink/60">双击 start_windows.cmd 启动</div>
                    </div>
                  )}
                </div>
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
+              {savedExample && <p role="status" className="mb-4 rounded-lg bg-secondary/10 p-3 text-sm text-secondary">已保存的真实案例 · 当前未执行实时推理。参考图预览为原始输入；重新生成需再次选择上传文件。</p>}
+              <section className="mb-5 rounded-xl border border-primary/10 bg-paper p-4 text-sm" aria-label="模型服务状态">
+                <p>图像生成 · Qwen Image 3.0：{backendStatus === 'disconnected' ? '当前不可用' : backendStatus === 'checking' ? '检查中' : backendHealth?.providers?.dashscope_qwen_image?.hasApiKey === false ? '未配置' : backendHealth?.providers?.dashscope_qwen_image?.available ? '已连接（配置就绪）' : '当前不可用'}</p>
+                <p className="mt-2">文化理解 · Qwen3-VL：{backendHealth?.localVisionAnalysis?.available ? '本地可用' : '本地未启动或模型未安装'}</p>
+                <p className="mt-3 text-xs text-ink/60">实时图像生成需要配置阿里云百炼服务及个人 API Key，可能产生调用费用。没有模型也可<Link className="text-primary underline" to="/gallery">查看已保存的真实案例</Link>；模板说明不代表看图分析成功。</p>
+              </section>
               {/* Prompt Area */}
               <div className="mb-6">
                 <div className="flex justify-between items-end mb-2">
@@ -417,6 +433,12 @@ export default function AICreator() {
                   placeholder="描述你想生成的场景、人物或故事..."
                 />
                 <p className="mt-2 text-[11px] text-ink/45">主题文本将与所选文化风格共同进入本次生成提示。</p>
+
+                <div className="mt-4">
+                  <label htmlFor="subject-lock" className="mb-2 flex items-center gap-2 text-xs font-serif text-ink/80">画面主体约束 <span className="rounded border border-primary/20 px-1 text-[10px] font-sans text-primary/60">可选</span></label>
+                  <input id="subject-lock" value={subjectLock} onChange={(e) => setSubjectLock(e.target.value)} maxLength={120} className="w-full rounded border border-primary/20 bg-paper/50 p-2.5 text-sm text-ink/90 shadow-inner transition-all hover:border-primary/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" placeholder="例如：一只狸花猫，保持猫的身份与主要外形" />
+                  <p className="mt-1 text-[10px] text-ink/45">填写后，主体身份优先于风格装饰建议；未填写时不增加额外主体限制。</p>
+                </div>
                 
                 <div className="mt-4">
                    <div className="flex justify-between items-end mb-2">
@@ -562,6 +584,7 @@ export default function AICreator() {
                 <summary className="cursor-pointer font-medium text-primary">本次请求参数预览</summary>
                 <div className="mt-2 grid grid-cols-2 gap-2">
                   <div className="col-span-2 truncate" title={prompt}>当前主题：{prompt || '未填写'}</div>
+                  {subjectLock.trim() && <div className="col-span-2 truncate" title={subjectLock}>主体约束：{subjectLock}</div>}
                   <div>当前风格：{currentStyleData?.name || selectedStyle}</div>
                    <div>风格影响强度：{styleStrength}%（通过提示词约束表达）</div>
                    <div>生成路径：{uploadedImageBase64 ? 'Qwen Image 3.0 参考图创作' : 'Qwen Image 3.0 文本创作'}</div>
@@ -638,7 +661,6 @@ export default function AICreator() {
                     </div>
                     {connectionNotice && <div className="mb-4 w-full rounded-lg border border-primary/15 bg-primary/5 px-4 py-2 text-sm text-primary">{connectionNotice}</div>}
                     {resultData?.error && <div className="mb-4 w-full rounded-lg border border-primary/15 bg-primary/5 px-4 py-2 text-sm text-primary">{resultData.error}</div>}
-                    {resultData?.realProviderError && <div className="mb-4 w-full rounded-lg border border-primary/15 bg-primary/5 px-4 py-2 text-sm text-primary">生成服务错误：{resultData.realProviderError}</div>}
 
                     <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-[520px]">
                       <div className="group relative mx-auto aspect-[3/4] w-full overflow-hidden rounded-xl border-[6px] border-white bg-[#eee7dc] shadow-[0_16px_44px_rgba(70,42,30,0.15)]">
@@ -679,7 +701,6 @@ export default function AICreator() {
                         <div className="rounded-lg bg-paper/70 px-3 py-2"><span className="text-ink/45">构图模式</span><span className="ml-2 font-medium text-ink/75">{resultPayload?.compositionMode || '—'}</span></div>
                         <div className="rounded-lg bg-paper/70 px-3 py-2 sm:col-span-2"><span className="text-ink/45">生成时间</span><span className="ml-2 font-medium text-ink/75">{new Date(resultGeneratedAt).toLocaleString('zh-CN')}</span></div>
                       </div>
-                      <details className="border-t border-black/5 px-4 py-3"><summary className="cursor-pointer text-xs font-medium text-ink/55">开发者信息</summary><div className="mt-3 grid gap-2 text-xs text-ink/55 sm:grid-cols-2"><div>Provider：{resultData?.provider || 'dashscope_qwen_image'}</div><div>Engine：{resultData?.engine || '—'}</div><div>Request ID：{requestId || '—'}</div><div>用户输入图像数量：{resultData?.referenceImageUsed ? 1 : 0}</div></div></details>
                       {enhancedPrompt && <details className="border-t border-black/5 px-4 py-3"><summary className="cursor-pointer text-xs font-medium text-ink/55">查看本次生成 Prompt</summary><pre className="mt-3 max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-lg bg-paper p-3 text-[11px] leading-relaxed text-ink/65">{enhancedPrompt}</pre></details>}
                     </details>
                   </div>

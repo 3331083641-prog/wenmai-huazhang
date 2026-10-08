@@ -22,7 +22,7 @@ export default function Home() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-            2026 iCAN大学生创新创业大赛 · AI应用创新挑战赛 · 软件赛道
+            传统文化视觉创作 · 文化理解 · 文创应用
           </div>
           <h1 className="text-5xl md:text-6xl font-serif font-bold leading-tight mb-6 text-ink">
             纹脉华章 <br />
@@ -61,7 +61,7 @@ export default function Home() {
           <div className="relative w-full h-full">
             {/* Main Center Image */}
             <div className="absolute top-[10%] left-[15%] w-[60%] aspect-[3/4] rounded-xl overflow-hidden shadow-2xl border-4 border-white/80 z-20 group hover:-translate-y-2 transition-transform duration-500">
-               <img src="/zhuxianzhen.png" className="w-full h-full object-cover" alt="木版年画" />
+               <img src={import.meta.env.BASE_URL + "zhuxianzhen.png"} className="w-full h-full object-cover" alt="木版年画" />
                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-sm shadow-sm chinese-plaque !py-1 !text-xs">
                  朱仙镇木版年画
                </div>
@@ -69,17 +69,17 @@ export default function Home() {
 
             {/* Top Right Float */}
             <div className="absolute top-[5%] right-[5%] w-[40%] aspect-square rounded-xl overflow-hidden shadow-xl border-4 border-white/60 z-10 opacity-90 group hover:opacity-100 hover:-translate-y-2 transition-all duration-500">
-               <img src="/songhua.png" className="w-full h-full object-cover" alt="宋画" />
+               <img src={import.meta.env.BASE_URL + "songhua.png"} className="w-full h-full object-cover" alt="宋画" />
             </div>
 
             {/* Bottom Right Float */}
             <div className="absolute bottom-[10%] right-[10%] w-[45%] aspect-[4/3] rounded-xl overflow-hidden shadow-xl border-4 border-white/60 z-30 opacity-90 group hover:opacity-100 hover:-translate-y-2 transition-all duration-500">
-               <img src="/bianxiu.png" className="w-full h-full object-cover" alt="汴绣" />
+               <img src={import.meta.env.BASE_URL + "bianxiu.png"} className="w-full h-full object-cover" alt="汴绣" />
             </div>
 
             {/* Bottom Left Float */}
             <div className="absolute bottom-[5%] left-[5%] w-[35%] aspect-square rounded-full overflow-hidden shadow-xl border-[6px] border-white z-40 opacity-95 group hover:-rotate-6 transition-all duration-500">
-               <img src="/qinghua.png" className="w-full h-full object-cover" alt="青花" />
+               <img src={import.meta.env.BASE_URL + "qinghua.png"} className="w-full h-full object-cover" alt="青花" />
             </div>
           </div>
           
@@ -101,7 +101,7 @@ export default function Home() {
          <span className="text-sm font-serif text-ink/50">传统文化风格：</span>
          {['/zhuxianzhen.png', '/songhua.png', '/bianxiu.png', '/qinghua.png', '/jianzhi.png'].map((src, idx) => (
            <Link key={idx} to="/styles" className="w-12 h-12 rounded-full border-2 border-primary/20 overflow-hidden shadow-sm hover:scale-110 hover:border-primary transition-all">
-             <img src={src} className="w-full h-full object-cover" alt="style thumbnails" />
+             <img src={import.meta.env.BASE_URL + src.replace(/^\//, "")} className="w-full h-full object-cover" alt="style thumbnails" />
            </Link>
          ))}
       </div>
@@ -185,7 +185,7 @@ export default function Home() {
          </div>
          <div className="grid md:grid-cols-3 gap-6">
             <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all group relative cursor-pointer">
-                <img src="/zhuxianzhen.png" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="文创应用"/>
+                <img src={import.meta.env.BASE_URL + "zhuxianzhen.png"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="文创应用"/>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
                    <div className="text-sm font-medium">海报版式示意</div>
@@ -194,7 +194,7 @@ export default function Home() {
             <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all group relative cursor-pointer">
                 <div className="w-full h-full bg-[#f0ede6] flex items-center justify-center relative p-8 group-hover:scale-105 transition-transform duration-700">
                    <div className="w-2/3 aspect-square rounded-full border-4 border-white shadow-xl overflow-hidden z-10 shrink-0">
-                      <img src="/qinghua.png" className="w-full h-full object-cover mix-blend-multiply" alt="杯垫"/>
+                      <img src={import.meta.env.BASE_URL + "qinghua.png"} className="w-full h-full object-cover mix-blend-multiply" alt="杯垫"/>
                    </div>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -205,7 +205,7 @@ export default function Home() {
             <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all group relative cursor-pointer">
                 <div className="w-full h-full bg-[#111] flex items-center justify-center relative p-6 group-hover:scale-105 transition-transform duration-700">
                     <div className="w-full aspect-video bg-black rounded shadow-[0_0_20px_rgba(255,255,255,0.1)] border border-gray-800 flex overflow-hidden">
-                       <img src="/songhua.png" className="w-full h-full object-cover opacity-80" alt="展陈"/>
+                       <img src={import.meta.env.BASE_URL + "songhua.png"} className="w-full h-full object-cover opacity-80" alt="展陈"/>
                     </div>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>

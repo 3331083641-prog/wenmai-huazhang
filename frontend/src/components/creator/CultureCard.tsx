@@ -128,39 +128,42 @@ const drawCard = async (props: CultureCardProps) => {
     ctx.shadowColor = 'rgba(56, 42, 30, 0.14)';
     ctx.shadowBlur = 24;
     ctx.shadowOffsetY = 10;
-    roundedRect(ctx, 72, 168, 936, 552, 18);
+    roundedRect(ctx, 72, 168, 936, 432, 18);
     ctx.fillStyle = '#ffffff';
     ctx.fill();
     ctx.restore();
     ctx.save();
-    roundedRect(ctx, 78, 174, 924, 540, 13);
+    roundedRect(ctx, 78, 174, 924, 420, 13);
     ctx.clip();
-    containImage(ctx, image, 78, 174, 924, 540, palette.paper);
+    containImage(ctx, image, 78, 174, 924, 420, palette.paper);
     ctx.restore();
 
     ctx.fillStyle = palette.primary;
     ctx.font = '600 18px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
-    ctx.fillText(props.analysis ? '画面主题' : '创作主题', 78, 770);
+    ctx.fillText(props.analysis ? '画面主题' : '创作主题', 78, 650);
     ctx.fillStyle = palette.ink;
     ctx.font = '600 29px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
-    wrapCanvasText(ctx, props.analysis?.title || readableTheme(props.theme), 78, 814, 924, 39, 1);
+    wrapCanvasText(ctx, props.analysis?.title || readableTheme(props.theme), 78, 694, 924, 39, 1);
     if (props.analysis?.theme_summary) {
       ctx.fillStyle = palette.ink;
       ctx.font = '400 19px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
-      wrapCanvasText(ctx, props.analysis.theme_summary, 78, 850, 924, 29, 1);
+      wrapCanvasText(ctx, props.analysis.theme_summary, 78, 730, 924, 29, 1);
     } else {
       ctx.fillStyle = palette.ink;
       ctx.font = '400 18px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
-      wrapCanvasText(ctx, `创作主题：${readableTheme(props.theme)}`, 78, 850, 924, 28, 1);
+      wrapCanvasText(ctx, `创作主题：${readableTheme(props.theme)}`, 78, 730, 924, 28, 1);
     }
+
+    ctx.font = '400 16px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
+    wrapCanvasText(ctx, `创作输入：${readableTheme(props.theme)}`, 78, 764, 924, 26, 1);
 
     ctx.fillStyle = palette.primary;
     ctx.font = '600 18px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
-    ctx.fillText(props.analysis ? `画面主体 · ${props.analysis.observed_subjects.slice(0, 3).join('、')}` : '风格特征', 78, 900);
-    if (props.analysis) ctx.fillText('风格特征', 78, 940);
+    ctx.fillText(props.analysis ? `画面主体 · ${props.analysis.observed_subjects.slice(0, 3).join('、')}` : '风格特征', 78, 804);
+    if (props.analysis) ctx.fillText('风格特征', 78, 844);
     const features = props.visualFeatures.slice(0, 4);
     let featureX = 78;
-    let featureY = props.analysis ? 964 : 934;
+    let featureY = props.analysis ? 868 : 838;
     ctx.font = '500 17px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
     for (const feature of features) {
       const tagWidth = Math.ceil(ctx.measureText(feature).width) + 34;
@@ -182,7 +185,16 @@ const drawCard = async (props: CultureCardProps) => {
     ctx.fillText('文化解读', 78, cultureY);
     ctx.fillStyle = palette.ink;
     ctx.font = '400 20px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
-    wrapCanvasText(ctx, props.cultureSummary, 78, cultureY + 42, 924, 34, 4);
+    wrapCanvasText(ctx, props.cultureSummary, 78, cultureY + 38, 924, 30, 4);
+
+    if (props.analysis) {
+      ctx.font = '500 17px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
+      ctx.fillStyle = palette.primary;
+      ctx.fillText(`主要色彩 · ${props.analysis.dominant_colors.join('、')}`, 78, 1130);
+      ctx.fillStyle = palette.ink;
+      ctx.font = '400 17px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
+      wrapCanvasText(ctx, `构图：${props.analysis.composition}`, 78, 1165, 924, 26, 2);
+    }
 
     const sceneY = 1244;
     ctx.fillStyle = palette.primary;
@@ -203,7 +215,7 @@ const drawCard = async (props: CultureCardProps) => {
     ctx.font = '400 15px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
     ctx.fillText(`生成于 ${Number.isNaN(generatedDate.valueOf()) ? '—' : generatedDate.toLocaleString('zh-CN')}`, 78, 1376);
     ctx.textAlign = 'right';
-    ctx.fillText('传统视觉文化 · 数字创作', 1002, 1376);
+    ctx.fillText(props.analysisSource === 'qwen3_vl' ? '本地 Qwen3-VL · 成图解读' : '模板说明 · 未执行看图分析', 1002, 1376);
     ctx.textAlign = 'left';
 
     const png = await new Promise<Blob>((resolve, reject) => {
@@ -312,6 +324,7 @@ export default function CultureCard(props: CultureCardProps) {
             <div className="text-[11px] font-medium" style={{ color: palette.primary }}>文化解读</div>
             <p className="mt-1.5 text-xs leading-6 text-ink/75">{props.cultureSummary}</p>
           </div>
+          {props.analysis && <div className="mt-4 text-xs leading-6 text-ink/65"><p>主要色彩：{props.analysis.dominant_colors.join('、')}</p><p>画面构图：{props.analysis.composition}</p></div>}
           <div className="mt-4">
             <div className="text-[11px] font-medium" style={{ color: palette.primary }}>推荐应用</div>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -321,7 +334,7 @@ export default function CultureCard(props: CultureCardProps) {
             </div>
           </div>
           <div className="mt-auto flex items-end justify-between gap-3 pt-5">
-            <span className="text-[10px] text-ink/40">{props.analysisSource === 'qwen3_vl' ? '本地 Qwen3-VL 已读取生成图' : '依据主题与平台风格条目生成'}</span>
+            <span className="text-[10px] text-ink/40">{props.analysisSource === 'qwen3_vl' ? '本地 Qwen3-VL 已读取生成图' : '模板说明 · 未执行看图分析'}</span>
             <button
               type="button"
               onClick={handleDownload}

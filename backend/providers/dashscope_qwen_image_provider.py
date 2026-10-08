@@ -326,6 +326,15 @@ def _env_float(name: str, default: float) -> float:
 
 
 def _save_image_bytes(content: bytes, style_id: str) -> Path:
+    from io import BytesIO
+    from PIL import Image
+    try:
+        with Image.open(BytesIO(content)) as image:
+            if image.format != 'PNG':
+                raise ValueError('Expected a PNG generation result')
+            image.verify()
+    except Exception as exc:
+        raise ProviderError('dashscope_qwen_image', 'validate_image', '生成服务返回的图片文件无效；未保存替代图片。') from exc
     ensure_runtime_dirs()
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_path = OUTPUT_DIR / f"qwen_image_{stamp}_{style_id}.png"

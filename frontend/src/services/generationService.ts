@@ -9,6 +9,7 @@ export interface GeneratePayload {
   styleStrength: number;
   compositionMode: string;
   negativePrompt: string | null;
+  subjectLock?: string | null;
   uploadedImage: string | null;
   generationProvider?: 'dashscope_qwen_image';
 }
@@ -39,8 +40,8 @@ export interface BackendHealth {
     model: string;
     message: string;
   };
-  allowMockFallback: boolean;
   providers?: Record<string, Record<string, unknown>>;
+  allowMockFallback: boolean;
   message?: string;
 }
 
@@ -88,7 +89,7 @@ export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://127.0.
 const GENERATE_TIMEOUT_MS = 300_000;
 
 export class BackendConnectionError extends Error {
-  constructor(message = "前端无法连接后端 FastAPI，请确认 http://127.0.0.1:8000/health 是否可打开。") {
+  constructor(message = "生成服务未连接。请双击 start_windows.cmd 启动完整系统，或先浏览已保存的真实案例。") {
     super(message);
     this.name = "BackendConnectionError";
   }
@@ -140,6 +141,7 @@ export async function generateImage(payload: GeneratePayload): Promise<GenerateR
     styleStrength: payload.styleStrength,
     compositionMode: payload.compositionMode,
     negativePrompt: payload.negativePrompt,
+    subjectLock: payload.subjectLock || null,
     uploadedImage: payload.uploadedImage,
     generationProvider: payload.generationProvider || 'dashscope_qwen_image',
   };
@@ -156,12 +158,11 @@ export async function generateImage(payload: GeneratePayload): Promise<GenerateR
 
     const data = await parseGenerateResponse(response);
     if (!response.ok) {
-      throw new ApiResponseError(data.error || `API error: ${response.status}`);
+      throw new ApiResponseError("生成服务暂不可用，请检查个人服务配置和网络后重试。");
     }
 
     if (!data.success) {
-      const debugText = data.debug ? ` Debug: ${JSON.stringify(data.debug)}` : "";
-      throw new ApiResponseError((data.error || "后端生成失败。") + debugText);
+      throw new ApiResponseError("图像生成失败。请检查个人 API Key、服务额度及网络连接；本次未使用演示图片替代。");
     }
 
     if (!data.imageUrl || typeof data.enhancedPrompt !== "string" || !data.mode) {

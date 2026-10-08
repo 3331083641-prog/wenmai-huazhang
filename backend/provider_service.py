@@ -21,7 +21,7 @@ from style_config import OUTPUT_DIR, PROJECT_ROOT, STYLE_REFS_DIR, get_style, mi
 
 
 BACKEND_DIR = Path(__file__).resolve().parent
-ENV_PATH = BACKEND_DIR / ".env"
+ENV_PATH = Path(os.getenv("WENMAI_ENV_FILE") or BACKEND_DIR / ".env")
 
 
 def load_backend_env() -> None:
