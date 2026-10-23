@@ -16,6 +16,59 @@ function Find-Port([int]$First,[int]$Last) {
     foreach ($Candidate in $First..$Last) { if (Port-Free $Candidate) { return $Candidate } }
     throw 'No free project service port. Please close only the conflicting application yourself.'
 }
+function Test-RecordedProcess([object]$Running,[object]$Recorded) {
+    if (-not $Running -or -not $Recorded -or $Running.Id -ne $Recorded.id) { return $false }
+    try {
+        # ConvertFrom-Json may return a string (Windows PowerShell) or DateTime
+        # (PowerShell 7). Compare the same UTC instant, preserving all ticks.
+        $Started=$Recorded.started
+        if ($Started -is [DateTimeOffset]) { $RecordedTicks=$Started.UtcDateTime.Ticks }
+        elseif ($Started -is [DateTime]) { $RecordedTicks=$Started.ToUniversalTime().Ticks }
+        else {
+            $Parsed=[DateTimeOffset]::Parse([string]$Started,[Globalization.CultureInfo]::InvariantCulture,[Globalization.DateTimeStyles]::AssumeUniversal)
+            $RecordedTicks=$Parsed.UtcDateTime.Ticks
+        }
+        return $Running.StartTime.ToUniversalTime().Ticks -eq $RecordedTicks
+    } catch { return $false }
+}
+function Stop-RecordedProcessTree([object]$Recorded) {
+    $RootProcess=Get-Process -Id $Recorded.id -ErrorAction SilentlyContinue
+    if (-not (Test-RecordedProcess $RootProcess $Recorded)) { return }
+    # Windows venv launchers can leave a Python child holding the API port.
+    # Take one parent/PID snapshot only after verifying our recorded root.
+    $Snapshot=@(Get-CimInstance -ClassName Win32_Process -Property ProcessId,ParentProcessId -ErrorAction Stop)
+    $Queue=New-Object 'System.Collections.Generic.Queue[object]'
+    $RootRecord=[pscustomobject]@{id=$RootProcess.Id;started=$RootProcess.StartTime.ToUniversalTime();depth=0}
+    $Queue.Enqueue($RootRecord)
+    $Captured=@($RootRecord)
+    $Seen=@{}; $Seen[[int]$RootRecord.id]=$true
+    while ($Queue.Count) {
+        $ParentRecord=$Queue.Dequeue()
+        foreach ($Candidate in $Snapshot) {
+            $ChildId=[int]$Candidate.ProcessId
+            if ([int]$Candidate.ParentProcessId -ne $ParentRecord.id -or $Seen.ContainsKey($ChildId)) { continue }
+            $Seen[$ChildId]=$true
+            $ChildProcess=Get-Process -Id $ChildId -ErrorAction SilentlyContinue
+            if (-not $ChildProcess) { continue }
+            $ChildStarted=$ChildProcess.StartTime.ToUniversalTime()
+            # A process older than its claimed parent cannot be our descendant.
+            if ($ChildStarted.Ticks -lt $ParentRecord.started.Ticks) { continue }
+            $ChildRecord=[pscustomobject]@{id=$ChildId;started=$ChildStarted;depth=($ParentRecord.depth+1)}
+            $Captured+=$ChildRecord
+            $Queue.Enqueue($ChildRecord)
+        }
+    }
+    $RootProcess=Get-Process -Id $Recorded.id -ErrorAction SilentlyContinue
+    if (-not (Test-RecordedProcess $RootProcess $Recorded)) { return }
+    foreach ($Member in ($Captured | Sort-Object depth -Descending)) {
+        $CurrentProcess=Get-Process -Id $Member.id -ErrorAction SilentlyContinue
+        # Recheck every captured creation time immediately before stopping it.
+        if (Test-RecordedProcess $CurrentProcess $Member) {
+            Stop-Process -InputObject $CurrentProcess -ErrorAction Stop
+            Write-Host ('Stopped project process '+$Member.id)
+        }
+    }
+}
 function Environment-Check {
     if (Get-Command python -ErrorAction SilentlyContinue) { & python --version } else { Write-Host 'Python missing: install Python 3.10+.' }
     if (Get-Command node -ErrorAction SilentlyContinue) { & node --version } else { Write-Host 'Node missing: install Node 20.19+ or 22.12+.' }
@@ -30,9 +83,11 @@ function Environment-Check {
     Write-Host ('Personal DashScope key configured: '+$KeyReady)
     if (-not $KeyReady) { Write-Host 'Saved cases remain available. Real generation requires YOUR paid DashScope service and personal API key.' }
     try {
-        $Models=Invoke-RestMethod 'http://127.0.0.1:11434/api/tags' -TimeoutSec 3
-        Write-Host ('Local Qwen3-VL installed: '+[bool]($Models.models.name -contains 'qwen3-vl:4b-instruct-q4_K_M'))
-    } catch { Write-Host 'Ollama not reachable. Saved cases remain available; live image analysis is unavailable.' }
+        $Models=Invoke-RestMethod 'http://127.0.0.1:11434/api/tags' -TimeoutSec 8
+        $DefaultModelInstalled=[bool]($Models.models.name -contains 'qwen3-vl:4b-instruct-q4_K_M')
+        Write-Host ('Default local Qwen3-VL model listed: '+$DefaultModelInstalled)
+        if (-not $DefaultModelInstalled) { Write-Host 'Ollama responded, but the default model was not listed. Check your configured QWEN_VL_MODEL in backend/.env.' }
+    } catch { Write-Host 'Ollama check failed (connection, timeout, or response error); model installation is unconfirmed. Saved cases remain available. Check backend /health for live analysis status.' }
 }
 
 if ($Action -eq 'check') { Environment-Check; exit 0 }
@@ -59,12 +114,7 @@ if ($Action -eq 'stop') {
     if (-not (Test-Path $StateFile)) { Write-Host 'No recorded project processes.'; exit 0 }
     $State=Get-Content -LiteralPath $StateFile -Raw | ConvertFrom-Json
     foreach ($Recorded in $State.processes) {
-        $Running=Get-Process -Id $Recorded.id -ErrorAction SilentlyContinue
-        # Creation time prevents stopping an unrelated process if a PID was reused.
-        if ($Running -and $Running.StartTime.ToUniversalTime().ToString('o') -eq $Recorded.started) {
-            Stop-Process -Id $Recorded.id
-            Write-Host ('Stopped project process '+$Recorded.id)
-        }
+        Stop-RecordedProcessTree $Recorded
     }
     Remove-Item -LiteralPath $StateFile
     Write-Host 'Ollama and other projects were not stopped.'
@@ -72,7 +122,7 @@ if ($Action -eq 'stop') {
 }
 if (Test-Path $StateFile) {
     $Prior=Get-Content -LiteralPath $StateFile -Raw | ConvertFrom-Json
-    $Alive=@($Prior.processes | Where-Object { $P=Get-Process -Id $_.id -ErrorAction SilentlyContinue; $P -and $P.StartTime.ToUniversalTime().ToString('o') -eq $_.started })
+    $Alive=@($Prior.processes | Where-Object { $P=Get-Process -Id $_.id -ErrorAction SilentlyContinue; Test-RecordedProcess $P $_ })
     if ($Alive.Count) { Write-Host 'This launcher already has running project services. Use stop_windows.cmd first.'; exit 0 }
 }
 if (-not (Test-Path $PythonExe) -or -not (Test-Path 'frontend\node_modules')) { throw 'Run setup_windows.cmd first.' }
@@ -102,6 +152,6 @@ try {
     Write-Host ('Qwen3-VL local ready: '+$Health.localVisionAnalysis.available)
     if (-not $NoBrowser) { Start-Process "http://127.0.0.1:$WebPort/gallery" }
 } catch {
-    foreach ($Recorded in $Processes) { $P=Get-Process -Id $Recorded.id -ErrorAction SilentlyContinue; if ($P -and $P.StartTime.ToUniversalTime().ToString('o') -eq $Recorded.started) { Stop-Process -Id $Recorded.id } }
+    foreach ($Recorded in $Processes) { Stop-RecordedProcessTree $Recorded }
     throw
 }

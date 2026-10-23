@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import { ArrowLeft, ArrowRight, BookOpen, Check, Compass, Copy, Download, Image as ImageIcon } from 'lucide-react';
 import { experiences, getExperience } from '../data/experiences';
@@ -16,6 +17,7 @@ function cameraTransform(scale: number, focusX: number, focusY: number): string 
 
 /** /story/:id —— 「一图一境」互动故事页。滚动驱动镜头，但不劫持滚动。 */
 function StoryContent({ experience }: { experience: CultureExperience }) {
+  const { hash } = useLocation();
   const [activeChapter, setActiveChapter] = useState(experience.chapters[0]?.id ?? '');
   const [copied, setCopied] = useState(false);
   const prefersReduced = useReducedMotion();
@@ -48,6 +50,13 @@ function StoryContent({ experience }: { experience: CultureExperience }) {
     const element = chapterRefs.current.get(id);
     element?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
   }, [reducedMotion]);
+
+  useEffect(() => {
+    const id = hash.slice(1);
+    if (!id) return;
+    const chapter = experience.chapters.find((item) => item.id === id || `chapter-${item.index}` === id);
+    if (chapter) scrollToChapter(chapter.id);
+  }, [hash, experience.chapters, scrollToChapter]);
 
   const copyLink = async () => {
     const url = window.location.href;
@@ -104,13 +113,13 @@ function StoryContent({ experience }: { experience: CultureExperience }) {
         />
         <div className="mx-auto max-w-[1180px] px-4 pb-8 pt-24 sm:px-8">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-            <a
-              href="/gallery"
+            <Link
+              to="/gallery"
               className="inline-flex items-center gap-1.5 text-[12px] text-[color:var(--color-ink)]/55 transition hover:text-[color:var(--color-primary)]"
             >
               <ArrowLeft size={13} />
               文化作品展厅
-            </a>
+            </Link>
             <ExperienceModeSwitch
               experienceId={experience.id}
               current="story"
@@ -132,31 +141,31 @@ function StoryContent({ experience }: { experience: CultureExperience }) {
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-2.5">
-                <a
-                  href={`/experience/${experience.id}`}
+                <Link
+                  to={`/experience/${experience.id}`}
                   className="inline-flex items-center gap-1.5 rounded px-4 py-2 text-[13px] text-white transition hover:opacity-90"
                   style={{ backgroundColor: experience.theme.accent }}
                 >
                   <ImageIcon size={14} />
                   进入画中探索
-                </a>
+                </Link>
                 {hasWanderMode(experience.animation) && (
-                  <a
-                    href={`/wander/${experience.id}`}
+                  <Link
+                    to={`/wander/${experience.id}`}
                     data-testid="story-to-wander"
                     className="inline-flex items-center gap-1.5 rounded px-4 py-2 text-[13px] font-medium text-[color:var(--color-primary)] ring-1 ring-inset ring-[color:var(--color-primary)]/45 transition hover:bg-[color:var(--color-primary)] hover:text-white hover:ring-[color:var(--color-primary)]"
                   >
                     <Compass size={14} />
                     走进画境漫游
-                  </a>
+                  </Link>
                 )}
-                <a
-                  href="#chapter-1"
+                <button
+                  type="button" onClick={() => scrollToChapter(experience.chapters[0]?.id ?? '')}
                   className="inline-flex items-center gap-1.5 rounded border border-[color:var(--color-gold)]/60 px-4 py-2 text-[13px] text-[color:var(--color-ink)]/75 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
                 >
                   <BookOpen size={14} />
                   从第一折读起
-                </a>
+                </button>
                 <span className="text-[11.5px] text-[color:var(--color-ink)]/45">
                   {experience.chapters.length} 折 · {experience.hotspots.length} 处线索
                 </span>
@@ -323,14 +332,14 @@ function StoryContent({ experience }: { experience: CultureExperience }) {
                   {experience.hotspots
                     .filter((hotspot) => item.focusHotspotIds.includes(hotspot.id))
                     .map((hotspot) => (
-                      <a
+                      <Link
                         key={hotspot.id}
-                        href={`/experience/${experience.id}`}
+                        to={`/experience/${experience.id}`}
                         className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/60 px-2.5 py-1 text-[11.5px] text-[color:var(--color-ink)]/70 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
                       >
                         <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: experience.theme.accent }} />
                         {hotspot.title}
-                      </a>
+                      </Link>
                     ))}
                 </div>
 
@@ -392,8 +401,8 @@ function StoryContent({ experience }: { experience: CultureExperience }) {
           顺序才是 互动画境 → 一图一境 → 画境漫游 → 下一卷。 */}
       {hasWanderMode(experience.animation) ? (
         <section className="mx-auto mt-10 max-w-[1180px] px-4 sm:px-8">
-          <a
-            href={`/wander/${experience.id}`}
+          <Link
+            to={`/wander/${experience.id}`}
             data-testid="story-bottom-next-wander"
             className="group flex flex-wrap items-center justify-between gap-4 rounded-lg border border-[color:var(--color-gold)]/45 bg-white/55 px-5 py-4 transition hover:border-[color:var(--color-primary)]/50"
           >
@@ -413,7 +422,7 @@ function StoryContent({ experience }: { experience: CultureExperience }) {
               <Compass size={14} />
               开始画境漫游
             </span>
-          </a>
+          </Link>
         </section>
       ) : (
         <NextExperience currentId={experience.id} accent={experience.theme.accent} />
@@ -428,8 +437,8 @@ function NextExperience({ currentId, accent }: { currentId: string; accent: stri
   if (!next || next.id === currentId) return null;
   return (
     <section className="mx-auto mt-10 max-w-[1180px] px-4 sm:px-8">
-      <a
-        href={`/story/${next.id}`}
+      <Link
+        to={`/story/${next.id}`}
         className="group flex items-center justify-between gap-4 rounded-lg border border-[color:var(--color-gold)]/35 bg-white/45 px-4 py-3.5 transition hover:border-[color:var(--color-primary)]/50"
       >
         <span>
@@ -444,7 +453,7 @@ function NextExperience({ currentId, accent }: { currentId: string; accent: stri
         >
           <ArrowRight size={16} />
         </span>
-      </a>
+      </Link>
     </section>
   );
 }
@@ -458,12 +467,12 @@ export function Story() {
       <div className="mx-auto max-w-xl px-6 py-28 text-center">
         <p className="mb-3 text-[11px] tracking-[0.3em] text-[color:var(--color-ink)]/45">未找到这一卷</p>
         <h1 className="mb-5 font-serif text-2xl text-[color:var(--color-ink)]">展厅里暂时没有「{id}」这件作品</h1>
-        <a
-          href="/gallery"
+        <Link
+          to="/gallery"
           className="inline-flex items-center rounded border border-[color:var(--color-gold)] px-5 py-2 text-sm text-[color:var(--color-primary)] transition hover:bg-[color:var(--color-primary)] hover:text-white"
         >
           返回文化作品展厅
-        </a>
+        </Link>
       </div>
     );
   }

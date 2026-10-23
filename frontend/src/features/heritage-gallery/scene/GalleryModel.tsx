@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 绾硅剦灞曢 路 妯″瀷鍔犺浇涓庡浘灞傛帶鍒? *
  * 妯″瀷鏉ヨ嚜 Blender锛歚assets/gallery3d/exports/wenmai_gallery.glb`
  * 锛堟瀯寤鸿剼鏈?`assets/gallery3d/scripts/build_all.py`锛屽鍑哄悗澶嶅埗鍒?public/models锛夈€? *
@@ -18,7 +18,7 @@ import { applySanzhuan2, disposeToonResources, getOutlineMesh } from './sanzhuan
 // switched off until it ramps the GLB base colour instead of replacing it.
 const TOON_ENABLED = false;
 
-export const MODEL_URL = '/models/wenmai_gallery_v5.glb?v=5w';
+export const MODEL_URL = `${import.meta.env.BASE_URL}models/wenmai_gallery_v5.glb?v=5w`;
 
 /** 灞嬮《鍥惧眰锛氬唴閮ㄦā寮忎笅涓€寰嬮殣钘忥紝鎵嶈兘鐪嬭繘灞嬮噷銆? *  浠?Blender 瀵煎嚭鐨勫懡鍚嶅墠缂€涓哄噯锛圧OOF_* 灞嬫灦 / TILE_* 鐡﹂潰锛夛紝
  *  澶栧姞鎸傚湪妾愪笅鐨勭伅绗尖€斺€斿畠璺熺潃灞嬮《涓€璧锋敹锛屽惁鍒欎細鎮湪鍗婄┖銆?*/

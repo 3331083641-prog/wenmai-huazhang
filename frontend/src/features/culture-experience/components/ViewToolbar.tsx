@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { BookOpen, ChevronDown, Compass, Eye, EyeOff, Maximize2, Minus, Plus, RotateCcw } from 'lucide-react';
 
 interface ToolbarProps {
@@ -63,25 +64,25 @@ export function ViewToolbar({
         {showRegions ? <Eye size={15} /> : <EyeOff size={15} />}
       </button>
 
-      <a
-        href={storyHref}
+      <Link
+        to={storyHref}
         className="ml-auto inline-flex h-9 items-center gap-1.5 rounded px-3 text-xs text-white transition hover:opacity-90"
         style={{ backgroundColor: accent }}
       >
         <BookOpen size={14} />
         读这一卷的故事
         <ChevronDown size={13} className="opacity-70" />
-      </a>
+      </Link>
 
       {wanderHref && (
-        <a
-          href={wanderHref}
+        <Link
+          to={wanderHref}
           data-testid="experience-to-wander"
           className="inline-flex h-9 items-center gap-1.5 rounded border border-[color:var(--color-gold)]/60 bg-white/70 px-3 text-xs text-[color:var(--color-primary)] transition hover:border-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-white"
         >
           <Compass size={14} />
           走进画境
-        </a>
+        </Link>
       )}
     </div>
   );

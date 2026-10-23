@@ -62,3 +62,20 @@ tools/dsh-plugins/*/tests/viewer/public/models/
 docs/painting_world/
 docs/heritage_gallery/screens/
 docs/competition/innovation_annual_exhibition/
+
+# Local environments, model weights and verification output
+.venv/
+venv/
+*.gguf
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.pid
+*.tsbuildinfo
+*.bak[0-9]*
+*.blend[0-9]
+playwright-report/
+test-results/
+coverage/

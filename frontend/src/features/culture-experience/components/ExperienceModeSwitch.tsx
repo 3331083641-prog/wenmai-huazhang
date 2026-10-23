@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { BookOpen, Compass, Image as ImageIcon } from 'lucide-react';
 import type { CultureExperience } from '../types';
 
@@ -107,9 +108,9 @@ export function ExperienceModeSwitch({
         }
 
         return (
-          <a
+          <Link
             key={key}
-            href={`/${key}/${experienceId}`}
+            to={`/${key}/${experienceId}`}
             title={hint}
             className={[
               base,
@@ -120,7 +121,7 @@ export function ExperienceModeSwitch({
           >
             <Icon size={13} />
             {label}
-          </a>
+          </Link>
         );
       })}
     </nav>

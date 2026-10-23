@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
 interface Props {
@@ -45,12 +46,12 @@ export class ExperienceErrorBoundary extends Component<Props, State> {
         <pre className="mb-8 max-h-40 overflow-auto rounded border border-[color:var(--color-gold)]/40 bg-white/60 p-3 text-left text-xs text-[color:var(--color-ink)]/60">
           {error.message}
         </pre>
-        <a
-          href={this.props.fallbackHref ?? '/gallery'}
+        <Link
+          to={this.props.fallbackHref ?? '/gallery'}
           className="inline-flex items-center gap-2 rounded border border-[color:var(--color-gold)] px-5 py-2 text-sm text-[color:var(--color-primary)] transition hover:bg-[color:var(--color-primary)] hover:text-white"
         >
           返回文化作品展厅
-        </a>
+        </Link>
       </div>
     );
   }

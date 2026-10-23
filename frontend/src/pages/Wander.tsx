@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useReducedMotion } from 'motion/react';
@@ -84,13 +85,13 @@ function WanderContent({ experience }: { experience: NonNullable<ReturnType<type
   return (
     <div className="mx-auto w-full max-w-[1240px] px-4 pb-20 pt-24 sm:px-6">
       <header className="mb-5">
-        <a
-          href="/gallery"
+        <Link
+          to="/gallery"
           className="mb-2 inline-flex items-center gap-1.5 text-[12px] text-[color:var(--color-ink)]/55 transition hover:text-[color:var(--color-primary)]"
         >
           <ArrowLeft size={13} />
           文化作品展厅
-        </a>
+        </Link>
         <p className="text-[11px] tracking-[0.34em] text-[color:var(--color-ink)]/45">{experience.styleName} · 画境漫游</p>
         <h1 className="mt-1 font-serif text-2xl leading-tight text-[color:var(--color-ink)] sm:text-3xl">
           走进《{experience.title}》
@@ -295,20 +296,20 @@ function WanderContent({ experience }: { experience: NonNullable<ReturnType<type
           </div>
 
           <div className="flex flex-col gap-2">
-            <a
-              href={`/experience/${experience.id}`}
+            <Link
+              to={`/experience/${experience.id}`}
               className="inline-flex items-center justify-center gap-1.5 rounded border border-[color:var(--color-gold)]/60 px-3 py-2 text-[12.5px] text-[color:var(--color-ink)]/80 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
             >
               回到画中找线索
-            </a>
-            <a
-              href={`/story/${experience.id}`}
+            </Link>
+            <Link
+              to={`/story/${experience.id}`}
               className="inline-flex items-center justify-center gap-1.5 rounded px-3 py-2 text-[12.5px] text-white transition hover:opacity-90"
               style={{ backgroundColor: experience.theme.accent }}
             >
               <BookOpen size={14} />
               读这一卷的故事
-            </a>
+            </Link>
           </div>
         </aside>
       </div>
@@ -330,12 +331,12 @@ export function Wander() {
         <p className="mb-6 text-[13px] leading-relaxed text-[color:var(--color-ink)]/60">
           请回到展厅从五件案例里选一件。展厅里的作品都带真实生成图与文化说明。
         </p>
-        <a
-          href="/gallery"
+        <Link
+          to="/gallery"
           className="inline-flex items-center rounded border border-[color:var(--color-gold)] px-5 py-2 text-sm text-[color:var(--color-primary)] transition hover:bg-[color:var(--color-primary)] hover:text-white"
         >
           返回文化作品展厅
-        </a>
+        </Link>
       </div>
     );
   }
@@ -360,12 +361,12 @@ export function Wander() {
           画境需要为每件作品单独估计深度并烘焙资产，目前只完成了《云鹤临水楼》。
           其余作品仍可在「画中有话」里逐处探索。
         </p>
-        <a
-          href="/gallery"
+        <Link
+          to="/gallery"
           className="inline-flex items-center rounded border border-[color:var(--color-gold)] px-5 py-2 text-sm text-[color:var(--color-primary)] transition hover:bg-[color:var(--color-primary)] hover:text-white"
         >
           返回文化作品展厅
-        </a>
+        </Link>
       </div>
     );
   }

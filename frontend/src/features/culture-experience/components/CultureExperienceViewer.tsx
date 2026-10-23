@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useReducedMotion } from 'motion/react';
 import { ArrowLeft, Info } from 'lucide-react';
@@ -202,13 +203,13 @@ export function CultureExperienceViewer({ experience }: ViewerProps) {
     <div className="mx-auto w-full max-w-[1400px] px-4 pb-14 pt-16 sm:px-6">
       <header className="mb-3 flex flex-wrap items-end justify-between gap-4">
         <div className="min-w-0">
-          <a
-            href="/gallery"
+          <Link
+            to="/gallery"
             className="mb-2 inline-flex items-center gap-1.5 text-[12px] text-[color:var(--color-ink)]/55 transition hover:text-[color:var(--color-primary)]"
           >
             <ArrowLeft size={13} />
             文化作品展厅
-          </a>
+          </Link>
           <p className="text-[11px] tracking-[0.34em] text-[color:var(--color-ink)]/45">
             {experience.styleName} · 画中有话
           </p>

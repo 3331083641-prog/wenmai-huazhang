@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-24",
+  "purpose": "single real runtime verification; not a new curated gallery case",
+  "request_count": 1,
+  "reference_image": "../../examples/zhuxianzhen/reference.png",
+  "reference_sha256": "4d53069744d334658501fa7efbb66cacdab072a865804297da3cf8f02ec3b96b",
+  "generated_sha256": "5aa84e7d23bcdde92f89d2128385f048a8b1023a6734527f06e1cf82b9e1e803",
+  "request": {
+    "theme": "瑞猫迎春：虎斑猫与牡丹，朱仙镇木版年画视觉风格",
+    "style": "zhuxianzhen",
+    "styleStrength": 0.65,
+    "subjectLock": "虎斑猫",
+    "negativePrompt": "水印，额外肢体，文字",
+    "outputType": "poster",
+    "compositionMode": "portrait"
+  },
+  "health": {
+    "status": "ok",
+    "generationProvider": "dashscope_qwen_image",
+    "model": "qwen-image-3.0",
+    "localVisionAnalysis": {
+      "enabled": true,
+      "available": true,
+      "provider": "ollama_local",
+      "model": "qwen3-vl:4b-instruct-q4_K_M",
+      "message": "本地 Qwen3-VL 已就绪。"
+    }
+  },
+  "result": {
+    "success": true,
+    "provider": "dashscope_qwen_image",
+    "model": "qwen-image-3.0",
+    "mode": "image_to_image",
+    "referenceImageUsed": true,
+    "analysisSource": "qwen3_vl",
+    "visionAnalysis": {
+      "title": "瑞猫迎春",
+      "theme_summary": "虎斑猫踏牡丹，祥云绕身，朱红背景配吉祥文字，寓意新春纳福。",
+      "composition": "猫居画面中央，牡丹对称分布，祥云填满背景，文字竖排左侧，构图饱满对称。",
+      "style_interpretation": "画面呈现朱仙镇木版年画典型特征，套色鲜明，轮廓分明，构图饱满，充满节庆装饰感，视觉冲击力强。",
+      "culture_interpretation": "虎斑猫立于牡丹花丛，眼眸清澈，尾高扬，似有威仪；背景祥云缭绕，朱红背景衬托吉祥文字，整幅画面洋溢着新春的喜庆与祈愿。此景非写实，乃传统年画的符号化表达，借瑞兽与花卉之形，传递对丰收、平安与新岁的期许，静中含动，暖中藏韵，令观者心生安定与喜悦。",
+      "observed_subjects": [
+        "虎斑猫",
+        "牡丹",
+        "祥云",
+        "朱红背景",
+        "竖排文字"
+      ],
+      "dominant_colors": [
+        "朱红",
+        "金黄",
+        "翠绿",
+        "深褐"
+      ],
+      "visual_features": [
+        "粗黑轮廓线",
+        "红绿黄配色",
+        "木版印刷肌理",
+        "祥云纹样",
+        "对称式构图"
+      ],
+      "recommended_scenes": [
+        "节庆主题海报",
+        "民俗文创"
+      ],
+      "theme_alignment": "高",
+      "style_alignment": "明显"
+    },
+    "autoSave": {
+      "enabled": false,
+      "saved": false,
+      "error": null
+    },
+    "error": null,
+    "http_status": 200,
+    "seconds": 69.91
+  }
+}

@@ -1,4 +1,4 @@
-﻿import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
@@ -88,7 +88,7 @@ function MascotModel({
 }: {
   onReady: (mixer: THREE.AnimationMixer, actions: Record<string, THREE.AnimationAction>) => void;
 }) {
-  const { scene, animations } = useGLTF('/models/wenmai_mascot_ww.glb');
+  const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}models/wenmai_mascot_ww.glb`);
   const mixer = useMemo(() => new THREE.AnimationMixer(scene), [scene]);
 
   useEffect(() => {
@@ -140,7 +140,7 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
   /* 模型可用性：dev server 对缺失文件会回落 index.html，必须先验 magic */
   useEffect(() => {
     let cancelled = false;
-    fetch('/models/wenmai_mascot_ww.glb', { cache: 'no-store' })
+    fetch(`${import.meta.env.BASE_URL}models/wenmai_mascot_ww.glb`, { cache: 'no-store' })
       .then((res) => res.arrayBuffer())
       .then((buf) => {
         if (cancelled) return;

@@ -1,9 +1,9 @@
-/**
- * public/ 下资源的解析。
- * 静态展示模式会用非根 base（GitHub Pages 子路径），所以不能写死 '/interactive/...'。
- */
+/** Resolve public assets for both local development and a Pages subpath. */
 export function publicUrl(path: string): string {
+  if (/^(?:https?:|data:|blob:|\/\/)/.test(path)) return path;
   const base = import.meta.env.BASE_URL || '/';
+  // Imported Vite assets already contain BASE_URL. Do not prepend it twice.
+  if (path.startsWith(base)) return path;
   const normalized = path.replace(/^\//, '');
   return `${base.replace(/\/$/, '')}/${normalized}`;
 }

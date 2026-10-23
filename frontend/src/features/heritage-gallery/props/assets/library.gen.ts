@@ -2,7 +2,7 @@
 /**
  * 器物资产库（由 Gemini 的 5.html 精确移植）
  *
- * 来源：C:\\Users\\WPY11\\Desktop\\5.html 的 MAT / 纹理生成器 / box / cyl /
+ * 来源：用户提供的器物原型 HTML 中的 MAT / 纹理生成器 / box / cyl /
  * addFlushSpandrel / BUILDERS。只保留用户白名单里的 14 件，另外五件
  * （DIY_A06 / A10 / B05 / C03 / D05）的构建代码根本没有抽进来。
  *

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Canvas } from '@react-three/fiber';
@@ -458,13 +459,13 @@ export default function PaintingWorld({ experience }: { experience: CultureExper
               单图深度估计，有限视角：可以推进与小幅转头，不能绕到山石背后。
             </p>
             {nextArtwork ? (
-              <a
-                href={`/story/${nextArtwork.id}`}
+              <Link
+                to={`/story/${nextArtwork.id}`}
                 className="mt-3 inline-flex items-center gap-1 text-[11.5px] text-[color:var(--color-ink)]/50 underline decoration-dotted underline-offset-4 transition hover:text-[color:var(--color-primary)]"
               >
                 不进画境，直接走进下一卷《{nextArtwork.title}》
                 <ArrowRight size={12} />
-              </a>
+              </Link>
             ) : null}
           </div>
         </div>
@@ -558,8 +559,8 @@ export default function PaintingWorld({ experience }: { experience: CultureExper
           顺序是 互动画境 → 一图一境 → 画境漫游 → 下一卷。 */}
       {inside && !showNote && nextArtwork ? (
         <div className="pointer-events-none absolute inset-x-0 bottom-12 flex justify-center">
-          <a
-            href={`/story/${nextArtwork.id}`}
+          <Link
+            to={`/story/${nextArtwork.id}`}
             data-testid="wander-next-volume"
             title={`走进下一卷：${nextArtwork.title}`}
             className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-[color:var(--color-gold)]/60 bg-[color:var(--color-paper)]/88 px-4 py-2 text-[12px] text-[color:var(--color-ink)]/75 backdrop-blur-sm transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
@@ -568,7 +569,7 @@ export default function PaintingWorld({ experience }: { experience: CultureExper
             <span className="font-serif text-[13px] text-[color:var(--color-ink)]">{nextArtwork.title}</span>
             <span className="hidden text-[10.5px] text-[color:var(--color-ink)]/45 sm:inline">{nextArtwork.styleName}</span>
             <ArrowRight size={14} />
-          </a>
+          </Link>
         </div>
       ) : null}
 

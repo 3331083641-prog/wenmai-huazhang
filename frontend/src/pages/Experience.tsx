@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getExperience } from '../data/experiences';
 import CultureExperienceViewer from '../features/culture-experience/components/CultureExperienceViewer';
@@ -15,12 +16,12 @@ export function Experience() {
         <h1 className="mb-5 font-serif text-2xl text-[color:var(--color-ink)]">
           展厅里暂时没有「{id}」这件作品
         </h1>
-        <a
-          href="/gallery"
+        <Link
+          to="/gallery"
           className="inline-flex items-center rounded border border-[color:var(--color-gold)] px-5 py-2 text-sm text-[color:var(--color-primary)] transition hover:bg-[color:var(--color-primary)] hover:text-white"
         >
           返回文化作品展厅
-        </a>
+        </Link>
       </div>
     );
   }

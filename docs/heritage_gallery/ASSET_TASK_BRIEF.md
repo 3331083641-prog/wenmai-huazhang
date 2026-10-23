@@ -6,10 +6,10 @@
 ## 已完成（勿重做）
 
 1. **资产抽取**：`frontend/src/features/heritage-gallery/props/assets/library.gen.ts`
-   - 由 `scripts\assets\extract_library.py`（仓库内，可复现）从 `C:\Users\WPY11\Desktop\5.html` 精确抽行生成（`// @ts-nocheck`）。
+   - 由 `scripts\assets\extract_library.py`（仓库内，可复现）从 `用户提供的原始资产 / 本机工具配置` 精确抽行生成（`// @ts-nocheck`）。
    - 含纹理生成器 + MAT + box/cyl/addFlushSpandrel + **仅白名单 14 个 builder**；
      排除件 A06/A10/B05/C03/D05 **代码根本不在文件里**。
-   - 重新生成：`python scripts\assets\extract_library.py`（脚本里已内置 B02 纸张 NaN 钳制）。
+   - 重新生成：`python scripts\assets\extract_library.py "用户提供的原始器物.html"`（脚本里已内置 B02 纸张 NaN 钳制）。
    - 14 件全部构建通过，浏览器审计钩子 `window.__wenmaiAudit()` 可量 bbox/网格数/三角面。
 2. **元数据**：`assets/assetCatalog.ts`（14 件、6 分类、placement floor/surface/hang、说明、互动说明）
 3. **实例化**：`assets/AssetInstance.tsx`（每实例克隆材质、包围盒对齐 y=0、点击触发、状态写回 store）

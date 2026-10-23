@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { ChevronLeft, ChevronRight, Link2, X } from 'lucide-react';
 import type { CultureExperience, CultureHotspot } from '../types';
@@ -138,13 +139,13 @@ export function KnowledgePanel({
                   <ChevronRight size={14} />
                 </button>
                 {active.relatedChapterId && (
-                  <a
-                    href={`/story/${experience.id}#${active.relatedChapterId}`}
+                  <Link
+                    to={`/story/${experience.id}#${active.relatedChapterId}`}
                     className="inline-flex items-center justify-center rounded px-3 py-2 text-xs text-white transition hover:opacity-90"
                     style={{ backgroundColor: experience.theme.accent }}
                   >
                     在故事里看
-                  </a>
+                  </Link>
                 )}
               </div>
             </motion.div>

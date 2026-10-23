@@ -107,7 +107,7 @@ QA 端到端脚本（同一套工具，独立驱动）：
 
 安装状态（当前）：
 
-- 依赖：`C:\Users\WPY11\.dsh\profiles\desktop\node_modules\wenmai-3d-reconstruction` → **`link:` 指向源码目录**（改 `lib/`、`python/` 立即生效）
+- 依赖：`用户提供的原始资产 / 本机工具配置` → **`link:` 指向源码目录**（改 `lib/`、`python/` 立即生效）
 - 激活：`profiles\desktop\cordis.patch.yml` 末尾一条 `insert` 行（id/name = `wenmai-3d-reconstruction`）
 - **没有**同时写进 `dsh.profile.bundles`（两种方式互斥，避免重启后同 id 重复注册）
 - 回滚：删除该 insert 行即可停用；`dsh plugin --profile desktop remove wenmai-3d-reconstruction` 卸载依赖；QA 的 `install-profile.ps1` 会在改动前把 `package.json` / `cordis.patch.yml` / `pnpm-lock.yaml` 备份到 `.backup\<时间戳>\`

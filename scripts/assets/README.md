@@ -4,7 +4,7 @@
 
 ## extract_library.py
 
-从 `C:\Users\WPY11\Desktop\5.html`（Gemini 原始资产文件）里**精确抽行**，生成
+从 `用户提供的原始资产 / 本机工具配置`（Gemini 原始资产文件）里**精确抽行**，生成
 
 `frontend/src/features/heritage-gallery/props/assets/library.gen.ts`
 
@@ -16,10 +16,10 @@
 用法：
 
 ```powershell
-python scripts/assets/extract_library.py
+python scripts/assets/extract_library.py "用户提供的原始器物.html"
 ```
 
-> 注意：`5.html` 是资产来源，路径写在脚本顶部 `SRC`；换机器时改这一行即可。
+> 注意：原始 HTML 由用户提供，未随仓库发布；使用必填参数指定来源文件。可用 `--output` 指定输出路径，默认输出到本项目的资产模块。
 > 原始 HTML 保留不动，不要删。
 
 ## 相关验证脚本

@@ -13,6 +13,7 @@ import requests
 DEFAULT_MODEL = "qwen3-vl:4b-instruct-q4_K_M"
 DEFAULT_BASE_URL = "http://127.0.0.1:11434"
 DEFAULT_TIMEOUT_SECONDS = 180
+DEFAULT_HEALTH_TIMEOUT_SECONDS = 8
 DEFAULT_CONTEXT_TOKENS = 8192
 DEFAULT_IMAGE_LIMIT_BYTES = 20 * 1024 * 1024
 
@@ -290,7 +291,7 @@ class VisionAnalysisService:
             }
 
         try:
-            response = self.session.get(self.tags_url, timeout=3)
+            response = self.session.get(self.tags_url, timeout=DEFAULT_HEALTH_TIMEOUT_SECONDS)
             response.raise_for_status()
             body = response.json()
             models = body.get("models") or []

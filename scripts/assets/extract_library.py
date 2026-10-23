@@ -1,9 +1,15 @@
 """从 5.html 精确抽取 14 件允许器物的建模代码，生成 TS 模块（UTF-8 无 BOM）。"""
+import argparse
 import io
 import re
+from pathlib import Path
 
-SRC = r"C:\Users\WPY11\Desktop\5.html"
-OUT = r"D:\wenmai-huazhang\frontend\src\features\heritage-gallery\props\assets\library.gen.ts"
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("source", type=Path, help="用户提供的原始器物 HTML（原 5.html）")
+parser.add_argument("--output", type=Path, default=Path(__file__).resolve().parents[2] / "frontend/src/features/heritage-gallery/props/assets/library.gen.ts", help="生成的 TS 模块路径")
+args = parser.parse_args()
+SRC = args.source
+OUT = args.output
 
 src = io.open(SRC, encoding="utf-8", errors="replace").read().split("\n")
 
@@ -48,7 +54,7 @@ header = '''// @ts-nocheck
 /**
  * 器物资产库（由 Gemini 的 5.html 精确移植）
  *
- * 来源：C:\\\\Users\\\\WPY11\\\\Desktop\\\\5.html 的 MAT / 纹理生成器 / box / cyl /
+ * 来源：用户提供的器物原型 HTML 中的 MAT / 纹理生成器 / box / cyl /
  * addFlushSpandrel / BUILDERS。只保留用户白名单里的 14 件，另外五件
  * （DIY_A06 / A10 / B05 / C03 / D05）的构建代码根本没有抽进来。
  *
