@@ -244,7 +244,6 @@ wenmai-huazhang/
 ├─ scripts/                 Windows 启动器、素材准备与扩展互动流水线
 ├─ tests/                   后端与交付回归检查
 ├─ tools/                   保留的场景工具与测试查看器
-├─ iCAN_应用方案/            历史赛事资料
 ├─ licenses/                第三方许可文本
 ├─ setup_windows.cmd        首次安装
 ├─ start_windows.cmd        一键启动
@@ -291,6 +290,6 @@ Pages 由 `.github/workflows/pages.yml` 在 `main` 推送时构建，使用 Hash
 
 ## 历史版本与许可
 
-保留 [iCAN v1.0.0 视频与方案 Release](https://github.com/3331083641-prog/wenmai-huazhang/releases/tag/v1.0.0)、原始案例和历史提交。赛事资料用于记录当时版本；既有作品再参赛的资格须由对应组委会确认，仓库不声明已满足。
+保留 [iCAN v1.0.0 视频与方案 Release](https://github.com/3331083641-prog/wenmai-huazhang/releases/tag/v1.0.0)、原始案例和历史提交。[历史文件索引](docs/history/README.md) 记录移出当前发布目录的开发备份；本机赛事工作区不随源码 ZIP 分发。赛事资料用于记录当时版本；既有作品再参赛的资格须由对应组委会确认，仓库不声明已满足。
 
 项目原创代码采用 [MIT](LICENSE)，保留既有 Apache-2.0 声明及 [第三方许可说明](THIRD_PARTY_NOTICES.md)。模型、云端服务与素材按各自条款使用，MIT 不重新授权这些内容；参考图的 AI 来源与使用范围见 [案例来源](docs/examples/reference_sources.md) 和 [素材职责](assets/README.md)。

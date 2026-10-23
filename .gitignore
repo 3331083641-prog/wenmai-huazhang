@@ -75,6 +75,8 @@ venv/
 *.pid
 *.tsbuildinfo
 *.bak[0-9]*
+*.bak_*
+/scripts/tmp_f2map.js
 *.blend[0-9]
 playwright-report/
 test-results/
