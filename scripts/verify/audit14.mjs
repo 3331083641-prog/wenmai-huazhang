@@ -1,0 +1,16 @@
+﻿const PORT = process.env.CDP_PORT || "50315";
+const t = await (await fetch(`http://127.0.0.1:${PORT}/json/list`)).json();
+const page = t.find(x => x.type === "page");
+const ws = new WebSocket(page.webSocketDebuggerUrl);
+let id = 0; const pend = new Map();
+ws.addEventListener("message", e => { const m = JSON.parse(e.data); if (m.id && pend.has(m.id)) { pend.get(m.id)(m); pend.delete(m.id); } });
+await new Promise((r, j) => { ws.addEventListener("open", r, { once: true }); ws.addEventListener("error", j, { once: true }); });
+const send = (method, params = {}) => new Promise(res => { id += 1; pend.set(id, res); ws.send(JSON.stringify({ id, method, params })); });
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const ev = async e => (await send("Runtime.evaluate", { expression: e, awaitPromise: true, returnByValue: true })).result?.result?.value;
+await send("Page.enable"); await send("Runtime.enable");
+await send("Page.navigate", { url: "http://localhost:5173/heritage-gallery" });
+await sleep(14000);
+const audit = await ev(`(typeof window.__wenmaiAudit === 'function') ? window.__wenmaiAudit() : 'NO HOOK'`);
+console.log(JSON.stringify(audit, null, 0));
+ws.close();

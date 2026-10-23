@@ -1,0 +1,515 @@
+{
+ "results": [
+  {
+   "id": "DIY_A01",
+   "name": "胡桃木博古架",
+   "placePoint": [
+    640,
+    680
+   ],
+   "placed": {
+    "key": "diy-mvkjzwln-ouksr",
+    "p": "DIY_A01",
+    "x": 0.392,
+    "y": 0.25,
+    "z": 0.588,
+    "parent": null,
+    "surface": "floor",
+    "state": null
+   },
+   "projected": {
+    "x": 640,
+    "y": 542,
+    "z": 0.936,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 640,
+    "y": 542
+   },
+   "hover": "点击互动 · 胡桃木博古架",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_A02",
+   "name": "云纹玻璃展柜",
+   "placePoint": [
+    640,
+    680
+   ],
+   "placed": {
+    "key": "diy-mvkk04v2-zdsma",
+    "p": "DIY_A02",
+    "x": 0.392,
+    "y": 0.25,
+    "z": 0.588,
+    "parent": null,
+    "surface": "floor",
+    "state": null
+   },
+   "projected": {
+    "x": 640,
+    "y": 572,
+    "z": 0.935,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 640,
+    "y": 572
+   },
+   "hover": "点击互动 · 云纹玻璃展柜",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_A04",
+   "name": "宋式折叠屏风",
+   "placePoint": [
+    640,
+    680
+   ],
+   "placed": {
+    "key": "diy-mvkk0ddw-dty0x",
+    "p": "DIY_A04",
+    "x": 0.392,
+    "y": 0.25,
+    "z": 0.588,
+    "parent": null,
+    "surface": "floor",
+    "state": null
+   },
+   "projected": {
+    "x": 640,
+    "y": 549,
+    "z": 0.936,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 640,
+    "y": 549
+   },
+   "hover": "点击互动 · 宋式折叠屏风",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_A05",
+   "name": "莲花暖光立灯",
+   "placePoint": [
+    640,
+    680
+   ],
+   "placed": {
+    "key": "diy-mvkk0lc6-gyjkp",
+    "p": "DIY_A05",
+    "x": 0.392,
+    "y": 0.25,
+    "z": 0.588,
+    "parent": null,
+    "surface": "floor",
+    "state": null
+   },
+   "projected": {
+    "x": 640,
+    "y": 565,
+    "z": 0.935,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 640,
+    "y": 560
+   },
+   "hover": "点击互动 · 莲花暖光立灯",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_A07",
+   "name": "六方悬挂宫灯",
+   "placePoint": [
+    160,
+    180
+   ],
+   "placed": {
+    "key": "diy-mvkk0tpg-wtzsd",
+    "p": "DIY_A07",
+    "x": 3.415,
+    "y": 2.46,
+    "z": 0.651,
+    "parent": null,
+    "surface": "hang",
+    "state": null
+   },
+   "projected": {
+    "x": 159,
+    "y": 256,
+    "z": 0.937,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 159,
+    "y": 256
+   },
+   "hover": "点击互动 · 六方悬挂宫灯",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_A09",
+   "name": "宋式铜座文化展签架",
+   "placePoint": [
+    640,
+    680
+   ],
+   "placed": {
+    "key": "diy-mvkk11n8-8lk4v",
+    "p": "DIY_A09",
+    "x": 0.392,
+    "y": 0.25,
+    "z": 0.588,
+    "parent": null,
+    "surface": "floor",
+    "state": null
+   },
+   "projected": {
+    "x": 640,
+    "y": 599,
+    "z": 0.935,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 640,
+    "y": 604
+   },
+   "hover": "点击互动 · 宋式铜座文化展签架",
+   "afterClick": {
+    "active": false
+   },
+   "card": "宋式铜座文化展签架",
+   "closed": "closed-by-button",
+   "cardAfter": null,
+   "activate": true
+  },
+  {
+   "id": "DIY_B02",
+   "name": "木版套印工作台",
+   "placePoint": [
+    640,
+    680
+   ],
+   "placed": {
+    "key": "diy-mvkk191k-a7n4i",
+    "p": "DIY_B02",
+    "x": 0.392,
+    "y": 0.25,
+    "z": 0.588,
+    "parent": null,
+    "surface": "floor",
+    "state": null
+   },
+   "projected": {
+    "x": 640,
+    "y": 609,
+    "z": 0.935,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 625,
+    "y": 624
+   },
+   "hover": "点击互动 · 木版套印工作台",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_C02",
+   "name": "彩色丝线陈列架",
+   "carrierKey": "diy-mvkk1gym-3jsyl",
+   "placePoint": [
+    601,
+    347
+   ],
+   "placed": {
+    "key": "diy-mvkk1ic9-9e3ok",
+    "p": "DIY_C02",
+    "x": 0.611,
+    "y": 2.095,
+    "z": 0.478,
+    "parent": "diy-mvkk1gym-3jsyl",
+    "surface": "prop-top",
+    "state": null
+   },
+   "projected": {
+    "x": 601,
+    "y": 307,
+    "z": 0.934,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 596,
+    "y": 302
+   },
+   "hover": "点击互动 · 彩色丝线陈列架",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_D01",
+   "name": "宋式画案与矿物颜料",
+   "placePoint": [
+    640,
+    680
+   ],
+   "placed": {
+    "key": "diy-mvkk1tpt-qux9t",
+    "p": "DIY_D01",
+    "x": 0.392,
+    "y": 0.25,
+    "z": 0.588,
+    "parent": null,
+    "surface": "floor",
+    "state": null
+   },
+   "projected": {
+    "x": 640,
+    "y": 603,
+    "z": 0.935,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 610,
+    "y": 573
+   },
+   "hover": "点击互动 · 宋式画案与矿物颜料",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_D04",
+   "name": "青绿山水微缩摆件",
+   "carrierKey": "diy-mvkk26ev-xw1ys",
+   "placePoint": [
+    601,
+    347
+   ],
+   "placed": {
+    "key": "diy-mvkk27xr-htzgn",
+    "p": "DIY_D04",
+    "x": 0.611,
+    "y": 2.095,
+    "z": 0.478,
+    "parent": "diy-mvkk26ev-xw1ys",
+    "surface": "prop-top",
+    "state": null
+   },
+   "projected": {
+    "x": 601,
+    "y": 345,
+    "z": 0.934,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 601,
+    "y": 345
+   },
+   "hover": "点击互动 · 青绿山水微缩摆件",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_E01",
+   "name": "青花瓷梅瓶",
+   "carrierKey": "diy-mvkk2fxo-cwggw",
+   "placePoint": [
+    601,
+    347
+   ],
+   "placed": {
+    "key": "diy-mvkk2hfq-jty1y",
+    "p": "DIY_E01",
+    "x": 0.611,
+    "y": 2.095,
+    "z": 0.478,
+    "parent": "diy-mvkk2fxo-cwggw",
+    "surface": "prop-top",
+    "state": null
+   },
+   "projected": {
+    "x": 601,
+    "y": 341,
+    "z": 0.934,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 601,
+    "y": 341
+   },
+   "hover": "点击互动 · 青花瓷梅瓶",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_E02",
+   "name": "青花瓷茶具套组",
+   "carrierKey": "diy-mvkk2rwd-q11u5",
+   "placePoint": [
+    601,
+    347
+   ],
+   "placed": {
+    "key": "diy-mvkk2tom-95tyt",
+    "p": "DIY_E02",
+    "x": 0.611,
+    "y": 2.095,
+    "z": 0.478,
+    "parent": "diy-mvkk2rwd-q11u5",
+    "surface": "prop-top",
+    "state": null
+   },
+   "projected": {
+    "x": 601,
+    "y": 356,
+    "z": 0.934,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 606,
+    "y": 351
+   },
+   "hover": "点击互动 · 青花瓷茶具套组",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_E05",
+   "name": "青花瓷文创花灯",
+   "carrierKey": "diy-mvkk36rj-3ib7s",
+   "placePoint": [
+    601,
+    347
+   ],
+   "placed": {
+    "key": "diy-mvkk38nk-nma5t",
+    "p": "DIY_E05",
+    "x": 0.611,
+    "y": 2.095,
+    "z": 0.478,
+    "parent": "diy-mvkk36rj-3ib7s",
+    "surface": "prop-top",
+    "state": null
+   },
+   "projected": {
+    "x": 601,
+    "y": 341,
+    "z": 0.934,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 601,
+    "y": 341
+   },
+   "hover": "点击互动 · 青花瓷文创花灯",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  },
+  {
+   "id": "DIY_F05",
+   "name": "可旋转剪纸走马灯",
+   "carrierKey": "diy-mvkk3l42-klfst",
+   "placePoint": [
+    601,
+    347
+   ],
+   "placed": {
+    "key": "diy-mvkk3msp-ha8ak",
+    "p": "DIY_F05",
+    "x": 0.611,
+    "y": 2.095,
+    "z": 0.478,
+    "parent": "diy-mvkk3l42-klfst",
+    "surface": "prop-top",
+    "state": null
+   },
+   "projected": {
+    "x": 601,
+    "y": 330,
+    "z": 0.934,
+    "inView": true
+   },
+   "hitPoint": {
+    "x": 601,
+    "y": 330
+   },
+   "hover": "点击互动 · 可旋转剪纸走马灯",
+   "afterClick": {
+    "active": true
+   },
+   "afterReset": {
+    "active": false
+   },
+   "activate": true
+  }
+ ],
+ "errors": []
+}

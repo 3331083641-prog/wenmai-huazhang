@@ -1,0 +1,132 @@
+{
+ "file": "attachment-87ad119d4539fc7a18b736d5cecd3d4d.png",
+ "w": 1448,
+ "h": 1086,
+ "bg": [
+  219,
+  235,
+  248
+ ],
+ "coverage_pct": 95.83,
+ "max_width": 0.9993,
+ "hedges_y": [
+  0.2376,
+  0.2873,
+  0.4042,
+  0.4273,
+  0.4972,
+  0.5239,
+  0.5414,
+  0.6197,
+  0.6575,
+  0.6842,
+  0.7035,
+  0.7238,
+  0.7606,
+  0.8029
+ ],
+ "vedges_x": [
+  0.116,
+  0.1326,
+  0.3039,
+  0.3612,
+  0.3819,
+  0.4116,
+  0.4703,
+  0.4855,
+  0.5124,
+  0.5463,
+  0.5587,
+  0.5863,
+  0.6202,
+  0.6961,
+  0.7217,
+  0.8522,
+  0.904,
+  0.9289
+ ],
+ "palette": [
+  {
+   "hex": "#66aef6",
+   "pct": 7.1
+  },
+  {
+   "hex": "#102f6f6",
+   "pct": 6.8
+  },
+  {
+   "hex": "#5aaef6",
+   "pct": 3.8
+  },
+  {
+   "hex": "#f6f6f6",
+   "pct": 1.9
+  },
+  {
+   "hex": "#102f6ea",
+   "pct": 1.9
+  },
+  {
+   "hex": "#72baf6",
+   "pct": 1.7
+  },
+  {
+   "hex": "#66baf6",
+   "pct": 1.0
+  },
+  {
+   "hex": "#102ead2",
+   "pct": 0.9
+  },
+  {
+   "hex": "#8a7266",
+   "pct": 0.9
+  },
+  {
+   "hex": "#4e424e",
+   "pct": 0.9
+  }
+ ]
+}
+
+EXTENT (y, left, right, width) normalised:
+  0.01:0.00/1.00/1.00  0.04:0.00/1.00/1.00  0.06:0.00/1.00/1.00  0.09:0.00/1.00/1.00  0.11:0.00/1.00/1.00  0.14:0.00/1.00/1.00  0.16:0.00/1.00/1.00  0.19:0.00/1.00/1.00  0.21:0.00/1.00/1.00  0.24:0.00/1.00/1.00  0.26:0.00/1.00/1.00  0.29:0.00/1.00/1.00  0.31:0.00/1.00/1.00  0.34:0.00/1.00/1.00  0.36:0.00/1.00/1.00  0.39:0.00/1.00/1.00  0.41:0.00/1.00/1.00  0.44:0.00/1.00/1.00  0.46:0.00/1.00/1.00  0.49:0.00/1.00/1.00
+  0.51:0.00/0.97/0.97  0.54:0.00/0.97/0.97  0.56:0.02/0.97/0.95  0.59:0.02/0.97/0.95  0.61:0.07/1.00/0.93  0.64:0.07/1.00/0.93  0.66:0.00/1.00/1.00  0.69:0.00/1.00/1.00  0.71:0.00/1.00/1.00  0.74:0.00/1.00/1.00  0.76:0.02/1.00/0.98  0.79:0.02/1.00/0.98  0.81:0.00/1.00/1.00  0.84:0.00/1.00/1.00  0.86:0.00/1.00/1.00  0.89:0.00/1.00/1.00  0.91:0.00/1.00/1.00  0.94:0.00/1.00/1.00  0.96:0.00/1.00/1.00  0.99:0.00/1.00/1.00
+
+SKYLINE (top row per column, 48 cols):
+  [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+ZONES  . = background/empty
+  legend: a=sky  b=cloud  c=wall  d=stone  e=tile  f=slate  g=wood  h=wdeep  i=red  j=gold  k=green  l=ink  m=sky2
+  mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmeemmmmmmmmmmmmmmmmmmmmmmmmmmm
+  mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmegmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmeeefffgemmmmmmmmmmmmmmmmmmmmabaaab
+  mmmmmmmmmmmmmmmmmmmmeemmmeeeffffkeggjheemmmmmmmmmmmmmmmmaaaaa.aa
+  mmmmmmmmammmmmmmmmmmffffffffffffgfhhejhggeeemmmmmmmmmmmmmmmmmmmm
+  mmmmmm.bbbbmmmmmmmmefffffffeeeffhhhhhfeeeeeeeeeeegmmmmmmmmmmmmmm
+  mmmm.bbbbbdbammmegggeeekfffhhhhhhhhhhhhhhggeeeeegfemmmmmmmmmmmmm
+  amma.aaabbegeeefffffhhhhhhhhghhhhijgghhhhhhhhhfgeeefeeeeemmmmmmm
+  abaaaaaaaaaefhhhhhhhghhghghgggggjjjjjgghhhhhhlhhhhhhffffmmmmmmmm
+  .aaaaaaaaaa.dfhjihhggjjjgggghiggjggccdjjjjjgghhhhhhhgeeeeemmmmmm
+  mmaaamdmedaadfhjjhgjdjddgjgggjggjgeccdjjjdjjdgjgjgggjdegeemmmmmm
+  mmmmamddfemeeegjehjjjjjjgggghgghhggccdjggjjgjgjjjjjgdmejgdmmmmmm
+  mmmmmjjmeekfhhhefhhhggghhhhhhhhhhhfecdggggggghjgjgeemmejjdmmmmmm
+  mmmmmddmeejjghhfhhhhhhhhhhhhhggfffffedjjjjggghggggggdmejjdaabbba
+  mmammdjgjjjjgkfffffghgghghhghhghhhhhhgdcdjddddjgggggdmejjja.bbbb
+  a.adkgggggggjghhhhhghhhhhhhhhghhhhhhjccefffggggeeeegdaeed.bab...
+  aadjgjghkgjjjjghiihhhhhhgjjjjghhhijgccdfhhhfgggggeeekeeed..eed..
+  .dekedjhhhhgggjgjjhggghggjjjjjhggjjjcdjghhhhgjjddjjjjjggjjdedj..
+  .a..ddgfhfgggggdjgijjggjjdjjjjgjjiijdjgghhhhghhjjjjjjdddjjdddd..
+  ....ddgeegkgggjjjghgjggjgjjjjjgjjgggjggggghjjhjdjjhjhgkhkjdd....
+  ......dkeghgghgggghggghggjjjgjhgghgjjggjhghgjhjjjjgjhekkkjcdc.bb
+  b....efhgjjgghhjjkhhhhhihhhggghgjhhkjegghhggghgjgghggekggjcedbbb
+  bbbaegffkggggggjdgkghhhigjghhgheghgejkgkjhhgghgggggghfhgjjkfdbbb
+  baadeeffgffejegggggegeggjjjjjjhgghjjjedeghheeeejdddfhffeddkfdbbb
+  .ekeeeeeeeedddjjjjjeeeeeeeefffekkkfggedegeeeeddddddddddddddddddb
+  .fffffffffeeeeeddddddddddcdddddddefeedddddddcccdddddddeeeeegggeb
+  amdeefffffffffffffeeeedddddddeedjeeddcdddddddeeeeeegggggggeeddcb
+  bbbbccaddeefffffffffffffffeeeeddddddddeeeeegggggggggeeddccbbbbbb
+  bbbbbbbbbccccddeefffffhfffffffeeeeeggggggggggeedddcbbbbbbbbbbbbb
+  bbbbbbbbbbbbbbbbccaddeeffffffffgggggggeedddccbbbbbbbbbbbbbbbbbbb
+  bbbbbbbbbbbbbbbbbbbbbbcaadeefffgeeddccbbbbbbbbbbbbbbbbbbbbbbbbbb
+  bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb

@@ -1,0 +1,25 @@
+{
+ "rotated": true,
+ "angle": 0.262,
+ "shelfRot": [
+  0,
+  0.262
+ ],
+ "vaseBefore": {
+  "x": 0.611,
+  "z": 0.478,
+  "y": 2.095
+ },
+ "vaseAfter": {
+  "x": 0.611,
+  "z": 0.478,
+  "y": 2.095
+ },
+ "expected": {
+  "x": 0.611,
+  "z": 0.478
+ },
+ "orbitMatches": true,
+ "yPreserved": true,
+ "parentPreserved": true
+}

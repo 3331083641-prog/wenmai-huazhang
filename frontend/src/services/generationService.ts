@@ -83,6 +83,16 @@ export interface GenerateResponse {
   width?: number | null;
   height?: number | null;
   localPath?: string | null;
+  /** 后端自动把本次结果落盘成展厅案例后的回执（未开启或演示模式时为 null）。 */
+  savedCase?: {
+    caseId: string;
+    artworkTitle: string;
+    styleId: string;
+    styleName: string;
+    generatedAt: string;
+    images: { generated: string; reference: string; cultureCard: string };
+  } | null;
+  autoSave?: { enabled: boolean; saved: boolean; error: string | null };
 }
 
 export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
@@ -193,6 +203,9 @@ export async function generateImage(payload: GeneratePayload): Promise<GenerateR
       width: data.width || null,
       height: data.height || null,
       localPath: data.localPath || null,
+      // 后端自动落盘案例的回执：必须透传，否则创作台无法提示「已存入展厅」
+      savedCase: data.savedCase ?? null,
+      autoSave: data.autoSave,
     };
   } catch (error) {
     if (error instanceof ApiResponseError) {

@@ -1,0 +1,60 @@
+{
+  "slug": "jianzhi",
+  "title": "剪影灵狐",
+  "styleName": "中国剪纸",
+  "source": "docs/examples/jianzhi/generated.png",
+  "hotspotsSource": "frontend/src/data/experiences/jianzhi.ts",
+  "hotspots": [
+    {
+      "id": "fox-head",
+      "label": "赤狐头部",
+      "x": 0.75,
+      "y": 0.35,
+      "w": 0,
+      "h": 0,
+      "r": 0.085
+    },
+    {
+      "id": "fox-body",
+      "label": "狐身与毛发镂空",
+      "x": 0.65,
+      "y": 0.55,
+      "w": 0.26,
+      "h": 0.26,
+      "r": 0
+    },
+    {
+      "id": "flower-tl",
+      "label": "花卉环饰（左上）",
+      "x": 0.25,
+      "y": 0.15,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    },
+    {
+      "id": "flower-br",
+      "label": "花卉环饰（右下）",
+      "x": 0.85,
+      "y": 0.75,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    }
+  ],
+  "cutouts": [
+    {
+      "id": "fox",
+      "label": "狐狸剪影",
+      "depth_min": 0.55,
+      "seed": {
+        "x": 0.75,
+        "y": 0.35
+      },
+      "half": {
+        "w": 0.22,
+        "h": 0.22
+      }
+    }
+  ]
+}

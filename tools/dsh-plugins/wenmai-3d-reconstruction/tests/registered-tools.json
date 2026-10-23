@@ -1,0 +1,422 @@
+{
+  "status": "pass",
+  "at": "2026-10-22T10:33:09+08:00",
+  "plugin": {
+    "name": "wenmai-3d-reconstruction",
+    "inject": [
+      "tools"
+    ]
+  },
+  "registeredCount": 17,
+  "contractCount": 17,
+  "missing": [],
+  "extra": [],
+  "tools": [
+    {
+      "name": "wm_analyze_references",
+      "inContract": true,
+      "group": "A",
+      "descriptionLength": 454,
+      "params": [
+        "images",
+        "outDir",
+        "makeContactSheet"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_build_scene_spec",
+      "inContract": true,
+      "group": "A",
+      "descriptionLength": 399,
+      "params": [
+        "observations",
+        "measurementsPath",
+        "outPath"
+      ],
+      "required": [
+        "observations"
+      ],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_match_camera",
+      "inContract": true,
+      "group": "A",
+      "descriptionLength": 381,
+      "params": [
+        "image",
+        "correspondences",
+        "imageSize",
+        "init",
+        "outPath"
+      ],
+      "required": [
+        "image",
+        "correspondences"
+      ],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_validate_multiview",
+      "inContract": true,
+      "group": "A",
+      "descriptionLength": 314,
+      "params": [
+        "specPath",
+        "views",
+        "outPath"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_generate_roof",
+      "inContract": true,
+      "group": "B",
+      "descriptionLength": 909,
+      "params": [
+        "baseBlend",
+        "outBlend",
+        "fromProjectModel",
+        "overwrite",
+        "style",
+        "footprintX",
+        "footprintY",
+        "eaveZ",
+        "ridgeZ",
+        "overhang",
+        "cornerLift",
+        "slopePower",
+        "ridgeHalf",
+        "tileRows",
+        "tileCover",
+        "tileSegments",
+        "tileThickness",
+        "ridgeOrnament",
+        "detail"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_generate_timber",
+      "inContract": true,
+      "group": "B",
+      "descriptionLength": 560,
+      "params": [
+        "baseBlend",
+        "outBlend",
+        "fromProjectModel",
+        "overwrite",
+        "baysX",
+        "baysY",
+        "columnRadius",
+        "f1H",
+        "f2H",
+        "dougongLevels",
+        "rafterSpacing",
+        "detail"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_generate_interior",
+      "inContract": true,
+      "group": "B",
+      "descriptionLength": 825,
+      "params": [
+        "baseBlend",
+        "outBlend",
+        "fromProjectModel",
+        "overwrite",
+        "voidX",
+        "voidY",
+        "corridorWidth",
+        "railingHeight",
+        "stairWidth",
+        "stairRisers",
+        "ceilingStyle",
+        "displayWalls",
+        "lanterns",
+        "detail"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_generate_diorama",
+      "inContract": true,
+      "group": "B",
+      "descriptionLength": 604,
+      "params": [
+        "baseBlend",
+        "outBlend",
+        "fromProjectModel",
+        "overwrite",
+        "baseSize",
+        "plinthHeight",
+        "frieze",
+        "medallion",
+        "paving",
+        "props",
+        "detail"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_export_glb",
+      "inContract": true,
+      "group": "B",
+      "descriptionLength": 364,
+      "params": [
+        "blend",
+        "out",
+        "copyTo",
+        "yUp",
+        "draco"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_capture_views",
+      "inContract": true,
+      "group": "C",
+      "descriptionLength": 439,
+      "params": [
+        "blend",
+        "views",
+        "camerasPath",
+        "width",
+        "height",
+        "samples",
+        "outDir"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_compare_reference",
+      "inContract": true,
+      "group": "C",
+      "descriptionLength": 412,
+      "params": [
+        "reference",
+        "render",
+        "outDir",
+        "align",
+        "cameraPath"
+      ],
+      "required": [
+        "reference",
+        "render"
+      ],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_generate_diff_report",
+      "inContract": true,
+      "group": "C",
+      "descriptionLength": 328,
+      "params": [
+        "comparisons",
+        "comparisonPaths",
+        "outDir",
+        "title"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_propose_geometry_changes",
+      "inContract": true,
+      "group": "C",
+      "descriptionLength": 355,
+      "params": [
+        "comparisonPath",
+        "reportPath",
+        "specPath",
+        "outDir"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_inspect_scene",
+      "inContract": true,
+      "group": "D",
+      "descriptionLength": 365,
+      "params": [
+        "blend",
+        "checks"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_check_art_frames",
+      "inContract": true,
+      "group": "D",
+      "descriptionLength": 309,
+      "params": [
+        "blend",
+        "expected",
+        "layoutPath"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_check_export",
+      "inContract": true,
+      "group": "D",
+      "descriptionLength": 301,
+      "params": [
+        "glb",
+        "profile"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    },
+    {
+      "name": "wm_performance_report",
+      "inContract": true,
+      "group": "D",
+      "descriptionLength": 314,
+      "params": [
+        "blend",
+        "glb",
+        "triangleBudget",
+        "sizeBudgetMb"
+      ],
+      "required": [],
+      "contractParamsMissing": [],
+      "contractRequiredMissing": [],
+      "schemaProblems": [],
+      "hasExecute": true,
+      "hasOutputSchema": true,
+      "hasOutputRender": true,
+      "disposable": false
+    }
+  ],
+  "schemaProblems": {
+    "wm_analyze_references": [],
+    "wm_build_scene_spec": [],
+    "wm_match_camera": [],
+    "wm_validate_multiview": [],
+    "wm_generate_roof": [],
+    "wm_generate_timber": [],
+    "wm_generate_interior": [],
+    "wm_generate_diorama": [],
+    "wm_export_glb": [],
+    "wm_capture_views": [],
+    "wm_compare_reference": [],
+    "wm_generate_diff_report": [],
+    "wm_propose_geometry_changes": [],
+    "wm_inspect_scene": [],
+    "wm_check_art_frames": [],
+    "wm_check_export": [],
+    "wm_performance_report": []
+  },
+  "contractDrift": []
+}

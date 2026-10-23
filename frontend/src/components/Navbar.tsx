@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { name: '首页', path: '/' },
   { name: '风格库', path: '/styles' },
   { name: '真实案例', path: '/gallery' },
+  { name: '纹脉展馆', path: '/heritage-gallery' },
   { name: '智能生成', path: '/creator' },
   { name: '文创转化', path: '/products' },
   { name: '应用场景', path: '/scenarios' },

@@ -1,0 +1,53 @@
+{
+ "lampsPlaced": [
+  {
+   "key": "diy-mvkl2mm7-scmqq",
+   "x": 1.6,
+   "z": 0.376,
+   "y": 0.25
+  },
+  {
+   "key": "diy-mvkl2nsg-4p639",
+   "x": -1.095,
+   "z": 0.376,
+   "y": 0.25
+  }
+ ],
+ "afterLamp1": [
+  {
+   "key": "diy-mvkl2mm7-scmqq",
+   "state": {
+    "active": true
+   }
+  },
+  {
+   "key": "diy-mvkl2nsg-4p639",
+   "state": null
+  }
+ ],
+ "afterLamp2": [
+  {
+   "key": "diy-mvkl2mm7-scmqq",
+   "state": {
+    "active": true
+   }
+  },
+  {
+   "key": "diy-mvkl2nsg-4p639",
+   "state": {
+    "active": true
+   }
+  }
+ ],
+ "editToggle": true,
+ "editButtonText": "完成调整",
+ "stateInEdit": null,
+ "selectedText": "已选中「莲花暖光立灯」",
+ "clickEditPoint": {
+  "x": 700,
+  "y": 567
+ },
+ "stateNormal": {
+  "active": true
+ }
+}

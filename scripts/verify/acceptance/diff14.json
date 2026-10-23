@@ -1,0 +1,266 @@
+[
+ {
+  "id": "A01",
+  "name": "胡桃木博古架",
+  "placeY": 0.25,
+  "surface": "floor",
+  "parent": false,
+  "hoverHint": "点击互动 · 胡桃木博古架",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0,
+  "resetVsBeforeRatio": 0.0,
+  "note": null
+ },
+ {
+  "id": "A02",
+  "name": "云纹玻璃展柜",
+  "placeY": 0.25,
+  "surface": "floor",
+  "parent": false,
+  "hoverHint": "点击互动 · 云纹玻璃展柜",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0716,
+  "resetVsBeforeRatio": 0.0014,
+  "note": null
+ },
+ {
+  "id": "A04",
+  "name": "宋式折叠屏风",
+  "placeY": 0.25,
+  "surface": "floor",
+  "parent": false,
+  "hoverHint": "点击互动 · 宋式折叠屏风",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.1669,
+  "resetVsBeforeRatio": 0.0068,
+  "note": null
+ },
+ {
+  "id": "A05",
+  "name": "莲花暖光立灯",
+  "placeY": 0.25,
+  "surface": "floor",
+  "parent": false,
+  "hoverHint": "点击互动 · 莲花暖光立灯",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0134,
+  "resetVsBeforeRatio": 0.0,
+  "note": null
+ },
+ {
+  "id": "A07",
+  "name": "六方悬挂宫灯",
+  "placeY": 2.46,
+  "surface": "hang",
+  "parent": false,
+  "hoverHint": "点击互动 · 六方悬挂宫灯",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0603,
+  "resetVsBeforeRatio": 0.0026,
+  "note": null
+ },
+ {
+  "id": "A09",
+  "name": "宋式铜座文化展签架",
+  "placeY": 0.25,
+  "surface": "floor",
+  "parent": false,
+  "hoverHint": "点击互动 · 宋式铜座文化展签架",
+  "stateAfterClick": {
+   "active": false
+  },
+  "stateAfterReset": null,
+  "cardAfterClick": "宋式铜座文化展签架",
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.1524,
+  "resetVsBeforeRatio": 0.0,
+  "note": null
+ },
+ {
+  "id": "B02",
+  "name": "木版套印工作台",
+  "placeY": 0.25,
+  "surface": "floor",
+  "parent": false,
+  "hoverHint": "点击互动 · 木版套印工作台",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0022,
+  "resetVsBeforeRatio": 0.0023,
+  "note": null
+ },
+ {
+  "id": "C02",
+  "name": "彩色丝线陈列架",
+  "placeY": 2.095,
+  "surface": "prop-top",
+  "parent": true,
+  "hoverHint": "点击互动 · 彩色丝线陈列架",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0008,
+  "resetVsBeforeRatio": 0.0013,
+  "note": null
+ },
+ {
+  "id": "D01",
+  "name": "宋式画案与矿物颜料",
+  "placeY": 0.25,
+  "surface": "floor",
+  "parent": false,
+  "hoverHint": "点击互动 · 宋式画案与矿物颜料",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0134,
+  "resetVsBeforeRatio": 0.0011,
+  "note": null
+ },
+ {
+  "id": "D04",
+  "name": "青绿山水微缩摆件",
+  "placeY": 2.095,
+  "surface": "prop-top",
+  "parent": true,
+  "hoverHint": "点击互动 · 青绿山水微缩摆件",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0003,
+  "resetVsBeforeRatio": 0.0,
+  "note": null
+ },
+ {
+  "id": "E01",
+  "name": "青花瓷梅瓶",
+  "placeY": 2.095,
+  "surface": "prop-top",
+  "parent": true,
+  "hoverHint": "点击互动 · 青花瓷梅瓶",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0,
+  "resetVsBeforeRatio": 0.0,
+  "note": null
+ },
+ {
+  "id": "E02",
+  "name": "青花瓷茶具套组",
+  "placeY": 2.095,
+  "surface": "prop-top",
+  "parent": true,
+  "hoverHint": "点击互动 · 青花瓷茶具套组",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0012,
+  "resetVsBeforeRatio": 0.0003,
+  "note": null
+ },
+ {
+  "id": "E05",
+  "name": "青花瓷文创花灯",
+  "placeY": 2.095,
+  "surface": "prop-top",
+  "parent": true,
+  "hoverHint": "点击互动 · 青花瓷文创花灯",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0176,
+  "resetVsBeforeRatio": 0.0063,
+  "note": null
+ },
+ {
+  "id": "F05",
+  "name": "可旋转剪纸走马灯",
+  "placeY": 2.095,
+  "surface": "prop-top",
+  "parent": true,
+  "hoverHint": "点击互动 · 可旋转剪纸走马灯",
+  "stateAfterClick": {
+   "active": true
+  },
+  "stateAfterReset": {
+   "active": false
+  },
+  "cardAfterClick": null,
+  "cardAfterClose": null,
+  "pixelChangedRatio": 0.0094,
+  "resetVsBeforeRatio": 0.0149,
+  "note": null
+ }
+]

@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "slug": "bianxiu",
+  "title": "绣兔牡丹",
+  "art": {
+    "file": "art.webp",
+    "width": 1024,
+    "height": 1024,
+    "aspect": 1.0
+  },
+  "depth": {
+    "file": "depth-rg.png",
+    "width": 768,
+    "height": 768,
+    "gamma": 0.72
+  },
+  "backdrop": {
+    "file": "backdrop.webp"
+  },
+  "masks": {
+    "file": "masks.png",
+    "width": 768,
+    "height": 768,
+    "coverage": {
+      "water": 0.1296,
+      "mist": 0.1035,
+      "foliage": 0.2815
+    }
+  },
+  "cutouts": [
+    {
+      "bbox_px": [
+        158,
+        217,
+        444,
+        488
+      ],
+      "bbox_norm": [
+        0.1543,
+        0.2119,
+        0.4336,
+        0.4766
+      ],
+      "alpha_coverage": 0.682,
+      "region_share": 0.1321,
+      "size": [
+        444,
+        488
+      ],
+      "id": "rabbit",
+      "label": "白兔与绣线",
+      "file": "cutout-rabbit.webp",
+      "bytes": 44630
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "rabbit-head",
+      "x": 0.35,
+      "y": 0.45,
+      "depth": 0.7684,
+      "depth_measured": 0.7684,
+      "depth_overridden": false
+    },
+    {
+      "id": "rabbit-body",
+      "x": 0.5493,
+      "y": 0.6494,
+      "depth": 0.865,
+      "depth_measured": 0.865,
+      "depth_overridden": false
+    },
+    {
+      "id": "peony",
+      "x": 0.25,
+      "y": 0.75,
+      "depth": 0.3948,
+      "depth_measured": 0.3948,
+      "depth_overridden": false
+    },
+    {
+      "id": "leaf",
+      "x": 0.75,
+      "y": 0.85,
+      "depth": 0.88,
+      "depth_measured": 0.9145,
+      "depth_overridden": false
+    },
+    {
+      "id": "stitch-field",
+      "x": 0.45,
+      "y": 0.35,
+      "depth": 0.7609,
+      "depth_measured": 0.7609,
+      "depth_overridden": false
+    }
+  ],
+  "camera": {
+    "fov": 34.0,
+    "plane_height": 1.0,
+    "plane_width": 1.0,
+    "distance_fill": 1.6354,
+    "depth_amplitude": 0.3,
+    "yaw_limit_deg": 18.0,
+    "pitch_limit_deg": 12.0,
+    "dolly_near": 0.62,
+    "dolly_far": 1.55,
+    "entry": {
+      "from_scale": 1.74,
+      "duration_ms": 2600
+    }
+  },
+  "provenance": {
+    "depth_model": "depth-anything/Depth-Anything-V2-Small-hf",
+    "depth_generated_at": "2026-10-21T15:39:26",
+    "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
+  }
+}

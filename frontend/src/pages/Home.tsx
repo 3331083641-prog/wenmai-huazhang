@@ -1,6 +1,41 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, BookOpen, PenTool, Layout, Palette, Smartphone } from 'lucide-react';
 import { motion } from 'motion/react';
+import { experienceById } from '../data/experiences';
+
+/**
+ * 首页「进入画里，再看一遍」的三张卡。
+ *
+ * 三张卡的图片一律取自各自作品的成图（experience.artworkUrl，即 docs/examples 下各风格的
+ * generated.png），不做单独配图：一是不能用 frontend/public 里的风格参考图（那是另一套画面，
+ * 会出现「标题写瑞猫、图里却是童子」的错位），二是只有同源同尺寸，三张卡在 16:10 槽位里的
+ * 裁切与视觉大小才完全一致。
+ *
+ * 每张卡的图片、标题、文案、跳转必须指向同一件作品：卡与卡之间也不能重复用同一幅画。
+ */
+const INTERACTIVE_ENTRIES = [
+  {
+    to: '/experience/zhuxianzhen-ruimao',
+    experienceId: 'zhuxianzhen-ruimao',
+    tag: '画中有话',
+    title: '瑞猫迎春',
+    desc: '在年画上点开六处线索，看墨线与套色是怎么把一只猫刻出来的。',
+  },
+  {
+    to: '/story/bianxiu-xiutu',
+    experienceId: 'bianxiu-xiutu',
+    tag: '一图一境',
+    title: '绣兔牡丹',
+    desc: '顺着三折往下读汴绣：一根线怎么当笔用、色阶为什么不是调出来的，以及「宋绣」这个名字从哪里来。',
+  },
+  {
+    to: '/wander/songhua-yunhe',
+    experienceId: 'songhua-yunhe',
+    tag: '画境漫游',
+    title: '走进画里',
+    desc: '推进镜头就进了《云鹤临水楼》：近处松石先掠过、远山慢慢退开，能转头、能前后，还能点开画中线索。',
+  },
+];
 
 const FEATURES = [
   { icon: Palette, title: '传统文化视觉风格库', desc: '围绕朱仙镇木版年画、汴绣、宋画青绿山水、青花瓷纹样与中国剪纸，整理色彩、构图、纹样与视觉语言，为 AI 生成提供结构化风格约束。' },
@@ -104,6 +139,60 @@ export default function Home() {
              <img src={import.meta.env.BASE_URL + src.replace(/^\//, "")} className="w-full h-full object-cover" alt="style thumbnails" />
            </Link>
          ))}
+      </div>
+
+      {/* Interactive Culture Experience Entry */}
+      <div className="mb-24">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="mb-1 text-xs tracking-[0.3em] text-primary/70">纹脉华章 2.0 · 一卷五境</p>
+            <h2 className="font-serif text-2xl md:text-3xl text-ink">进入画里，再看一遍</h2>
+          </div>
+          <Link
+            to="/gallery"
+            className="inline-flex items-center gap-2 text-sm text-primary hover:gap-3 transition-all"
+          >
+            全部互动作品
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {INTERACTIVE_ENTRIES.map((item) => {
+            const experience = experienceById.get(item.experienceId);
+            // 只用作品成图：三张卡因此同源同尺寸，16:10 槽位里的裁切也一致
+            const src = experience?.artworkUrl || '';
+            return (
+              <Link
+                key={item.tag}
+                to={item.to}
+                className="group flex flex-col overflow-hidden rounded-lg border border-primary/15 bg-white/60 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-ink/5">
+                  {src && (
+                    <img
+                      src={src}
+                      alt={`${item.title} · ${experience?.styleName ?? ''}`}
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                  )}
+                  <span className="absolute left-2.5 top-2.5 rounded-sm bg-white/90 px-2 py-0.5 text-[10.5px] tracking-wider text-primary backdrop-blur">
+                    {item.tag}
+                  </span>
+                </div>
+                <div className="flex flex-1 flex-col p-4">
+                  <h3 className="font-serif text-base text-ink">{item.title}</h3>
+                  <p className="mt-1.5 text-[12.5px] leading-relaxed text-ink/60">{item.desc}</p>
+                  <span className="mt-3 inline-flex items-center gap-1.5 text-[12px] text-primary opacity-80 transition group-hover:gap-2.5 group-hover:opacity-100">
+                    走进去
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
       {/* Core Features */}

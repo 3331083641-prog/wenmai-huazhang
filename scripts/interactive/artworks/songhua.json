@@ -1,0 +1,83 @@
+{
+  "slug": "songhua",
+  "title": "云鹤临水楼",
+  "styleName": "宋画青绿山水",
+  "source": "docs/examples/songhua/generated.png",
+  "hotspotsSource": "frontend/src/data/experiences/songhua.ts",
+  "hotspot_depth_overrides": {
+    "crane": 0.42,
+    "mist": 0.34,
+    "pavilion": 0.58
+  },
+  "hotspots": [
+    {
+      "id": "pavilion",
+      "label": "双层楼阁",
+      "x": 0.55,
+      "y": 0.55,
+      "w": 0.22,
+      "h": 0.22,
+      "r": 0
+    },
+    {
+      "id": "crane",
+      "label": "仙鹤",
+      "x": 0.34,
+      "y": 0.25,
+      "w": 0,
+      "h": 0,
+      "r": 0.085
+    },
+    {
+      "id": "mountains",
+      "label": "青绿山峦",
+      "x": 0.145,
+      "y": 0.15,
+      "w": 0.28,
+      "h": 0.24,
+      "r": 0
+    },
+    {
+      "id": "mist",
+      "label": "云雾留白",
+      "x": 0.355,
+      "y": 0.435,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    },
+    {
+      "id": "pine",
+      "label": "松树与坡石",
+      "x": 0.15,
+      "y": 0.75,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    },
+    {
+      "id": "water",
+      "label": "水面与汀岸",
+      "x": 0.75,
+      "y": 0.85,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    }
+  ],
+  "cutouts": [
+    {
+      "id": "pine",
+      "label": "松枝坡石",
+      "depth_min": 0.64,
+      "seed": {
+        "x": 0.15,
+        "y": 0.74
+      },
+      "half": {
+        "w": 0.2,
+        "h": 0.24
+      }
+    }
+  ]
+}

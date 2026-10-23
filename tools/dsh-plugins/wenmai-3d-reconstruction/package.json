@@ -1,0 +1,40 @@
+{
+  "name": "wenmai-3d-reconstruction",
+  "version": "0.1.0",
+  "private": true,
+  "description": "《纹脉华章》heritage-gallery 3D reconstruction plugin for DeepSeek Harness — reference-image analysis, parametric Blender generation, visual matching and scene inspection",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./lib/*": "./lib/*",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "python",
+    "docs",
+    "README.md",
+    "INSTALL.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node ../../../frontend/node_modules/typescript/lib/tsc.js -p tsconfig.json",
+    "test": "node tests/run-unit.mjs",
+    "e2e": "node tests/run-e2e.mjs"
+  },
+  "license": "MIT"
+}

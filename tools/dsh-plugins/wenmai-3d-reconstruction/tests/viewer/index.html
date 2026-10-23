@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>纹脉华章 · 插件 GLB 浏览器验证</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/vendor/three/build/three.module.js",
+          "three/addons/": "/vendor/three/examples/jsm/",
+          "three/src/": "/vendor/three/src/"
+        }
+      }
+    </script>
+    <style>
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #bfd8ef; }
+      #app { position: fixed; inset: 0; }
+      #hud {
+        position: fixed; left: 16px; top: 16px; max-width: 380px;
+        padding: 12px 14px; border-radius: 12px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 6px 24px rgba(20, 40, 60, 0.16);
+        font: 12px/1.55 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+        color: #23303b; pointer-events: none;
+      }
+      #hud h1 { margin: 0 0 6px; font-size: 13px; letter-spacing: 0.02em; }
+      #status { font-weight: 600; }
+      #status.ok { color: #1c6b3a; }
+      #status.err { color: #a3211b; }
+      #stats { margin-top: 6px; color: #43545f; white-space: pre-line; }
+      #error { margin-top: 6px; color: #a3211b; white-space: pre-wrap; }
+      #badge {
+        position: fixed; right: 16px; bottom: 14px; padding: 6px 10px; border-radius: 999px;
+        background: rgba(35, 48, 59, 0.75); color: #fff;
+        font: 11px/1.4 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="hud">
+      <h1>纹脉华章 · 插件 GLB 浏览器验证</h1>
+      <div id="status">加载中…</div>
+      <div id="stats"></div>
+      <div id="error"></div>
+    </div>
+    <div id="badge">three.js · GLTFLoader · 与前端同版本</div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

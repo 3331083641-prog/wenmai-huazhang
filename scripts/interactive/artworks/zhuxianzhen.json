@@ -1,0 +1,78 @@
+{
+  "slug": "zhuxianzhen",
+  "title": "瑞猫迎春",
+  "styleName": "朱仙镇木版年画",
+  "source": "docs/examples/zhuxianzhen/generated.png",
+  "hotspotsSource": "frontend/src/data/experiences/zhuxianzhen.ts",
+  "hotspots": [
+    {
+      "id": "cat-face",
+      "label": "猫的脸部",
+      "x": 0.35,
+      "y": 0.45,
+      "w": 0,
+      "h": 0,
+      "r": 0.085
+    },
+    {
+      "id": "tiger-stripe",
+      "label": "虎斑条纹",
+      "x": 0.55,
+      "y": 0.65,
+      "w": 0.3,
+      "h": 0.28,
+      "r": 0
+    },
+    {
+      "id": "peony",
+      "label": "牡丹花",
+      "x": 0.105,
+      "y": 0.75,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    },
+    {
+      "id": "cloud-motif",
+      "label": "祥云纹",
+      "x": 0.15,
+      "y": 0.15,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    },
+    {
+      "id": "wave-band",
+      "label": "海水纹",
+      "x": 0.75,
+      "y": 0.935,
+      "w": 0.26,
+      "h": 0.12,
+      "r": 0
+    },
+    {
+      "id": "title-banner",
+      "label": "顶部题名横带",
+      "x": 0.75,
+      "y": 0.055,
+      "w": 0.32,
+      "h": 0.1,
+      "r": 0
+    }
+  ],
+  "cutouts": [
+    {
+      "id": "cat",
+      "label": "猫身与虎斑",
+      "depth_min": 0.6,
+      "seed": {
+        "x": 0.35,
+        "y": 0.45
+      },
+      "half": {
+        "w": 0.22,
+        "h": 0.22
+      }
+    }
+  ]
+}

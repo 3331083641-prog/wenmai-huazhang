@@ -11,6 +11,8 @@ from pydantic import BaseModel, Field
 from image_analyzer import analyze_image, get_analysis_mode
 from provider_service import GenerationService
 from style_config import OUTPUT_DIR, STYLE_REFS_DIR, ensure_runtime_dirs
+from case_store import auto_save_enabled, delete_case, list_cases, save_case
+from interactive_jobs import list_jobs, start_interactive_build
 
 
 class GenerateRequest(BaseModel):
@@ -83,4 +85,57 @@ def analyze_image_endpoint(request_body: AnalyzeImageRequest) -> dict[str, objec
 @app.post("/generate")
 def generate(request_body: GenerateRequest, request: Request) -> dict[str, Any]:
     payload = request_body.model_dump() if hasattr(request_body, "model_dump") else request_body.dict()
-    return service.generate(payload, base_url=str(request.base_url))
+    base_url = str(request.base_url)
+    result = service.generate(payload, base_url=base_url)
+
+    # 自动沉淀为展厅可直接展示的案例。
+    # 保存是副作用：任何异常都只记录在响应里，绝不改变已经成功的出图结果。
+    if auto_save_enabled() and isinstance(result, dict) and result.get("success"):
+        try:
+            saved = save_case(payload=payload, response=result, base_url=base_url)
+            result["savedCase"] = saved
+            result["autoSave"] = {"enabled": True, "saved": bool(saved), "error": None}
+            # 落盘之后顺手把「三重互动」也做出来：三折叙事 + 自动热点 + 画境资产。
+            # 深度推理要十几秒，绝不能阻塞这次出图响应，所以丢到后台线程里跑；
+            # 跑完 ingest 会把 metadata.json 的 experienceId 写回去，前端下次加载就能用。
+            if saved and saved.get("caseId"):
+                result["interactiveJob"] = start_interactive_build(str(saved["caseId"]))
+        except Exception as exc:  # noqa: BLE001 - 保存失败不能影响出图
+            result["savedCase"] = None
+            result["autoSave"] = {"enabled": True, "saved": False, "error": f"{type(exc).__name__}: {str(exc)[:160]}"}
+    else:
+        result["savedCase"] = None
+        result["autoSave"] = {"enabled": False, "saved": False, "error": None}
+    return result
+
+
+@app.get("/cases")
+def cases(request: Request) -> dict[str, object]:
+    """展厅用的案例清单：内置五件 + 运行期自动保存的案例，含可直接使用的图片地址。"""
+    items = list_cases(base_url=str(request.base_url))
+    return {
+        "success": True,
+        "count": len(items),
+        "cases": items,
+        "error": None,
+    }
+
+
+@app.get("/interactive-jobs")
+def interactive_jobs() -> dict[str, object]:
+    """出图后自动生成「三折叙事 + 热点 + 画境」的后台任务状态。
+
+    任务跑完会把 experienceId 写进案例的 metadata.json；前端重新构建/重启开发服务器后
+    该案例的卡片上就会出现三个互动入口。
+    """
+    jobs = list_jobs()
+    return {"success": True, "count": len(jobs), "jobs": jobs, "error": None}
+
+
+@app.delete("/cases/{case_id}")
+def remove_case(case_id: str) -> dict[str, object]:
+    """删除运行期案例；内置的真实案例受保护，不允许删除。"""
+    removed = delete_case(case_id)
+    if not removed:
+        raise HTTPException(status_code=400, detail="只能删除运行期自动保存的案例（内置案例受保护）")
+    return {"success": True, "caseId": case_id}

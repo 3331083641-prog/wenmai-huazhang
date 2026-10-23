@@ -1,0 +1,60 @@
+{
+  "slug": "qinghua",
+  "title": "青花蝶韵",
+  "styleName": "青花瓷纹样",
+  "source": "docs/examples/qinghua/generated.png",
+  "hotspotsSource": "frontend/src/data/experiences/qinghua.ts",
+  "hotspots": [
+    {
+      "id": "butterfly-body",
+      "label": "蝴蝶身体",
+      "x": 0.475,
+      "y": 0.45,
+      "w": 0,
+      "h": 0,
+      "r": 0.05
+    },
+    {
+      "id": "left-wing",
+      "label": "左翼纹样",
+      "x": 0.33,
+      "y": 0.45,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    },
+    {
+      "id": "right-wing",
+      "label": "右翼纹样",
+      "x": 0.62,
+      "y": 0.45,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    },
+    {
+      "id": "vine",
+      "label": "缠枝花卉纹",
+      "x": 0.55,
+      "y": 0.75,
+      "w": 0,
+      "h": 0,
+      "r": 0.1
+    }
+  ],
+  "cutouts": [
+    {
+      "id": "butterfly",
+      "label": "青花蝶",
+      "depth_min": 0.55,
+      "seed": {
+        "x": 0.475,
+        "y": 0.45
+      },
+      "half": {
+        "w": 0.26,
+        "h": 0.26
+      }
+    }
+  ]
+}

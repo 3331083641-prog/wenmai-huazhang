@@ -1,0 +1,41 @@
+{
+ "surface": {
+  "shelf": {
+   "key": "diy-mvkl4ch0-1t086",
+   "y": 0.25
+  },
+  "vase": {
+   "y": 2.095,
+   "parent": "diy-mvkl4ch0-1t086",
+   "expectedParent": "diy-mvkl4ch0-1t086",
+   "parentOk": true
+  },
+  "expectedY": 2.095
+ },
+ "rotationFollow": {
+  "rotated": false,
+  "angle": 0,
+  "shelfRotBefore": 0,
+  "shelfRotAfter": 0,
+  "vaseBefore": {
+   "x": 0.611,
+   "z": 0.478
+  },
+  "vaseAfter": {
+   "x": 0.611,
+   "z": 0.478
+  },
+  "expected": {
+   "x": 0.611,
+   "z": 0.478
+  },
+  "matches": true,
+  "yPreserved": true,
+  "parentPreserved": true
+ },
+ "legacy": {
+  "rendered": 2,
+  "errors": [],
+  "panelChip": "器物 · 2"
+ }
+}

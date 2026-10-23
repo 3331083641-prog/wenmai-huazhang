@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "note": "Structured visual observations of the ten 纹脉华章 gallery concept images, transcribed against docs/CONTRACT.md §1. This is the model's reading of the references (envelope + components + confidence), NOT a measurement: the numeric band ratios come from wm_analyze_references and are cross-checked in wm_build_scene_spec.",
+  "sourceImages": [
+    "assets/gallery3d/references/raw/attachment-11f23a89c6a08bd413c5aa743712f581.png",
+    "assets/gallery3d/references/raw/attachment-34905d3a33a77bd6da938ef9c00d9b78.png",
+    "assets/gallery3d/references/raw/attachment-38f07249f28fd543fdc9b33a0c27947e.png",
+    "assets/gallery3d/references/raw/attachment-67aae5499bb8cea99ac9fc0b2ee06510.png",
+    "assets/gallery3d/references/raw/attachment-7384138ca086288207bcf2eb6f328027.png",
+    "assets/gallery3d/references/raw/attachment-7a4b282e0921ee5a92bb4bc0eff6ade0.png",
+    "assets/gallery3d/references/raw/attachment-87ad119d4539fc7a18b736d5cecd3d4d.png",
+    "assets/gallery3d/references/raw/attachment-881293cb4f73a9b26f81c0a9f840be53.png",
+    "assets/gallery3d/references/raw/attachment-8de3260b3a254b441cc12a53818f551d.png",
+    "assets/gallery3d/references/raw/attachment-ecc05f3996aae40c157d60fde807e080.png"
+  ],
+  "envelope": {
+    "baseSize": 16.0,
+    "floor1Z": 0.25,
+    "floor2Z": 3.6,
+    "topZ": 6.55,
+    "eaveZ": 6.15,
+    "ridgeZ": 11.3,
+    "footprintX": 8.4,
+    "footprintZ": 7.5,
+    "hallOffsetZ": 0.55,
+    "baseThickness": 0.65
+  },
+  "frameAnchorCount": 15,
+  "constraints": [
+    "Z up, front faces -Y, plinth geometric centre at the origin, plinth top z = 0 (CONTRACT §1)",
+    "base is 16 x 16 m square; the model must not invent a different base shape",
+    "hall footprint 8.4 x 7.5 m centred at y = +0.55 so the front yard is deeper than the back",
+    "eave z = 6.15 sits just below the wall head z = 6.55; main ridge z = 11.3",
+    "front street depth >= 2.6 m and >= 1.5 m clear on both sides",
+    "the 15 FRAME_F1_* / FRAME_F2_* anchors are a hard dependency of the Three.js gallery and must never be renamed or deleted"
+  ],
+  "components": [
+    {
+      "id": "BASE_PLINTH",
+      "part": "base",
+      "floor": 0,
+      "shape": "square tiered plinth (须弥座) with a stepped front stair",
+      "size": [16.0, 16.0, 0.65],
+      "position": [0, 0, -0.325],
+      "confidence": 0.92,
+      "sourceImage": "attachment-11f23a89c6a08bd413c5aa743712f581.png",
+      "notes": "three visible mouldings; the references show a stone balustrade on the upper edge"
+    },
+    {
+      "id": "BASE_STAIR",
+      "part": "base",
+      "floor": 0,
+      "shape": "central front stair, 5 risers",
+      "size": [3.6, 2.2, 0.65],
+      "position": [0, -9.0, -0.325],
+      "confidence": 0.86,
+      "sourceImage": "attachment-38f07249f28fd543fdc9b33a0c27947e.png"
+    },
+    {
+      "id": "BASE_PAVING",
+      "part": "base",
+      "floor": 0,
+      "shape": "stone paving field around the hall",
+      "size": [15.6, 15.6, 0.02],
+      "position": [0, 0, 0.01],
+      "confidence": 0.9,
+      "sourceImage": "attachment-7a4b282e0921ee5a92bb4bc0eff6ade0.png"
+    },
+    {
+      "id": "WALL_F1",
+      "part": "wall",
+      "floor": 1,
+      "shape": "whitewashed infill walls between columns, 0.16 m thick",
+      "size": [8.4, 7.5, 3.3],
+      "position": [0, 0.55, 1.9],
+      "confidence": 0.88,
+      "sourceImage": "attachment-67aae5499bb8cea99ac9fc0b2ee06510.png"
+    },
+    {
+      "id": "WALL_F2",
+      "part": "wall",
+      "floor": 2,
+      "shape": "upper storey infill, slight batter (收分) toward the top",
+      "size": [8.1, 7.2, 2.95],
+      "position": [0, 0.55, 5.075],
+      "confidence": 0.84,
+      "sourceImage": "attachment-67aae5499bb8cea99ac9fc0b2ee06510.png"
+    },
+    {
+      "id": "TIMBER_COLUMNS_F1",
+      "part": "timber",
+      "floor": 1,
+      "shape": "3 x 3 column grid, round columns r = 0.16 m",
+      "size": [8.4, 7.5, 3.35],
+      "position": [0, 0.55, 1.925],
+      "confidence": 0.9,
+      "sourceImage": "attachment-87ad119d4539fc7a18b736d5cecd3d4d.png"
+    },
+    {
+      "id": "TIMBER_DOUGONG",
+      "part": "timber",
+      "floor": 2,
+      "shape": "two tiers of bracket sets (斗拱) under the eave",
+      "size": [8.4, 7.5, 0.6],
+      "position": [0, 0.55, 6.25],
+      "confidence": 0.72,
+      "sourceImage": "attachment-881293cb4f73a9b26f81c0a9f840be53.png",
+      "notes": "bracket density is the least certain element in the references"
+    },
+    {
+      "id": "ROOF_MAIN",
+      "part": "roof",
+      "floor": 2,
+      "shape": "hip roof (庑殿) with lifted corners (起翘) and a ridge ornament",
+      "size": [11.5, 10.6, 5.15],
+      "position": [0, 0.55, 8.725],
+      "confidence": 0.8,
+      "sourceImage": "attachment-11f23a89c6a08bd413c5aa743712f581.png",
+      "notes": "roof/total height ratio ~0.46 by the envelope; tile courses read as parallel, not radial"
+    },
+    {
+      "id": "ROOF_TILES",
+      "part": "roof",
+      "floor": 2,
+      "shape": "28 tile courses per slope, 26 segments along the slope",
+      "size": [11.5, 10.6, 0.045],
+      "position": [0, 0.55, 8.7],
+      "confidence": 0.66,
+      "sourceImage": "attachment-7a4b282e0921ee5a92bb4bc0eff6ade0.png"
+    },
+    {
+      "id": "FLOOR_01",
+      "part": "floor",
+      "floor": 1,
+      "shape": "ground floor slab at z = 0.25",
+      "size": [14.0, 13.2, 0.12],
+      "position": [0, 0, 0.19],
+      "confidence": 0.94,
+      "sourceImage": "attachment-34905d3a33a77bd6da938ef9c00d9b78.png"
+    },
+    {
+      "id": "FLOOR_02",
+      "part": "floor",
+      "floor": 2,
+      "shape": "upper floor slab at z = 3.60 with a central void",
+      "size": [14.0, 13.2, 0.14],
+      "position": [0, 0, 3.53],
+      "confidence": 0.82,
+      "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png",
+      "notes": "void 5.4 x 4.6 m is visible in two of the ten references"
+    },
+    {
+      "id": "RAIL_02",
+      "part": "railing",
+      "floor": 2,
+      "shape": "void railing with 挂落 tracery, height 1.05 m",
+      "size": [5.4, 4.6, 1.05],
+      "position": [0, 0, 4.125],
+      "confidence": 0.78,
+      "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png"
+    },
+    {
+      "id": "STAIR_INT",
+      "part": "stair",
+      "floor": 1,
+      "shape": "straight run stair to the upper level",
+      "size": [1.8, 4.2, 3.35],
+      "position": [-5.2, -1.4, 1.925],
+      "confidence": 0.7,
+      "sourceImage": "attachment-ecc05f3996aae40c157d60fde807e080.png"
+    },
+    {
+      "id": "INTERIOR_CEILING",
+      "part": "interior",
+      "floor": 1,
+      "shape": "coffered ceiling with exposed beams",
+      "size": [8.4, 7.5, 0.3],
+      "position": [0, 0.55, 3.45],
+      "confidence": 0.6,
+      "sourceImage": "attachment-34905d3a33a77bd6da938ef9c00d9b78.png"
+    },
+    {
+      "id": "INTERIOR_GALWALL",
+      "part": "interior",
+      "floor": 1,
+      "shape": "display partition walls defining the 15 frame bays",
+      "size": [8.0, 0.12, 3.0],
+      "position": [0, 2.0, 1.75],
+      "confidence": 0.55,
+      "sourceImage": "attachment-7384138ca086288207bcf2eb6f328027.png"
+    },
+    {
+      "id": "PROP_LANTERN",
+      "part": "prop",
+      "floor": 0,
+      "shape": "pair of street lanterns flanking the stair",
+      "size": [0.45, 0.45, 0.8],
+      "position": [-2.6, -8.6, 0.4],
+      "confidence": 0.88,
+      "sourceImage": "attachment-ecc05f3996aae40c157d60fde807e080.png"
+    },
+    {
+      "id": "PROP_TREES",
+      "part": "prop",
+      "floor": 0,
+      "shape": "four stylised pines in the side yards",
+      "size": [1.2, 1.2, 3.2],
+      "position": [-9.5, 3.0, 1.6],
+      "confidence": 0.75,
+      "sourceImage": "attachment-7a4b282e0921ee5a92bb4bc0eff6ade0.png"
+    },
+    {
+      "id": "PROP_BAMBOO",
+      "part": "prop",
+      "floor": 0,
+      "shape": "bamboo cluster along the rear wall",
+      "size": [1.0, 1.0, 2.6],
+      "position": [6.0, 7.4, 1.3],
+      "confidence": 0.7,
+      "sourceImage": "attachment-87ad119d4539fc7a18b736d5cecd3d4d.png"
+    },
+    { "id": "FRAME_F1_001", "part": "frame", "floor": 1, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-6.6, 0.55, 1.6], "confidence": 0.8, "sourceImage": "attachment-7384138ca086288207bcf2eb6f328027.png" },
+    { "id": "FRAME_F1_002", "part": "frame", "floor": 1, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-5.3, 0.55, 1.6], "confidence": 0.8, "sourceImage": "attachment-7384138ca086288207bcf2eb6f328027.png" },
+    { "id": "FRAME_F1_003", "part": "frame", "floor": 1, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-4.0, 0.55, 1.6], "confidence": 0.8, "sourceImage": "attachment-7384138ca086288207bcf2eb6f328027.png" },
+    { "id": "FRAME_F1_004", "part": "frame", "floor": 1, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-2.7, 0.55, 1.6], "confidence": 0.8, "sourceImage": "attachment-7384138ca086288207bcf2eb6f328027.png" },
+    { "id": "FRAME_F1_005", "part": "frame", "floor": 1, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-1.4, 0.55, 1.6], "confidence": 0.8, "sourceImage": "attachment-7384138ca086288207bcf2eb6f328027.png" },
+    { "id": "FRAME_F1_006", "part": "frame", "floor": 1, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-0.1, 0.55, 1.6], "confidence": 0.8, "sourceImage": "attachment-7384138ca086288207bcf2eb6f328027.png" },
+    { "id": "FRAME_F1_007", "part": "frame", "floor": 1, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [1.2, 0.55, 1.6], "confidence": 0.8, "sourceImage": "attachment-7384138ca086288207bcf2eb6f328027.png" },
+    { "id": "FRAME_F2_001", "part": "frame", "floor": 2, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-4.6, 0.55, 4.9], "confidence": 0.75, "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png" },
+    { "id": "FRAME_F2_002", "part": "frame", "floor": 2, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-3.3, 0.55, 4.9], "confidence": 0.75, "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png" },
+    { "id": "FRAME_F2_003", "part": "frame", "floor": 2, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-2.0, 0.55, 4.9], "confidence": 0.75, "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png" },
+    { "id": "FRAME_F2_004", "part": "frame", "floor": 2, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [-0.7, 0.55, 4.9], "confidence": 0.75, "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png" },
+    { "id": "FRAME_F2_005", "part": "frame", "floor": 2, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [0.6, 0.55, 4.9], "confidence": 0.75, "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png" },
+    { "id": "FRAME_F2_006", "part": "frame", "floor": 2, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [1.9, 0.55, 4.9], "confidence": 0.75, "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png" },
+    { "id": "FRAME_F2_007", "part": "frame", "floor": 2, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [3.2, 0.55, 4.9], "confidence": 0.75, "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png" },
+    { "id": "FRAME_F2_008", "part": "frame", "floor": 2, "shape": "hanging scroll frame", "size": [1.2, 0.06, 1.8], "position": [4.5, 0.55, 4.9], "confidence": 0.75, "sourceImage": "attachment-8de3260b3a254b441cc12a53818f551d.png" }
+  ],
+  "unknowns": [
+    "street furniture beyond the four pines, bamboo cluster and two lanterns is not visible in the references",
+    "the interior is never shown from inside; the ceiling and partition layout below is a reasonable inference, not a measurement",
+    "colouring of the dougong brackets is ambiguous between painted timber and bare wood"
+  ],
+  "contradictions": [
+    {
+      "id": "background-architecture",
+      "detail": "several references show a second pavilion behind the hall that the 16 m base cannot hold; treat it as scenery, not geometry",
+      "severity": "low"
+    }
+  ]
+}

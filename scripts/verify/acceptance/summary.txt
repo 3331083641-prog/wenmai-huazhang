@@ -1,0 +1,14 @@
+DIY_A01   ok=True  y=0.25   surface=floor      parent=None                 click={'active': True} reset={'active': False}
+DIY_A02   ok=True  y=0.25   surface=floor      parent=None                 click={'active': True} reset={'active': False}
+DIY_A04   ok=True  y=0.25   surface=floor      parent=None                 click={'active': True} reset={'active': False}
+DIY_A05   ok=True  y=0.25   surface=floor      parent=None                 click={'active': True} reset={'active': False}
+DIY_A07   ok=True  y=2.46   surface=hang       parent=None                 click={'active': True} reset={'active': False}
+DIY_A09   ok=True  y=0.25   surface=floor      parent=None                 click={'active': False} reset=None
+DIY_B02   ok=True  y=0.25   surface=floor      parent=None                 click={'active': True} reset={'active': False}
+DIY_C02   ok=True  y=2.095  surface=prop-top   parent=diy-mvkk1gym-3jsyl   click={'active': True} reset={'active': False}
+DIY_D01   ok=True  y=0.25   surface=floor      parent=None                 click={'active': True} reset={'active': False}
+DIY_D04   ok=True  y=2.095  surface=prop-top   parent=diy-mvkk26ev-xw1ys   click={'active': True} reset={'active': False}
+DIY_E01   ok=True  y=2.095  surface=prop-top   parent=diy-mvkk2fxo-cwggw   click={'active': True} reset={'active': False}
+DIY_E02   ok=True  y=2.095  surface=prop-top   parent=diy-mvkk2rwd-q11u5   click={'active': True} reset={'active': False}
+DIY_E05   ok=True  y=2.095  surface=prop-top   parent=diy-mvkk36rj-3ib7s   click={'active': True} reset={'active': False}
+DIY_F05   ok=True  y=2.095  surface=prop-top   parent=diy-mvkk3l42-klfst   click={'active': True} reset={'active': False}

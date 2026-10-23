@@ -1,0 +1,21 @@
+# The wenmai-3d-reconstruction bundle patch.
+#
+# Installed as a profile bundle, this file inserts the plugin row into the
+# composed profile tree. `name` resolves through the profile's node_modules
+# (the package itself); the row id is stable so the user's profile patch can
+# override the config or disable the plugin without touching this file.
+#
+# Verified against DSH 0.2.1-rc.2 patch semantics: a top-level YAML array of
+# loader patch entries (`insert` for new rows, `id`+overrides otherwise).
+- insert:
+    - id: wenmai-3d-reconstruction
+      name: wenmai-3d-reconstruction
+      config:
+        # Only paths inside this root may be read or written. The Blender
+        # executable is the single allowed exception (it is an installed app).
+        projectRoot: 'D:\wenmai-huazhang'
+        blenderExe: 'D:\Codex\blender-5.2.2\blender-5.2.2-windows-x64\blender.exe'
+        # Headless Blender renders can be slow on EEVEE; 30 minutes is a hard
+        # ceiling, the model-visible progress comes from the tool result.
+        timeoutMs: 1800000
+        allowProjectWrites: true

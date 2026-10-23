@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "synthetic": true,
+  "purpose": "Ground-truth pinhole camera for wm_match_camera. The camera below is stated by construction, not measured from a photograph; the pixel coordinates are its exact projections. A correct solve must reach ~0 px reprojection RMS.",
+  "image": "assets/gallery3d/references/raw/attachment-11f23a89c6a08bd413c5aa743712f581.png",
+  "imageSize": [
+    1448,
+    1086
+  ],
+  "groundTruthCamera": {
+    "position": [
+      -22.425,
+      -24.725,
+      10.971
+    ],
+    "target": [
+      0,
+      0.55,
+      5.7
+    ],
+    "lensMm": 35,
+    "sensorWidthMm": 36,
+    "rollDeg": 0,
+    "sensorFit": "HORIZONTAL",
+    "fovDegHorizontal": 54.432,
+    "note": "pixel origin top-left, u right, v down; principal point at image centre"
+  },
+  "expectedRmsPx": 0,
+  "toleranceRmsPx": 2,
+  "correspondences": [
+    {
+      "label": "plinth front-left top",
+      "point3d": [
+        -8,
+        -8,
+        0
+      ],
+      "pixel": [
+        705.453,
+        988.244
+      ]
+    },
+    {
+      "label": "plinth front-right top",
+      "point3d": [
+        8,
+        -8,
+        0
+      ],
+      "pixel": [
+        1206.682,
+        783.099
+      ]
+    },
+    {
+      "label": "plinth back-right top",
+      "point3d": [
+        8,
+        8,
+        0
+      ],
+      "pixel": [
+        755.941,
+        664.479
+      ]
+    },
+    {
+      "label": "plinth back-left top",
+      "point3d": [
+        -8,
+        8,
+        0
+      ],
+      "pixel": [
+        288.616,
+        765.752
+      ]
+    },
+    {
+      "label": "stair foot centre",
+      "point3d": [
+        0,
+        -8,
+        0
+      ],
+      "pixel": [
+        1001.785,
+        866.96
+      ]
+    },
+    {
+      "label": "wall corner front-left @floor1",
+      "point3d": [
+        -4.2,
+        -3.2,
+        0.25
+      ],
+      "pixel": [
+        692.855,
+        840.986
+      ]
+    },
+    {
+      "label": "wall corner front-right @floor1",
+      "point3d": [
+        4.2,
+        -3.2,
+        0.25
+      ],
+      "pixel": [
+        950.338,
+        759.575
+      ]
+    },
+    {
+      "label": "wall corner back-left @floor1",
+      "point3d": [
+        -4.2,
+        4.3,
+        0.25
+      ],
+      "pixel": [
+        497.887,
+        759.141
+      ]
+    },
+    {
+      "label": "wall corner back-right @floor1",
+      "point3d": [
+        4.2,
+        4.3,
+        0.25
+      ],
+      "pixel": [
+        746.66,
+        699.969
+      ]
+    },
+    {
+      "label": "wall corner front-left @wall head",
+      "point3d": [
+        -4.2,
+        -3.2,
+        6.55
+      ],
+      "pixel": [
+        691.796,
+        544.092
+      ]
+    },
+    {
+      "label": "wall corner front-right @wall head",
+      "point3d": [
+        4.2,
+        -3.2,
+        6.55
+      ],
+      "pixel": [
+        956.793,
+        508.389
+      ]
+    },
+    {
+      "label": "eave centre",
+      "point3d": [
+        0,
+        0.55,
+        6.15
+      ],
+      "pixel": [
+        724,
+        524.66
+      ]
+    },
+    {
+      "label": "ridge left",
+      "point3d": [
+        -1.35,
+        0.55,
+        11.3
+      ],
+      "pixel": [
+        680.19,
+        308.945
+      ]
+    },
+    {
+      "label": "ridge right",
+      "point3d": [
+        1.35,
+        0.55,
+        11.3
+      ],
+      "pixel": [
+        765.543,
+        309.693
+      ]
+    }
+  ]
+}

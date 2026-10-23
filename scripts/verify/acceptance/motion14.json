@@ -1,0 +1,355 @@
+[
+ {
+  "id": "DIY_A01",
+  "name": "胡桃木博古架",
+  "placed": {
+   "key": "diy-mvkkefrz-rercs",
+   "p": "DIY_A01",
+   "x": 0.392,
+   "y": 0.25,
+   "z": 0.588,
+   "surface": "floor"
+  },
+  "parts": 11,
+  "changedAtActivation": [
+   {
+    "name": "Cabinet_Door_L",
+    "delta": 0.371
+   },
+   {
+    "name": "Cabinet_Door_R",
+    "delta": 0.371
+   },
+   {
+    "name": "Drawer_Right",
+    "delta": 0.13
+   },
+   {
+    "name": "Drawer_Left",
+    "delta": 0.106
+   }
+  ],
+  "changedCount": 4,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_A02",
+  "name": "云纹玻璃展柜",
+  "placed": {
+   "key": "diy-mvkkekpa-nchwh",
+   "p": "DIY_A02",
+   "x": 0.392,
+   "y": 0.25,
+   "z": 0.588,
+   "surface": "floor"
+  },
+  "parts": 3,
+  "changedAtActivation": [
+   {
+    "name": "Glass_Hood_Liftable",
+    "delta": 0.2112
+   }
+  ],
+  "changedCount": 1,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_A04",
+  "name": "宋式折叠屏风",
+  "placed": {
+   "key": "diy-mvkkepuv-idrym",
+   "p": "DIY_A04",
+   "x": 0.392,
+   "y": 0.25,
+   "z": 0.588,
+   "surface": "floor"
+  },
+  "parts": 5,
+  "changedAtActivation": [
+   {
+    "name": "Screen_Leaf_01",
+    "delta": 0.1212
+   },
+   {
+    "name": "Screen_Leaf_02",
+    "delta": 0.1212
+   },
+   {
+    "name": "Screen_Leaf_03",
+    "delta": 0.1212
+   },
+   {
+    "name": "Screen_Leaf_04",
+    "delta": 0.1212
+   }
+  ],
+  "changedCount": 4,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_A05",
+  "name": "莲花暖光立灯",
+  "placed": {
+   "key": "diy-mvkkeunb-g7kt7",
+   "p": "DIY_A05",
+   "x": 0.392,
+   "y": 0.25,
+   "z": 0.588,
+   "surface": "floor"
+  },
+  "parts": 4,
+  "changedAtActivation": [
+   {
+    "name": "Jade_Tassel_Switch",
+    "delta": 0.0878
+   }
+  ],
+  "changedCount": 1,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_A07",
+  "name": "六方悬挂宫灯",
+  "placed": {
+   "key": "diy-mvkkf02d-4cboc",
+   "p": "DIY_A07",
+   "x": 3.415,
+   "y": 2.46,
+   "z": 0.651,
+   "surface": "hang"
+  },
+  "parts": 5,
+  "changedAtActivation": [
+   {
+    "name": "Lantern_Body_Pivot",
+    "delta": 0.2362
+   },
+   {
+    "name": "Bottom_Tassels_Group",
+    "delta": 0.0498
+   }
+  ],
+  "changedCount": 2,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_A09",
+  "name": "宋式铜座文化展签架",
+  "placed": {
+   "key": "diy-mvkkf580-9aws2",
+   "p": "DIY_A09",
+   "x": 0.392,
+   "y": 0.25,
+   "z": 0.588,
+   "surface": "floor"
+  },
+  "parts": 4,
+  "changedAtActivation": [],
+  "changedCount": 0
+ },
+ {
+  "id": "DIY_B02",
+  "name": "木版套印工作台",
+  "placed": {
+   "key": "diy-mvkkf91u-6v6rl",
+   "p": "DIY_B02",
+   "x": 0.392,
+   "y": 0.25,
+   "z": 0.588,
+   "surface": "floor"
+  },
+  "parts": 4,
+  "changedAtActivation": [],
+  "changedCount": 0,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_C02",
+  "name": "彩色丝线陈列架",
+  "placed": {
+   "key": "diy-mvkkfgvu-9hzoz",
+   "p": "DIY_C02",
+   "x": 0.611,
+   "y": 2.095,
+   "z": 0.478,
+   "surface": "prop-top"
+  },
+  "parts": 5,
+  "changedAtActivation": [
+   {
+    "name": "Spool_Row_1",
+    "delta": 0.243
+   },
+   {
+    "name": "Spool_Row_2",
+    "delta": 0.243
+   },
+   {
+    "name": "Spool_Row_3",
+    "delta": 0.243
+   },
+   {
+    "name": "Spool_Row_4",
+    "delta": 0.243
+   }
+  ],
+  "changedCount": 4,
+  "changedAfterReset": [
+   {
+    "name": "Spool_Row_1",
+    "delta": 0.1252
+   },
+   {
+    "name": "Spool_Row_2",
+    "delta": 0.1252
+   },
+   {
+    "name": "Spool_Row_3",
+    "delta": 0.1252
+   },
+   {
+    "name": "Spool_Row_4",
+    "delta": 0.1252
+   }
+  ],
+  "resetDelta": 0.1252
+ },
+ {
+  "id": "DIY_D01",
+  "name": "宋式画案与矿物颜料",
+  "placed": {
+   "key": "diy-mvkkfo4y-uq5g6",
+   "p": "DIY_D01",
+   "x": 0.392,
+   "y": 0.25,
+   "z": 0.588,
+   "surface": "floor"
+  },
+  "parts": 6,
+  "changedAtActivation": [
+   {
+    "name": "Mineral_Box_Lid",
+    "delta": 0.5792
+   }
+  ],
+  "changedCount": 1,
+  "changedAfterReset": [
+   {
+    "name": "Mineral_Box_Lid",
+    "delta": 0.1132
+   }
+  ],
+  "resetDelta": 0.1132
+ },
+ {
+  "id": "DIY_D04",
+  "name": "青绿山水微缩摆件",
+  "placed": {
+   "key": "diy-mvkkfwpc-caox9",
+   "p": "DIY_D04",
+   "x": 0.611,
+   "y": 2.095,
+   "z": 0.478,
+   "surface": "prop-top"
+  },
+  "parts": 6,
+  "changedAtActivation": [
+   {
+    "name": "Cloud_Mist_Layer",
+    "delta": 0.0198
+   }
+  ],
+  "changedCount": 1,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_E01",
+  "name": "青花瓷梅瓶",
+  "placed": {
+   "key": "diy-mvkkg2tb-0sesq",
+   "p": "DIY_E01",
+   "x": 0.611,
+   "y": 2.095,
+   "z": 0.478,
+   "surface": "prop-top"
+  },
+  "parts": 6,
+  "changedAtActivation": [
+   {
+    "name": "Vase_Spin_Pivot",
+    "delta": 0.45
+   }
+  ],
+  "changedCount": 1,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_E02",
+  "name": "青花瓷茶具套组",
+  "placed": {
+   "key": "diy-mvkkg9a3-ncoaq",
+   "p": "DIY_E02",
+   "x": 0.611,
+   "y": 2.095,
+   "z": 0.478,
+   "surface": "prop-top"
+  },
+  "parts": 7,
+  "changedAtActivation": [
+   {
+    "name": "Teapot_Lid_Liftable",
+    "delta": 0.0436
+   }
+  ],
+  "changedCount": 1,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_E05",
+  "name": "青花瓷文创花灯",
+  "placed": {
+   "key": "diy-mvkkgfyp-nonsi",
+   "p": "DIY_E05",
+   "x": 0.611,
+   "y": 2.095,
+   "z": 0.478,
+   "surface": "prop-top"
+  },
+  "parts": 4,
+  "changedAtActivation": [],
+  "changedCount": 0,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ },
+ {
+  "id": "DIY_F05",
+  "name": "可旋转剪纸走马灯",
+  "placed": {
+   "key": "diy-mvkkgmqy-095ei",
+   "p": "DIY_F05",
+   "x": 0.611,
+   "y": 2.095,
+   "z": 0.478,
+   "surface": "prop-top"
+  },
+  "parts": 4,
+  "changedAtActivation": [
+   {
+    "name": "Revolving_Papercut_Cage",
+    "delta": 0.6615
+   }
+  ],
+  "changedCount": 1,
+  "changedAfterReset": [],
+  "resetDelta": 0
+ }
+]

@@ -1,0 +1,804 @@
+{
+ "schema": 2,
+ "generatedBy": "assets/gallery3d/scripts/v5/build_v5.py",
+ "units": "metre",
+ "up": "Y (three.js), converted from Blender Z-up",
+ "envelope": {
+  "min": [
+   -7.99,
+   -0.4,
+   -7.99
+  ],
+  "max": [
+   7.99,
+   12.3,
+   7.99
+  ],
+  "baseSize": 16.0,
+  "baseThickness": 0.65,
+  "floor1Z": 0.25,
+  "floor2Z": 3.6,
+  "floor1Height": 3.35,
+  "floor2Height": 2.95,
+  "topZ": 6.55,
+  "eaveZ": 6.15,
+  "ridgeZ": 11.3,
+  "footprintX": 8.4,
+  "footprintZ": 7.5,
+  "hallOffsetZ": 0.55,
+  "triangles": 194434
+ },
+ "walls": [
+  {
+   "id": "f1-back",
+   "floor": 1,
+   "center": [
+    -0.5025,
+    1.925,
+    4.14
+   ],
+   "rotationY": 3.1416,
+   "size": [
+    2.885,
+    3.35
+   ],
+   "label": "一层 · 后墙"
+  },
+  {
+   "id": "f1-front-right",
+   "floor": 1,
+   "center": [
+    1.4725,
+    1.925,
+    -3.04
+   ],
+   "rotationY": 0.0,
+   "size": [
+    0.945,
+    3.35
+   ],
+   "label": "一层 · 前墙右段"
+  },
+  {
+   "id": "f1-left-mid",
+   "floor": 1,
+   "center": [
+    -4.04,
+    1.925,
+    0.55
+   ],
+   "rotationY": 1.5708,
+   "size": [
+    1.75,
+    3.35
+   ],
+   "label": "一层 · 左墙中段"
+  },
+  {
+   "id": "f1-left-rear",
+   "floor": 1,
+   "center": [
+    -4.04,
+    1.925,
+    3.4575
+   ],
+   "rotationY": 1.5708,
+   "size": [
+    1.365,
+    3.35
+   ],
+   "label": "一层 · 左墙后段"
+  },
+  {
+   "id": "f1-right-front",
+   "floor": 1,
+   "center": [
+    4.04,
+    1.925,
+    -2.3575
+   ],
+   "rotationY": -1.5708,
+   "size": [
+    1.365,
+    3.35
+   ],
+   "label": "一层 · 右墙前段"
+  },
+  {
+   "id": "f1-right-mid",
+   "floor": 1,
+   "center": [
+    4.04,
+    1.925,
+    0.55
+   ],
+   "rotationY": -1.5708,
+   "size": [
+    1.75,
+    3.35
+   ],
+   "label": "一层 · 右墙中段"
+  },
+  {
+   "id": "f2-back",
+   "floor": 2,
+   "center": [
+    0.0,
+    5.075,
+    4.14
+   ],
+   "rotationY": 3.1416,
+   "size": [
+    3.89,
+    2.95
+   ],
+   "label": "二层 · 后墙"
+  },
+  {
+   "id": "f2-left-front",
+   "floor": 2,
+   "center": [
+    -4.04,
+    5.075,
+    -2.3575
+   ],
+   "rotationY": 1.5708,
+   "size": [
+    1.365,
+    2.95
+   ],
+   "label": "二层 · 左墙前段"
+  },
+  {
+   "id": "f2-left-mid",
+   "floor": 2,
+   "center": [
+    -4.04,
+    5.075,
+    0.55
+   ],
+   "rotationY": 1.5708,
+   "size": [
+    1.75,
+    2.95
+   ],
+   "label": "二层 · 左墙中段"
+  },
+  {
+   "id": "f2-left-rear",
+   "floor": 2,
+   "center": [
+    -4.04,
+    5.075,
+    3.4575
+   ],
+   "rotationY": 1.5708,
+   "size": [
+    1.365,
+    2.95
+   ],
+   "label": "二层 · 左墙后段"
+  },
+  {
+   "id": "f2-right-front",
+   "floor": 2,
+   "center": [
+    4.04,
+    5.075,
+    -2.3575
+   ],
+   "rotationY": -1.5708,
+   "size": [
+    1.365,
+    2.95
+   ],
+   "label": "二层 · 右墙前段"
+  },
+  {
+   "id": "f2-right-mid",
+   "floor": 2,
+   "center": [
+    4.04,
+    5.075,
+    0.3375
+   ],
+   "rotationY": -1.5708,
+   "size": [
+    1.325,
+    2.95
+   ],
+   "label": "二层 · 右墙中段"
+  }
+ ],
+ "frames": [
+  {
+   "id": "FRAME_F1_001",
+   "floor": 1,
+   "index": 1,
+   "position": [
+    -1.3025,
+    1.75,
+    4.14
+   ],
+   "rotationY": 3.1416,
+   "wallId": "f1-back",
+   "group": "back",
+   "size": [
+    1.0,
+    0.8
+   ],
+   "u": 0.2227,
+   "v": 0.4478,
+   "label": "一层 · 后墙 · 左",
+   "rotZ": 0.0,
+   "wallSize": [
+    2.885,
+    3.35
+   ]
+  },
+  {
+   "id": "FRAME_F1_002",
+   "floor": 1,
+   "index": 2,
+   "position": [
+    -0.0525,
+    1.75,
+    4.14
+   ],
+   "rotationY": 3.1416,
+   "wallId": "f1-back",
+   "group": "back",
+   "size": [
+    1.0,
+    0.8
+   ],
+   "u": 0.656,
+   "v": 0.4478,
+   "label": "一层 · 后墙 · 右",
+   "rotZ": 0.0,
+   "wallSize": [
+    2.885,
+    3.35
+   ]
+  },
+  {
+   "id": "FRAME_F1_003",
+   "floor": 1,
+   "index": 3,
+   "position": [
+    -4.04,
+    1.75,
+    0.55
+   ],
+   "rotationY": 1.5708,
+   "wallId": "f1-left-mid",
+   "group": "left-mid",
+   "size": [
+    0.86,
+    1.14
+   ],
+   "u": 0.5,
+   "v": 0.4478,
+   "label": "一层 · 左墙 · 中",
+   "rotZ": -1.5708,
+   "wallSize": [
+    1.75,
+    3.35
+   ]
+  },
+  {
+   "id": "FRAME_F1_004",
+   "floor": 1,
+   "index": 4,
+   "position": [
+    -4.04,
+    1.75,
+    3.3475
+   ],
+   "rotationY": 1.5708,
+   "wallId": "f1-left-rear",
+   "group": "left-rear",
+   "size": [
+    0.86,
+    1.14
+   ],
+   "u": 0.4194,
+   "v": 0.4478,
+   "label": "一层 · 左墙 · 后",
+   "rotZ": -1.5708,
+   "wallSize": [
+    1.365,
+    3.35
+   ]
+  },
+  {
+   "id": "FRAME_F1_005",
+   "floor": 1,
+   "index": 5,
+   "position": [
+    4.04,
+    1.75,
+    0.55
+   ],
+   "rotationY": -1.5708,
+   "wallId": "f1-right-mid",
+   "group": "right-mid",
+   "size": [
+    0.86,
+    1.14
+   ],
+   "u": 0.5,
+   "v": 0.4478,
+   "label": "一层 · 右墙 · 中",
+   "rotZ": 1.5708,
+   "wallSize": [
+    1.75,
+    3.35
+   ]
+  },
+  {
+   "id": "FRAME_F1_006",
+   "floor": 1,
+   "index": 6,
+   "position": [
+    4.04,
+    1.75,
+    -2.4675
+   ],
+   "rotationY": -1.5708,
+   "wallId": "f1-right-front",
+   "group": "right-front",
+   "size": [
+    0.86,
+    1.14
+   ],
+   "u": 0.5806,
+   "v": 0.4478,
+   "label": "一层 · 右墙 · 前",
+   "rotZ": 1.5708,
+   "wallSize": [
+    1.365,
+    3.35
+   ]
+  },
+  {
+   "id": "FRAME_F1_007",
+   "floor": 1,
+   "index": 7,
+   "position": [
+    1.4725,
+    1.72,
+    -3.04
+   ],
+   "rotationY": 0.0,
+   "wallId": "f1-front-right",
+   "group": "front-right",
+   "size": [
+    0.84,
+    0.68
+   ],
+   "u": 0.5,
+   "v": 0.4388,
+   "label": "一层 · 前墙 · 入口",
+   "rotZ": 3.1416,
+   "wallSize": [
+    0.945,
+    3.35
+   ]
+  },
+  {
+   "id": "FRAME_F2_001",
+   "floor": 2,
+   "index": 1,
+   "position": [
+    -1.32,
+    5.15,
+    4.14
+   ],
+   "rotationY": 3.1416,
+   "wallId": "f2-back",
+   "group": "back",
+   "size": [
+    0.82,
+    0.66
+   ],
+   "u": 0.1607,
+   "v": 0.4915,
+   "label": "二层 · 后墙 · 左",
+   "rotZ": 0.0,
+   "wallSize": [
+    3.89,
+    2.95
+   ]
+  },
+  {
+   "id": "FRAME_F2_002",
+   "floor": 2,
+   "index": 2,
+   "position": [
+    0.0,
+    5.15,
+    4.14
+   ],
+   "rotationY": 3.1416,
+   "wallId": "f2-back",
+   "group": "back",
+   "size": [
+    1.25,
+    0.92
+   ],
+   "u": 0.5,
+   "v": 0.4915,
+   "label": "二层 · 后墙 · 中",
+   "rotZ": 0.0,
+   "wallSize": [
+    3.89,
+    2.95
+   ]
+  },
+  {
+   "id": "FRAME_F2_003",
+   "floor": 2,
+   "index": 3,
+   "position": [
+    1.32,
+    5.15,
+    4.14
+   ],
+   "rotationY": 3.1416,
+   "wallId": "f2-back",
+   "group": "back",
+   "size": [
+    0.82,
+    0.66
+   ],
+   "u": 0.8393,
+   "v": 0.4915,
+   "label": "二层 · 后墙 · 右",
+   "rotZ": 0.0,
+   "wallSize": [
+    3.89,
+    2.95
+   ]
+  },
+  {
+   "id": "FRAME_F2_004",
+   "floor": 2,
+   "index": 4,
+   "position": [
+    -4.04,
+    5.15,
+    0.55
+   ],
+   "rotationY": 1.5708,
+   "wallId": "f2-left-mid",
+   "group": "left-mid",
+   "size": [
+    0.85,
+    1.1
+   ],
+   "u": 0.5,
+   "v": 0.4915,
+   "label": "二层 · 左墙 · 中",
+   "rotZ": -1.5708,
+   "wallSize": [
+    1.75,
+    2.95
+   ]
+  },
+  {
+   "id": "FRAME_F2_005",
+   "floor": 2,
+   "index": 5,
+   "position": [
+    -4.04,
+    5.15,
+    3.3475
+   ],
+   "rotationY": 1.5708,
+   "wallId": "f2-left-rear",
+   "group": "left-rear",
+   "size": [
+    0.85,
+    1.1
+   ],
+   "u": 0.4194,
+   "v": 0.4915,
+   "label": "二层 · 左墙 · 后",
+   "rotZ": -1.5708,
+   "wallSize": [
+    1.365,
+    2.95
+   ]
+  },
+  {
+   "id": "FRAME_F2_006",
+   "floor": 2,
+   "index": 6,
+   "position": [
+    -4.04,
+    5.15,
+    -2.2475
+   ],
+   "rotationY": 1.5708,
+   "wallId": "f2-left-front",
+   "group": "left-front",
+   "size": [
+    0.85,
+    1.1
+   ],
+   "u": 0.5806,
+   "v": 0.4915,
+   "label": "二层 · 左墙 · 前",
+   "rotZ": -1.5708,
+   "wallSize": [
+    1.365,
+    2.95
+   ]
+  },
+  {
+   "id": "FRAME_F2_007",
+   "floor": 2,
+   "index": 7,
+   "position": [
+    4.04,
+    5.15,
+    0.4975
+   ],
+   "rotationY": -1.5708,
+   "wallId": "f2-right-mid",
+   "group": "right-mid",
+   "size": [
+    0.85,
+    1.1
+   ],
+   "u": 0.3792,
+   "v": 0.4915,
+   "label": "二层 · 右墙 · 中",
+   "rotZ": 1.5708,
+   "wallSize": [
+    1.325,
+    2.95
+   ]
+  },
+  {
+   "id": "FRAME_F2_008",
+   "floor": 2,
+   "index": 8,
+   "position": [
+    4.04,
+    5.15,
+    -2.4675
+   ],
+   "rotationY": -1.5708,
+   "wallId": "f2-right-front",
+   "group": "right-front",
+   "size": [
+    0.85,
+    1.1
+   ],
+   "u": 0.5806,
+   "v": 0.4915,
+   "label": "二层 · 右墙 · 前",
+   "rotZ": 1.5708,
+   "wallSize": [
+    1.365,
+    2.95
+   ]
+  }
+ ],
+ "cameras": [
+  {
+   "id": "back",
+   "position": [
+    12.5,
+    9.6,
+    32.55
+   ],
+   "target": [
+    0.0,
+    4.4,
+    0.95
+   ],
+   "lens": 42.0,
+   "sensor": 36.0,
+   "fov": 46.4
+  },
+  {
+   "id": "baselow",
+   "position": [
+    6.6,
+    -1.35,
+    -14.4
+   ],
+   "target": [
+    0.6,
+    0.55,
+    -1.2
+   ],
+   "lens": 40.0,
+   "sensor": 36.0,
+   "fov": 48.46
+  },
+  {
+   "id": "ceiling",
+   "position": [
+    2.2,
+    5.22,
+    -0.45
+   ],
+   "target": [
+    0.0,
+    9.95,
+    0.85
+   ],
+   "lens": 20.0,
+   "sensor": 36.0,
+   "fov": 83.97
+  },
+  {
+   "id": "corner",
+   "position": [
+    9.8,
+    3.6,
+    -8.85
+   ],
+   "target": [
+    4.4,
+    2.4,
+    -0.05
+   ],
+   "lens": 44.0,
+   "sensor": 36.0,
+   "fov": 44.5
+  },
+  {
+   "id": "eave",
+   "position": [
+    9.4,
+    6.8,
+    -10.4
+   ],
+   "target": [
+    3.348,
+    7.65,
+    -3.65
+   ],
+   "lens": 52.0,
+   "sensor": 36.0,
+   "fov": 38.19
+  },
+  {
+   "id": "f1",
+   "position": [
+    0.0,
+    1.87,
+    -2.5
+   ],
+   "target": [
+    0.0,
+    1.97,
+    3.15
+   ],
+   "lens": 17.0,
+   "sensor": 36.0,
+   "fov": 93.27
+  },
+  {
+   "id": "f2",
+   "position": [
+    -0.9,
+    5.18,
+    -2.2
+   ],
+   "target": [
+    0.9,
+    4.65,
+    3.55
+   ],
+   "lens": 18.0,
+   "sensor": 36.0,
+   "fov": 90.0
+  },
+  {
+   "id": "front",
+   "position": [
+    0.0,
+    7.6,
+    -36.0
+   ],
+   "target": [
+    0.0,
+    4.7,
+    0.15
+   ],
+   "lens": 42.0,
+   "sensor": 36.0,
+   "fov": 46.4
+  },
+  {
+   "id": "front34",
+   "position": [
+    20.6,
+    9.4,
+    -22.8
+   ],
+   "target": [
+    0.0,
+    4.0,
+    -0.15
+   ],
+   "lens": 42.0,
+   "sensor": 36.0,
+   "fov": 46.4
+  },
+  {
+   "id": "left",
+   "position": [
+    -33.5,
+    8.6,
+    -7.95
+   ],
+   "target": [
+    0.0,
+    4.6,
+    -0.0
+   ],
+   "lens": 42.0,
+   "sensor": 36.0,
+   "fov": 46.4
+  },
+  {
+   "id": "low34",
+   "position": [
+    15.2,
+    3.1,
+    -17.0
+   ],
+   "target": [
+    0.0,
+    4.4,
+    -0.25
+   ],
+   "lens": 46.0,
+   "sensor": 36.0,
+   "fov": 42.74
+  },
+  {
+   "id": "right",
+   "position": [
+    33.5,
+    8.6,
+    -7.95
+   ],
+   "target": [
+    0.0,
+    4.6,
+    -0.0
+   ],
+   "lens": 42.0,
+   "sensor": 36.0,
+   "fov": 46.4
+  },
+  {
+   "id": "top",
+   "position": [
+    13.0,
+    34.0,
+    -13.45
+   ],
+   "target": [
+    0.0,
+    1.4,
+    0.55
+   ],
+   "lens": 40.0,
+   "sensor": 36.0,
+   "fov": 48.46
+  }
+ ],
+ "counts": {
+  "floor1": 7,
+  "floor2": 8
+ }
+}

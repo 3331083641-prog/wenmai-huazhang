@@ -1,0 +1,48 @@
+attachment-38f07249f28fd543fdc9b33a0c27947e.png  1448x1086  kind=exterior  sky=0.23  bg=0.40
+bbox_norm {"x0": 0.0221, "y0": 0.0037, "x1": 0.9827, "y1": 0.9457}
+HEDGES y [0.004, 0.038, 0.058, 0.091, 0.615, 0.66, 0.735, 0.773, 0.802, 0.831, 0.924, 0.945]
+VEDGES x [0.026, 0.045, 0.059, 0.073, 0.209, 0.247, 0.383, 0.396, 0.601, 0.708, 0.75, 0.776, 0.923, 0.941, 0.959, 0.983]
+PALETTE [{"hex": "#786858", "rgb": [120, 104, 88], "pct": 2.4}, {"hex": "#482818", "rgb": [72, 40, 24], "pct": 1.8}, {"hex": "#484858", "rgb": [72, 72, 88], "pct": 1.8}, {"hex": "#683828", "rgb": [104, 56, 40], "pct": 1.7}, {"hex": "#582818", "rgb": [88, 40, 24], "pct": 1.6}, {"hex": "#683818", "rgb": [104, 56, 24], "pct": 1.6}, {"hex": "#685858", "rgb": [104, 88, 88], "pct": 1.5}, {"hex": "#583828", "rgb": [88, 56, 40], "pct": 1.4}, {"hex": "#484848", "rgb": [72, 72, 72], "pct": 1.3}, {"hex": "#584848", "rgb": [88, 72, 72], "pct": 1.2}, {"hex": "#783818", "rgb": [120, 56, 24], "pct": 1.2}, {"hex": "#685848", "rgb": [104, 88, 72], "pct": 1.1}]
+
+EXTENT bands (y:left/right/width):
+  0.01:0.40/0.43/0.03  0.04:0.39/0.46/0.07  0.06:0.33/0.50/0.17  0.09:0.32/0.73/0.41  0.11:0.32/0.73/0.42  0.14:0.31/0.74/0.43  0.16:0.29/0.75/0.46  0.19:0.27/0.78/0.52  0.21:0.26/0.89/0.63  0.24:0.22/0.88/0.66
+  0.26:0.20/0.88/0.68  0.29:0.11/0.86/0.75  0.31:0.12/0.83/0.72  0.34:0.12/0.82/0.70  0.36:0.13/0.81/0.68  0.39:0.10/0.81/0.71  0.41:0.08/0.81/0.73  0.44:0.07/0.88/0.81  0.46:0.03/0.88/0.84  0.49:0.03/0.87/0.84
+  0.51:0.03/0.86/0.83  0.54:0.03/0.86/0.83  0.56:0.04/0.86/0.82  0.59:0.06/0.85/0.80  0.61:0.06/0.85/0.79  0.64:0.06/0.86/0.80  0.66:0.06/0.96/0.90  0.69:0.06/0.97/0.91  0.71:0.04/0.96/0.93  0.74:0.03/0.96/0.94
+  0.76:0.03/0.97/0.94  0.79:0.02/0.98/0.96  0.81:0.04/0.98/0.94  0.84:0.08/0.98/0.90  0.86:0.13/0.98/0.85  0.89:0.18/0.92/0.74  0.91:0.23/0.71/0.48  0.94:0.27/0.51/0.23  0.96:-  0.99:-
+
+SKYLINE (top fg row per column /48):
+  [null, 0.46, 0.449, 0.424, 0.394, 0.28, 0.291, 0.287, 0.28, 0.265, 0.239, 0.232, 0.199, 0.173, 0.151, 0.074, 0.074, 0.085, 0.048, 0.007, 0.004, 0.044, 0.048, 0.07, 0.077, 0.081, 0.088, 0.092, 0.099, 0.103, 0.11, 0.114, 0.122, 0.114, 0.088, 0.096, 0.173, 0.192, 0.214, 0.225, 0.221, 0.217, 0.206, 0.751, 0.659, 0.656, 0.674, 0.788]
+
+ZONES 64x32  legend: a=pale-sky s=sky w=white c=warm-wall/stone g=grey-stone/tile f=slate/shadow p=plant-green W=wood-mid D=wood-dark R=red-lacquer G=gold/ochre ?=other k=near-black
+ssssssssssssssssssssssssssWsssssssssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssDDssssssssssssssssssssssssssssssssssss
+sssssssssssssssssssssssssGDDDD?sssssssssssssssssssssssssssssssss
+sssssssssssssssssssssfsscDDDcff????DDDssssssssWsssssssssswwwssss
+sssssssssssssssssssssfcfff??fDggggfgggfgfDDDDffsssssssssssssssss
+sssssssssswwsssssssDDDfDDDDfffffgffffgfffffffffsssssssssssssssss
+ssssssssswwwssssssDD?DDDDDDDDDDDDDfffffffffgfffffsssssssssssssss
+ssswwwwsswwwwwws??DDDDDDDDR??RDRDWDWDDDDDDDDffgffffffsffssssssss
+sssswwwwssswww?DDDDDDDDgDRc??RDW??DRRRDDWRDDDDDRDDDDDDRsssssssss
+sssssss?wsfDDDDDDDDDDgggDRcccDWW??WDWDDDDD????RRRDDDDsssssssssss
+ssssssssDDDDDDDDDgDDDD??gRgggDcWccWWWDWDWWWc???WDDD??sssssssssss
+sssssssss?DDDWWW?DDDD????RccgDDDDDWDWDWRW?WWW?cWWcRsssssssssssss
+sssssssssDDcW??W?DDD??DDRRGG??DDDDDDDDDDDDDWWWWWDDRsssssssssssss
+sssssssDDG?cDWDD?DD?G?GGDDDDD???ffffDDDDDDDDDDDDDDDsssssssssssss
+wsssssppDDDDDDDDDDDDDDDDDDW??DDDDffffDDffffffffffffffsssssswwwss
+ssw?RsppDDDgggggfWpDDDccDDDDD????DDDDWDDDDDDDDDDDDDDDDfssswwwwww
+ss??RsDpD?????fDWWDDDDccDDDDDDD????DDDDDW??WWDDDRDDDDsswwwwwwwww
+ssssssDpD?D?DDDDggDDDDccDDDDDDDDW??WDD????WDDDDDDDR??DDs?wwwwwww
+?swsDspcDDDWDDDDggDggDccDRDD???DWWRcWR?????WDWDR??RWWGss???wwwww
+wwwwDwpDDDW??WDDDDDggD?cDW??WW?WRcRWWD???W?WDWDDcWRcWDwwwwwwwwww
+wwwwwwwDDDDWWDDDDDDggfDDDDDWWWDDRDGWDDDWWWWDDDDDDDRDDGwwwwwwwwww
+wwwwfppDDDDDDDDDDDDgpDDDDD?DDDDDDDDcDDDDDDDDDWDDDDccDDwwwwwwgwww
+wwwwfffsgDgggDpDDDppppDDfDDG???DDDDccDDcDDDDDWDDDDccD?wwwwwwWwww
+wwggggggfggggDfffggggccDfDDccccDDDcDcDc??????????DcD?ccwwwwggwww
+wwffffgggggggsfgfggggccgfDfccDDDDfcDDcc??ccccccccccccccccccf?www
+wwwfffffffgggggsssgggccfc?cccccccccccccccccccccccccccccccccccccw
+wwwwwwwffffffffggggggcccccccccccccccc??????g???????????????????w
+wwwwwwwwwwffffffffffggg????????????????????????????????????????c
+wwwwwwwwwwwwwwfffffffg???????????????????????????cccccccccccwwww
+wwwwwwwwwwwwwwwwwwfff????????????ccccccccccccwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww

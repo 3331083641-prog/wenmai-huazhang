@@ -1,0 +1,1912 @@
+[
+ {
+  "file": "attachment-11f23a89c6a08bd413c5aa743712f581.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "interior",
+  "sky_frac": 0.0,
+  "bg_frac": 0.997,
+  "coverage_pct": 0.27,
+  "bbox_norm": {
+   "x0": 0.011,
+   "y0": 0.0405,
+   "x1": 0.9883,
+   "y1": 0.9825
+  },
+  "hedges_y": [
+   0.144,
+   0.166,
+   0.272,
+   0.298,
+   0.345,
+   0.549,
+   0.582,
+   0.608,
+   0.667,
+   0.769,
+   0.788,
+   0.954
+  ],
+  "vedges_x": [
+   0.014,
+   0.047,
+   0.126,
+   0.14,
+   0.251,
+   0.403,
+   0.445,
+   0.506,
+   0.561,
+   0.61,
+   0.738,
+   0.845,
+   0.865,
+   0.925,
+   0.953,
+   0.988
+  ],
+  "palette": [
+   {
+    "hex": "#f8f8d8",
+    "rgb": [
+     248,
+     248,
+     216
+    ],
+    "pct": 37.6
+   },
+   {
+    "hex": "#f8f8f8",
+    "rgb": [
+     248,
+     248,
+     248
+    ],
+    "pct": 24.9
+   },
+   {
+    "hex": "#f8f8e8",
+    "rgb": [
+     248,
+     248,
+     232
+    ],
+    "pct": 22.5
+   },
+   {
+    "hex": "#f8f8c8",
+    "rgb": [
+     248,
+     248,
+     200
+    ],
+    "pct": 2.1
+   },
+   {
+    "hex": "#786848",
+    "rgb": [
+     120,
+     104,
+     72
+    ],
+    "pct": 1.9
+   },
+   {
+    "hex": "#885858",
+    "rgb": [
+     136,
+     88,
+     88
+    ],
+    "pct": 1.1
+   },
+   {
+    "hex": "#981808",
+    "rgb": [
+     152,
+     24,
+     8
+    ],
+    "pct": 1.1
+   },
+   {
+    "hex": "#f8e8b8",
+    "rgb": [
+     248,
+     232,
+     184
+    ],
+    "pct": 0.5
+   },
+   {
+    "hex": "#a82818",
+    "rgb": [
+     168,
+     40,
+     24
+    ],
+    "pct": 0.5
+   },
+   {
+    "hex": "#881808",
+    "rgb": [
+     136,
+     24,
+     8
+    ],
+    "pct": 0.5
+   },
+   {
+    "hex": "#b82818",
+    "rgb": [
+     184,
+     40,
+     24
+    ],
+    "pct": 0.5
+   },
+   {
+    "hex": "#786858",
+    "rgb": [
+     120,
+     104,
+     88
+    ],
+    "pct": 0.4
+   }
+  ],
+  "zones": [
+   "RRRRRDDWDDDDDDDDRRRRRRRRRDDRRDDDDWRDDDDRRRDDRRRRRWDDDDDDDDDRRRRR",
+   "RRRRDWDDDWWRRDDRDRRDDRRDRRDDRRDDDDRDDDRRDRRDDDRRWWDDRRWDDDWDRRRR",
+   "RRRDRRDDDDDRWDDDRRDRRDDRRDDRDWWWDDDRDDDDRDDRRDDRRRRDWWDDDDDDDRRR",
+   "RRDDDRWWDDDDWWWWRRRRDRRDDRRWWDRRWWWDRRRDDRDDRRRDDDWWWDDDDWRDDRRR",
+   "RDRR??RDWDDRRWWRDRRDRRDRRRRWDRDWW??RRRRRDDRRDDRRDDDRRRDDDD?DRDRR",
+   "DRR?RWRR?RRRRRDDRRDDRDRRRRDRWWWWW???RDRRRDDRDDDRRRDRRRDRDDR?RRRR",
+   "DRRR???RRDWWWDDDRDRRDRRRRDWWWDDDDDD??RRRRRDDRRDDRRDDDWWW????RRDR",
+   "RRR??c??RRRWRWWRDDDDDRWDRWWWDD????DDW?RRRRRDDDDRRRDWWWDR?????RRD",
+   "RDD????RRRWRRRRRRRRDDWDRWDWWWD?WWW?DDW?RRWRRDRRRRRWRRRRRR???RRRD",
+   "WDDDD?RRDDRRRDRRRRRDWWWRRW?WDD?WW?DDD??WRDWDDRRRRRRDRRWWW?DDD?RR",
+   "WDD?DDDDDDRDDRDRDRRDWDDRRRW???WDDDD???WWDDDDDRRRDDRRDRDDDDD?DWRR",
+   "RDRRRRDDDDDDRDRDDDDWWWWRRDWW????D???WWDDDDWWWWDRDRDDRDDDDDDDDWWR",
+   "RDDWWRDDDWRRDRDDRDRDRRRRRRDRRWWDRDWWDWDDRRWWWDRRRDRDRRRDDDRRDD?R",
+   "?DWWDDDDWWWRRRDRDRDRRRRRWRRDDR??R?RDDWWWWWRDRRRDRDDRDRWDWWRWWDD?",
+   "c???DDDRWDRRRRRRRDRDRDRRDRRRDWcccccWWWWRRDRRDRDRDRRRRWWWDDWDDDDD",
+   "cccc?RRRRWRRRRRRRRDDDDDRRDDDW?cccccWWDDRDRDDDDRDRRDDRRDWRD?D???R",
+   "WccccWRR???RRRRRRRRWDRDDDRDDWWcRRccWDDRDRDRDRRRRRRRRWWRRRRD??ccc",
+   "ccccRRRW????RRRWWRRRRRRDRDDDRR??R?RRDRDRDRDRRRRRRRRR???RRR?ccccc",
+   "RRRRRRR???WWRR?WDRRRRRRRDDRR?R????RRRRDDDDRRRRWWRRRR????RR?cccc?",
+   "DRRRRRW?c?WWW??WWWRRDDDWWDWD?DRDDRRRDWDDWRRRRRDWWWRR????RRWWc?DD",
+   "RRDRRRRR??W?cccc?WD?DDDDDWWDDDRDDRDDDWWDDDRRRRDWW??WWWDWWRDDDDDD",
+   "RRRRRRRR?RRWcccccWW??DDDRWDWRRDDDDRRWDWDDDDDRRW?cccWWDDDDRDDDDDD",
+   "RRWRRRRRRRRRDccccW????DWRRWWWRDDDRRWWDRRDD???R?cccc?WDDDDRDDDDDD",
+   "DRWWWWRRRRRRRRRRcW????DWRRWWWWDWDWWWWWRRWW????WcccRRDDDDDDDDDRDD",
+   "DRRDDWWRRRRRRRRRDR??cWWWRRc?WDDWDDWW??RW?WWW??WRRRRDRRDDDDWWDDDD",
+   "RRRWWDWRRRRRRRRRRRRRRRWRRRcc??DWD??cccRRWWDW?RRRRRRDDRRRWWWWDDDD",
+   "RRRWDDDD??RRRRRRRRRDRRRRRWccc?RWR?ccccRRWRRRRRRRRRRRRRRRWWDDRRDD",
+   "RRDDDDDDWWWWWRWWRRRRRRRRRRccccRWR?cccRRDDRRDRRRRRRRRRRWWDWWDDRD?",
+   "RDDDDDDWWDDDDWDWWRRRRRRDRRDRccRWWcDcRRRDRRDRDDRWWRRW?DDDDDDDRRRD",
+   "R??DDDDWWDDDDWDDDWRRRRRRRRDDDRRDRDDDRRRDRRRDDDDDDWDWWWDDDDDDRRRR",
+   "?c?WDWW??DDDDDRDDDDWWRR?WRRRRDDDDDRRRRWWWRRD?WDDDDDDDDDDDDDWRRRR",
+   "WWWDDW?WW????DDDRR??RDWDDRRRRRRDRRRRRRWDWWWDDDDDDDDDDD?DDWWcRRRR"
+  ]
+ },
+ {
+  "file": "attachment-34905d3a33a77bd6da938ef9c00d9b78.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "exterior",
+  "sky_frac": 0.203,
+  "bg_frac": 0.353,
+  "coverage_pct": 64.71,
+  "bbox_norm": {
+   "x0": 0.0276,
+   "y0": 0.0074,
+   "x1": 0.9744,
+   "y1": 0.9788
+  },
+  "hedges_y": [
+   0.006,
+   0.035,
+   0.058,
+   0.089,
+   0.128,
+   0.261,
+   0.612,
+   0.65,
+   0.705,
+   0.737,
+   0.957,
+   0.977
+  ],
+  "vedges_x": [
+   0.028,
+   0.1,
+   0.144,
+   0.244,
+   0.405,
+   0.443,
+   0.642,
+   0.7,
+   0.722,
+   0.787,
+   0.819,
+   0.856,
+   0.91,
+   0.931,
+   0.948,
+   0.975
+  ],
+  "palette": [
+   {
+    "hex": "#484848",
+    "rgb": [
+     72,
+     72,
+     72
+    ],
+    "pct": 2.4
+   },
+   {
+    "hex": "#583828",
+    "rgb": [
+     88,
+     56,
+     40
+    ],
+    "pct": 2.3
+   },
+   {
+    "hex": "#482818",
+    "rgb": [
+     72,
+     40,
+     24
+    ],
+    "pct": 2.3
+   },
+   {
+    "hex": "#584848",
+    "rgb": [
+     88,
+     72,
+     72
+    ],
+    "pct": 2.0
+   },
+   {
+    "hex": "#683828",
+    "rgb": [
+     104,
+     56,
+     40
+    ],
+    "pct": 1.5
+   },
+   {
+    "hex": "#383838",
+    "rgb": [
+     56,
+     56,
+     56
+    ],
+    "pct": 1.5
+   },
+   {
+    "hex": "#582818",
+    "rgb": [
+     88,
+     40,
+     24
+    ],
+    "pct": 1.4
+   },
+   {
+    "hex": "#f8e8c8",
+    "rgb": [
+     248,
+     232,
+     200
+    ],
+    "pct": 1.3
+   },
+   {
+    "hex": "#887868",
+    "rgb": [
+     136,
+     120,
+     104
+    ],
+    "pct": 1.3
+   },
+   {
+    "hex": "#683818",
+    "rgb": [
+     104,
+     56,
+     24
+    ],
+    "pct": 1.2
+   },
+   {
+    "hex": "#685858",
+    "rgb": [
+     104,
+     88,
+     88
+    ],
+    "pct": 1.2
+   },
+   {
+    "hex": "#784828",
+    "rgb": [
+     120,
+     72,
+     40
+    ],
+    "pct": 1.1
+   }
+  ],
+  "zones": [
+   "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+   "sssssssssssssssssssssssssssssssssssssssss?ssssssssssssssssssssss",
+   "ssssssssssssssssssss?sssssssssssssfffffffDsssssssssssssssssswwws",
+   "ssssssssssssssssssssffffffffffffgggggggcccDsssf?ssssssssssssssss",
+   "sssssssswwssssssssssffggggggggggggggggfD?????fDkssssssssssssssss",
+   "sssssssswww?wsssssffggggggggggggggggffgfffDDDDRRssssssssssssssss",
+   "sssssssswwwwff?gggggggggfDDffDDDDDDDDDDDDDDDDDDDDss?ssssssssssss",
+   "sssswsssswwwwDDDDDDDDDDDDDDDDDDDDDDWRRRWDDDD??DDDDDfssssssssssss",
+   "ssswsssssssww?DDD?DDDDRWRDDDDDDD??W??????WDR??D?DDDDDfffssssssss",
+   "ssssssssssswDDfDg??DWW????WWWDDWWDDWWWWWWWDD?cccWDDDD?ssssssssss",
+   "ssssssssDsssppfDccDW?D?Wcc?cDD?WWDWcW?c?DWDfgccWccRDR??Dssssssss",
+   "ssssss??sssfpgfggggW?DDDWc?DDDDDDDDDDDDDDDDDgccWWDWWRssDccssssss",
+   "ssssss??sssgg?DDDgDDDDDDDDDDDDDDDDDDDDDDDDDffcDWWWWWssscccssssss",
+   "sssssssssDsDD??DfffffffWffffffffffffffWWffffffgcccDWWsscccswwwws",
+   "sssssDGGGDWGDDDGfffffffWffffffffffffffWDDDDDDDccccc??csDccwwwwww",
+   "sssssGGGDDDDD?GDDDDDDDDDRDDDDDDDDDDDDDDDDDDDDccffffgggwDwwwwwwww",
+   "sssDWDDc?DDDDDDG?????RDDWDDDDW???WWW?DDDDD???ccDDDDDggggfwwDwwww",
+   "wswwDwccDDDDDDDDDW???RD?W?DD????WWWDDDD??R???cgDDDDDDcccccww??ww",
+   "wwwwwwccDDD??DDD?????WD?WcWWWWW?cW?DDDDccRWWWDDDDDDWD??ccccwwwww",
+   "wwwwwwwwDww?gDWD????WRDWWcDD??W?cW?DDDDccRRWRcDDDRWWWDDDDDwwwwww",
+   "wwwwwwwwfwDDDG?DWWWDDDDDDDDDDDDWDWcDDDDDDDDDDcDDDDWWDDDDDwwwwwww",
+   "wwwwwwppfDDD?D?DDDDDccDDDDDDDDDDDDDDDDDDDcDpp?DDDDWDDDWDDGwDwwww",
+   "wwwwwgg?fDgpDDDDDDfDccD?cDDDWccDDDDccDDRccDD??DgcD?cccDf?ccfwwww",
+   "wwwwwgggffg?fgggc?ccDffg?ccc??????cccDDDDcDggcWcWD?ccccffcccccww",
+   "wwgggggggggcccfgccccccccccccccgggggggggggggggcgDcccccccccgcc??ww",
+   "wwffffffffggggggggccccccccccccccccggggcgccccgggfccccccgg??????cw",
+   "ssffffffffffffffffffffgggggggccccccccgggggggggccccccg??????ccccc",
+   "wwwwwwwwwwfffffffffffffffffffggggggggggggcggccccc???????cccccccw",
+   "wwwwwwwwwwwwwwcccccfffffffffffffffffffffffggcc???????ccccccccwww",
+   "wwwwwwwwwwwwwwwwwwccccccccccfffffffffffffffff?????cccccccccwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwgfffffffff??cccccccwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+  ]
+ },
+ {
+  "file": "attachment-38f07249f28fd543fdc9b33a0c27947e.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "exterior",
+  "sky_frac": 0.234,
+  "bg_frac": 0.399,
+  "coverage_pct": 60.1,
+  "bbox_norm": {
+   "x0": 0.0221,
+   "y0": 0.0037,
+   "x1": 0.9827,
+   "y1": 0.9457
+  },
+  "hedges_y": [
+   0.004,
+   0.038,
+   0.058,
+   0.091,
+   0.615,
+   0.66,
+   0.735,
+   0.773,
+   0.802,
+   0.831,
+   0.924,
+   0.945
+  ],
+  "vedges_x": [
+   0.026,
+   0.045,
+   0.059,
+   0.073,
+   0.209,
+   0.247,
+   0.383,
+   0.396,
+   0.601,
+   0.708,
+   0.75,
+   0.776,
+   0.923,
+   0.941,
+   0.959,
+   0.983
+  ],
+  "palette": [
+   {
+    "hex": "#786858",
+    "rgb": [
+     120,
+     104,
+     88
+    ],
+    "pct": 2.4
+   },
+   {
+    "hex": "#482818",
+    "rgb": [
+     72,
+     40,
+     24
+    ],
+    "pct": 1.8
+   },
+   {
+    "hex": "#484858",
+    "rgb": [
+     72,
+     72,
+     88
+    ],
+    "pct": 1.8
+   },
+   {
+    "hex": "#683828",
+    "rgb": [
+     104,
+     56,
+     40
+    ],
+    "pct": 1.7
+   },
+   {
+    "hex": "#582818",
+    "rgb": [
+     88,
+     40,
+     24
+    ],
+    "pct": 1.6
+   },
+   {
+    "hex": "#683818",
+    "rgb": [
+     104,
+     56,
+     24
+    ],
+    "pct": 1.6
+   },
+   {
+    "hex": "#685858",
+    "rgb": [
+     104,
+     88,
+     88
+    ],
+    "pct": 1.5
+   },
+   {
+    "hex": "#583828",
+    "rgb": [
+     88,
+     56,
+     40
+    ],
+    "pct": 1.4
+   },
+   {
+    "hex": "#484848",
+    "rgb": [
+     72,
+     72,
+     72
+    ],
+    "pct": 1.3
+   },
+   {
+    "hex": "#584848",
+    "rgb": [
+     88,
+     72,
+     72
+    ],
+    "pct": 1.2
+   },
+   {
+    "hex": "#783818",
+    "rgb": [
+     120,
+     56,
+     24
+    ],
+    "pct": 1.2
+   },
+   {
+    "hex": "#685848",
+    "rgb": [
+     104,
+     88,
+     72
+    ],
+    "pct": 1.1
+   }
+  ],
+  "zones": [
+   "ssssssssssssssssssssssssssWsssssssssssssssssssssssssssssssssssss",
+   "ssssssssssssssssssssssssssDDssssssssssssssssssssssssssssssssssss",
+   "sssssssssssssssssssssssssGDDDD?sssssssssssssssssssssssssssssssss",
+   "sssssssssssssssssssssfsscDDDcff????DDDssssssssWsssssssssswwwssss",
+   "sssssssssssssssssssssfcfff??fDggggfgggfgfDDDDffsssssssssssssssss",
+   "sssssssssswwsssssssDDDfDDDDfffffgffffgfffffffffsssssssssssssssss",
+   "ssssssssswwwssssssDD?DDDDDDDDDDDDDfffffffffgfffffsssssssssssssss",
+   "ssswwwwsswwwwwws??DDDDDDDDR??RDRDWDWDDDDDDDDffgffffffsffssssssss",
+   "sssswwwwssswww?DDDDDDDDgDRc??RDW??DRRRDDWRDDDDDRDDDDDDRsssssssss",
+   "sssssss?wsfDDDDDDDDDDgggDRcccDWW??WDWDDDDD????RRRDDDDsssssssssss",
+   "ssssssssDDDDDDDDDgDDDD??gRgggDcWccWWWDWDWWWc???WDDD??sssssssssss",
+   "sssssssss?DDDWWW?DDDD????RccgDDDDDWDWDWRW?WWW?cWWcRsssssssssssss",
+   "sssssssssDDcW??W?DDD??DDRRGG??DDDDDDDDDDDDDWWWWWDDRsssssssssssss",
+   "sssssssDDG?cDWDD?DD?G?GGDDDDD???ffffDDDDDDDDDDDDDDDsssssssssssss",
+   "wsssssppDDDDDDDDDDDDDDDDDDW??DDDDffffDDffffffffffffffsssssswwwss",
+   "ssw?RsppDDDgggggfWpDDDccDDDDD????DDDDWDDDDDDDDDDDDDDDDfssswwwwww",
+   "ss??RsDpD?????fDWWDDDDccDDDDDDD????DDDDDW??WWDDDRDDDDsswwwwwwwww",
+   "ssssssDpD?D?DDDDggDDDDccDDDDDDDDW??WDD????WDDDDDDDR??DDs?wwwwwww",
+   "?swsDspcDDDWDDDDggDggDccDRDD???DWWRcWR?????WDWDR??RWWGss???wwwww",
+   "wwwwDwpDDDW??WDDDDDggD?cDW??WW?WRcRWWD???W?WDWDDcWRcWDwwwwwwwwww",
+   "wwwwwwwDDDDWWDDDDDDggfDDDDDWWWDDRDGWDDDWWWWDDDDDDDRDDGwwwwwwwwww",
+   "wwwwfppDDDDDDDDDDDDgpDDDDD?DDDDDDDDcDDDDDDDDDWDDDDccDDwwwwwwgwww",
+   "wwwwfffsgDgggDpDDDppppDDfDDG???DDDDccDDcDDDDDWDDDDccD?wwwwwwWwww",
+   "wwggggggfggggDfffggggccDfDDccccDDDcDcDc??????????DcD?ccwwwwggwww",
+   "wwffffgggggggsfgfggggccgfDfccDDDDfcDDcc??ccccccccccccccccccf?www",
+   "wwwfffffffgggggsssgggccfc?cccccccccccccccccccccccccccccccccccccw",
+   "wwwwwwwffffffffggggggcccccccccccccccc??????g???????????????????w",
+   "wwwwwwwwwwffffffffffggg????????????????????????????????????????c",
+   "wwwwwwwwwwwwwwfffffffg???????????????????????????cccccccccccwwww",
+   "wwwwwwwwwwwwwwwwwwfff????????????ccccccccccccwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+  ]
+ },
+ {
+  "file": "attachment-67aae5499bb8cea99ac9fc0b2ee06510.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "exterior",
+  "sky_frac": 0.229,
+  "bg_frac": 0.414,
+  "coverage_pct": 58.55,
+  "bbox_norm": {
+   "x0": 0.0221,
+   "y0": 0.0037,
+   "x1": 0.98,
+   "y1": 0.942
+  },
+  "hedges_y": [
+   0.007,
+   0.029,
+   0.058,
+   0.084,
+   0.228,
+   0.366,
+   0.61,
+   0.645,
+   0.878,
+   0.9,
+   0.921,
+   0.94
+  ],
+  "vedges_x": [
+   0.023,
+   0.046,
+   0.079,
+   0.244,
+   0.36,
+   0.438,
+   0.458,
+   0.706,
+   0.745,
+   0.794,
+   0.847,
+   0.881,
+   0.928,
+   0.945,
+   0.96,
+   0.98
+  ],
+  "palette": [
+   {
+    "hex": "#482818",
+    "rgb": [
+     72,
+     40,
+     24
+    ],
+    "pct": 3.3
+   },
+   {
+    "hex": "#785848",
+    "rgb": [
+     120,
+     88,
+     72
+    ],
+    "pct": 3.1
+   },
+   {
+    "hex": "#382818",
+    "rgb": [
+     56,
+     40,
+     24
+    ],
+    "pct": 2.6
+   },
+   {
+    "hex": "#583828",
+    "rgb": [
+     88,
+     56,
+     40
+    ],
+    "pct": 2.4
+   },
+   {
+    "hex": "#483828",
+    "rgb": [
+     72,
+     56,
+     40
+    ],
+    "pct": 2.1
+   },
+   {
+    "hex": "#683828",
+    "rgb": [
+     104,
+     56,
+     40
+    ],
+    "pct": 1.9
+   },
+   {
+    "hex": "#584838",
+    "rgb": [
+     88,
+     72,
+     56
+    ],
+    "pct": 1.9
+   },
+   {
+    "hex": "#584848",
+    "rgb": [
+     88,
+     72,
+     72
+    ],
+    "pct": 1.9
+   },
+   {
+    "hex": "#383838",
+    "rgb": [
+     56,
+     56,
+     56
+    ],
+    "pct": 1.9
+   },
+   {
+    "hex": "#484848",
+    "rgb": [
+     72,
+     72,
+     72
+    ],
+    "pct": 1.9
+   },
+   {
+    "hex": "#684838",
+    "rgb": [
+     104,
+     72,
+     56
+    ],
+    "pct": 1.8
+   },
+   {
+    "hex": "#582818",
+    "rgb": [
+     88,
+     40,
+     24
+    ],
+    "pct": 1.7
+   }
+  ],
+  "zones": [
+   "ssssssssssssssssssssssssssssssssssssssss?sssssssssssssssssssssss",
+   "ssssssssssssssssssssssssssssssssssssssffDsssfsssssssssssssssssss",
+   "sssssssssssssssssssssssssssssssssfffffcfffffDsssssssssssssswwwss",
+   "ssssssssssssssssssssssssssssffff??ffffffDDDDRRssssssssssssssssss",
+   "sssssssssssssssssssssffffffffffffDDDDDDDDDDDDRDsssssssssssssssss",
+   "sssssssswsssssssssssfffffffDDDDDDDDDDDRDDD??DDDDssssssssssssssss",
+   "ssssssswwwww??sssfffDDDDDDDDDDDDRDDR???WWD?cRDDDDsssssssssssssss",
+   "sssssssswwwwwDDDDDDDDDDDRDDDDWD??WWW?????DcccWRRDDDsssssssssssss",
+   "sssswwsssswwwwDDR??DDD???WWWDWDWWWW????WWDgcccWWDDDDDff?ssssssss",
+   "sssssssssswwwDfDg?RD???????WDWWWWW?W?cDDDDgccWW?DRDDDDDsssssssss",
+   "sssssssssDwwwwfDcgDW?W?Wc??cDDDDDDDDDDDDDDffDWWWWsDD??ssssssssss",
+   "sssssss?ssspp?fDggDDDDDDDDDDDDDffffffWffffDDD?WWWWsRsssccsssssss",
+   "sssssss?sDsWD???DgDDDDDWffffffffffffDWDDDDDDcccccDWWsssccsssssss",
+   "sssssssGGDDDDD???fffffDWffffDDDDDDDDDDDDR??cccfff?WWWsscccssssss",
+   "sssssGDGDDDDDDD??DDDDDDDDDDDDDWWWWWWDDDDR??ccgDDDDDDDsscccsssssw",
+   "ssssDDDccDDDDDDDD????DDDWDDD??????WWDDW?RWRcGDDDDDDDDDDfsswwwwww",
+   "sssDDDDccDDDDDDDDW???RD?W?DD????????DDccRDRccDDDRWWW??cccwwDwwww",
+   "sssssssccDDD?DWD?????R???cDW?c?W?WDDDDDDcDDDDWDDRWWWWDDDDccw?www",
+   "sssssssssssDDDWW???WWDD?WcDD????c??DDDDccD?cDgcDRWWWWWDDDDwwwwww",
+   "sssssssDfDDD??DDWDDDccDDDDDWDWWWW?DDgggggggccgccRDWWWDDDDwwwwwww",
+   "wwsssspDfDDDDDDgcDDDccDDDDggggggggggffffffffcccccccccDDDD??wwwww",
+   "wwwwwgg?ffgWDDggggggggggffffffffffffffffffffcc???cccggDf?cDDwwww",
+   "wwwgggggggggfffffffffffffffffffffffffffffffDcc?????????ggcDfcwww",
+   "wwfffffffffffffffffffffffffffDDDDDDDDDDDDDDDDDDDDcc???????cccwww",
+   "wwffffffffffDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD????????ww",
+   "wwfDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD?????w",
+   "wwwwwDDwDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDkkDDDDDDDD?ww",
+   "wwwwwwwwwwwwwwDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwDDDDDDDDDDDDDDDDDDDDDDDDwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwDDDDDwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+  ]
+ },
+ {
+  "file": "attachment-7384138ca086288207bcf2eb6f328027.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "interior",
+  "sky_frac": 0.023,
+  "bg_frac": 0.502,
+  "coverage_pct": 49.77,
+  "bbox_norm": {
+   "x0": 0.0773,
+   "y0": 0.0074,
+   "x1": 0.9441,
+   "y1": 0.9936
+  },
+  "hedges_y": [
+   0.006,
+   0.026,
+   0.047,
+   0.076,
+   0.11,
+   0.132,
+   0.196,
+   0.617,
+   0.879,
+   0.927,
+   0.953,
+   0.98
+  ],
+  "vedges_x": [
+   0.083,
+   0.103,
+   0.156,
+   0.173,
+   0.531,
+   0.649,
+   0.698,
+   0.713,
+   0.744,
+   0.767,
+   0.849,
+   0.863,
+   0.892,
+   0.91,
+   0.924,
+   0.943
+  ],
+  "palette": [
+   {
+    "hex": "#f8e8c8",
+    "rgb": [
+     248,
+     232,
+     200
+    ],
+    "pct": 3.2
+   },
+   {
+    "hex": "#484858",
+    "rgb": [
+     72,
+     72,
+     88
+    ],
+    "pct": 1.6
+   },
+   {
+    "hex": "#f8d8b8",
+    "rgb": [
+     248,
+     216,
+     184
+    ],
+    "pct": 1.6
+   },
+   {
+    "hex": "#383838",
+    "rgb": [
+     56,
+     56,
+     56
+    ],
+    "pct": 1.4
+   },
+   {
+    "hex": "#383848",
+    "rgb": [
+     56,
+     56,
+     72
+    ],
+    "pct": 1.4
+   },
+   {
+    "hex": "#585868",
+    "rgb": [
+     88,
+     88,
+     104
+    ],
+    "pct": 1.1
+   },
+   {
+    "hex": "#282838",
+    "rgb": [
+     40,
+     40,
+     56
+    ],
+    "pct": 1.0
+   },
+   {
+    "hex": "#988888",
+    "rgb": [
+     152,
+     136,
+     136
+    ],
+    "pct": 1.0
+   },
+   {
+    "hex": "#683828",
+    "rgb": [
+     104,
+     56,
+     40
+    ],
+    "pct": 0.9
+   },
+   {
+    "hex": "#c8a898",
+    "rgb": [
+     200,
+     168,
+     152
+    ],
+    "pct": 0.9
+   },
+   {
+    "hex": "#f8e8b8",
+    "rgb": [
+     248,
+     232,
+     184
+    ],
+    "pct": 0.9
+   },
+   {
+    "hex": "#887878",
+    "rgb": [
+     136,
+     120,
+     120
+    ],
+    "pct": 0.9
+   }
+  ],
+  "zones": [
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwfwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwww??ffffwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwww?gf????ffffwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwff??ccg?????????fffwwf?wwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwGpfffffcg?????????????ffDgwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwffffpffggg??fffffgg????????gWDgfgfwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwp?ffffggggg?????fff???????cWcggggggfffwwwwwwwwwwww",
+   "wwwwwwwwwwwwwpppfgggcgggggg??????fff????ggggggggggggwwDwwwwwwwww",
+   "wwwwwwwwwwwDwppp?DRRfgcgg??g?????????fD?gggggggggg??wwwccwwwwwww",
+   "wwwwwwwww??wwff?????R?Dggcggggg??????c?DfcggggggDD???wwccwwwwwww",
+   "wwwwwwww???Ds???DDggDcWWcWffggggg????cgggfffggDccDpDDwwccwwwwwww",
+   "wwww??ssssGGpWW??DDDDDDDWWc?DDffgg??fcggggggDWWWWWpDwwwwwwwwwwww",
+   "wwww?sssspGDGDD???ff?DDD??DDRDW?Dffgg??ggDWcWWWWWccDDwDwwwDwwwww",
+   "???ssssssD?DDpDD?D?DDfgfDDDDDD??DWcc?DDDcWWWWWWcggggDD?Gww??wwww",
+   "w?sssssssscDDDDD??????DDWffDDDD?DDcWDD??cWWWccggggg??DD?wwwwwwww",
+   "wwsssssssscDsDDDDDD????D??fffffDDDDD?D??cWcccgggg?????Dcwwwwwwww",
+   "wwwsssssppfDpDDD?DDWWDRD?WDDDfffffDDDDDDcccg?gg?????DDD?gfccwwww",
+   "w?sssssgggffgDDc?DDfDDDDDDRDWWcWffW???DfgggDDDDW??DDfgccccc?wwww",
+   "wwwwssgggggggggpD??DgDcDDDDDccDDWcDDDff?fcgDDRWWWWWDfgcccc??cwww",
+   "www?ssffgggggggfggcccDcggDDD?cccccR?cD?RccDDDRWWWccccccc??ccwwww",
+   "wwwwwww?fffgggggggcccDcccgcc????c?DDcR?WcDDDDRDccccccc??cccwwwww",
+   "wwwwwwwwwwffffggcccccccccgggg???RcDDDRDDcDDDDDcccccc??cccwwwwwww",
+   "wwwwwwwwwwwwwwffggccccccccccccggcgggccDppcD?cccccc??ccwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwfffggccccccccccgggggcDfgcccccccc??cccwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwfffggccccccccggggg?ggccccccc?ccwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwfffggccccgggggcDWcccccc??ccwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwfffggccccggggccccc??ccwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwfffggcccgggccc??ccwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwfffggcccc??ccwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwffff??ccwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwff?wwwwwwwwwwwwwwwwwwwwwwwwww"
+  ]
+ },
+ {
+  "file": "attachment-7a4b282e0921ee5a92bb4bc0eff6ade0.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "exterior",
+  "sky_frac": 0.101,
+  "bg_frac": 0.214,
+  "coverage_pct": 78.57,
+  "bbox_norm": {
+   "x0": 0.0028,
+   "y0": 0.0037,
+   "x1": 0.9965,
+   "y1": 0.9936
+  },
+  "hedges_y": [
+   0.004,
+   0.053,
+   0.111,
+   0.158,
+   0.305,
+   0.537,
+   0.579,
+   0.617,
+   0.857,
+   0.899,
+   0.936,
+   0.991
+  ],
+  "vedges_x": [
+   0.002,
+   0.26,
+   0.278,
+   0.316,
+   0.497,
+   0.512,
+   0.546,
+   0.567,
+   0.593,
+   0.609,
+   0.626,
+   0.666,
+   0.817,
+   0.921,
+   0.974,
+   0.997
+  ],
+  "palette": [
+   {
+    "hex": "#482818",
+    "rgb": [
+     72,
+     40,
+     24
+    ],
+    "pct": 2.7
+   },
+   {
+    "hex": "#583828",
+    "rgb": [
+     88,
+     56,
+     40
+    ],
+    "pct": 2.6
+   },
+   {
+    "hex": "#683818",
+    "rgb": [
+     104,
+     56,
+     24
+    ],
+    "pct": 2.6
+   },
+   {
+    "hex": "#683828",
+    "rgb": [
+     104,
+     56,
+     40
+    ],
+    "pct": 2.5
+   },
+   {
+    "hex": "#582818",
+    "rgb": [
+     88,
+     40,
+     24
+    ],
+    "pct": 2.3
+   },
+   {
+    "hex": "#381808",
+    "rgb": [
+     56,
+     24,
+     8
+    ],
+    "pct": 1.4
+   },
+   {
+    "hex": "#783818",
+    "rgb": [
+     120,
+     56,
+     24
+    ],
+    "pct": 1.4
+   },
+   {
+    "hex": "#784828",
+    "rgb": [
+     120,
+     72,
+     40
+    ],
+    "pct": 1.3
+   },
+   {
+    "hex": "#484848",
+    "rgb": [
+     72,
+     72,
+     72
+    ],
+    "pct": 1.2
+   },
+   {
+    "hex": "#f8e8c8",
+    "rgb": [
+     248,
+     232,
+     200
+    ],
+    "pct": 1.0
+   },
+   {
+    "hex": "#f8f8f8",
+    "rgb": [
+     248,
+     248,
+     248
+    ],
+    "pct": 1.0
+   },
+   {
+    "hex": "#884818",
+    "rgb": [
+     136,
+     72,
+     24
+    ],
+    "pct": 1.0
+   }
+  ],
+  "zones": [
+   "ssssssssssssssssssssssssssDsssssssssssssssssssssssssssssssswwfww",
+   "sssssssssssssDsssssssfffffcsssssssssssssssssssssWWsssssswwswwgfs",
+   "ssssssssssss?ffffgfggggg?DffffssssssssssffffffDWDD?sssssssfsfDss",
+   "ssswwwwwsssggggggggggggfDDDDDDRsssssssssgffffffffDffsssffffccWss",
+   "sswwwwwwDDDDDDDDDDDDDDDDDDDD?DDDDsssssss?ggggggff?fffffffffff?ss",
+   "ssss?wwwfD??DD??WDDDWDWW??WD?cDDDDDgssss?ffffffgggfffffffgfDksss",
+   "wwwwwDwwp?ggD??c??DDWDWDc??DgcWWDD?DssssRDRDggggfffgffgDRRRW?sww",
+   "ssw???fffDggDDDDDDDDDDDDDDDDccWWWwwcc?ssDDDRDDRDRRRDRRDDDDDDksss",
+   "sssGGDp???fffffWffffffffWfffffccWDwccwwwDDDDDDDDDDDDDDDDDRRkssss",
+   "??wGGpDp?DDDDDDWDfDfDDDDDDDDDcfffgwDwwwwWWWDWDDDWDDDDWDDDDDsssss",
+   "wwDpcDDpDDD??RDDDD???WWDDDD??cDDDDccwwwwDDDDfccfcccWDWsDsDDsssss",
+   "wwwwcDDgDD???WR??D????DDD?RWRGDDDD?ccw?wfffffffffff??ccRsDssssss",
+   "wwwwwwpDDD??RDDWcDWW??DDDWDDDDDDWWDDDwwwfDDDDDDgDDDfccccsRwcccss",
+   "wwwwpDpDDDDDDcDDDDDDDDDDDDcDDDDDWDDDDwwwDDDDDccgDDDDDcc?DRwcccww",
+   "wwgg?fggggccDcDcDDccccccDDcDgDcD?ccffcwwWDD??ccDDDDDDDccccwcccww",
+   "wgggggggcgccccgcccccccccgggggcfccccccccwDDR?RcGDDDRWWD??D??cccww",
+   "wfffffffgggggggggcccccccggcggcccccc????cWWRWRcDDDDR?WWDDDRwccc??",
+   "wwwccffffffffffffffggggggggggccc???ccccc?DRDD?DDDDRWWDDDDfwwwwww",
+   "wwwcccccccccccccfffgfffffffff???ccccccccDDDfDcDDDDDWWWDDDfcwwwww",
+   "wwwwwwcccccccccccccwwwccfffff?cccccccwwwDpDgccppDgDcccg?ffgwwwww",
+   "sssssDsGwDDDDDDDDDDRDW?DWWDDWDDwWWWWDDDDDDDDDDWDWDDWggggggggcccc",
+   "ssssDDDGDDDDWDDDDDRDD?cccc??WRDwW???W?WWWWDDDDDDDDDWwggccccccccc",
+   "ss???DWWDDDDDDDWDDDDD??Dc???WDDw??c????D??WDDW?cDDDWcccccccccccc",
+   "w????WDDDDDDDDDRDD??DD??WD?RDDDwcccccccWc??DDDDDDDDWggccccc?????",
+   "ww???cDWDDD??DDRDW??DDDDDDDDDDDwccWccccWcc?DDWDDDDWWwgg???????g?",
+   "wwGWcccDDD????DRWW??DDDDDDDDDDDwWDcccccWWWcDDWcDDDWWwg???ggg????",
+   "GGDpcccDDW?cc?DRWWccDDDDDDDDDDDw?D?ccD?W?ccDDWcDDWWWwg????Dg????",
+   "wwwDccfDDDcW??DDWW??DDDDDDDDDDDwDD??WW?WcWwDDWDDDDDWw?gf??????gg",
+   "GGppcccDwDD?cDRRRW?WDDDDDDDDDRRw?????cccc??DDDDDcDDcw??g????ggcc",
+   "WDpDWcDDwDDRDcRDDW??DDDDDDDRRRRwDDDDDcDDDDDDDDDDDDDDggggcccccccc",
+   "wDDWpfDDDRRRDDRWDDDDRDDDDRRRRRDDDDDDDDDDDDDDDDDRRRDRwcgccccccggg",
+   "wpDpwffDwRRRDDDDDDDDwDRR?WW?RRRwDDDDDDDDDDDDDDDRRDDRwcccccggggww"
+  ]
+ },
+ {
+  "file": "attachment-87ad119d4539fc7a18b736d5cecd3d4d.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "exterior",
+  "sky_frac": 0.216,
+  "bg_frac": 0.372,
+  "coverage_pct": 62.76,
+  "bbox_norm": {
+   "x0": 0.0138,
+   "y0": 0.011,
+   "x1": 0.98,
+   "y1": 0.9715
+  },
+  "hedges_y": [
+   0.01,
+   0.038,
+   0.058,
+   0.095,
+   0.137,
+   0.173,
+   0.238,
+   0.657,
+   0.703,
+   0.761,
+   0.95,
+   0.971
+  ],
+  "vedges_x": [
+   0.015,
+   0.076,
+   0.116,
+   0.133,
+   0.382,
+   0.47,
+   0.559,
+   0.586,
+   0.696,
+   0.722,
+   0.852,
+   0.904,
+   0.929,
+   0.946,
+   0.961,
+   0.979
+  ],
+  "palette": [
+   {
+    "hex": "#f8e8c8",
+    "rgb": [
+     248,
+     232,
+     200
+    ],
+    "pct": 2.0
+   },
+   {
+    "hex": "#484848",
+    "rgb": [
+     72,
+     72,
+     72
+    ],
+    "pct": 1.8
+   },
+   {
+    "hex": "#482818",
+    "rgb": [
+     72,
+     40,
+     24
+    ],
+    "pct": 1.8
+   },
+   {
+    "hex": "#582818",
+    "rgb": [
+     88,
+     40,
+     24
+    ],
+    "pct": 1.7
+   },
+   {
+    "hex": "#887868",
+    "rgb": [
+     136,
+     120,
+     104
+    ],
+    "pct": 1.7
+   },
+   {
+    "hex": "#583828",
+    "rgb": [
+     88,
+     56,
+     40
+    ],
+    "pct": 1.5
+   },
+   {
+    "hex": "#f8e8d8",
+    "rgb": [
+     248,
+     232,
+     216
+    ],
+    "pct": 1.4
+   },
+   {
+    "hex": "#683828",
+    "rgb": [
+     104,
+     56,
+     40
+    ],
+    "pct": 1.3
+   },
+   {
+    "hex": "#683818",
+    "rgb": [
+     104,
+     56,
+     24
+    ],
+    "pct": 1.3
+   },
+   {
+    "hex": "#584848",
+    "rgb": [
+     88,
+     72,
+     72
+    ],
+    "pct": 1.2
+   },
+   {
+    "hex": "#786868",
+    "rgb": [
+     120,
+     104,
+     104
+    ],
+    "pct": 1.1
+   },
+   {
+    "hex": "#685858",
+    "rgb": [
+     104,
+     88,
+     88
+    ],
+    "pct": 1.1
+   }
+  ],
+  "zones": [
+   "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+   "ssssssssssssssssssssssssssssssssssss?sssssssssssssssssssssssssss",
+   "sssssssssssssssssssssssssssssssssfff?ssssssssssssssssssssswwwsww",
+   "sssssssssssssssssssssssssssfffffff?DcDssssssssssssssssssssssswww",
+   "sssssssswsssssssssssfffffffffffD???gccD???ssssssssssssssssssssss",
+   "sssssswwwwwsssssssssff?gggggggg?DDDRDgggggg???sssDssssssssssssss",
+   "sssswwwwwwwwwssssD?gggggggfDDDDDDDDRDDDDDgggccgc?fssssssssssssss",
+   "sssswwswwww?fgffgggDDDDDDDDDWDRDDD?RRDDDDDDDDDgggggffsss?sssssss",
+   "wwwwwssssswwDDDDDDDDWDDDDDDRDWDD????cgDDDDDDDDDDDDDDggfsssssssss",
+   "sssssssssswwwDD?RDDD????DDDDDDWDWR?ccccc???DDDDDDDDDDsssssssssss",
+   "sssssssssssssfD?cRWWc?ccDWWDDWWD?DgccccW?c?WcDcD?DDR?ssDcWssssss",
+   "ssssssssDssspsgcgDWD????DWDDDWDDDWgccccWW?WWcWcc?WgRssscccssssss",
+   "sssss??ssspppfDggDDDDDDDDDDDDDDDDffcccWWWWWDWDWW?Wgsssscccssssss",
+   "ssssss?sss??gfDDDDDDDDDffffffWWfff??cccccWWWWDDDDWWWssscccswwwww",
+   "ssssssGGD????ff?ffffffffffffffDffDDDDgccccccccccDDDWssscccwwwwww",
+   "swssDDDDDDDDDDDDDDDWDfDDDDDDDDDDDDDDccccfff?fgggggc?ssssswwwwwww",
+   "sssWWGcDDD????DDDDDDRDDDD?????DDD??DcccgRDfDgcggggggfffwwwwDwwww",
+   "wsDDDccDDDDDDD????RDDDDDD?W??WDDD??Wcc??DDDDDDcccccccccWDG?w??ww",
+   "wwwwwc?DDDDDDDD???R?WRDcDc????DccRRWccDDDDDDDDD?????cc?cccwww?ww",
+   "wwwwwccwgDDgWD???cRWWDDWD???W?DccRRRcDDDDRRDcD?c?WD?D?DDDDwwwwww",
+   "wwwwwwwDDDDDcDWDDDDDWDDWDW?WDWDDDDDDgDD?DDRD?D?W??D?DcDDDwwwwwww",
+   "wwwwwppDDD?DDDDccDDDRDDDDDDDDDDccppD?gD?DDWWDDDWWDDWWcDDDwwDwwww",
+   "wwwwggfDppcpcDfcc?DcDDDDDDDRDDDc?DgccDGgcDRD?D???ccDDfDDccDfwwww",
+   "wwwwgggg?gggc?cDDggcgc?????cccDcDD?c??ccDDD????ccccffffgccgfcwww",
+   "wfggggggcccccccccccccccgggggggggggfcc?ccccccccccccccccccccccccww",
+   "wffffffffggggggcccccccccccccgccccgfcccccccccccccccccccgc?????ggw",
+   "swwwfffffffffffffggggggcccccggggggfccccccccccccc????????????cccw",
+   "wwwwwwwwwwffffffffffffffggggggccccccccc??????????????cccccccccww",
+   "wwwwwwwwwwwccwwwffffffffffffffc????????????????ccccccccccccwwwww",
+   "wwwwwwwwwwwwwwccccwwwwfffffffff?????????ccccccccccccwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwffff???cccccccccwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+  ]
+ },
+ {
+  "file": "attachment-881293cb4f73a9b26f81c0a9f840be53.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "exterior",
+  "sky_frac": 0.223,
+  "bg_frac": 0.395,
+  "coverage_pct": 60.45,
+  "bbox_norm": {
+   "x0": 0.0276,
+   "y0": 0.011,
+   "x1": 0.98,
+   "y1": 0.9457
+  },
+  "hedges_y": [
+   0.011,
+   0.03,
+   0.051,
+   0.072,
+   0.141,
+   0.529,
+   0.653,
+   0.678,
+   0.705,
+   0.757,
+   0.924,
+   0.944
+  ],
+  "vedges_x": [
+   0.028,
+   0.053,
+   0.079,
+   0.108,
+   0.124,
+   0.164,
+   0.222,
+   0.307,
+   0.476,
+   0.537,
+   0.567,
+   0.675,
+   0.7,
+   0.865,
+   0.924,
+   0.977
+  ],
+  "palette": [
+   {
+    "hex": "#484848",
+    "rgb": [
+     72,
+     72,
+     72
+    ],
+    "pct": 3.4
+   },
+   {
+    "hex": "#584848",
+    "rgb": [
+     88,
+     72,
+     72
+    ],
+    "pct": 3.3
+   },
+   {
+    "hex": "#887878",
+    "rgb": [
+     136,
+     120,
+     120
+    ],
+    "pct": 3.1
+   },
+   {
+    "hex": "#683828",
+    "rgb": [
+     104,
+     56,
+     40
+    ],
+    "pct": 2.5
+   },
+   {
+    "hex": "#583828",
+    "rgb": [
+     88,
+     56,
+     40
+    ],
+    "pct": 2.5
+   },
+   {
+    "hex": "#482818",
+    "rgb": [
+     72,
+     40,
+     24
+    ],
+    "pct": 2.3
+   },
+   {
+    "hex": "#582818",
+    "rgb": [
+     88,
+     40,
+     24
+    ],
+    "pct": 1.8
+   },
+   {
+    "hex": "#786868",
+    "rgb": [
+     120,
+     104,
+     104
+    ],
+    "pct": 1.5
+   },
+   {
+    "hex": "#683818",
+    "rgb": [
+     104,
+     56,
+     24
+    ],
+    "pct": 1.5
+   },
+   {
+    "hex": "#685858",
+    "rgb": [
+     104,
+     88,
+     88
+    ],
+    "pct": 1.5
+   },
+   {
+    "hex": "#784828",
+    "rgb": [
+     120,
+     72,
+     40
+    ],
+    "pct": 1.4
+   },
+   {
+    "hex": "#887868",
+    "rgb": [
+     136,
+     120,
+     104
+    ],
+    "pct": 1.3
+   }
+  ],
+  "zones": [
+   "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+   "ssssssssssssssssssssssssDsssssssssssssssssssssssssssssssssssssss",
+   "sssssssssssssssssssssssWffD??ssssssssssssssssssssssssssssssswwws",
+   "sssssssssssssssssssssssDfcfgggg???f??ssssssDssssssssssssssssssss",
+   "sssssssswwssssssssfffsfcfffggggggggggggg??fffsssssssssssssssssss",
+   "ssssssw?wwwwwsssssRRfffffggggggggggggggggggfffssssssssssssssssss",
+   "ssssswwwwwwwwssssDDDDDDDDDDDDfffffffffgggggggfffssssssssssssssss",
+   "swsswssswwwwwwDfDDDR?RDDDDRDDDDWDDDDDDDDDDDfffffffffffssssssssss",
+   "sswwssssssffffDDDDD???DDDD?D?RRRDDDDRDRDDDDDDDDDDDDDDwwsssssssss",
+   "ssssssssssssDDDD?DDR?RDDWDW?c?WWDDDDD??DDDDDRDRRDDDffwwwssssssss",
+   "ssssssssssss?wR?WDDccDDDcDWcccWcDDWWDDWDWDD?D??WDR??DwwDwsssssss",
+   "ssssssssssss?sRWWDDccDDDcDDcccDcDDccDDWDcDDcc?WWWR??wwwDw?ssssss",
+   "ssssssssssssssDWWDDccDDDDDDDDDDDDDDDDDDDDDDDDcWWDDggpDss??ssssss",
+   "ssssssssssssDDDDDDD?ffffDDDDDDDDDDDDDDDDDDDDDDDDDDDgD?ssssswwwws",
+   "swssssssssDsDDDWcfDDDffffffffffffffffffffffffffDDffpDDDDsswwwwww",
+   "sssssssDssDDDcccfDDDDDDDDDDDDDDDDDDDDDDDDDfffffffffffffDGwwwwwww",
+   "sssss??sssffgfffDDDc??RDDDRDDDDRDDDDDDDDDDDDDDDDDDDDDDDDDGwDwwww",
+   "sssss???sfDDDDDDDDgc??RRD?D?D?DDDDDDD??DDDDDD?DDRDR?DDDD?DDD??ww",
+   "wwwwwwwD??DDWWDDD?GGcWRR??W?D?DDDD??cccDWDD?Wc?DWRR??DDDDDwDw?ww",
+   "wwwwwwwDDDDDWWWDDDDcccRR??WWD?DDDRD?ccc?DDR?W?WWWRRWDDDDDDDDwwww",
+   "wwwwwwwDwDDDWWDDDDDccgDDD?DWDWDDDDD?cccDDDD?DDWDDRRcDDDDwwwDwwww",
+   "wwwwwwwDwDDDDWDDDDDcc?DDDDDDDDDDDDDDDDDDDDDDDDDDDDDgpDDDDGwDwwww",
+   "wwwww?wfc?DDWWDDDGDcppDDDggggggggDDgggggggDgggggfDDD?c?pcDwfwwww",
+   "wwwwwfwfc?ffcccfccgpg?D?gggggggggDgggggggggggggfggg?cf?fccffwwww",
+   "wwcccccccccccccfccgcgfgggfgggggggggggggggggggggfgggcccggcggccgww",
+   "ww????ccccccccccccccgggggggggcccggcccccggggggggggggggggfgffffffw",
+   "wwc?????????cccccggggggggggggggggggggffffffffffffffffffffffffffw",
+   "wwwwccc?????????gfffffffffffffffffffffffffffffffffffffffwwwwwwww",
+   "wwwwwwwwwc??????fffffffffffffffffffffffffwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwcc???ffffffffffwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+   "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+  ]
+ },
+ {
+  "file": "attachment-8de3260b3a254b441cc12a53818f551d.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "interior",
+  "sky_frac": 0.011,
+  "bg_frac": 0.972,
+  "coverage_pct": 2.81,
+  "bbox_norm": {
+   "x0": 0.0304,
+   "y0": 0.0037,
+   "x1": 0.9965,
+   "y1": 0.8278
+  },
+  "hedges_y": [
+   0.004,
+   0.106,
+   0.412,
+   0.452,
+   0.487,
+   0.507,
+   0.588,
+   0.608,
+   0.648,
+   0.692,
+   0.769,
+   0.796
+  ],
+  "vedges_x": [
+   0.035,
+   0.211,
+   0.28,
+   0.334,
+   0.356,
+   0.369,
+   0.392,
+   0.502,
+   0.528,
+   0.568,
+   0.588,
+   0.63,
+   0.644,
+   0.66,
+   0.899,
+   0.984
+  ],
+  "palette": [
+   {
+    "hex": "#a8d8f8",
+    "rgb": [
+     168,
+     216,
+     248
+    ],
+    "pct": 10.1
+   },
+   {
+    "hex": "#e8f8f8",
+    "rgb": [
+     232,
+     248,
+     248
+    ],
+    "pct": 8.7
+   },
+   {
+    "hex": "#b8e8f8",
+    "rgb": [
+     184,
+     232,
+     248
+    ],
+    "pct": 8.0
+   },
+   {
+    "hex": "#c8e8f8",
+    "rgb": [
+     200,
+     232,
+     248
+    ],
+    "pct": 7.6
+   },
+   {
+    "hex": "#f8f8f8",
+    "rgb": [
+     248,
+     248,
+     248
+    ],
+    "pct": 4.9
+   },
+   {
+    "hex": "#d8e8f8",
+    "rgb": [
+     216,
+     232,
+     248
+    ],
+    "pct": 4.4
+   },
+   {
+    "hex": "#98d8f8",
+    "rgb": [
+     152,
+     216,
+     248
+    ],
+    "pct": 3.0
+   },
+   {
+    "hex": "#f8f888",
+    "rgb": [
+     248,
+     248,
+     136
+    ],
+    "pct": 2.7
+   },
+   {
+    "hex": "#d8f8f8",
+    "rgb": [
+     216,
+     248,
+     248
+    ],
+    "pct": 2.3
+   },
+   {
+    "hex": "#f8f898",
+    "rgb": [
+     248,
+     248,
+     152
+    ],
+    "pct": 1.3
+   },
+   {
+    "hex": "#b8c868",
+    "rgb": [
+     184,
+     200,
+     104
+    ],
+    "pct": 1.2
+   },
+   {
+    "hex": "#b8b868",
+    "rgb": [
+     184,
+     184,
+     104
+    ],
+    "pct": 1.2
+   }
+  ],
+  "zones": [
+   "?WDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDRDDDWWWWWDRDDDDDDDRRRDDDD",
+   "???WDDDRDDDDDDDDDDDDDDD????RDDDDDDDDDWDDDWWWDDDDDDDDDDRRRRRDWWWW",
+   "cc???DDDRDDDDDDDDDDDDDR??c??DDDDDDDDDDDDDDDDDDDDDDRDDDRR?????RDR",
+   "DW?c?DRDRDDDDDDDDDDDWDDRRccRRDDDDDDDDDDDDDDDDDDRRRRRRDW???RRRWWR",
+   "Dcc?cD??WDDDDDDDDDDDWD??DWWWWWWWDDDDDDDDDDDDDDRRWWDWRRRRWWWWWWWD",
+   "DccccR?c?DRRDDDDDRDDDRc?RRRRDDDDDDD??DDDDRRDDD????ccRDWWWWWWsssR",
+   "DccccDDccD?DDDDDDDRDDRRRRDDDDDDDDDD?cRDDRDRDRD??c?ccRDRRssRssssR",
+   "DccccDDccD??RDDWDDDRDRRDRRRRRRRRRDDRDDDDDsDDRcccccccRDRsssRssssR",
+   "DccccDDccRc?RDDDDDDD???????c?????R???D?DWWWWRcccccccRDRsssRssswR",
+   "Dcc?cRDccRccDDWWWDDRW?????ccc????R?c?D?RRRssRD?ccc??RDRw?wR?wwwR",
+   "DccccRDccRc?RDWDDDDR???c?W?c??cccR?c?W?RwwwwRD?ccW?cRRRc??RcwwwR",
+   "DDcccRcccRccRDDDDDDR?c?cccccc?cc?R?W?WWRwwwwRD?cDWWWRDRcc?RcsWWR",
+   "DDcccRcccWcDDDDDDDDRW??c?????ccDDR???DDRcRwDDD????ccRRRccRR?gWWR",
+   "ccccDWccWDc?cDDDDDDR?????DWcWDgDDR??DDDRDRRRDW??c?ccRDRRRRRRRRRR",
+   "RDg??DcDDRDDWDDWWDDDDDWDDDDDRDDDDDDDDDRDRRRRDDWWD?gDR?WWWW?cDcWW",
+   "DDDD?DWRDWDDWDDWDDDDDDDDDDDDDDDDDDDDDDDRRRRDDRRRDDDDDDDWW??DWWDG",
+   "DDDRDDRRDWDD????DDDDDDDDDDDDDDDDDDDDDDDDDDRRRRRRDDDDRRDDRRRRDDDD",
+   "DDDRDDWWDW?????WWDRDDDDDDDDDDDDDDDDDDDDRRDRRDRRRRRRRRRDDDRRRRDDD",
+   "DDDRDDW????WDWWWRDRDDDDDDDDDDDDDDDDDDRRRDDRRRDRRRDRRRRDDDRRRRDD?",
+   "D?D???WWcWWDDDRDDDRDWWWWWW??WWW?WWWD?RRRRRRDDDRRRRRRRDDDRRRRRDD?",
+   "WWWWRWWWWWDDDDDDRDWRWcWW??c??????WWR?WWRRRDRDDDDDDDDDDDDWc??RRRR",
+   "WWRcccccc?DDDDRDRWWDWRWRWWDDDDDDDDDDDDDDDDDDDWWRRRRRRDDRRccccc??",
+   "?ccccccc??DDDDDDDDDDDDDDDDDDDDD??DDDRRDRRRRDDRRRRRRRRDDRRccccccc",
+   "cccccccRRWDDDDDDD?RRDDWDDDDDDDRDRRRRWDRDDRDRRDDRRRRRRDDRRc?ccccc",
+   "ccccccRRWWDDDDDDDDDDDDDDDDDDDDDDWWW??DWDDDDRRDDDDDDRDDDDWc?ccccc",
+   "cccccRRRWWDDDDDDDDDgDDDDDDRDDD?DWcWc??DDDDDRRDDDDDDDDDDDRcccccc?",
+   "RRRRRRRWWWDDDDDDDDDDD?DDDRRDDDDDWWDDDDDDDDDDDDDDDDDDDWWWW?cccccc",
+   "RRRRRRRWWWDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDW?WWWWWWWWWWccccccc",
+   "WWWWRRRRWWDDDDDDDDDDDDDDDDDDDDDDDDDDDDDRWWW?WW??WWWWWWWW???????c",
+   "WWWWWRRRRRDDDDDDDDDDDDDDDDDDDDDDR?RWRWWWWWWWWWWWWWWRRRRR???ccccc",
+   "????RRRRRRDDDDDDDDDDDDDDDDWWWWWWWWWWWWWWWWWWWRRRRRRRRRcccccccccc",
+   "WWDRRRRRRDDDDDDDDRRRRRRWWWWWWWWWWWWWWWRRRRRRRRRRRccccccccccccccc"
+  ]
+ },
+ {
+  "file": "attachment-ecc05f3996aae40c157d60fde807e080.png",
+  "w": 1448,
+  "h": 1086,
+  "kind": "interior",
+  "sky_frac": 0.004,
+  "bg_frac": 0.983,
+  "coverage_pct": 1.68,
+  "bbox_norm": {
+   "x0": 0.0028,
+   "y0": 0.0331,
+   "x1": 0.9662,
+   "y1": 0.9751
+  },
+  "hedges_y": [
+   0.032,
+   0.122,
+   0.261,
+   0.28,
+   0.315,
+   0.337,
+   0.377,
+   0.43,
+   0.632,
+   0.651,
+   0.673,
+   0.728
+  ],
+  "vedges_x": [
+   0.003,
+   0.054,
+   0.088,
+   0.133,
+   0.229,
+   0.305,
+   0.378,
+   0.392,
+   0.412,
+   0.513,
+   0.691,
+   0.745,
+   0.833,
+   0.854,
+   0.876,
+   0.944
+  ],
+  "palette": [
+   {
+    "hex": "#f86848",
+    "rgb": [
+     248,
+     104,
+     72
+    ],
+    "pct": 10.2
+   },
+   {
+    "hex": "#f87858",
+    "rgb": [
+     248,
+     120,
+     88
+    ],
+    "pct": 5.6
+   },
+   {
+    "hex": "#e86848",
+    "rgb": [
+     232,
+     104,
+     72
+    ],
+    "pct": 3.9
+   },
+   {
+    "hex": "#e85848",
+    "rgb": [
+     232,
+     88,
+     72
+    ],
+    "pct": 3.5
+   },
+   {
+    "hex": "#f86838",
+    "rgb": [
+     248,
+     104,
+     56
+    ],
+    "pct": 2.7
+   },
+   {
+    "hex": "#f87848",
+    "rgb": [
+     248,
+     120,
+     72
+    ],
+    "pct": 2.2
+   },
+   {
+    "hex": "#f87838",
+    "rgb": [
+     248,
+     120,
+     56
+    ],
+    "pct": 2.1
+   },
+   {
+    "hex": "#e85838",
+    "rgb": [
+     232,
+     88,
+     56
+    ],
+    "pct": 1.3
+   },
+   {
+    "hex": "#f86858",
+    "rgb": [
+     248,
+     104,
+     88
+    ],
+    "pct": 1.3
+   },
+   {
+    "hex": "#f8f8f8",
+    "rgb": [
+     248,
+     248,
+     248
+    ],
+    "pct": 1.2
+   },
+   {
+    "hex": "#f88848",
+    "rgb": [
+     248,
+     136,
+     72
+    ],
+    "pct": 1.1
+   },
+   {
+    "hex": "#786818",
+    "rgb": [
+     120,
+     104,
+     24
+    ],
+    "pct": 1.1
+   }
+  ],
+  "zones": [
+   "RRRDDDDDDDDDDDDDRDDDDDRRRDDDRDDDDRRDDDDDDDDDDRRDDDDDDDDDDRRRDRRR",
+   "RRWRRDDDDWcRDDDDDRDDDDDDDDDDDDD????RRRRRRRRDDWWDDRDDDDDDDDDDDRWR",
+   "sRRRRDDRRccccRDDDDDDDDDDDDRRRR??????DDRDDDRDRDDDDRDRDDDDDDDRRW?R",
+   "ssRRsRDRRcD??WDRDDDDDDDDRRRDDD???R?RDDRDDDRDDDDDDDDDDDDRDDRRWc?D",
+   "?sRRsRDRRcDW?c?WcDDWRDRDDDDRDDDD??RDDDDDDDDDDRRRRRRRRDRRDRRW?cRW",
+   "pw?RRRDRRD?c?c?WWDRWRRRDDDRRDDDDDRDDDRDDDDRDDDDDDRW??RRRDRR?cccW",
+   "pW?wDDDRRD?cccWDWRRWWWRRR?RDDDDDDRRRRRRRRRRRRRRRRDW??R?RDRRccccR",
+   "ppDD?RDWc?DcccW?WRRW?c?R??RDDD?DcccW??WWWcDWWWWWDRWWRRDDDDDccccc",
+   "?wDR?RDWccWc?cW?WRR??c?RWWWDDDDRWWWW?WWWWWR????WRRW?RRW?DDDccWcc",
+   "??RRRDDWccWDccD??RRDcc?RR?WWDDDRWRWW?c?WW?R????WRRDDRDDcDDRW??WR",
+   "g?DRRDDWccWc?c?W?RDDWcWRR?WWDDDR?WWcccDWW?DDW?DWRRDDRD?cDDDc?cWc",
+   "ppDR?DDWcc?W?cD??RD?DDWRRWWWDDDR?WWccWWWDWRDWWRDRRDDRW?cD??cW??c",
+   "ggRR?RDWcc?DRRDWWRWc???RDWWDDDDRDDDDDDDDRDRDDDRDRRRRRW?WRWDcW??c",
+   "gRRRRRDW?c?WDDDRRDWcDRR?D?WDDDDRDDDDDRDDRDRDRDRRRRRRDWWcDDDcWc?c",
+   "Rwww?RRWcc??DR???DDcDDDDDDDDDDRRRRRRRRDDRDDDRRD???WDD?WWDDDGW?cc",
+   "wwwDDDRDcc?DWDcc?RD?DDDD?WDDcW??WDWc?WW?RDRRRDDDDDW?R?WDDDDD?ccD",
+   "DDDcDDDcccWWDRcc?RDcRWDD?WDDW????R???DDDRRRR??DDDDW?RGD?DDDDDWDD",
+   "DDDcDDcWccWDDRWc?RDcRDDDWDDD??GDDDWDWDDDRRRD??DDDWDWDDD?RDD???WD",
+   "DDDDDDDDD?WWDDDW?RD?DDDD?DDDDDDDDDWWcDDDRDDR??DDDDDWDW??RDgW?DDD",
+   "gDDDDDDRRDDWDRDWWWDDDDDDDDDDDDRDDDWWcD?DDDDRDDDDDDDDcg?RRDccDDDD",
+   "ggcDDDDRRDDDDDDWWWDDDDDDDDDDDDDDDDWWWDcDDDDDDDRRRRDDDWDDRWcDDRRD",
+   "?ggDDDWRRDRDDRDRRRRDDRDDDWDDD???DDDWWWWWDDDDWWWWWWDDDDDDWWWWWWWW",
+   "ggcDDWWRDDDRRRDRRRRDDDDDDDDDDDDDDDDDRRRDDRD?WWWWWDDDRRRW????WW??",
+   "g?RRDDWWRRRWWRDRD?WWcWDDDRDDDDDDDRRRRRRWD?????Wcc?WWWRDRRR??cWWc",
+   "DDRRDDRRRRRDD??ccccccWDDDDDDDDDDDRRDRRRW???cccccccWWWWDDRRRR?Dcc",
+   "DDDDDDRRDRRDDgg??cWWWWWWWWDWWWWWWWDWDDD??????cccccccccDRRRRDRDDD",
+   "DDDDDR?DDRRRDcc???????cc???ggg?ggg?cccccccccccccccccccWDRRRDRWWD",
+   "DDkDRR?DDWRRRccccccc??cc???ccccccccccccccccccccccccccccRRRRRWDDD",
+   "DDDDRDWDRRRRccccccccccccccccccccccccccccccccccccccccccc?RRRRDDDD",
+   "DDDDRRDDccc??????RRR????????????????cccccccccccccccc?c???RRRWDDD",
+   "DDkDRR?cRRRRRRRRR??????????????????????????R?R?RRRRRWW????RRRDDD",
+   "DDkDRRRRRRRRRRRRRRRRRWR???????????????RRRRRRRRRRRRRRWWWg???RRDDD"
+  ]
+ }
+]

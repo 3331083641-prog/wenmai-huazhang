@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "slug": "zhuxianzhen",
+  "title": "瑞猫迎春",
+  "art": {
+    "file": "art.webp",
+    "width": 1024,
+    "height": 1024,
+    "aspect": 1.0
+  },
+  "depth": {
+    "file": "depth-rg.png",
+    "width": 768,
+    "height": 768,
+    "gamma": 0.72
+  },
+  "backdrop": {
+    "file": "backdrop.webp"
+  },
+  "masks": {
+    "file": "masks.png",
+    "width": 768,
+    "height": 768,
+    "coverage": {
+      "water": 0.0531,
+      "mist": 0.1038,
+      "foliage": 0.2838
+    }
+  },
+  "cutouts": [
+    {
+      "bbox_px": [
+        164,
+        217,
+        438,
+        488
+      ],
+      "bbox_norm": [
+        0.1602,
+        0.2119,
+        0.4277,
+        0.4766
+      ],
+      "alpha_coverage": 0.7294,
+      "region_share": 0.1397,
+      "size": [
+        438,
+        488
+      ],
+      "id": "cat",
+      "label": "猫身与虎斑",
+      "file": "cutout-cat.webp",
+      "bytes": 100670
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "cat-face",
+      "x": 0.35,
+      "y": 0.45,
+      "depth": 0.88,
+      "depth_measured": 0.8922,
+      "depth_overridden": false
+    },
+    {
+      "id": "tiger-stripe",
+      "x": 0.5493,
+      "y": 0.6494,
+      "depth": 0.8292,
+      "depth_measured": 0.8292,
+      "depth_overridden": false
+    },
+    {
+      "id": "peony",
+      "x": 0.105,
+      "y": 0.75,
+      "depth": 0.5963,
+      "depth_measured": 0.5963,
+      "depth_overridden": false
+    },
+    {
+      "id": "cloud-motif",
+      "x": 0.15,
+      "y": 0.15,
+      "depth": 0.4118,
+      "depth_measured": 0.4118,
+      "depth_overridden": false
+    },
+    {
+      "id": "wave-band",
+      "x": 0.7495,
+      "y": 0.9346,
+      "depth": 0.7585,
+      "depth_measured": 0.7585,
+      "depth_overridden": false
+    },
+    {
+      "id": "title-banner",
+      "x": 0.7495,
+      "y": 0.0547,
+      "depth": 0.3681,
+      "depth_measured": 0.3681,
+      "depth_overridden": false
+    }
+  ],
+  "camera": {
+    "fov": 34.0,
+    "plane_height": 1.0,
+    "plane_width": 1.0,
+    "distance_fill": 1.6354,
+    "depth_amplitude": 0.3,
+    "yaw_limit_deg": 18.0,
+    "pitch_limit_deg": 12.0,
+    "dolly_near": 0.62,
+    "dolly_far": 1.55,
+    "entry": {
+      "from_scale": 1.74,
+      "duration_ms": 2600
+    }
+  },
+  "provenance": {
+    "depth_model": "depth-anything/Depth-Anything-V2-Small-hf",
+    "depth_generated_at": "2026-10-21T15:39:44",
+    "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
+  }
+}

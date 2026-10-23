@@ -69,6 +69,8 @@ export default function AICreator() {
   const [backendStatus, setBackendStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
   const [imageLoadState, setImageLoadState] = useState<'idle' | 'loading' | 'loaded' | 'error'>('idle');
   const [imageLoadError, setImageLoadError] = useState<string | null>(null);
+  const [savedCase, setSavedCase] = useState<GenerateResponse['savedCase']>(null);
+  const [autoSaveError, setAutoSaveError] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const generationLockRef = useRef(false);
@@ -273,6 +275,10 @@ export default function AICreator() {
        subjectLock: payload.subjectLock || null,
     };
     localStorage.setItem('wenmai_latest_result', JSON.stringify(resultToSave));
+
+    // 后端已把这次结果落盘成展厅案例；这里只做提示，不重复上传
+    setSavedCase(nextResult.savedCase ?? null);
+    setAutoSaveError(nextResult.autoSave?.enabled && !nextResult.autoSave.saved ? (nextResult.autoSave.error || '自动保存未完成') : null);
   };
 
   const handleGenerate = async () => {
@@ -291,6 +297,8 @@ export default function AICreator() {
     setConnectionNotice(null);
     setImageLoadState('idle');
     setImageLoadError(null);
+    setSavedCase(null);
+    setAutoSaveError(null);
     
     // Animate steps
     let currentStep = 0;
@@ -685,6 +693,32 @@ export default function AICreator() {
                       <button type="button" onClick={() => navigate('/products')} className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"><ArrowRight className="h-4 w-4" />前往文创预览</button>
                     </div>
                     {downloadStatus && <p role="status" aria-live="polite" className="mt-2 w-full max-w-[520px] text-center text-xs text-ink/60">{downloadStatus}</p>}
+
+                    {savedCase && (
+                      <div
+                        role="status"
+                        aria-live="polite"
+                        className="mt-3 flex w-full max-w-[520px] flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-lg border border-gold/45 bg-white/75 px-3 py-2 text-xs text-ink/70"
+                      >
+                        <span className="inline-flex items-center gap-1.5 font-medium text-ink/75">
+                          <Check className="h-3.5 w-3.5 text-primary" />
+                          已自动存入文化作品展厅
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/gallery#case-${savedCase.caseId}`)}
+                          className="underline decoration-dotted underline-offset-4 transition hover:text-primary"
+                        >
+                          查看《{savedCase.artworkTitle}》
+                        </button>
+                        <span className="text-ink/40">参考图 · 成图 · 文化卡已一并保存</span>
+                      </div>
+                    )}
+                    {autoSaveError && (
+                      <p role="status" className="mt-2 w-full max-w-[520px] text-center text-xs text-ink/50">
+                        图片已生成，但自动保存未完成（{autoSaveError}）。可在展厅刷新后确认。
+                      </p>
+                    )}
 
                     <div className="mt-7 w-full">
                       {resultPayload && resultImage && <CultureCard imageUrl={resultImage} theme={resultPayload.theme} styleId={resultPayload.style} styleName={resultStyleData.name} visualFeatures={resultData?.visionAnalysis?.visual_features || resultStyleData.visualFeatures} cultureSummary={resultCultureSummary} recommendedScenes={resultData?.visionAnalysis?.recommended_scenes || resultStyleData.recommendedScenes} generatedAt={resultGeneratedAt} analysis={resultData?.visionAnalysis || null} analysisSource={resultData?.analysisSource || 'template_fallback'} />}
