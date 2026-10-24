@@ -339,13 +339,8 @@ export default function Scenarios() {
   });
 
   return (
-    <div className="relative overflow-hidden bg-[#FAF8F5]/80 py-12 md:py-20 lg:py-24">
-      {/* 柔和背景光晕 */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute top-1/3 left-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* ── 页面标题区 ──────────────────────────────────────────── */}
+    <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 lg:py-24">
+      {/* ── 页面标题区 ──────────────────────────────────────────── */}
         <header className="mb-20 md:mb-28 text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs md:text-sm font-medium mb-5 shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-gold" />
@@ -552,6 +547,5 @@ export default function Scenarios() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
