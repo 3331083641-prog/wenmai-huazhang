@@ -4,12 +4,13 @@ import { cn } from '../lib/utils';
 import { Leaf, Menu, X } from 'lucide-react';
 
 /**
- * 全站唯一导航顺序：风格库 → 智能生成 → 作品展厅 → 纹脉展馆 → 文创转化 → 应用场景 → 关于项目。
- * 首页不设导航项，由左侧品牌 Logo 回到 `/`。
+ * 全站唯一导航顺序：首页 → 风格库 → 智能生成 → 作品展厅 → 纹脉展馆 → 文创转化 → 应用场景 → 关于项目。
+ * 首页既保留 Logo 入口，也按要求作为导航第一项。
  * 纹脉展馆（/heritage-gallery）与画境漫游（/wander/:id）在 App.tsx 里渲染于 MainLayout 之外，
  * 因此沉浸式页面本来就不会出现这根导航条 —— 不要为了“补全导航”把它们挪进布局。
  */
 const NAV_ITEMS = [
+  { name: '首页', path: '/' },
   { name: '风格库', path: '/styles' },
   { name: '智能生成', path: '/creator' },
   { name: '作品展厅', path: '/gallery' },
