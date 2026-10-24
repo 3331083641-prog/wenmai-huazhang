@@ -502,12 +502,12 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── 文创与传播场景示意 ───────────────────────────────────── */}
+      {/* ── 文创与空间展陈美学 ───────────────────────────────────── */}
       <div className="mb-20">
         <div className="flex items-center gap-4 mb-8">
           <div>
             <p className="text-xs tracking-[0.25em] text-primary/70 font-medium">应用落地</p>
-            <h2 className="text-2xl font-serif font-bold text-ink">文创衍生与传播场景</h2>
+            <h2 className="text-2xl font-serif font-bold text-ink">文创衍生与空间展陈美学</h2>
           </div>
           <div className="flex-1 h-px bg-gradient-to-r from-primary/20 to-transparent"></div>
           <Link
@@ -517,63 +517,76 @@ export default function Home() {
             打开文创工坊 <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <Link
             to="/products"
-            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-primary/10"
+            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-primary/10 bg-[#FAF7F2]"
           >
             <img
-              src={import.meta.env.BASE_URL + "zhuxianzhen.png"}
+              src={import.meta.env.BASE_URL + "scenarios/product-package-concept.jpg"}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              alt="文化海报"
+              alt="朱仙镇年画瑞猫节庆礼盒"
+              loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
             <div className="absolute bottom-4 left-4 right-4 text-white">
-              <span className="text-[10px] tracking-widest text-gold uppercase font-serif">POSTER FORMAT</span>
-              <div className="text-base font-serif font-bold">节庆与文创海报版式</div>
-              <p className="text-xs text-white/75 mt-0.5">将年画质感映射至文旅宣传大片</p>
+              <span className="text-[10px] tracking-widest text-gold uppercase font-serif">NEW YEAR PACKAGING</span>
+              <div className="text-base font-serif font-bold">年画节庆礼盒包装</div>
+              <p className="text-xs text-white/80 mt-0.5 line-clamp-1">瑞猫年画烫金浮雕与利是封</p>
             </div>
           </Link>
 
           <Link
             to="/products"
-            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-primary/10"
+            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-primary/10 bg-[#FAF7F2]"
           >
-            <div className="w-full h-full bg-[#f4f1ea] flex items-center justify-center relative p-8 group-hover:scale-105 transition-transform duration-700">
-              <div className="w-2/3 aspect-square rounded-full border-4 border-white shadow-xl overflow-hidden z-10 shrink-0">
-                <img
-                  src={import.meta.env.BASE_URL + "qinghua.png"}
-                  className="w-full h-full object-cover mix-blend-multiply"
-                  alt="陶瓷杯垫"
-                />
-              </div>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
+            <img
+              src={import.meta.env.BASE_URL + "scenarios/product-coaster-lifestyle.jpg"}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              alt="青花瓷杯垫茶席生活美学"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
             <div className="absolute bottom-4 left-4 right-4 text-white">
-              <span className="text-[10px] tracking-widest text-gold uppercase font-serif">MERCHANDISE</span>
-              <div className="text-base font-serif font-bold">文创实体打样与生活美学</div>
-              <p className="text-xs text-white/75 mt-0.5">青花瓷盘与杯垫纹样效果模拟</p>
+              <span className="text-[10px] tracking-widest text-gold uppercase font-serif">TEA MERCHANDISE</span>
+              <div className="text-base font-serif font-bold">青花瓷杯垫与茶席</div>
+              <p className="text-xs text-white/80 mt-0.5 line-clamp-1">缠枝双蝶纹样与天然棉麻生活</p>
             </div>
           </Link>
 
           <Link
-            to="/heritage-gallery"
-            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-primary/10"
+            to="/products"
+            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-primary/10 bg-[#FAF7F2]"
           >
-            <div className="w-full h-full bg-[#18181b] flex items-center justify-center relative p-6 group-hover:scale-105 transition-transform duration-700">
-              <div className="w-full aspect-video bg-black rounded-lg shadow-[0_0_25px_rgba(255,255,255,0.12)] border border-gray-800 flex overflow-hidden">
-                <img
-                  src={galleryExterior}
-                  className="w-full h-full object-cover opacity-85"
-                  alt="展陈大屏"
-                />
-              </div>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
+            <img
+              src={import.meta.env.BASE_URL + "scenarios/product-embroidery-lifestyle.jpg"}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              alt="汴绣丝绸艺术团扇生活"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
             <div className="absolute bottom-4 left-4 right-4 text-white">
-              <span className="text-[10px] tracking-widest text-gold uppercase font-serif">EXHIBITION</span>
-              <div className="text-base font-serif font-bold">数字美术馆与展陈大屏</div>
-              <p className="text-xs text-white/75 mt-0.5">三维空间漫游与数字展陈映射</p>
+              <span className="text-[10px] tracking-widest text-gold uppercase font-serif">SILK EMBROIDERY</span>
+              <div className="text-base font-serif font-bold">汴绣真丝团扇与长巾</div>
+              <p className="text-xs text-white/80 mt-0.5 line-clamp-1">双面劈丝牡丹与宋韵刺绣</p>
+            </div>
+          </Link>
+
+          <Link
+            to="/scenarios"
+            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-primary/10 bg-black"
+          >
+            <img
+              src={import.meta.env.BASE_URL + "scenarios/museum-screen-concept.jpg"}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              alt="环幕数字展陈大屏"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
+            <div className="absolute bottom-4 left-4 right-4 text-white">
+              <span className="text-[10px] tracking-widest text-gold uppercase font-serif">DIGITAL EXHIBITION</span>
+              <div className="text-base font-serif font-bold">环幕展陈与沉浸空间</div>
+              <p className="text-xs text-white/80 mt-0.5 line-clamp-1">超高清曲面大屏空间全景展陈</p>
             </div>
           </Link>
         </div>

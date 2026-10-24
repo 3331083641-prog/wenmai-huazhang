@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import {
@@ -21,6 +22,15 @@ import cultureCardShot from '../../../docs/screenshots/culture-card.png';
 import interiorShot from '../../../docs/screenshots/heritage-interior.png';
 import productShot from '../../../docs/screenshots/creative-products.png';
 
+type ScenarioTab = {
+  id: string;
+  label: string;
+  shot: string;
+  alt: string;
+  badge?: string;
+  isLive?: boolean;
+};
+
 type Scenario = {
   id: string;
   number: string;
@@ -39,6 +49,7 @@ type Scenario = {
   shot?: string;
   alt?: string;
   position?: 'center' | 'upper';
+  tabs?: ScenarioTab[];
 };
 
 /**
@@ -63,6 +74,24 @@ const SCENARIOS: Scenario[] = [
     cta: '进入三维展馆',
     shot: interiorShot,
     alt: '纹脉展馆内景：画框、展柜与器物陈列',
+    tabs: [
+      {
+        id: '3d-live',
+        label: '3D 展馆实景',
+        shot: interiorShot,
+        alt: '纹脉展馆内景：画框、展柜与器物陈列',
+        badge: '系统实景 · Three.js 展馆',
+        isLive: true,
+      },
+      {
+        id: 'screen-concept',
+        label: '环幕展陈大屏',
+        shot: import.meta.env.BASE_URL + 'scenarios/museum-screen-concept.jpg',
+        alt: '现代顶级美术馆沉浸式数字艺术展厅全景（宋画青绿山水）',
+        badge: '空间展陈构想 · 超高清环幕',
+        isLive: false,
+      },
+    ],
   },
   {
     id: 'heritage-education',
@@ -100,6 +129,40 @@ const SCENARIOS: Scenario[] = [
     shot: productShot,
     alt: '文创转化工坊：多载体排版与效果预览',
     position: 'upper',
+    tabs: [
+      {
+        id: 'studio-live',
+        label: '工坊实时排版',
+        shot: productShot,
+        alt: '文创转化工坊：多载体排版与效果预览',
+        badge: '系统功能 · 8 类载体打样',
+        isLive: true,
+      },
+      {
+        id: 'box-concept',
+        label: '年画伴手礼盒',
+        shot: import.meta.env.BASE_URL + 'scenarios/product-package-concept.jpg',
+        alt: '朱仙镇年画瑞猫节庆礼盒与利是封包装打样',
+        badge: '国潮包装概念 · 烫金起鼓',
+        isLive: false,
+      },
+      {
+        id: 'coaster-concept',
+        label: '青花茶席杯垫',
+        shot: import.meta.env.BASE_URL + 'scenarios/product-coaster-lifestyle.jpg',
+        alt: '青花瓷缠枝纹吸水杯垫与生活美学茶席',
+        badge: '生活器物概念 · 新中式茶道',
+        isLive: false,
+      },
+      {
+        id: 'embroidery-concept',
+        label: '汴绣真丝团扇',
+        shot: import.meta.env.BASE_URL + 'scenarios/product-embroidery-lifestyle.jpg',
+        alt: '宋代汴绣双面绣丝绸真丝团扇与长巾',
+        badge: '丝织非遗概念 · 劈丝刺绣',
+        isLive: false,
+      },
+    ],
   },
   {
     id: 'creative-studio',
@@ -153,11 +216,17 @@ const SCENARIOS: Scenario[] = [
     highlights: ['符合手机竖屏黄金视角的视觉规范', '文化卡与社交图文模板设计', '轻量化无门槛的社交裂变模式'],
     to: '/styles',
     cta: '查看视觉风格素材',
+    shot: import.meta.env.BASE_URL + 'scenarios/social-mobile-concept.jpg',
+    alt: '极简智能手机展示宋代汝窑天青釉文化知识日签卡',
   },
 ];
 
 export default function Scenarios() {
   const shouldReduceMotion = useReducedMotion();
+  const [activeTabs, setActiveTabs] = useState<Record<string, string>>({
+    'museum-exhibition': '3d-live',
+    'creative-products': 'studio-live',
+  });
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 md:py-20 lg:py-24">
@@ -196,6 +265,11 @@ export default function Scenarios() {
         {SCENARIOS.map((item, index) => {
           const isEven = index % 2 === 0;
           const Icon = item.icon;
+          const activeTabId = activeTabs[item.id] || (item.tabs ? item.tabs[0].id : '');
+          const currentTab = item.tabs?.find((t) => t.id === activeTabId) || item.tabs?.[0];
+          const displayShot = currentTab?.shot || item.shot;
+          const displayAlt = currentTab?.alt || item.alt || item.title;
+          const displayBadge = currentTab?.badge || (item.status === 'live' ? '实景运行 · 系统界面' : '应用构想 · 视觉示意');
 
           return (
             <motion.article
@@ -215,60 +289,54 @@ export default function Scenarios() {
                 }`}
               >
                 <div className="group relative aspect-[16/10] overflow-hidden rounded-2xl border-2 border-white/90 shadow-xl bg-[#F7F4EE]">
-                  {item.shot ? (
-                    <img
-                      src={item.shot}
-                      alt={item.alt || item.title}
-                      className={`w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] ${
-                        item.position === 'upper' ? 'object-top' : 'object-center'
-                      }`}
-                      loading="lazy"
-                    />
-                  ) : (
-                    /* 针对社交传播概念场景的精美艺术化手机模拟构想 */
-                    <div className="relative w-full h-full bg-gradient-to-br from-[#2D1B1A] via-[#1E1413] to-[#120B0A] flex items-center justify-center p-6 sm:p-8 overflow-hidden">
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(197,165,107,0.2),transparent_70%)]"></div>
-                      
-                      {/* 手机外框模型 */}
-                      <div className="relative w-56 sm:w-64 aspect-[9/18] rounded-[2.2rem] border-[6px] border-[#382624] shadow-2xl bg-white overflow-hidden flex flex-col group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] transition-all duration-500">
-                        {/* 手机屏幕内容 */}
-                        <div className="relative w-full h-full bg-[#FAF7F2] p-3 flex flex-col justify-between">
-                          <div className="w-full aspect-[4/3] rounded-lg overflow-hidden border border-primary/20 shadow-xs mb-2">
-                            <img
-                              src={import.meta.env.BASE_URL + "zhuxianzhen.png"}
-                              className="w-full h-full object-cover"
-                              alt="社交分享示意"
-                            />
-                          </div>
-                          <div className="flex-1 flex flex-col justify-center">
-                            <span className="text-[9px] text-primary/80 font-serif">文化日签 · 纹脉华章</span>
-                            <p className="text-[11px] font-serif font-bold text-ink mt-0.5">《瑞猫迎春 · 木版年画》</p>
-                            <p className="text-[9px] text-ink/60 mt-1 line-clamp-2">
-                              “朱砂为底，石黄作辉。门神披甲之态化为迎春之猫，祥纹入微。”
-                            </p>
-                          </div>
-                          <div className="pt-2 border-t border-primary/10 flex items-center justify-between text-[8px] text-ink/40 font-mono">
-                            <span>#传统文化数字活化</span>
-                            <span>保存卡片</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* 装饰卡片 */}
-                      <div className="absolute right-8 bottom-8 hidden sm:block p-3 rounded-xl bg-white/90 backdrop-blur-md shadow-lg border border-gold/30 text-xs font-serif text-ink max-w-[160px]">
-                        <span className="text-[10px] text-primary block mb-0.5">文博传播示意</span>
-                        年轻人喜爱的数字文化日签卡
-                      </div>
+                  {/* 可交互切换标签（若该场景提供多维度实景 / 样机对比） */}
+                  {item.tabs && (
+                    <div className="absolute top-3 left-3 right-3 sm:right-auto z-30 flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-black/60 backdrop-blur-md border border-white/20 shadow-lg">
+                      {item.tabs.map((tab) => {
+                        const isSelected = tab.id === activeTabId;
+                        return (
+                          <button
+                            key={tab.id}
+                            type="button"
+                            onClick={() => setActiveTabs((prev) => ({ ...prev, [item.id]: tab.id }))}
+                            className={`px-2.5 py-1 rounded-lg text-xs font-serif transition-all cursor-pointer ${
+                              isSelected
+                                ? 'bg-white text-ink font-bold shadow-xs'
+                                : 'text-white/80 hover:text-white hover:bg-white/10'
+                            }`}
+                          >
+                            {tab.label}
+                          </button>
+                        );
+                      })}
                     </div>
                   )}
 
+                  {/* 针对社交传播日签卡的浮动标签 */}
+                  {!item.tabs && item.id === 'social-dissemination' && (
+                    <div className="absolute top-3.5 left-3.5 z-20 px-3 py-1 rounded-xl bg-black/60 backdrop-blur-md border border-white/20 shadow-lg text-xs font-serif text-white/95">
+                      文化日签 · 汝窑天青釉
+                    </div>
+                  )}
+
+                  {displayShot && (
+                    <img
+                      src={displayShot}
+                      alt={displayAlt}
+                      className={`w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] ${
+                        item.position === 'upper' && !item.tabs ? 'object-top' : 'object-center'
+                      }`}
+                      loading="lazy"
+                    />
+                  )}
+
                   {/* 悬停光晕与状态角标 */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white text-xs">
-                    <span className="font-serif tracking-wider bg-black/45 backdrop-blur-md px-3 py-1 rounded-md border border-white/20">
-                      {item.category}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white text-xs z-20">
+                    <span className="font-serif tracking-wider bg-black/55 backdrop-blur-md px-3 py-1 rounded-md border border-white/20">
+                      {displayBadge}
                     </span>
-                    <span className="font-mono text-[11px] text-white/80 hidden sm:inline">
+                    <span className="font-mono text-[11px] text-white/80 hidden sm:inline bg-black/40 backdrop-blur-xs px-2 py-0.5 rounded">
                       SCENARIO {item.number}
                     </span>
                   </div>
