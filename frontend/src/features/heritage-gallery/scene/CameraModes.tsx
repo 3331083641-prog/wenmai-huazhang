@@ -2,29 +2,21 @@
  * 电影视角 / 第一人称视角。
  *
  * 电影视角：绕馆缓慢环游 + 轻微升降，类似建筑漫游片头，不接用户输入。
- * 第一人称：锁定指针后 WASD 行走，视高 1.62 m，限制在馆内与檐廊范围。
+ * 第一人称：锁定指针后 WASD 行走，视高 1.62 m，限制在馆内与檐廊范围，
+ *          抬头上看就是通高屋顶的木构（模型本身没有楼板与天花）。
  *
- * 两座建筑体量不同（经典馆 16 m 台基、华章新馆 22 m 台基），
- * 所以环游半径、视点高度、可行走范围一律从当前建筑的 SceneSpec 取，
- * 不再写死一套只对经典馆成立的数字。
+ * 两者都只在激活时接管相机；退出时把朝向还给 OrbitControls。
  */
 
 import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
-import type { SceneSpec } from '../buildings';
-
 const EYE = 1.62;
 
-export function CinemaRig({ active, spec }: { active: boolean; spec: SceneSpec }) {
+export function CinemaRig({ active }: { active: boolean }) {
   const { camera } = useThree();
   const t = useRef(0);
-
-  // 由体量推导环游参数：经典馆得到 25.6 m 半径 / 8.6 m 高度，与改造前一致
-  const radiusBase = spec.diy.planeSize * 1.42;
-  const heightBase = spec.orbitTarget[1] + 5.0;
-
   useEffect(() => {
     if (!active) return;
     t.current = 0;
@@ -38,10 +30,10 @@ export function CinemaRig({ active, spec }: { active: boolean; spec: SceneSpec }
     t.current += delta;
     const time = t.current;
     const angle = 0.55 + time * 0.075;
-    const radius = radiusBase + Math.sin(time * 0.13) * 2.2;
-    const height = heightBase + Math.sin(time * 0.09 + 0.7) * 2.4;
+    const radius = 25.5 + Math.sin(time * 0.13) * 2.2;
+    const height = 8.6 + Math.sin(time * 0.09 + 0.7) * 2.4;
     camera.position.set(Math.sin(angle) * radius, height, Math.cos(angle) * radius);
-    camera.lookAt(0, spec.orbitTarget[1] + 0.75, 0.15);
+    camera.lookAt(0, 4.35, 0.15);
   });
 
   return null;
@@ -49,25 +41,24 @@ export function CinemaRig({ active, spec }: { active: boolean; spec: SceneSpec }
 
 interface FirstPersonProps {
   active: boolean;
-  /** 当前建筑的可行走范围、楼层标高与入口起点 */
-  spec: SceneSpec;
+  /** 站立的楼层标高（一层 0.25） */
+  floorY: number;
   /** 指针锁定状态回调，用来显示准星提示 */
   onLockChange?: (locked: boolean) => void;
 }
 
-export function FirstPersonRig({ active, spec, onLockChange }: FirstPersonProps) {
+export function FirstPersonRig({ active, floorY, onLockChange }: FirstPersonProps) {
   const { camera, gl } = useThree();
   const yaw = useRef(Math.PI);
   const pitch = useRef(0.02);
   const keys = useRef(new Set<string>());
-  const floorY = spec.diy.baseTop;
-  const position = useRef(new THREE.Vector3(0, floorY + EYE, spec.firstPerson.startZ));
+  const position = useRef(new THREE.Vector3(0, floorY + EYE, -2.7));
   const euler = useRef(new THREE.Euler(0, 0, 0, 'YXZ'));
 
   useEffect(() => {
     if (!active) return;
     const dom = gl.domElement;
-    position.current.set(0, floorY + EYE, spec.firstPerson.startZ);
+    position.current.set(0, floorY + EYE, 2.9);
     camera.position.copy(position.current);
     euler.current.set(pitch.current, yaw.current, 0, 'YXZ');
     camera.quaternion.setFromEuler(euler.current);
@@ -109,7 +100,7 @@ export function FirstPersonRig({ active, spec, onLockChange }: FirstPersonProps)
       keys.current.clear();
       onLockChange?.(false);
     };
-  }, [active, camera, gl, floorY, spec, onLockChange]);
+  }, [active, camera, gl, floorY, onLockChange]);
 
   useFrame((_, delta) => {
     if (!active) return;
@@ -124,15 +115,9 @@ export function FirstPersonRig({ active, spec, onLockChange }: FirstPersonProps)
     if (move.lengthSq() > 0) {
       move.normalize().multiplyScalar(step);
       position.current.add(move);
-      // 馆内 + 檐廊范围：允许走到前檐台阶上，但不穿墙出界（按本馆尺寸夹取）
-      position.current.x = Math.max(
-        spec.firstPerson.xMin,
-        Math.min(spec.firstPerson.xMax, position.current.x),
-      );
-      position.current.z = Math.max(
-        spec.firstPerson.zMin,
-        Math.min(spec.firstPerson.zMax, position.current.z),
-      );
+      // 馆内 + 檐廊范围：允许走到前檐台阶上，但不穿墙出界
+      position.current.x = Math.max(-4.9, Math.min(4.9, position.current.x));
+      position.current.z = Math.max(-4.4, Math.min(4.1, position.current.z));
     }
     position.current.y = floorY + EYE;
     camera.position.copy(position.current);

@@ -19,7 +19,7 @@ import { PROP_COLORS } from './props/catalog';
 import { AssetInstance } from '../props/assets/AssetInstance';
 import { AssetPreview, getPropDef, isAssetId } from '../props/assets/assetProps';
 import { ASSET_BY_ID } from '../props/assets/assetCatalog';
-import { ROOF_TINTS, useDiyItems, useDiyStore, useRoofTint } from '../state/diyStore';
+import { ROOF_TINTS, useDiyStore } from '../state/diyStore';
 import {
   findHangTarget,
   findNearbyItemTop,
@@ -28,8 +28,13 @@ import {
   SURFACE_HINT,
   type SurfaceTarget,
 } from './placement';
-import type { SceneSpec } from '../buildings';
 
+const BASE_TOP = 0.25;
+const FLOOR2 = 3.6;
+const LIMIT = 7.4;
+/** 台面吸附的最大抬升：一层布展不会吸到二层楼板（3.6 m） */
+const SURFACE_MAX_ABOVE = 2.6;
+/** 屏幕近邻吸附阈值（px）：点在器物上方一点点也算放它顶上 */
 const SNAP_PX = 56;
 
 type PlacementKind = 'floor' | 'surface' | 'hang';
@@ -50,8 +55,6 @@ interface DiYLayerProps {
   /** 模型网格，用于墙面吸附与梁架锚点 */
   wallMeshes: THREE.Object3D[];
   roofMeshes: THREE.Object3D[];
-  /** 当前建筑的尺寸参数（台面标高、场地边界、悬挂范围） */
-  spec: SceneSpec;
   onDragStateChange: (dragging: boolean) => void;
 }
 
@@ -64,22 +67,16 @@ function hangHeightOf(propId: string): number {
   return ASSET_BY_ID.get(propId)?.height ?? getPropDef(propId)?.height ?? 0.9;
 }
 
-export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, spec, onDragStateChange }: DiYLayerProps) {
-  const items = useDiyItems();
+export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, onDragStateChange }: DiYLayerProps) {
+  const items = useDiyStore((state) => state.items);
   const selectedKey = useDiyStore((state) => state.selectedKey);
   const pendingPropId = useDiyStore((state) => state.pendingPropId);
-  const roofTint = useRoofTint();
+  const roofTint = useDiyStore((state) => state.roofTint);
   const addItem = useDiyStore((state) => state.addItem);
   const updateItem = useDiyStore((state) => state.updateItem);
   const selectItem = useDiyStore((state) => state.selectItem);
   const setPending = useDiyStore((state) => state.setPending);
   const editMode = useDiyStore((state) => state.editMode);
-
-  const BASE_TOP = spec.diy.baseTop;
-  const FLOOR2 = spec.diy.floor2;
-  const LIMIT = spec.diy.limit;
-  const SURFACE_MAX_ABOVE = spec.diy.surfaceMaxAbove;
-  const PLANE_SIZE = spec.diy.planeSize;
 
   const planeY = level === 2 ? FLOOR2 : BASE_TOP;
   const [ghost, setGhost] = useState<{ x: number; y: number; z: number } | null>(null);
@@ -174,7 +171,7 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, spec, onDragS
       const fallbackX = floorPoint ? clamp(floorPoint.x) : 0;
       const fallbackZ = floorPoint ? clamp(floorPoint.z) : 0;
       if (kind === 'hang') {
-        const target = findHangTarget({ structural: wallMeshes, ray, floorPoint, spec: spec.hang });
+        const target = findHangTarget({ structural: wallMeshes, ray, floorPoint });
         if (!target) return null;
         return {
           x: clamp(target.point.x),
@@ -196,7 +193,6 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, spec, onDragS
           maxY: planeY + SURFACE_MAX_ABOVE,
           excludeKey,
           footprint,
-          columnTop: spec.hang.columnTop,
         });
         if (!target && screen) {
           target = findNearbyItemTop({
@@ -382,7 +378,7 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, spec, onDragS
       // 这里只保留墙面吸附的实时跟随，避免指针压在器物上就失去事件。
       const drag = dragRef.current;
       if (!drag) return;
-      const item = useDiyStore.getState().current().items.find((entry) => entry.key === drag.key);
+      const item = useDiyStore.getState().items.find((entry) => entry.key === drag.key);
       if (!item || item.mount !== 'wall') return;
       const hit = hitWall(event.ray);
       if (!hit) return;
@@ -402,7 +398,7 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, spec, onDragS
     const move = (event: PointerEvent) => {
       const drag = dragRef.current;
       if (!drag) return;
-      const item = useDiyStore.getState().current().items.find((entry) => entry.key === drag.key);
+      const item = useDiyStore.getState().items.find((entry) => entry.key === drag.key);
       if (!item || item.mount === 'wall') return;
       const rect = gl.domElement.getBoundingClientRect();
       const ndc = new THREE.Vector2(
@@ -460,7 +456,7 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, spec, onDragS
           onPointerMove={onPlaneMove as never}
           onPointerLeave={() => setGhost(null)}
         >
-          <planeGeometry args={[PLANE_SIZE, PLANE_SIZE]} />
+          <planeGeometry args={[18, 18]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         </mesh>
       )}

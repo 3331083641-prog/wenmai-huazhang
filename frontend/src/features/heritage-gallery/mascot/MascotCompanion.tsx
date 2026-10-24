@@ -4,12 +4,19 @@ import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
 import {
+  EXHIBIT_POINTS,
+  HALL,
   CAMERA,
   EXHIBIT,
+  FLOOR1_Y,
+  FLOOR2_Y,
   MOTION,
-  createMascotWorld,
+  SPAWN,
+  STAIR,
+  canStandAt,
+  clampToHall,
+  groundHeightAt,
 } from './mascotConfig';
-import type { BuildingDef } from '../buildings';
 import {
   MASCOT_MODEL,
   clipName,
@@ -43,8 +50,6 @@ export interface MascotProbe {
 }
 
 export interface MascotCompanionProps {
-  /** 当前建筑：灵宠的楼层、可行走范围、展品点都按它推导 */
-  building: BuildingDef;
   active: boolean;
   /** 馆体网格：第三人称相机用它做射线碰撞，避免穿墙 */
   collisionMeshes?: THREE.Object3D[];
@@ -136,10 +141,8 @@ function MascotModel({
 
 /* ------------------------------------------------------------------ 主组件 */
 
-export function MascotCompanion({ building, active, view, collisionMeshes, onExit, onViewChange, onExhibit }: MascotCompanionProps) {
+export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewChange, onExhibit }: MascotCompanionProps) {
   const { camera } = useThree();
-  // 每座展馆一套行走参数：经典馆沿用调好的楼梯世界，新馆按体量推导
-  const world = useMemo(() => createMascotWorld(building), [building]);
   const rootRef = useRef<THREE.Group>(null);
   const mixerRef = useRef<THREE.AnimationMixer | null>(null);
   const actionsRef = useRef<Record<string, THREE.AnimationAction>>({});
@@ -150,8 +153,8 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
   const [phase, setPhase] = useState<MascotPhase>('spawning');
 
   const state = useRef({
-    position: new THREE.Vector3(...world.spawn.outside),
-    yaw: world.spawn.lookYaw,
+    position: new THREE.Vector3(...SPAWN.outside),
+    yaw: SPAWN.lookYaw,
     spawnT: 0,
     nearest: null as string | null,
     lastExhibitAt: 0,
@@ -172,7 +175,7 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
   const camRay = useMemo(() => new THREE.Raycaster(), []);
   const collisionMeshesRef = useRef<THREE.Object3D[]>([]);
   const obstaclesRef = useRef<Array<{ floor: 1 | 2; minX: number; maxX: number; minZ: number; maxZ: number }>>([]);
-  const spawnTarget = useRef(new THREE.Vector3(...world.spawn.inside));
+  const spawnTarget = useRef(new THREE.Vector3(...SPAWN.inside));
   collisionMeshesRef.current = collisionMeshes ?? [];
 
   /* 模型可用性：地址与 magic 校验都在 mascotModel.ts，换模型不用改这里 */
@@ -224,11 +227,11 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
       debug.push({ x, z, ok });
       if (ok) {
         (window as unknown as { __mascotSpawnDebug?: unknown }).__mascotSpawnDebug = debug;
-        return [x, world.floor1Y, z];
+        return [x, FLOOR1_Y, z];
       }
     }
     (window as unknown as { __mascotSpawnDebug?: unknown }).__mascotSpawnDebug = debug;
-    return world.spawn.inside;
+    return SPAWN.inside;
   }, []);
 
   /** 把馆体网格里「挡住走路的家具/展柜」抽成二维矩形，按楼层分组。 */
@@ -239,7 +242,7 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
     const inStair = (object: THREE.Object3D) => {
       let node: THREE.Object3D | null = object;
       while (node) {
-        if (node.name && node.name.startsWith(world.stairMeshPrefix)) return true;
+        if (node.name && node.name.startsWith(STAIR.meshPrefix)) return true;
         node = node.parent;
       }
       return false;
@@ -256,8 +259,8 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
       if (height < 0.25 || height > 2.6) continue;
       if (sizeX > 6 || sizeZ > 6) continue;
       const centerY = (box.min.y + box.max.y) / 2;
-      const floor: 1 | 2 = centerY > (world.floor1Y + world.floor2Y) / 2 ? 2 : 1;
-      const floorY = floor === 1 ? world.floor1Y : world.floor2Y;
+      const floor: 1 | 2 = centerY > (FLOOR1_Y + FLOOR2_Y) / 2 ? 2 : 1;
+      const floorY = floor === 1 ? FLOOR1_Y : FLOOR2_Y;
       // 只保留站在楼面上、能挡到角色腰部的物件
       if (box.min.y > floorY + 1.3 || box.max.y < floorY + 0.12) continue;
       boxes.push({ floor, minX: box.min.x, maxX: box.max.x, minZ: box.min.z, maxZ: box.max.z });
@@ -272,7 +275,7 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
 
   /** 角色能否站在 (x,z)：不在任何同层障碍盒（外扩角色半径）里。 */
   const blockedAt = useCallback((x: number, z: number, y: number) => {
-    const floor: 1 | 2 = y > (world.floor1Y + world.floor2Y) / 2 ? 2 : 1;
+    const floor: 1 | 2 = y > (FLOOR1_Y + FLOOR2_Y) / 2 ? 2 : 1;
     return obstaclesRef.current.some(
       (box) =>
         box.floor === floor &&
@@ -289,7 +292,7 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
     const spawn = pickSpawn();
     spawnTarget.current.set(spawn[0], spawn[1], spawn[2]);
     state.current.position.set(spawn[0], spawn[1], spawn[2]);
-    state.current.yaw = world.spawn.lookYaw;
+    state.current.yaw = SPAWN.lookYaw;
     state.current.spawnT = 0;
     state.current.camBlend = 0;
     state.current.nearest = null;
@@ -382,7 +385,7 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
     if (!import.meta.env.DEV) return;
     (window as unknown as { __mascotDebug?: unknown }).__mascotDebug = {
       teleport: (x: number, z: number, yaw = s0.current.yaw, y?: number) => {
-        s0.current.position.set(x, y ?? world.groundHeightAt(x, z, s0.current.position.y), z);
+        s0.current.position.set(x, y ?? groundHeightAt(x, z, s0.current.position.y), z);
         s0.current.yaw = yaw;
         s0.current.spawnT = 1;
         setPhase('ready');
@@ -404,8 +407,8 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
     if (phase === 'spawning') {
       s.spawnT = Math.min(1, s.spawnT + dt / 1.15);
       const ease = s.spawnT * s.spawnT * (3 - 2 * s.spawnT);
-      s.position.lerpVectors(new THREE.Vector3(...world.spawn.outside), spawnTarget.current, ease);
-      s.position.y = world.floor1Y + Math.sin(Math.PI * Math.min(1, s.spawnT / 0.85)) * 0.3;
+      s.position.lerpVectors(new THREE.Vector3(...SPAWN.outside), spawnTarget.current, ease);
+      s.position.y = FLOOR1_Y + Math.sin(Math.PI * Math.min(1, s.spawnT / 0.85)) * 0.3;
       if (s.spawnT >= 1) {
         s.position.copy(spawnTarget.current);
         setPhase('ready');
@@ -446,27 +449,27 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
         const steps = Math.max(1, Math.ceil(Math.abs(distance) / MOTION.subStep));
         const stepLength = distance / steps;
         for (let i = 0; i < steps; i += 1) {
-          const [cx, cz] = world.clampToHall(
+          const [cx, cz] = clampToHall(
             s.position.x + forward.x * stepLength,
             s.position.z + forward.z * stepLength,
           );
           // 只按障碍盒判碰撞：楼梯踏步/栏杆本身就是通道，用射线打会把自己挡住
-          if (blockedAt(cx, cz, s.position.y) || !world.canStandAt(cx, cz, s.position.y)) {
+          if (blockedAt(cx, cz, s.position.y) || !canStandAt(cx, cz, s.position.y)) {
             s.speed = 0;
             break;
           }
           s.position.x = cx;
           s.position.z = cz;
-          const nextY = world.groundHeightAt(cx, cz, s.position.y);
+          const nextY = groundHeightAt(cx, cz, s.position.y);
           if (Number.isFinite(nextY)) s.position.y = nextY;
         }
 
         // 坠落保护：脚下滑出楼板（数值异常或踩到洞）时回到最近的合法落点，
         // 而不是继续往下掉、最后飘在场景外。
-        if (!Number.isFinite(s.position.y) || s.position.y < world.floor1Y - MOTION.fallGuard) {
-          const [sx, sz] = world.clampToHall(s.position.x, s.position.z);
-          const fallbackY = world.groundHeightAt(sx, sz, world.floor1Y);
-          s.position.set(sx, Number.isFinite(fallbackY) ? fallbackY : world.floor1Y, sz);
+        if (!Number.isFinite(s.position.y) || s.position.y < FLOOR1_Y - MOTION.fallGuard) {
+          const [sx, sz] = clampToHall(s.position.x, s.position.z);
+          const fallbackY = groundHeightAt(sx, sz, FLOOR1_Y);
+          s.position.set(sx, Number.isFinite(fallbackY) ? fallbackY : FLOOR1_Y, sz);
           s.speed = 0;
           s.yawVel = 0;
         }
@@ -490,8 +493,8 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
     const now = performance.now();
     let nearest: string | null = null;
     let nearestDist = Infinity;
-    for (const frame of world.exhibits) {
-      const floorY = frame.floor === 1 ? world.floor1Y : world.floor2Y;
+    for (const frame of EXHIBIT_POINTS) {
+      const floorY = frame.floor === 1 ? FLOOR1_Y : FLOOR2_Y;
       if (Math.abs(floorY - s.position.y) > EXHIBIT.sameFloorDelta) continue;
       const distance = Math.hypot(frame.x - s.position.x, frame.z - s.position.z);
       if (distance < nearestDist) {
@@ -537,9 +540,9 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
       }
       const allowed = THREE.MathUtils.clamp(s.camClear, CAMERA.thirdMinDistance, wantDistance);
       const desired = pivot.clone().addScaledVector(offset.clone().normalize(), allowed);
-      desired.x = THREE.MathUtils.clamp(desired.x, world.hall.minX + 0.35, world.hall.maxX - 0.35);
-      desired.z = THREE.MathUtils.clamp(desired.z, world.hall.minZ + 0.35, world.hall.maxZ - 0.35);
-      desired.y = THREE.MathUtils.clamp(desired.y, world.floor1Y + 1.6, world.floor2Y + 2.6);
+      desired.x = THREE.MathUtils.clamp(desired.x, HALL.minX + 0.35, HALL.maxX - 0.35);
+      desired.z = THREE.MathUtils.clamp(desired.z, HALL.minZ + 0.35, HALL.maxZ - 0.35);
+      desired.y = THREE.MathUtils.clamp(desired.y, FLOOR1_Y + 1.6, FLOOR2_Y + 2.6);
       camera.position.lerp(desired, 1 - Math.exp(-CAMERA.followLambda * s.camBlend * dt));
       camera.lookAt(pivot);
     } else {
@@ -564,7 +567,7 @@ export function MascotCompanion({ building, active, view, collisionMeshes, onExi
       yaw: Number(s.yaw.toFixed(2)),
       action: currentAction.current,
       speed: Number(s.speed.toFixed(2)),
-      floor: s.position.y > (world.floor1Y + world.floor2Y) / 2 ? 2 : 1,
+      floor: s.position.y > (FLOOR1_Y + FLOOR2_Y) / 2 ? 2 : 1,
       nearestFrame: s.nearest,
       hasModel,
       camera: [Number(camera.position.x.toFixed(2)), Number(camera.position.y.toFixed(2)), Number(camera.position.z.toFixed(2))],

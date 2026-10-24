@@ -11,12 +11,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { X, Search, RotateCcw, Eraser, Info, ArrowRight } from 'lucide-react';
 import { refreshGalleryPool, useGalleryPool } from '../../../data/galleryPool';
-import type { GalleryConfig } from '../buildings/layout';
+import { frameById, wallById } from '../../../data/heritageGalleryConfig';
 import type { GalleryArtwork } from '../types';
 
 interface GalleryPanelProps {
-  /** 当前建筑的画框/展墙配置：换馆后画框编号体系不同，必须按馆解析 */
-  config: GalleryConfig;
   frameId: string | null;
   currentArtworkId: string;
   onPick: (artworkId: string) => void;
@@ -27,7 +25,6 @@ interface GalleryPanelProps {
 }
 
 export function GalleryPanel({
-  config,
   frameId,
   currentArtworkId,
   onPick,
@@ -46,8 +43,8 @@ export function GalleryPanel({
     if (frameId) void refreshGalleryPool();
   }, [frameId]);
 
-  const frame = frameId ? config.frameById.get(frameId) : undefined;
-  const wall = frame ? config.wallById.get(frame.wallId) : undefined;
+  const frame = frameId ? frameById.get(frameId) : undefined;
+  const wall = frame ? wallById.get(frame.wallId) : undefined;
 
   // Esc 关闭
   useEffect(() => {

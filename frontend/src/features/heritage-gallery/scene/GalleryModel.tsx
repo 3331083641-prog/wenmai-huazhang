@@ -1,47 +1,49 @@
 /**
- * 建筑模型：加载、克隆、材质观感与图层分组。
- *
- * 模型来自 Blender（经典馆 `wenmai_gallery_v5.glb`，华章新馆 `wenmai_gallery_huazhang.glb`），
- * 每座建筑各自一份 GLB 与一份 layout 契约。
- *
- * 这里只做四件事：
- *  1. 从 modelCache 取已加载的 GLB 并克隆一份（材质与几何仍然共享，省显存）；
- *  2. 剥掉 GLB 里带进来的相机节点，避免它们参与射线/包围盒计算；
- *  3. 交给观感模块微调材质（scene/lookdev.ts）；
- *  4. 按各自的命名规则分组屋顶，供「外观 / 内部」模式显隐。
- *
- * 坐标、展墙、画框锚点都不在这里读 GLB，而是读各自建筑导出的 layout JSON ——
- * 单一数据源，避免网页和模型各写一套坐标。
- */
+ * 绾硅剦灞曢 路 妯″瀷鍔犺浇涓庡浘灞傛帶鍒? *
+ * 妯″瀷鏉ヨ嚜 Blender锛歚assets/gallery3d/exports/wenmai_gallery.glb`
+ * 锛堟瀯寤鸿剼鏈?`assets/gallery3d/scripts/build_all.py`锛屽鍑哄悗澶嶅埗鍒?public/models锛夈€? *
+ * 杩欓噷鍙仛鍥涗欢浜嬶細
+ *  1. 鍔犺浇 GLB 骞跺厠闅嗕竴浠斤紙drei 鐨勭紦瀛樻槸鍏变韩鐨勶紝鐩存帴娓叉煋浼氭薄鏌撲笅娆℃寕杞斤級锛? *  2. 鍓ユ帀 GLB 閲屽甫杩涙潵鐨勭浉鏈鸿妭鐐癸紝閬垮厤瀹冧滑鍙備笌灏勭嚎/鍖呭洿鐩掕绠楋紱
+ *  3. 浜ょ粰涓夋覆浜屾ā鍧楅噸鍐欐潗璐ㄤ笌鎻忚竟锛? *  4. 鎸夊浘灞傚垎缁勶紝渚涖€屽瑙?/ 鍐呴儴銆嶆ā寮忔樉闅愬眿椤躲€? *
+ * 鍧愭爣銆佸睍澧欍€佺敾妗嗛敋鐐归兘涓嶅湪杩欓噷璇?GLB锛岃€屾槸璇荤敱 Blender 鐩存帴瀵煎嚭鐨? * `gallery_layout.json`鈥斺€斿崟涓€鏁版嵁婧愶紝閬垮厤缃戦〉鍜屾ā鍨嬪悇鍐欎竴濂楀潗鏍囥€? */
 
 import { useMemo } from 'react';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
 import { applySanzhuan2, disposeToonResources, getOutlineMesh } from './sanzhuan2';
 import { applyLookDev } from './lookdev';
-import { useBuildingModel } from './modelCache';
-import type { BuildingDef } from '../buildings';
 
 // The V5 GLB already carries authored PBR colours. The legacy toon pass
 // overwrote them with a near-white ramp and washed the whole hall out, so it is
 // switched off until it ramps the GLB base colour instead of replacing it.
 const TOON_ENABLED = false;
 
-/** 相机节点前缀：Blender 工作参考，网页用 layout 里的机位 */
+export const MODEL_URL = `${import.meta.env.BASE_URL}models/wenmai_gallery_v5.glb?v=5w`;
+
+/** 灞嬮《鍥惧眰锛氬唴閮ㄦā寮忎笅涓€寰嬮殣钘忥紝鎵嶈兘鐪嬭繘灞嬮噷銆? *  浠?Blender 瀵煎嚭鐨勫懡鍚嶅墠缂€涓哄噯锛圧OOF_* 灞嬫灦 / TILE_* 鐡﹂潰锛夛紝
+ *  澶栧姞鎸傚湪妾愪笅鐨勭伅绗尖€斺€斿畠璺熺潃灞嬮《涓€璧锋敹锛屽惁鍒欎細鎮湪鍗婄┖銆?*/
+const ROOF_PREFIXES = ['ROOF_', 'TILE_'];
+const ROOF_EXTRA = new Set(['LANTERN_Eave']);
+
+function isRoofPart(name: string): boolean {
+  if (ROOF_EXTRA.has(name)) return true;
+  return ROOF_PREFIXES.some((prefix) => name.startsWith(prefix));
+}
+
+/** 骞曟爣銆佺伅绗肩瓑鎸傚湪灞嬪鐨勮楗帮紝鍐呴儴妯″紡淇濈暀锛堢伅绗兼槸瀹ゅ唴鍏夋簮锛?*/
 const CAMERA_PREFIX = 'CAM_';
 
 export interface GalleryLayers {
-  /** 屋顶相关网格，内部模式隐藏 */
+  /** 灞嬮《鐩稿叧缃戞牸锛屽唴閮ㄦā寮忛殣钘?*/
   roof: THREE.Object3D[];
-  /** 屋顶网格的墨线轮廓，相机进入室内后要隐藏（背面外推壳从内侧看是黑板） */
+  /** 灞嬮《缃戞牸鐨勫ⅷ绾胯疆寤擄紝鐩告満杩涘叆瀹ゅ唴鍚庤闅愯棌锛堣儗闈㈠鎺ㄥ３浠庡唴渚х湅鏄粦鏉匡級 */
   roofOutlines: THREE.Mesh[];
-  /** 全部可渲染网格，用于统计与调整 */
+  /** 鍏ㄩ儴鍙覆鏌撶綉鏍硷紝鐢ㄤ簬缁熻鍜岃皟璇?*/
   meshes: THREE.Mesh[];
 }
 
 export interface GalleryAssets {
-  /** 建筑定义 id，切换时用来确认「渲染的确实是当前馆」 */
-  buildingId: string;
   root: THREE.Group;
   layers: GalleryLayers;
   stats: {
@@ -55,23 +57,11 @@ export interface GalleryAssets {
   };
 }
 
-/** 按当前建筑的屋顶命名规则判断一个网格是不是屋面 */
-export function makeRoofMatcher(building: BuildingDef): (name: string) => boolean {
-  const prefixes = building.scene.roof.prefixes;
-  const extra = new Set(building.scene.roof.extra);
-  return (name: string): boolean => {
-    if (!name) return false;
-    if (extra.has(name)) return true;
-    return prefixes.some((prefix) => name.startsWith(prefix));
-  };
-}
-
-function prepare(source: THREE.Group, building: BuildingDef): GalleryAssets {
+function prepare(source: THREE.Group): GalleryAssets {
   const root = source.clone(true);
   const roof: THREE.Object3D[] = [];
   const meshes: THREE.Mesh[] = [];
   const cameras: THREE.Object3D[] = [];
-  const isRoofPart = makeRoofMatcher(building);
 
   root.traverse((object) => {
     if ((object as THREE.Camera).isCamera || object.name.startsWith(CAMERA_PREFIX)) {
@@ -83,14 +73,14 @@ function prepare(source: THREE.Group, building: BuildingDef): GalleryAssets {
     meshes.push(mesh);
     mesh.castShadow = true;
     mesh.receiveShadow = true;
+    // 鎻忚竟涓庨槾褰遍兘鐢ㄤ笉鍒拌閿ヨ鍓互澶栫殑鎶€宸э紝淇濈暀榛樿
     if (isRoofPart(mesh.name)) roof.push(mesh);
   });
 
-  // 相机节点只是 Blender 的工作参考，网页里用布局 JSON 的机位
-  for (const camera of cameras) camera.removeFromParent();
+  // 鐩告満鑺傜偣鍙槸 Blender 鐨勫伐浣滃弬鑰冿紝缃戦〉閲岀敤甯冨眬 JSON 鐨勬満浣?  for (const camera of cameras) camera.removeFromParent();
 
   const result = TOON_ENABLED ? applySanzhuan2(root) : { materials: 0 };
-  // 观感（走 GLB 自带的 PBR 材质）：暖木/石材/铜/朱红/纸感逐材质微调，
+  // 观感（走的是 GLB 自带的 PBR 材质）：暖木/石材/铜/朱红/纸感逐材质微调，
   // 不新增材质、不改几何，参数表在 scene/lookdev.ts。
   const lookDev = applyLookDev(root);
 
@@ -108,7 +98,6 @@ function prepare(source: THREE.Group, building: BuildingDef): GalleryAssets {
   }
 
   return {
-    buildingId: building.id,
     root,
     layers: { roof, roofOutlines, meshes },
     stats: {
@@ -121,21 +110,15 @@ function prepare(source: THREE.Group, building: BuildingDef): GalleryAssets {
   };
 }
 
-/**
- * 加载并准备好一座建筑的模型。
- *
- * 返回 null 表示模型还没下载完——调用方据此显示加载态，
- * 而不是把一个空场景当成「已经加载好」。
- */
-export function useBuildingAssets(building: BuildingDef): GalleryAssets | null {
-  const gltf = useBuildingModel(building.modelUrl);
-  return useMemo(() => {
-    if (!gltf) return null;
-    return prepare(gltf.scene as THREE.Group, building);
-  }, [gltf, building]);
+/** 鍔犺浇骞跺噯澶囧ソ灞曢妯″瀷锛涙暟鎹彧鍦ㄩ娆℃寕杞芥椂鏋勫缓涓€娆?*/
+export function useGalleryAssets(): GalleryAssets {
+  const gltf = useGLTF(MODEL_URL);
+  return useMemo(() => prepare(gltf.scene as THREE.Group), [gltf.scene]);
 }
 
-/** 卸载时释放三渲二模块里缓存的材质与渐变贴图 */
+/** 鍗歌浇鏃堕噴鏀句笁娓蹭簩妯″潡閲岀紦瀛樼殑鏉愯川涓庢笎鍙樿创鍥?*/
 export function releaseGalleryAssets(): void {
   disposeToonResources();
 }
+
+useGLTF.preload(MODEL_URL);
