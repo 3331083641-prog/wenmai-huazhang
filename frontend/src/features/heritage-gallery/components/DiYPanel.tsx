@@ -33,7 +33,7 @@ import {
   type PropCategory,
   type PropDef,
 } from '../scene/props/catalog';
-import { ROOF_TINTS, useDiyStore } from '../state/diyStore';
+import { ROOF_TINTS, useDiyItems, useDiyStore, useRoofTint } from '../state/diyStore';
 import { ALL_PROP_CATALOG, ASSET_GROUP_LABEL, getPropDef } from '../props/assets/assetProps';
 import { ASSET_BY_ID } from '../props/assets/assetCatalog';
 
@@ -98,10 +98,10 @@ function Spinner({ def }: { def: PropDef }) {
 
 export function DiYPanel() {
   const open = useDiyStore((state) => state.panelOpen);
-  const items = useDiyStore((state) => state.items);
+  const items = useDiyItems();
   const selectedKey = useDiyStore((state) => state.selectedKey);
   const pendingPropId = useDiyStore((state) => state.pendingPropId);
-  const roofTint = useDiyStore((state) => state.roofTint);
+  const roofTint = useRoofTint();
   const setPanelOpen = useDiyStore((state) => state.setPanelOpen);
   const setPending = useDiyStore((state) => state.setPending);
   const updateItem = useDiyStore((state) => state.updateItem);

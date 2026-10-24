@@ -1,17 +1,14 @@
 /**
- * 纹脉展馆 · 页面
+ * 纹脉展馆 · 页面（双建筑皮肤）
  *
- * 控件分层（V2）：
- *  - 默认只露三类入口：探索模式 / 布展模式 / 视角。面板一律收起，进来先看到场景。
- *  - 机位预设（外观·正·背·左·右·俯视 / 一层·二层·梁架·檐下）收进「视角」；
- *  - 昼夜收进右上角「环境」；
- *  - 重置布展只出现在「布展模式」的二级菜单里；
- *  - 操作说明合并进「帮助」，不再常驻屏幕；
- *  - 第一/第三人称只保留一套：视角菜单驱动同一个 viewMode，灵宠探索直接复用它
- *    （旧版页面一套、灵宠 HUD 又一套，是重复入口）。
+ * 控件分层：
+ *  - 默认只露三类主入口：探索模式 / 布展模式 / 视角；
+ *  - 右上角是图标级工具：建筑风格 / 环境 / 帮助 / 沉浸；
+ *  - 机位预设收进「视角」，昼夜收进「环境」，重置布展只出现在布展模式二级菜单；
+ *  - 建筑风格是新增的一级入口：点开选「经典展馆 / 华章新馆」，
+ *    切换前先把目标 GLB 下载并解析完，再换场景，全程有遮罩，不白屏、不重叠。
  *
- * 布局：3D 场景占满视口，UI 只占四个角，弹出菜单都是短时浮层、点空白即收。
- * 不使用站内常规导航条覆盖场景：进入后由本页自己提供返回入口。
+ * 数据来源：当前建筑的 layout（画框 / 展墙 / 机位）与按建筑分桶的布展 store。
  */
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -26,7 +23,9 @@ import {
   EyeOff,
   Frame,
   Info,
+  Landmark,
   Layers,
+  Loader2,
   Moon,
   PackageOpen,
   PawPrint,
@@ -38,22 +37,25 @@ import {
 import { HeritageScene } from '../features/heritage-gallery/scene/HeritageScene';
 import { GalleryPanel } from '../features/heritage-gallery/components/GalleryPanel';
 import { DiYPanel } from '../features/heritage-gallery/components/DiYPanel';
+import { BuildingSwitch } from '../features/heritage-gallery/components/BuildingSwitch';
 import { TimeSwitch } from '../features/heritage-gallery/components/TimeSwitch';
 import { ViewModeSwitch, VIEW_MODES, type ViewMode } from '../features/heritage-gallery/components/ViewModeSwitch';
 import { ArtworkDetail } from '../features/heritage-gallery/components/ArtworkDetail';
-import { useCurationStore, resolveArtworkId } from '../features/heritage-gallery/state/curationStore';
-import { useDiyStore } from '../features/heritage-gallery/state/diyStore';
+import { resolveArtworkId, useActivePlan, useCurationStore } from '../features/heritage-gallery/state/curationStore';
+import { useDiyCount, useDiyStore } from '../features/heritage-gallery/state/diyStore';
 import { useDoorStore } from '../features/heritage-gallery/state/doorStore';
 import { useFrameHoverStore } from '../features/heritage-gallery/state/frameHoverStore';
+import { useBuildingStore } from '../features/heritage-gallery/state/buildingStore';
+import { BUILDINGS, getBuilding } from '../features/heritage-gallery/buildings';
+import { preloadBuildingModel, warmupBuildingModel } from '../features/heritage-gallery/scene/modelCache';
 import { ASSET_BY_ID, ASSET_GROUP_LABEL } from '../features/heritage-gallery/props/assets/assetCatalog';
-import { cameraPresets, frameSlots } from '../data/heritageGalleryConfig';
 import { refreshGalleryPool, useGalleryPool } from '../data/galleryPool';
 import { TIME_PRESETS, type TimeOfDay } from '../features/heritage-gallery/scene/DayNightRig';
 import type { GalleryMode } from '../features/heritage-gallery/types';
 import type { MascotView } from '../features/heritage-gallery/mascot/MascotCompanion';
 
-/** 菜单标识：主入口三类 + 右上角两个工具 */
-type MenuId = 'explore' | 'curation' | 'view' | 'environment' | 'help';
+/** 菜单标识：主入口三类 + 右上角四个工具 */
+type MenuId = 'explore' | 'curation' | 'view' | 'building' | 'environment' | 'help';
 
 /** 探索模式下的两种取景 */
 const SCENE_MODES: {
@@ -171,13 +173,31 @@ export default function HeritageGallery() {
   // 作品池 = 内置精选 + 运行期新生成（Case Service 拉取，失败回退缓存）
   const galleryPool = useGalleryPool();
 
+  /* ---- 建筑皮肤 ---- */
+  const activeBuildingId = useBuildingStore((state) => state.active);
+  const setActiveBuilding = useBuildingStore((state) => state.setActive);
+  const building = useMemo(() => getBuilding(activeBuildingId), [activeBuildingId]);
+  const config = building.config;
+  const plan = useActivePlan();
+
+  /** 切换在途：目标建筑 id + 下载进度 */
+  const [pendingBuilding, setPendingBuilding] = useState<string | null>(null);
+  const [switchProgress, setSwitchProgress] = useState(0);
+  const [switchError, setSwitchError] = useState('');
+  /** 首次进入也要等模型，避免露出空场地 */
+  const [sceneReady, setSceneReady] = useState(false);
+
+  useEffect(() => {
+    setSceneReady(false);
+  }, [activeBuildingId]);
+
   useEffect(() => {
     void refreshGalleryPool();
   }, []);
 
   const panelOpen = useDiyStore((state) => state.panelOpen);
   const setPanelOpen = useDiyStore((state) => state.setPanelOpen);
-  const diyCount = useDiyStore((state) => state.items.length);
+  const diyCount = useDiyCount();
   useEffect(() => {
     const onInfo = (event: Event) => {
       const detail = (event as CustomEvent<{ assetId?: string }>).detail;
@@ -205,7 +225,6 @@ export default function HeritageGallery() {
   const closeContextMenu = useDiyStore((state) => state.closeContextMenu);
   const removeDiyItem = useDiyStore((state) => state.removeItem);
 
-  const assignments = useCurationStore((state) => state.assignments);
   const selectedFrameId = useCurationStore((state) => state.selectedFrameId);
   const detailArtworkId = useCurationStore((state) => state.detailArtworkId);
   const selectFrame = useCurationStore((state) => state.selectFrame);
@@ -291,11 +310,67 @@ export default function HeritageGallery() {
   /** 角色靠近展品：用现有 CultureCard（ArtworkDetail）展示，不新编文化知识 */
   const handleMascotExhibit = useCallback(
     (frameId: string) => {
-      const artworkId = resolveArtworkId(assignments, frameId);
+      const artworkId = resolveArtworkId(plan.assignments, frameId, activeBuildingId);
       if (artworkId) openDetail(artworkId);
     },
-    [assignments, openDetail],
+    [plan.assignments, openDetail, activeBuildingId],
   );
+
+  /* ---------------------------------------------------------- 建筑切换 */
+
+  /**
+   * 切换建筑：先把目标馆的 GLB 下载解析完，再换 active。
+   * 这样渲染阶段永远命中缓存，旧建筑不会提前卸载，新建筑也不会以半成品出现。
+   */
+  const handleBuildingSelect = useCallback(
+    async (id: string) => {
+      if (pendingBuilding) return;
+      if (id === activeBuildingId) {
+        setMenu(null);
+        return;
+      }
+      const target = getBuilding(id);
+      setMenu(null);
+      setSwitchError('');
+      setPendingBuilding(id);
+      setSwitchProgress(0);
+      // 先把场景 UI 收干净：换馆后仍停在上一个馆的「二层特写」会很怪
+      setMascotActive(false);
+      selectFrame(null);
+      setPanelOpen(false);
+      setPresetId('exterior');
+      setMode('exterior');
+      setViewMode('third');
+      try {
+        await preloadBuildingModel(target.modelUrl, (ratio) => setSwitchProgress(ratio));
+        setSwitchProgress(1);
+        setActiveBuilding(id);
+        // 真正收起遮罩交给场景 onReady，避免「状态已切、画面还没画」的一帧空白
+      } catch {
+        setPendingBuilding(null);
+        setSwitchError('建筑资源加载失败，请检查网络后重试');
+      }
+    },
+    [activeBuildingId, pendingBuilding, selectFrame, setActiveBuilding, setPanelOpen],
+  );
+
+  const handleSceneReady = useCallback(() => {
+    setSceneReady(true);
+    setPendingBuilding(null);
+    setSwitchProgress(1);
+  }, []);
+
+  // 悬停建筑卡时顺手预热：真的点下去时大概率已经在缓存里
+  const handleBuildingHover = useCallback((id: string) => {
+    if (id === activeBuildingId) return;
+    warmupBuildingModel(getBuilding(id).modelUrl);
+  }, [activeBuildingId]);
+
+  useEffect(() => {
+    if (!switchError) return undefined;
+    const timer = window.setTimeout(() => setSwitchError(''), 4200);
+    return () => window.clearTimeout(timer);
+  }, [switchError]);
 
   // 落位提示（吸附失败 / 降级到地面）自动消失，不长期占屏
   const placeHint = useDiyStore((state) => state.placeHint);
@@ -320,16 +395,27 @@ export default function HeritageGallery() {
     return () => window.removeEventListener('keydown', onKey);
   }, [menu, immersive]);
 
-  const currentArtworkId = selectedFrameId ? resolveArtworkId(assignments, selectedFrameId) : '';
-  const placed = frameSlots.filter((slot) => Boolean(resolveArtworkId(assignments, slot.id))).length;
+  const currentArtworkId = selectedFrameId
+    ? resolveArtworkId(plan.assignments, selectedFrameId, activeBuildingId)
+    : '';
+  const frames = config.frames;
+  const placed = frames.filter((slot) =>
+    Boolean(resolveArtworkId(plan.assignments, slot.id, activeBuildingId)),
+  ).length;
   const mascotView: MascotView = viewMode === 'first' ? 'first' : 'third';
   const timeLabel = TIME_PRESETS[time].label;
   const viewLabel = VIEW_MODES.find((entry) => entry.id === viewMode)?.label ?? '第三人称';
-  const currentPresetLabel = cameraPresets.find((preset) => preset.id === presetId)?.label ?? '外观';
+  const currentPresetLabel = config.cameras.find((preset) => preset.id === presetId)?.label ?? '外观';
   const TimeIcon = TIME_ICONS[time];
 
-  const exteriorPresets = useMemo(() => cameraPresets.filter((preset) => EXTERIOR_PRESETS.has(preset.id)), []);
-  const interiorPresets = useMemo(() => cameraPresets.filter((preset) => INTERIOR_PRESETS.has(preset.id)), []);
+  const exteriorPresets = useMemo(
+    () => config.cameras.filter((preset) => EXTERIOR_PRESETS.has(preset.id)),
+    [config],
+  );
+  const interiorPresets = useMemo(
+    () => config.cameras.filter((preset) => INTERIOR_PRESETS.has(preset.id)),
+    [config],
+  );
 
   const toggleMenu = useCallback((id: MenuId) => {
     setMenu((current) => (current === id ? null : id));
@@ -344,11 +430,16 @@ export default function HeritageGallery() {
     toggleMenu('explore');
   }, [mode, toggleMenu]);
 
+  /** 遮罩：首次进入 + 正在切换 */
+  const maskVisible = !sceneReady || pendingBuilding !== null;
+  const maskLabel = pendingBuilding ? getBuilding(pendingBuilding).loadingLabel : building.loadingLabel;
+
   return (
     <div className="relative h-[100dvh] w-full overflow-hidden bg-[#BFD9E8]">
       {/* 3D 场景 */}
       <div className="absolute inset-0">
         <HeritageScene
+          building={building}
           presetId={presetId}
           mode={mode}
           time={time}
@@ -356,6 +447,7 @@ export default function HeritageGallery() {
           diy={mode === 'curation'}
           level={presetId === 'floor2' ? 2 : 1}
           onFrameSelect={handleFrameSelect}
+          onReady={handleSceneReady}
           mascot={{
             active: mascotActive,
             view: mascotView,
@@ -365,6 +457,40 @@ export default function HeritageGallery() {
           }}
         />
       </div>
+
+      {/* 加载 / 切换遮罩：旧建筑卸载前先把新建筑准备好，所以这里不是白屏而是一层雾面 */}
+      <div
+        aria-hidden={!maskVisible}
+        data-testid="gallery-loading-mask"
+        className={`pointer-events-none absolute inset-0 z-[60] flex items-center justify-center transition-opacity duration-500 ${
+          maskVisible ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+        <div className="pointer-events-auto flex w-[min(84vw,320px)] flex-col items-center gap-3 rounded-2xl border border-[color:var(--color-gold)]/40 bg-[#FBF6EB]/95 px-6 py-5 text-center shadow-[0_24px_70px_rgba(63,43,31,0.3)] backdrop-blur-md">
+          <Loader2 size={20} className="animate-spin text-[color:var(--color-primary)]/80" />
+          <div>
+            <p className="font-serif text-[14px] text-[color:var(--color-ink)]">{maskLabel}</p>
+            <p className="mt-1 text-[10.5px] leading-relaxed text-[color:var(--color-ink)]/50">
+              {pendingBuilding ? '正在展开新的展厅空间…' : '正在展开建筑与展陈…'}
+            </p>
+          </div>
+          <span className="block h-[3px] w-full overflow-hidden rounded-full bg-black/10">
+            <span
+              className="block h-full rounded-full bg-[color:var(--color-primary)] transition-[width] duration-300"
+              style={{ width: `${Math.round((pendingBuilding ? switchProgress : 0.45) * 100)}%` }}
+            />
+          </span>
+        </div>
+      </div>
+
+      {/* 切换失败提示 */}
+      {switchError && (
+        <div className="pointer-events-none absolute left-1/2 top-[84px] z-[70] -translate-x-1/2">
+          <div className="rounded-full border border-[color:var(--color-primary)]/45 bg-[#FBF6EB]/97 px-3.5 py-1.5 text-[11.5px] text-[color:var(--color-primary)] shadow-lg">
+            {switchError}
+          </div>
+        </div>
+      )}
 
       {/* 菜单打开时的空白背板：点场景即收起，不打断看展 */}
       {menu && (
@@ -522,16 +648,27 @@ export default function HeritageGallery() {
               </Link>
               <h1 className="mt-1 font-serif text-[17px] leading-tight text-[color:var(--color-ink)]">纹脉展馆</h1>
               <p className="mt-0.5 text-[10.5px] leading-relaxed text-[color:var(--color-ink)]/55">
-                两层微缩展馆 · {frameSlots.length} 个画框 · {galleryPool.length} 件作品可布展
+                {building.name} · {frames.length} 个画框 · {galleryPool.length} 件作品可布展
               </p>
               <p className="mt-1 text-[10px] tabular-nums tracking-wide text-[color:var(--color-ink)]/45">
-                已布展 {placed}/{frameSlots.length}
+                已布展 {placed}/{frames.length}
               </p>
             </div>
           </header>
 
-          {/* 右上：环境 / 帮助 / 沉浸（图标级工具，不占主入口） */}
+          {/* 右上：建筑风格 / 环境 / 帮助 / 沉浸 */}
           <div className="absolute right-3 top-3 z-30 flex items-center gap-1 rounded-xl border border-[color:var(--color-gold)]/35 bg-[#FBF6EB]/85 p-1 backdrop-blur-md sm:right-5 sm:top-5">
+            <button
+              type="button"
+              onClick={() => toggleMenu('building')}
+              aria-label={`建筑风格（当前${building.name}）`}
+              title={`建筑风格 · 当前${building.name}`}
+              data-testid="building-switch-button"
+              className={dockButtonClass(menu === 'building')}
+            >
+              <Landmark size={12} />
+              <span className="hidden sm:inline">建筑</span>
+            </button>
             <button
               type="button"
               onClick={() => toggleMenu('environment')}
@@ -565,6 +702,22 @@ export default function HeritageGallery() {
               <EyeOff size={12} />
             </button>
 
+            {/* 建筑风格面板 */}
+            {menu === 'building' && (
+              <div className="absolute right-0 top-[calc(100%+6px)] z-30">
+                <div className={panelClass}>
+                  <BuildingSwitch
+                    buildings={BUILDINGS}
+                    activeId={activeBuildingId}
+                    pendingId={pendingBuilding}
+                    progress={switchProgress}
+                    onSelect={(id) => void handleBuildingSelect(id)}
+                    onHover={handleBuildingHover}
+                  />
+                </div>
+              </div>
+            )}
+
             {/* 环境面板：昼夜 */}
             {menu === 'environment' && (
               <div className="absolute right-0 top-[calc(100%+6px)] z-30">
@@ -589,7 +742,8 @@ export default function HeritageGallery() {
                     <li>· 布展模式：从器物库拖入场景，点选落位，右键删除</li>
                     <li>· 视角里的「第一人称」：点击画面锁定鼠标，Esc 解锁</li>
                     <li>· 灵宠探索：W/S 前后、A/D 转向、Shift 小跑、E 看展品、V 切视角、Esc 退出</li>
-                    <li>· 后侧折返楼梯可上二层；沉浸模式用 Esc 或右上角按钮退出</li>
+                    <li>· 右上「建筑」可切换经典展馆 / 华章新馆，两馆布展各自保存</li>
+                    <li>· 沉浸模式用 Esc 或右上角按钮退出</li>
                   </ul>
                   <p className="mt-2 border-t border-[color:var(--color-gold)]/25 px-1 pt-1.5 text-[10px] leading-snug text-[color:var(--color-ink)]/45">
                     灵宠「纹纹」在探索模式菜单里唤出；靠近画框会自动打开文化卡。
@@ -668,14 +822,14 @@ export default function HeritageGallery() {
                   <MenuRow
                     icon={<RotateCcw size={12} />}
                     label="重置布展"
-                    hint="清空所有画框与已摆器物，回到默认方案"
+                    hint={`只重置${building.name}，另一座馆的布展保留`}
                     onClick={() => {
                       resetAll();
                       setMenu(null);
                     }}
                   />
                   <p className="mt-1 px-1 text-[10px] tabular-nums text-[color:var(--color-ink)]/45">
-                    已布展 {placed}/{frameSlots.length}
+                    已布展 {placed}/{frames.length}
                   </p>
                 </div>
               )}
@@ -781,13 +935,16 @@ export default function HeritageGallery() {
                 W / ↑ 前进 · S / ↓ 后退 · A / ← 左转 · D / → 右转 · Shift 小跑 · E 看展品 · V 切视角 · Esc 退出
               </p>
               <p className="text-[10px] text-[color:var(--color-ink)]/40">
-                后侧折返楼梯可上二层；靠近画框会自动打开对应的文化卡
+                {building.id === 'classic'
+                  ? '后侧折返楼梯可上二层；靠近画框会自动打开对应的文化卡'
+                  : '本馆灵宠在地面层探索；靠近画框会自动打开对应的文化卡'}
               </p>
             </div>
           )}
 
           {/* 右侧图库 */}
           <GalleryPanel
+            config={config}
             frameId={selectedFrameId}
             currentArtworkId={currentArtworkId}
             onPick={(artworkId) => {

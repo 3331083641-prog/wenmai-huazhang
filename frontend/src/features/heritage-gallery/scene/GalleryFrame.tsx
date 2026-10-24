@@ -15,13 +15,15 @@
 import { useMemo, useState } from 'react';
 import * as THREE from 'three';
 import { useTexture } from '@react-three/drei';
-import { frameById, wallById, wallPointToWorld } from '../../../data/heritageGalleryConfig';
+import type { GalleryConfig } from '../buildings/layout';
 import { useFrameHoverStore } from '../state/frameHoverStore';
 import { findArtwork } from '../../../data/artworkRegistry';
-import { PALETTE, toonMaterial } from './materials';
+import { PALETTE } from './materials';
 import { ToonBox } from './primitives';
 
 interface FrameProps {
+  /** 当前建筑的配置（画框/展墙都在里面，换馆时随 props 变化） */
+  config: GalleryConfig;
   frameId: string;
   artworkId: string;
   /** 墙面局部归一化位置 */
@@ -88,6 +90,7 @@ function EmptyPlane({ w, h }: { w: number; h: number }) {
 }
 
 export function GalleryFrame({
+  config,
   frameId,
   artworkId,
   u,
@@ -95,8 +98,8 @@ export function GalleryFrame({
   selected,
   onSelect,
 }: FrameProps) {
-  const frame = frameById.get(frameId);
-  const wall = frame ? wallById.get(frame.wallId) : undefined;
+  const frame = config.frameById.get(frameId);
+  const wall = frame ? config.wallById.get(frame.wallId) : undefined;
   const artwork = findArtwork(artworkId);
 
   const [hovered, setHovered] = useState(false);
@@ -109,8 +112,8 @@ export function GalleryFrame({
 
   const worldPosition = useMemo<[number, number, number]>(() => {
     if (!wall) return [0, 0, 0];
-    return wallPointToWorld(wall, u, v, 0.06);
-  }, [wall, u, v]);
+    return config.wallPointToWorld(wall, u, v, 0.06);
+  }, [config, wall, u, v]);
 
   const rotationY = wall?.rotationY ?? 0;
 
@@ -181,26 +184,6 @@ export function GalleryFrame({
           <meshBasicMaterial color="#E4D6BC" transparent opacity={0.55} />
         </mesh>
       )}
-    </group>
-  );
-}
-
-/**
- * 墙面底板：给画框一个可读的「展墙」背景。
- * 比纯白墙略深，让白卡纸的画框能跳出来。
- */
-export function WallBoard({ wallId }: { wallId: string }) {
-  const wall = wallById.get(wallId);
-  const material = useMemo(() => toonMaterial('#EFE6D2'), []);
-  if (!wall) return null;
-  return (
-    <group
-      position={[wall.center[0] + Math.sin(wall.rotationY) * 0.03, wall.center[1], wall.center[2] + Math.cos(wall.rotationY) * 0.03]}
-      rotation={[0, wall.rotationY, 0]}
-    >
-      <mesh material={material} receiveShadow>
-        <planeGeometry args={[wall.size[0], wall.size[1]]} />
-      </mesh>
     </group>
   );
 }

@@ -33,15 +33,31 @@ export interface HangTarget {
 }
 
 const DOWN = new THREE.Vector3(0, -1, 0);
-/** 扫描柱的起点高度：高于整馆（脊高约 11.3 m） */
-const COLUMN_TOP = 13;
 
-/** 悬挂锚点允许的高度区间：低于一层梁架会撞人，高于屋面则等于悬空 */
-const HANG_MIN_Y = 2.35;
-const HANG_MAX_Y = 7.6;
+/**
+ * 悬挂/吸附的几何范围。
+ *
+ * 以前这些值是写死的，只对经典馆成立；新馆更高更宽，必须由建筑定义传入
+ * （buildings/layout.ts 的 deriveSceneSpec 按 envelope 推导）。
+ * 这里保留经典馆的数值作为默认，方便尚未接参数的调用点继续工作。
+ */
+export interface HangSpec {
+  /** 扫描柱起点高度：高于整馆脊线 */
+  columnTop: number;
+  /** 悬挂锚点允许的最低高度：低于一层梁架会撞人 */
+  minY: number;
+  /** 悬挂锚点允许的最高高度：高于屋面则等于悬空 */
+  maxY: number;
+  /** 落点允许范围：建筑外轮廓 + 一圈檐口 */
+  bounds: { x: number; z: number };
+}
 
-/** 落点允许范围：建筑外轮廓 + 一圈檐口 */
-const HANG_BOUNDS = { x: 4.7, z: 4.5 };
+export const DEFAULT_HANG_SPEC: HangSpec = {
+  columnTop: 13,
+  minY: 2.35,
+  maxY: 7.6,
+  bounds: { x: 4.7, z: 4.5 },
+};
 
 /**
  * 可以挂东西的构件名称。
@@ -101,8 +117,11 @@ export function findSurfaceTarget(options: {
   maxY: number;
   excludeKey?: string;
   footprint?: [number, number];
+  /** 扫描柱起点（默认经典馆脊高），新馆更高要传自己的 */
+  columnTop?: number;
 }): SurfaceTarget | null {
   const { ray, floorPoint, placedRoot, structural, roof, minY, maxY, excludeKey, footprint } = options;
+  const columnTop = options.columnTop ?? DEFAULT_HANG_SPEC.columnTop;
   _probe.set(ray.origin, ray.direction);
   _probe.near = 0.02;
   _probe.far = 120;
@@ -134,9 +153,9 @@ export function findSurfaceTarget(options: {
   }
 
   // B. 落点正上方向下扫描：取「可达高度以内」最高的朝上平面。
-  //    必须有 maxY：否则一层布展会把器物吸到二层楼板（3.6 m）顶上。
+  //    必须有 maxY：否则一层布展会把器物吸到二层楼板（floor2）顶上。
   if (!floorPoint) return null;
-  _column.set(new THREE.Vector3(floorPoint.x, COLUMN_TOP, floorPoint.z), DOWN);
+  _column.set(new THREE.Vector3(floorPoint.x, columnTop, floorPoint.z), DOWN);
   _column.near = 0.02;
   _column.far = 60;
   const columnHits: THREE.Intersection[] = [];
@@ -246,18 +265,21 @@ export function findHangTarget(options: {
   structural: THREE.Object3D[];
   ray?: THREE.Ray;
   floorPoint?: THREE.Vector3 | null;
+  /** 当前建筑的悬挂几何范围；不传则按经典馆 */
+  spec?: HangSpec;
 }): HangTarget | null {
   const { structural, ray, floorPoint } = options;
+  const spec = options.spec ?? DEFAULT_HANG_SPEC;
   if (!structural.length) return null;
 
   const accept = (hit: THREE.Intersection): boolean => {
     if (!isHangCarrier(hit.object.name)) return false;
     const point = hit.point;
     return (
-      Math.abs(point.x) <= HANG_BOUNDS.x &&
-      Math.abs(point.z) <= HANG_BOUNDS.z &&
-      point.y >= HANG_MIN_Y &&
-      point.y <= HANG_MAX_Y
+      Math.abs(point.x) <= spec.bounds.x &&
+      Math.abs(point.z) <= spec.bounds.z &&
+      point.y >= spec.minY &&
+      point.y <= spec.maxY
     );
   };
 
@@ -277,8 +299,8 @@ export function findHangTarget(options: {
 
   // B. 落点正上方向下扫描
   if (!floorPoint) return null;
-  if (Math.abs(floorPoint.x) > HANG_BOUNDS.x || Math.abs(floorPoint.z) > HANG_BOUNDS.z) return null;
-  _column.set(new THREE.Vector3(floorPoint.x, COLUMN_TOP, floorPoint.z), DOWN);
+  if (Math.abs(floorPoint.x) > spec.bounds.x || Math.abs(floorPoint.z) > spec.bounds.z) return null;
+  _column.set(new THREE.Vector3(floorPoint.x, spec.columnTop, floorPoint.z), DOWN);
   _column.near = 0.02;
   _column.far = 60;
   const hits = _column.intersectObjects(structural, true).sort((a, b) => a.distance - b.distance);

@@ -1,14 +1,19 @@
 /**
- * DIY 布展状态：器物实例、选中态、屋顶瓦色。
+ * DIY 布展状态（双馆分桶）：器物实例、选中态、屋顶瓦色。
  *
  * 只持久化「摆了哪些东西、摆在哪、什么颜色」，不存几何：
  * 器物定义在 scene/props/catalog，改器物样式后旧布展仍然有效。
  * 与 curationStore（画框布展）分开存 key，互不影响。
+ *
+ * 分桶：`byBuilding[buildingId] = { items, roofTint }`
+ *  - 切换建筑时各馆器物互不影响，坐标也不会跨馆串用；
+ *  - 旧版本（v1，顶层 items/roofTint）迁移后落进 classic 桶。
  */
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { getPropDef } from '../props/assets/assetProps';
+import { activeBuildingId, useBuildingStore } from './buildingStore';
 
 export interface DiyItem {
   key: string;
@@ -38,6 +43,11 @@ export interface RoofTintDef {
   color: string;
 }
 
+export interface BuildingDiy {
+  items: DiyItem[];
+  roofTint: string;
+}
+
 /** 屋顶瓦色：都是古建可用的几种，不做高饱和色 */
 export const ROOF_TINTS: RoofTintDef[] = [
   { id: 'dai', name: '黛瓦', color: '#4A5A61' },
@@ -47,16 +57,20 @@ export const ROOF_TINTS: RoofTintDef[] = [
   { id: 'shan', name: '赭石', color: '#7A4E3C' },
 ];
 
+const DEFAULT_TINT = 'dai';
+
 interface DiyState {
-  items: DiyItem[];
+  /** buildingId -> 该馆的器物布展 */
+  byBuilding: Record<string, BuildingDiy>;
   selectedKey: string | null;
   /** 面板里点中、等待落位的器物 id */
   pendingPropId: string | null;
   panelOpen: boolean;
-  roofTint: string;
   /** 从面板拖到画面后的一次性落位请求（屏幕坐标） */
   dropRequest: { propId: string; clientX: number; clientY: number } | null;
 
+  /** 当前建筑的器物列表（非 React 环境读取用） */
+  current: () => BuildingDiy;
   addItem: (item: DiyItem) => void;
   updateItem: (key: string, patch: Partial<DiyItem>) => void;
   removeItem: (key: string) => void;
@@ -92,6 +106,20 @@ function newKey(): string {
   return `diy-${Date.now().toString(36)}-${seq}`;
 }
 
+/** 取某座馆的布展桶（没有就建空的） */
+function bucketOf(byBuilding: Record<string, BuildingDiy>, buildingId: string): BuildingDiy {
+  return byBuilding[buildingId] ?? { items: [], roofTint: DEFAULT_TINT };
+}
+
+/** 写回某座馆的桶 */
+function withBucket(
+  byBuilding: Record<string, BuildingDiy>,
+  buildingId: string,
+  patch: Partial<BuildingDiy>,
+): Record<string, BuildingDiy> {
+  return { ...byBuilding, [buildingId]: { ...bucketOf(byBuilding, buildingId), ...patch } };
+}
+
 export function makeItem(
   propId: string,
   x: number,
@@ -117,55 +145,76 @@ export function makeItem(
 
 export const useDiyStore = create<DiyState>()(
   persist(
-    (set) => ({
-      items: [],
+    (set, get) => ({
+      byBuilding: {},
       selectedKey: null,
       pendingPropId: null,
       panelOpen: false,
-      roofTint: 'dai',
       dropRequest: null,
 
-      addItem: (item) => set((state) => ({ items: [...state.items, item], selectedKey: item.key, pendingPropId: null })),
-      updateItem: (key, patch) =>
+      current: () => bucketOf(get().byBuilding, activeBuildingId()),
+
+      addItem: (item) => {
+        const buildingId = activeBuildingId();
         set((state) => {
-          const target = state.items.find((item) => item.key === key);
+          const bucket = bucketOf(state.byBuilding, buildingId);
+          return {
+            byBuilding: withBucket(state.byBuilding, buildingId, { items: [...bucket.items, item] }),
+            selectedKey: item.key,
+            pendingPropId: null,
+          };
+        });
+      },
+
+      updateItem: (key, patch) => {
+        const buildingId = activeBuildingId();
+        set((state) => {
+          const bucket = bucketOf(state.byBuilding, buildingId);
+          const target = bucket.items.find((item) => item.key === key);
           if (!target) return {};
           const next = { ...target, ...patch };
-          const hasChild = state.items.some((item) => item.parentInstanceId === key);
+          const hasChild = bucket.items.some((item) => item.parentInstanceId === key);
           const dx = next.x - target.x;
           const dy = next.y - target.y;
           const dz = next.z - target.z;
           const drot = next.rotY - target.rotY;
           if (!hasChild || (!dx && !dy && !dz && !drot)) {
-            return { items: state.items.map((item) => (item.key === key ? next : item)) };
+            return {
+              byBuilding: withBucket(state.byBuilding, buildingId, {
+                items: bucket.items.map((item) => (item.key === key ? next : item)),
+              }),
+            };
           }
           // 承载物移动/转动时，子物件保持相对位置一起走（吸附在顶面的器物不会掉在原地）
           const cos = Math.cos(drot);
           const sin = Math.sin(drot);
-          return {
-            items: state.items.map((item) => {
-              if (item.key === key) return next;
-              if (item.parentInstanceId !== key) return item;
-              const ox = item.x - target.x;
-              const oz = item.z - target.z;
-              return {
-                ...item,
-                x: next.x + ox * cos - oz * sin,
-                y: item.y + dy,
-                z: next.z + ox * sin + oz * cos,
-                rotY: item.rotY + drot,
-              };
-            }),
-          };
-        }),
-      removeItem: (key) =>
+          const items = bucket.items.map((item) => {
+            if (item.key === key) return next;
+            if (item.parentInstanceId !== key) return item;
+            const ox = item.x - target.x;
+            const oz = item.z - target.z;
+            return {
+              ...item,
+              x: next.x + ox * cos - oz * sin,
+              y: item.y + dy,
+              z: next.z + ox * sin + oz * cos,
+              rotY: item.rotY + drot,
+            };
+          });
+          return { byBuilding: withBucket(state.byBuilding, buildingId, { items }) };
+        });
+      },
+
+      removeItem: (key) => {
+        const buildingId = activeBuildingId();
         set((state) => {
+          const bucket = bucketOf(state.byBuilding, buildingId);
           const doomed = new Set([key]);
           // 承载物被删掉时，摆在它上面的器物一并移除，避免留下悬空件
           let grew = true;
           while (grew) {
             grew = false;
-            for (const item of state.items) {
+            for (const item of bucket.items) {
               if (doomed.has(item.key)) continue;
               if (item.parentInstanceId && doomed.has(item.parentInstanceId)) {
                 doomed.add(item.key);
@@ -174,18 +223,46 @@ export const useDiyStore = create<DiyState>()(
             }
           }
           return {
-            items: state.items.filter((item) => !doomed.has(item.key)),
+            byBuilding: withBucket(state.byBuilding, buildingId, {
+              items: bucket.items.filter((item) => !doomed.has(item.key)),
+            }),
             selectedKey: state.selectedKey && doomed.has(state.selectedKey) ? null : state.selectedKey,
           };
-        }),
+        });
+      },
+
       selectItem: (key) => set({ selectedKey: key, pendingPropId: null }),
       setPending: (propId) => set({ pendingPropId: propId, panelOpen: true }),
       setPanelOpen: (open) => set({ panelOpen: open }),
-      setRoofTint: (id) => set({ roofTint: id }),
+
+      setRoofTint: (id) => {
+        const buildingId = activeBuildingId();
+        set((state) => ({
+          byBuilding: withBucket(state.byBuilding, buildingId, { roofTint: id }),
+        }));
+      },
+
       setDropRequest: (request) => set({ dropRequest: request }),
-      clearItems: () => set({ items: [], selectedKey: null }),
-      resetAll: () =>
-        set({ items: [], selectedKey: null, pendingPropId: null, roofTint: 'dai' }),
+
+      /** 只清空当前建筑的器物 */
+      clearItems: () => {
+        const buildingId = activeBuildingId();
+        set((state) => ({
+          byBuilding: withBucket(state.byBuilding, buildingId, { items: [] }),
+          selectedKey: null,
+        }));
+      },
+
+      /** 只重置当前建筑（器物 + 瓦色），另一座馆原样保留 */
+      resetAll: () => {
+        const buildingId = activeBuildingId();
+        set((state) => ({
+          byBuilding: withBucket(state.byBuilding, buildingId, { items: [], roofTint: DEFAULT_TINT }),
+          selectedKey: null,
+          pendingPropId: null,
+        }));
+      },
+
       editMode: false,
       setEditMode: (on) => set({ editMode: on, pendingPropId: null }),
       hoverAssetKey: null,
@@ -200,10 +277,48 @@ export const useDiyStore = create<DiyState>()(
       setPlaceHint: (text) => set({ placeHint: text }),
     }),
     {
-      name: 'wenmai-gallery-diy-v1',
+      name: 'wenmai-gallery-diy-v2',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ items: state.items, roofTint: state.roofTint }),
-      version: 1,
+      partialize: (state) => ({ byBuilding: state.byBuilding }),
+      version: 2,
+      migrate: (persisted, version) => {
+        const legacy = persisted as
+          | { items?: DiyItem[]; roofTint?: string; byBuilding?: Record<string, BuildingDiy> }
+          | undefined;
+        if (version >= 2 && legacy?.byBuilding) return { byBuilding: legacy.byBuilding };
+        // v1：单份器物表，属于经典馆
+        if (legacy && Array.isArray(legacy.items)) {
+          return {
+            byBuilding: {
+              classic: { items: legacy.items, roofTint: legacy.roofTint ?? DEFAULT_TINT },
+            },
+          };
+        }
+        return { byBuilding: {} };
+      },
     },
   ),
 );
+
+/* ---------------------------------------------------------------- 订阅 hooks */
+
+/** 当前建筑的器物列表 */
+export function useDiyItems(): DiyItem[] {
+  const byBuilding = useDiyStore((state) => state.byBuilding);
+  const active = useBuildingStore((state) => state.active);
+  return byBuilding[active]?.items ?? EMPTY_ITEMS;
+}
+
+/** 当前建筑的屋顶瓦色 */
+export function useRoofTint(): string {
+  const byBuilding = useDiyStore((state) => state.byBuilding);
+  const active = useBuildingStore((state) => state.active);
+  return byBuilding[active]?.roofTint ?? DEFAULT_TINT;
+}
+
+/** 当前建筑的器物数量 */
+export function useDiyCount(): number {
+  return useDiyItems().length;
+}
+
+const EMPTY_ITEMS: DiyItem[] = [];
