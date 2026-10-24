@@ -37,7 +37,6 @@ import os
 import time
 
 import numpy as np
-import torch
 from PIL import Image, ImageFilter
 
 CONFIG_DIR = os.path.join("scripts", "interactive", "artworks")
@@ -190,6 +189,9 @@ def run_depth(art_path: str, repo: str, cache: str, force: bool) -> np.ndarray:
         print(f"depth: 复用缓存 {cache}")
         return np.load(cache).astype(np.float32)
 
+    # 只在真正需要跑模型时导入 torch：缓存（含降级近似深度）可用时，
+    # 这台机器不需要安装 torch/transformers 也能构建画境资产。
+    import torch
     from transformers import AutoImageProcessor, DepthAnythingForDepthEstimation
 
     device = "cuda" if torch.cuda.is_available() else "cpu"

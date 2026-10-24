@@ -1,14 +1,14 @@
 /**
  * 作品详情：像展签，不是普通弹窗。
  *
- * 内容全部来自项目里已有的真实案例元数据（metadata.json 的 visionAnalysis），
+ * 内容全部来自项目里已有的作品元数据（metadata.json 的 visionAnalysis），
  * 不新编文案，也不做无法核实的断言。
  */
 
 import { useEffect } from 'react';
 import { X, BookOpen, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { getArtwork } from '../../../data/galleryArtworks';
+import { findArtwork } from '../../../data/artworkRegistry';
 import { experienceByStyle } from '../../../data/experiences';
 
 interface ArtworkDetailProps {
@@ -17,8 +17,13 @@ interface ArtworkDetailProps {
 }
 
 export function ArtworkDetail({ artworkId, onClose }: ArtworkDetailProps) {
-  const artwork = getArtwork(artworkId ?? undefined);
-  const experience = artwork ? experienceByStyle.get(artwork.styleId) : undefined;
+  const artwork = findArtwork(artworkId ?? undefined);
+  // 精选作品按风格对应已核验的体验；运行期作品必须用自己的 caseId，
+  // 绝不能拿同风格的旧体验来冒充这件新作品。
+  const experience = artwork && artwork.origin === 'curated'
+    ? experienceByStyle.get(artwork.styleId)
+    : undefined;
+  const experienceHref = experience?.id ?? artwork?.id ?? '';
 
   useEffect(() => {
     if (!artworkId) return;
@@ -83,25 +88,25 @@ export function ArtworkDetail({ artworkId, onClose }: ArtworkDetailProps) {
 
             <section className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10.5px] text-[color:var(--color-ink)]/45">
               <span>生成于 {artwork.generatedAt.slice(0, 10)}</span>
-              <span>{artwork.origin === 'curated' ? '随项目提交的真实案例' : '运行期自动保存'}</span>
+              <span>{artwork.origin === 'curated' ? '随项目提交的精选作品' : '运行期自动保存'}</span>
             </section>
           </div>
         </div>
 
         {/* 与既有互动体验联动，不重复造内容 */}
         <div className="flex flex-wrap items-center gap-2 border-t border-[color:var(--color-gold)]/30 px-4 py-3">
-          {experience ? (
+          {(experience || artwork.origin === 'runtime') ? (
             <>
               <Link
-                to={`/experience/${experience.id}`}
+                to={`/experience/${experienceHref}`}
                 className="inline-flex items-center gap-1.5 rounded px-3 py-1.5 text-[11.5px] text-white transition hover:opacity-90"
                 style={{ backgroundColor: artwork.accent }}
               >
-                进入互动画境
+                {experience ? '进入互动画境' : '打开这件作品的互动'}
                 <ArrowRight size={12} />
               </Link>
               <Link
-                to={`/story/${experience.id}`}
+                to={`/story/${experienceHref}`}
                 className="inline-flex items-center gap-1.5 rounded border border-[color:var(--color-gold)]/55 px-3 py-1.5 text-[11.5px] text-[color:var(--color-ink)]/70 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
               >
                 <BookOpen size={12} />
@@ -110,7 +115,7 @@ export function ArtworkDetail({ artworkId, onClose }: ArtworkDetailProps) {
             </>
           ) : (
             <span className="text-[11px] text-[color:var(--color-ink)]/40">
-              这件作品还没有人工标注的互动解读。
+              这件作品还没有可用的互动解读。
             </span>
           )}
           <Link

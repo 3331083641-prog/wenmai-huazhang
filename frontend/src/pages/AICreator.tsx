@@ -422,11 +422,11 @@ export default function AICreator() {
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
-              {savedExample && <p role="status" className="mb-4 rounded-lg bg-secondary/10 p-3 text-sm text-secondary">已保存的真实案例 · 当前未执行实时推理。参考图预览为原始输入；重新生成需再次选择上传文件。</p>}
+              {savedExample && <p role="status" className="mb-4 rounded-lg bg-secondary/10 p-3 text-sm text-secondary">已保存的作品 · 当前未执行实时推理。参考图预览为原始输入；重新生成需再次选择上传文件。</p>}
               <section className="mb-5 rounded-xl border border-primary/10 bg-paper p-4 text-sm" aria-label="模型服务状态">
                 <p>图像生成 · Qwen Image 3.0：{backendStatus === 'disconnected' ? '当前不可用' : backendStatus === 'checking' ? '检查中' : backendHealth?.providers?.dashscope_qwen_image?.hasApiKey === false ? '未配置' : backendHealth?.providers?.dashscope_qwen_image?.available ? '已连接（配置就绪）' : '当前不可用'}</p>
                 <p className="mt-2">文化理解 · Qwen3-VL：{backendHealth?.localVisionAnalysis?.available ? '本地可用' : '本地未启动或模型未安装'}</p>
-                <p className="mt-3 text-xs text-ink/60">实时图像生成需要配置阿里云百炼服务及个人 API Key，可能产生调用费用。没有模型也可<Link className="text-primary underline" to="/gallery">查看已保存的真实案例</Link>；模板说明不代表看图分析成功。</p>
+                <p className="mt-3 text-xs text-ink/60">实时图像生成需要配置阿里云百炼服务及个人 API Key，可能产生调用费用。没有模型也可<Link className="text-primary underline" to="/gallery">查看已保存的作品</Link>；模板说明不代表看图分析成功。</p>
               </section>
               {/* Prompt Area */}
               <div className="mb-6">
@@ -702,7 +702,7 @@ export default function AICreator() {
                       >
                         <span className="inline-flex items-center gap-1.5 font-medium text-ink/75">
                           <Check className="h-3.5 w-3.5 text-primary" />
-                          已自动存入文化作品展厅
+                          已自动存入作品展厅
                         </span>
                         <button
                           type="button"

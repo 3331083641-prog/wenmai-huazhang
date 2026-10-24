@@ -12,6 +12,7 @@ import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
 import { applySanzhuan2, disposeToonResources, getOutlineMesh } from './sanzhuan2';
+import { applyLookDev } from './lookdev';
 
 // The V5 GLB already carries authored PBR colours. The legacy toon pass
 // overwrote them with a near-white ramp and washed the whole hall out, so it is
@@ -45,7 +46,15 @@ export interface GalleryLayers {
 export interface GalleryAssets {
   root: THREE.Group;
   layers: GalleryLayers;
-  stats: { meshes: number; materials: number; triangles: number };
+  stats: {
+    meshes: number;
+    materials: number;
+    triangles: number;
+    /** 观感表覆盖到的材质份数 */
+    lookDevMaterials: number;
+    /** 命中观感规则的材质份数 */
+    lookDevTweaked: number;
+  };
 }
 
 function prepare(source: THREE.Group): GalleryAssets {
@@ -71,6 +80,9 @@ function prepare(source: THREE.Group): GalleryAssets {
   // 鐩告満鑺傜偣鍙槸 Blender 鐨勫伐浣滃弬鑰冿紝缃戦〉閲岀敤甯冨眬 JSON 鐨勬満浣?  for (const camera of cameras) camera.removeFromParent();
 
   const result = TOON_ENABLED ? applySanzhuan2(root) : { materials: 0 };
+  // 观感（走的是 GLB 自带的 PBR 材质）：暖木/石材/铜/朱红/纸感逐材质微调，
+  // 不新增材质、不改几何，参数表在 scene/lookdev.ts。
+  const lookDev = applyLookDev(root);
 
   const roofOutlines = roof
     .map((object) => getOutlineMesh(object as THREE.Mesh))
@@ -88,7 +100,13 @@ function prepare(source: THREE.Group): GalleryAssets {
   return {
     root,
     layers: { roof, roofOutlines, meshes },
-    stats: { meshes: meshes.length, materials: result.materials, triangles: Math.round(triangles) },
+    stats: {
+      meshes: meshes.length,
+      materials: result.materials,
+      triangles: Math.round(triangles),
+      lookDevMaterials: lookDev.materials,
+      lookDevTweaked: lookDev.tweaked,
+    },
   };
 }
 

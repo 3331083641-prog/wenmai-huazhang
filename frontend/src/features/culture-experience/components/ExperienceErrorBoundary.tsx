@@ -50,7 +50,7 @@ export class ExperienceErrorBoundary extends Component<Props, State> {
           to={this.props.fallbackHref ?? '/gallery'}
           className="inline-flex items-center gap-2 rounded border border-[color:var(--color-gold)] px-5 py-2 text-sm text-[color:var(--color-primary)] transition hover:bg-[color:var(--color-primary)] hover:text-white"
         >
-          返回文化作品展厅
+          返回作品展厅
         </Link>
       </div>
     );

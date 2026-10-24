@@ -10,7 +10,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { X, Search, RotateCcw, Eraser, Info, ArrowRight } from 'lucide-react';
-import { galleryArtworks } from '../../../data/galleryArtworks';
+import { refreshGalleryPool, useGalleryPool } from '../../../data/galleryPool';
 import { frameById, wallById } from '../../../data/heritageGalleryConfig';
 import type { GalleryArtwork } from '../types';
 
@@ -36,6 +36,12 @@ export function GalleryPanel({
   const [query, setQuery] = useState('');
   const [styleFilter, setStyleFilter] = useState<string>('all');
   const panelRef = useRef<HTMLDivElement>(null);
+  // 运行期新生成的作品也进入可选池；面板打开时拉一次，失败保留现有内容。
+  const pool = useGalleryPool();
+
+  useEffect(() => {
+    if (frameId) void refreshGalleryPool();
+  }, [frameId]);
 
   const frame = frameId ? frameById.get(frameId) : undefined;
   const wall = frame ? wallById.get(frame.wallId) : undefined;
@@ -57,15 +63,15 @@ export function GalleryPanel({
 
   const styles = useMemo(() => {
     const seen = new Map<string, string>();
-    for (const artwork of galleryArtworks) {
+    for (const artwork of pool) {
       if (!seen.has(artwork.styleId)) seen.set(artwork.styleId, artwork.styleName);
     }
     return Array.from(seen.entries());
-  }, []);
+  }, [pool]);
 
   const filtered = useMemo(() => {
     const keyword = query.trim().toLowerCase();
-    return galleryArtworks.filter((artwork) => {
+    return pool.filter((artwork) => {
       if (styleFilter !== 'all' && artwork.styleId !== styleFilter) return false;
       if (!keyword) return true;
       return (
@@ -74,7 +80,7 @@ export function GalleryPanel({
         artwork.features.some((feature) => feature.toLowerCase().includes(keyword))
       );
     });
-  }, [query, styleFilter]);
+  }, [pool, query, styleFilter]);
 
   if (!frameId) return null;
 
@@ -225,6 +231,11 @@ function ArtworkRow({
             </span>
             <span className="mt-0.5 block text-[10.5px]" style={{ color: artwork.accent }}>
               {artwork.styleName}
+              {artwork.origin === 'runtime' && (
+                <span className="ml-1 rounded-full bg-[color:var(--color-gold)]/20 px-1.5 py-px text-[9px] text-[color:var(--color-ink)]/60">
+                  新生成
+                </span>
+              )}
             </span>
             <span className="mt-0.5 line-clamp-1 block text-[10.5px] text-[color:var(--color-ink)]/45">
               {artwork.features.slice(0, 2).join(' · ') || artwork.summary.slice(0, 20)}

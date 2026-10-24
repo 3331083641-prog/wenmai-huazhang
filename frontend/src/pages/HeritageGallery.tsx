@@ -1,37 +1,45 @@
 /**
  * 纹脉展馆 · 页面
  *
- * 布局取向：3D 场景占满视口，UI 只保留最必要的角落
- *  - 左上：标题与一句说明
- *  - 左下：浏览模式 + 机位切换 + 布展工具
- *  - 右侧：图库抽屉（点画框才出现）
- *  - 右下：沉浸模式按钮（隐藏全部界面，只留一个「显示界面」）
+ * 控件分层（V2）：
+ *  - 默认只露三类入口：探索模式 / 布展模式 / 视角。面板一律收起，进来先看到场景。
+ *  - 机位预设（外观·正·背·左·右·俯视 / 一层·二层·梁架·檐下）收进「视角」；
+ *  - 昼夜收进右上角「环境」；
+ *  - 重置布展只出现在「布展模式」的二级菜单里；
+ *  - 操作说明合并进「帮助」，不再常驻屏幕；
+ *  - 第一/第三人称只保留一套：视角菜单驱动同一个 viewMode，灵宠探索直接复用它
+ *    （旧版页面一套、灵宠 HUD 又一套，是重复入口）。
  *
- * 不使用站内常规导航条覆盖场景：进入后由本页自己提供返回入口，
- * 保证沉浸感，同时不让人迷路。
+ * 布局：3D 场景占满视口，UI 只占四个角，弹出菜单都是短时浮层、点空白即收。
+ * 不使用站内常规导航条覆盖场景：进入后由本页自己提供返回入口。
  */
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowLeft,
-  RotateCcw,
-  Trash2,
-  MousePointerClick,
-  Move,
-  ZoomIn,
+  Building2,
+  ChevronDown,
+  Compass,
   Eye,
   EyeOff,
-  Building2,
-  Layers,
   Frame,
+  Info,
+  Layers,
+  Moon,
   PackageOpen,
+  PawPrint,
+  RotateCcw,
+  Sun,
+  Sunset,
+  Trash2,
 } from 'lucide-react';
 import { HeritageScene } from '../features/heritage-gallery/scene/HeritageScene';
 import { GalleryPanel } from '../features/heritage-gallery/components/GalleryPanel';
 import { DiYPanel } from '../features/heritage-gallery/components/DiYPanel';
 import { TimeSwitch } from '../features/heritage-gallery/components/TimeSwitch';
-import { ViewModeSwitch, type ViewMode } from '../features/heritage-gallery/components/ViewModeSwitch';
+import { ViewModeSwitch, VIEW_MODES, type ViewMode } from '../features/heritage-gallery/components/ViewModeSwitch';
 import { ArtworkDetail } from '../features/heritage-gallery/components/ArtworkDetail';
 import { useCurationStore, resolveArtworkId } from '../features/heritage-gallery/state/curationStore';
 import { useDiyStore } from '../features/heritage-gallery/state/diyStore';
@@ -39,33 +47,134 @@ import { useDoorStore } from '../features/heritage-gallery/state/doorStore';
 import { useFrameHoverStore } from '../features/heritage-gallery/state/frameHoverStore';
 import { ASSET_BY_ID, ASSET_GROUP_LABEL } from '../features/heritage-gallery/props/assets/assetCatalog';
 import { cameraPresets, frameSlots } from '../data/heritageGalleryConfig';
-import { galleryArtworks } from '../data/galleryArtworks';
-import type { TimeOfDay } from '../features/heritage-gallery/scene/DayNightRig';
+import { refreshGalleryPool, useGalleryPool } from '../data/galleryPool';
+import { TIME_PRESETS, type TimeOfDay } from '../features/heritage-gallery/scene/DayNightRig';
 import type { GalleryMode } from '../features/heritage-gallery/types';
 import type { MascotView } from '../features/heritage-gallery/mascot/MascotCompanion';
 
-const MODES: { id: GalleryMode; label: string; icon: typeof Eye; hint: string }[] = [
-  { id: 'exterior', label: '外观', icon: Building2, hint: '屋顶完整，绕建筑旋转' },
-  { id: 'interior', label: '内部', icon: Layers, hint: '收起屋顶，进入两层展厅' },
-  { id: 'curation', label: '布展', icon: Frame, hint: '点画框换画、拖动位置' },
+/** 菜单标识：主入口三类 + 右上角两个工具 */
+type MenuId = 'explore' | 'curation' | 'view' | 'environment' | 'help';
+
+/** 探索模式下的两种取景 */
+const SCENE_MODES: {
+  id: Extract<GalleryMode, 'exterior' | 'interior'>;
+  label: string;
+  hint: string;
+  icon: typeof Compass;
+}[] = [
+  { id: 'exterior', label: '外观', hint: '屋顶完整，绕建筑旋转', icon: Building2 },
+  { id: 'interior', label: '内部', hint: '收起屋顶，进入两层展厅', icon: Layers },
 ];
 
-/** 每种模式下提供的机位（顺序与 Blender 相机集合一致） */
-const MODE_PRESETS: Record<GalleryMode, string[]> = {
-  exterior: ['exterior', 'front', 'back', 'left', 'right', 'top'],
-  interior: ['floor1', 'floor2', 'ceiling', 'eave'],
-  curation: ['exterior', 'floor1', 'floor2'],
-};
+/** 机位分两组：建筑外部与室内（顺序与 Blender 相机集合一致） */
+const EXTERIOR_PRESETS = new Set(['exterior', 'front', 'back', 'left', 'right', 'top']);
+const INTERIOR_PRESETS = new Set(['floor1', 'floor2', 'ceiling', 'eave']);
+
+const TIME_ICONS: Record<TimeOfDay, typeof Sun> = { day: Sun, dusk: Sunset, night: Moon };
+
+const panelClass =
+  'pointer-events-auto w-[min(86vw,286px)] rounded-xl border border-[color:var(--color-gold)]/45 bg-[#FBF6EB]/97 p-2.5 shadow-[0_18px_50px_rgba(63,43,31,0.24)] backdrop-blur';
+
+const dockButtonClass = (active: boolean) =>
+  `inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[11.5px] transition ${
+    active
+      ? 'bg-[color:var(--color-primary)] text-white'
+      : 'text-[color:var(--color-ink)]/70 hover:bg-black/5 hover:text-[color:var(--color-ink)]'
+  }`;
+
+/* ------------------------------------------------------------------ 微分件 */
+
+/** 菜单里的一行操作 */
+function MenuRow({
+  icon,
+  label,
+  hint,
+  active,
+  testId,
+  onClick,
+}: {
+  icon: ReactNode;
+  label: string;
+  hint?: string;
+  active?: boolean;
+  testId?: string;
+  onClick: () => void;
+}): JSX.Element {
+  return (
+    <button
+      type="button"
+      data-testid={testId}
+      onClick={onClick}
+      className={`flex w-full items-start gap-2 rounded-md px-2 py-1.5 text-left transition ${
+        active
+          ? 'bg-[color:var(--color-primary)]/12 text-[color:var(--color-primary)]'
+          : 'text-[color:var(--color-ink)]/75 hover:bg-black/5'
+      }`}
+    >
+      <span className="mt-0.5 shrink-0 text-[color:var(--color-primary)]/80">{icon}</span>
+      <span className="min-w-0">
+        <span className="block text-[12px] leading-tight">{label}</span>
+        {hint && (
+          <span className="mt-0.5 block text-[10px] leading-snug text-[color:var(--color-ink)]/45">{hint}</span>
+        )}
+      </span>
+    </button>
+  );
+}
+
+/** 菜单小标题 */
+function MenuLabel({ children }: { children: ReactNode }): JSX.Element {
+  return (
+    <p className="mb-1 mt-1.5 px-1 text-[9.5px] tracking-[0.22em] text-[color:var(--color-ink)]/40 first:mt-0">
+      {children}
+    </p>
+  );
+}
+
+/** 机位小标签 */
+function PresetChip({
+  preset,
+  active,
+  onClick,
+}: {
+  preset: { id: string; label: string };
+  active: boolean;
+  onClick: () => void;
+}): JSX.Element {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`rounded px-2 py-1 text-[11px] transition ${
+        active
+          ? 'bg-[color:var(--color-primary)] text-white'
+          : 'text-[color:var(--color-ink)]/65 hover:bg-black/5 hover:text-[color:var(--color-ink)]'
+      }`}
+    >
+      {preset.label}
+    </button>
+  );
+}
+
+/* ------------------------------------------------------------------ 页面 */
 
 export default function HeritageGallery() {
   const [presetId, setPresetId] = useState('exterior');
   const [mode, setMode] = useState<GalleryMode>('exterior');
-  const [showHints, setShowHints] = useState(true);
   const [immersive, setImmersive] = useState(false);
   const [time, setTime] = useState<TimeOfDay>('day');
   const [viewMode, setViewMode] = useState<ViewMode>('third');
   const [mascotActive, setMascotActive] = useState(false);
-  const [mascotView, setMascotView] = useState<MascotView>('third');
+  /** 一次只开一个面板；默认 null = 全部收起，先看到场景 */
+  const [menu, setMenu] = useState<MenuId | null>(null);
+  // 作品池 = 内置精选 + 运行期新生成（Case Service 拉取，失败回退缓存）
+  const galleryPool = useGalleryPool();
+
+  useEffect(() => {
+    void refreshGalleryPool();
+  }, []);
+
   const panelOpen = useDiyStore((state) => state.panelOpen);
   const setPanelOpen = useDiyStore((state) => state.setPanelOpen);
   const diyCount = useDiyStore((state) => state.items.length);
@@ -110,68 +219,73 @@ export default function HeritageGallery() {
     (frameId: string) => {
       selectFrame(frameId);
       setMode('curation');
-      setShowHints(false);
+      setMenu(null);
     },
     [selectFrame],
   );
 
   const handleClose = useCallback(() => selectFrame(null), [selectFrame]);
 
-  const handleMode = useCallback((next: GalleryMode) => {
+  /** 探索模式：外观 / 内部 */
+  const handleSceneMode = useCallback((next: 'exterior' | 'interior') => {
     setMode(next);
-    // 切模式时落到该模式的主机位，避免停在一个不合法的视角。
-    // 布展必须进厅：外观机位离建筑几十米，落位会打到馆外的台基上。
-    const options = MODE_PRESETS[next];
     setPresetId((current) => {
-      if (next === 'curation' && !['floor1', 'floor2'].includes(current)) return 'floor1';
-      return options.includes(current) ? current : options[0];
+      const allowed = next === 'exterior' ? EXTERIOR_PRESETS : INTERIOR_PRESETS;
+      return allowed.has(current) ? current : next === 'exterior' ? 'exterior' : 'floor1';
     });
+    setMenu(null);
   }, []);
 
-  // 落位提示（吸附失败 / 降级到地面）自动消失，不长期占屏
-  const placeHint = useDiyStore((state) => state.placeHint);
-  const setPlaceHint = useDiyStore((state) => state.setPlaceHint);
-  useEffect(() => {
-    if (!placeHint) return undefined;
-    const timer = window.setTimeout(() => setPlaceHint(''), 3200);
-    return () => window.clearTimeout(timer);
-  }, [placeHint, setPlaceHint]);
-
-  // 首次进入 8 秒后自动收起提示，不长期占据画面
-  useEffect(() => {
-    const timer = window.setTimeout(() => setShowHints(false), 8000);
-    return () => window.clearTimeout(timer);
+  /** 布展模式：一次点进厅内，面板是二级菜单里再开 */
+  const enterCuration = useCallback(() => {
+    setMascotActive(false);
+    setMode('curation');
+    setPresetId((current) => (current === 'floor2' ? current : 'floor1'));
+    setMenu('curation');
   }, []);
 
-  // 沉浸模式统一用 Esc 退出
-  useEffect(() => {
-    if (!immersive) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setImmersive(false);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [immersive]);
-
-  const currentArtworkId = selectedFrameId ? resolveArtworkId(assignments, selectedFrameId) : '';
-  const visiblePresets = useMemo(
-    () => cameraPresets.filter((preset) => MODE_PRESETS[mode].includes(preset.id)),
+  /** 机位：不在布展里时按机位自动切外观 / 内部 */
+  const handlePreset = useCallback(
+    (next: string) => {
+      setPresetId(next);
+      if (mode !== 'curation') {
+        setMode(INTERIOR_PRESETS.has(next) ? 'interior' : 'exterior');
+      }
+      setMenu(null);
+    },
     [mode],
   );
-  const placed = frameSlots.filter((slot) => Boolean(resolveArtworkId(assignments, slot.id))).length;
 
-  /** 唤醒吉祥物：收起提示与布展面板，交给角色探索模式 */
+  /**
+   * 视角：唯一一套第一/第三人称切换。
+   * 灵宠探索时「第一人称」就是角色第一视角，不再是另一套开关；
+   * 选「电影」会先退出探索（电影机位要接管相机，两者不能同时）。
+   */
+  const handleViewMode = useCallback(
+    (next: ViewMode) => {
+      if (mascotActive && next === 'cinema') setMascotActive(false);
+      setViewMode(next);
+      setMenu(null);
+    },
+    [mascotActive],
+  );
+
+  /** 灵宠按 V 键切视角：同样落到这套 viewMode 上 */
+  const handleMascotView = useCallback((next: MascotView) => {
+    setViewMode(next === 'first' ? 'first' : 'third');
+  }, []);
+
   const wakeMascot = useCallback(() => {
     setMascotActive(true);
-    setMascotView('third');
-    setShowHints(false);
+    setViewMode('third');
     setPanelOpen(false);
     selectFrame(null);
+    setMenu(null);
   }, [selectFrame, setPanelOpen]);
 
   const exitMascot = useCallback(() => {
     setMascotActive(false);
-    setShowHints(true);
+    setMenu(null);
   }, []);
 
   /** 角色靠近展品：用现有 CultureCard（ArtworkDetail）展示，不新编文化知识 */
@@ -182,6 +296,53 @@ export default function HeritageGallery() {
     },
     [assignments, openDetail],
   );
+
+  // 落位提示（吸附失败 / 降级到地面）自动消失，不长期占屏
+  const placeHint = useDiyStore((state) => state.placeHint);
+  const setPlaceHint = useDiyStore((state) => state.setPlaceHint);
+  useEffect(() => {
+    if (!placeHint) return undefined;
+    const timer = window.setTimeout(() => setPlaceHint(''), 3200);
+    return () => window.clearTimeout(timer);
+  }, [placeHint, setPlaceHint]);
+
+  // Esc 统一处理：先收菜单，再退沉浸
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      if (menu) {
+        setMenu(null);
+        return;
+      }
+      if (immersive) setImmersive(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menu, immersive]);
+
+  const currentArtworkId = selectedFrameId ? resolveArtworkId(assignments, selectedFrameId) : '';
+  const placed = frameSlots.filter((slot) => Boolean(resolveArtworkId(assignments, slot.id))).length;
+  const mascotView: MascotView = viewMode === 'first' ? 'first' : 'third';
+  const timeLabel = TIME_PRESETS[time].label;
+  const viewLabel = VIEW_MODES.find((entry) => entry.id === viewMode)?.label ?? '第三人称';
+  const currentPresetLabel = cameraPresets.find((preset) => preset.id === presetId)?.label ?? '外观';
+  const TimeIcon = TIME_ICONS[time];
+
+  const exteriorPresets = useMemo(() => cameraPresets.filter((preset) => EXTERIOR_PRESETS.has(preset.id)), []);
+  const interiorPresets = useMemo(() => cameraPresets.filter((preset) => INTERIOR_PRESETS.has(preset.id)), []);
+
+  const toggleMenu = useCallback((id: MenuId) => {
+    setMenu((current) => (current === id ? null : id));
+  }, []);
+
+  /** 探索模式入口：从布展里点它先退回看展，然后展开菜单 */
+  const openExploreMenu = useCallback(() => {
+    if (mode === 'curation') {
+      setMode('exterior');
+      setPresetId((current) => (EXTERIOR_PRESETS.has(current) ? current : 'exterior'));
+    }
+    toggleMenu('explore');
+  }, [mode, toggleMenu]);
 
   return (
     <div className="relative h-[100dvh] w-full overflow-hidden bg-[#BFD9E8]">
@@ -199,11 +360,23 @@ export default function HeritageGallery() {
             active: mascotActive,
             view: mascotView,
             onExit: exitMascot,
-            onViewChange: setMascotView,
+            onViewChange: handleMascotView,
             onExhibit: handleMascotExhibit,
           }}
         />
       </div>
+
+      {/* 菜单打开时的空白背板：点场景即收起，不打断看展 */}
+      {menu && (
+        <div
+          className="absolute inset-0 z-10"
+          onPointerDown={() => setMenu(null)}
+          onContextMenu={(event) => {
+            event.preventDefault();
+            setMenu(null);
+          }}
+        />
+      )}
 
       {/* 已摆器物右键菜单：删除这件器物 */}
       {contextMenu && (
@@ -349,7 +522,7 @@ export default function HeritageGallery() {
               </Link>
               <h1 className="mt-1 font-serif text-[17px] leading-tight text-[color:var(--color-ink)]">纹脉展馆</h1>
               <p className="mt-0.5 text-[10.5px] leading-relaxed text-[color:var(--color-ink)]/55">
-                两层微缩展馆 · {frameSlots.length} 个画框 · {galleryArtworks.length} 件真实案例可布展
+                两层微缩展馆 · {frameSlots.length} 个画框 · {galleryPool.length} 件作品可布展
               </p>
               <p className="mt-1 text-[10px] tabular-nums tracking-wide text-[color:var(--color-ink)]/45">
                 已布展 {placed}/{frameSlots.length}
@@ -357,132 +530,227 @@ export default function HeritageGallery() {
             </div>
           </header>
 
-          {/* 左下：模式、机位与布展工具 */}
+          {/* 右上：环境 / 帮助 / 沉浸（图标级工具，不占主入口） */}
+          <div className="absolute right-3 top-3 z-30 flex items-center gap-1 rounded-xl border border-[color:var(--color-gold)]/35 bg-[#FBF6EB]/85 p-1 backdrop-blur-md sm:right-5 sm:top-5">
+            <button
+              type="button"
+              onClick={() => toggleMenu('environment')}
+              aria-label={`环境（当前${timeLabel}）`}
+              title={`环境 · 当前${timeLabel}`}
+              className={dockButtonClass(menu === 'environment')}
+            >
+              <TimeIcon size={12} />
+              <span className="hidden sm:inline">环境</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => toggleMenu('help')}
+              aria-label="帮助与操作说明"
+              title="帮助与操作说明"
+              className={dockButtonClass(menu === 'help')}
+            >
+              <Info size={12} />
+              <span className="hidden sm:inline">帮助</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMenu(null);
+                setImmersive(true);
+              }}
+              aria-label="沉浸模式（隐藏全部界面）"
+              title="沉浸模式"
+              className={dockButtonClass(false)}
+            >
+              <EyeOff size={12} />
+            </button>
+
+            {/* 环境面板：昼夜 */}
+            {menu === 'environment' && (
+              <div className="absolute right-0 top-[calc(100%+6px)] z-30">
+                <div className={panelClass}>
+                  <MenuLabel>环境 · 昼夜</MenuLabel>
+                  <TimeSwitch value={time} onChange={setTime} />
+                  <p className="mt-1.5 px-1 text-[10px] leading-snug text-[color:var(--color-ink)]/45">
+                    切换时段只改光照、曝光与环境反射，不重建场景。
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* 帮助面板：原「操作提示条 + 眼睛按钮」合并到这里 */}
+            {menu === 'help' && (
+              <div className="absolute right-0 top-[calc(100%+6px)] z-30">
+                <div className={`${panelClass} w-[min(88vw,300px)]`}>
+                  <MenuLabel>操作说明</MenuLabel>
+                  <ul className="space-y-1 px-1 text-[11px] leading-relaxed text-[color:var(--color-ink)]/70">
+                    <li>· 拖拽旋转，滚轮缩放，右键拖拽平移</li>
+                    <li>· 点画框打开图库换画；点门扇开关门</li>
+                    <li>· 布展模式：从器物库拖入场景，点选落位，右键删除</li>
+                    <li>· 视角里的「第一人称」：点击画面锁定鼠标，Esc 解锁</li>
+                    <li>· 灵宠探索：W/S 前后、A/D 转向、Shift 小跑、E 看展品、V 切视角、Esc 退出</li>
+                    <li>· 后侧折返楼梯可上二层；沉浸模式用 Esc 或右上角按钮退出</li>
+                  </ul>
+                  <p className="mt-2 border-t border-[color:var(--color-gold)]/25 px-1 pt-1.5 text-[10px] leading-snug text-[color:var(--color-ink)]/45">
+                    灵宠「纹纹」在探索模式菜单里唤出；靠近画框会自动打开文化卡。
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 左下：三类主入口 + 各自的二级菜单 */}
           <div className="absolute bottom-0 left-0 z-20 p-4 sm:p-6">
-            <div className="pointer-events-auto flex flex-col gap-2">
-              <div className="flex items-center gap-1 rounded-lg border border-[color:var(--color-gold)]/35 bg-[#FBF6EB]/85 p-1 backdrop-blur-md">
-                {MODES.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      title={item.hint}
-                      onClick={() => handleMode(item.id)}
-                      className={`inline-flex items-center gap-1 rounded px-2.5 py-1 text-[11.5px] transition ${
-                        mode === item.id
-                          ? 'bg-[color:var(--color-primary)] text-white'
-                          : 'text-[color:var(--color-ink)]/65 hover:bg-black/5'
-                      }`}
-                    >
-                      <Icon size={11} />
-                      {item.label}
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="relative flex flex-col items-start">
+              {menu === 'explore' && (
+                <div className={`${panelClass} absolute bottom-[calc(100%+8px)] left-0 z-30`}>
+                  <MenuLabel>探索模式 · 取景</MenuLabel>
+                  {SCENE_MODES.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <MenuRow
+                        key={item.id}
+                        icon={<Icon size={12} />}
+                        label={item.label}
+                        hint={item.hint}
+                        active={mode === item.id}
+                        onClick={() => handleSceneMode(item.id)}
+                      />
+                    );
+                  })}
+                  <div className="my-1 border-t border-[color:var(--color-gold)]/25" />
+                  <MenuLabel>灵宠</MenuLabel>
+                  {mascotActive ? (
+                    <MenuRow
+                      icon={<PawPrint size={12} />}
+                      label="退出灵宠探索"
+                      hint="回到普通看展视角"
+                      active
+                      onClick={exitMascot}
+                    />
+                  ) : (
+                    <MenuRow
+                      icon={<PawPrint size={12} />}
+                      label="唤出灵宠纹纹"
+                      hint="进入第一/第三人称探索，靠近画框自动看展"
+                      testId="mascot-wake"
+                      onClick={wakeMascot}
+                    />
+                  )}
+                </div>
+              )}
 
-              <div className="flex items-center gap-1 rounded-lg border border-[color:var(--color-gold)]/35 bg-[#FBF6EB]/85 p-1 backdrop-blur-md">
-                {visiblePresets.map((preset) => (
-                  <button
-                    key={preset.id}
-                    type="button"
-                    onClick={() => setPresetId(preset.id)}
-                    className={`rounded px-2.5 py-1 text-[11.5px] transition ${
-                      presetId === preset.id
-                        ? 'bg-[color:var(--color-primary)] text-white'
-                        : 'text-[color:var(--color-ink)]/65 hover:bg-black/5'
-                    }`}
-                  >
-                    {preset.label}
-                  </button>
-                ))}
-              </div>
+              {menu === 'curation' && (
+                <div className={`${panelClass} absolute bottom-[calc(100%+8px)] left-0 z-30`}>
+                  <MenuLabel>布展模式</MenuLabel>
+                  <MenuRow
+                    icon={<PackageOpen size={12} />}
+                    label={`器物库${diyCount > 0 ? ` · 已摆 ${diyCount}` : ''}`}
+                    hint="打开右侧器物图库，拖入场景或点选落位"
+                    active={panelOpen}
+                    onClick={() => {
+                      setPanelOpen(!panelOpen);
+                      setMode('curation');
+                      setMenu(null);
+                    }}
+                  />
+                  <MenuRow
+                    icon={<Frame size={12} />}
+                    label="画框布展"
+                    hint="点场景里的画框，从图库换画"
+                    onClick={() => {
+                      setMode('curation');
+                      setMenu(null);
+                    }}
+                  />
+                  <div className="my-1 border-t border-[color:var(--color-gold)]/25" />
+                  <MenuLabel>重置</MenuLabel>
+                  <MenuRow
+                    icon={<RotateCcw size={12} />}
+                    label="重置布展"
+                    hint="清空所有画框与已摆器物，回到默认方案"
+                    onClick={() => {
+                      resetAll();
+                      setMenu(null);
+                    }}
+                  />
+                  <p className="mt-1 px-1 text-[10px] tabular-nums text-[color:var(--color-ink)]/45">
+                    已布展 {placed}/{frameSlots.length}
+                  </p>
+                </div>
+              )}
 
-              <div className="flex items-center gap-1 rounded-lg border border-[color:var(--color-gold)]/35 bg-[#FBF6EB]/85 p-1 backdrop-blur-md">
+              {menu === 'view' && (
+                <div className={`${panelClass} absolute bottom-[calc(100%+8px)] left-0 z-30`}>
+                  <MenuLabel>视角</MenuLabel>
+                  <ViewModeSwitch value={viewMode} onChange={handleViewMode} />
+                  <div className="my-1.5 border-t border-[color:var(--color-gold)]/25" />
+                  <MenuLabel>建筑机位</MenuLabel>
+                  <div className="flex flex-wrap gap-1 px-0.5">
+                    {exteriorPresets.map((preset) => (
+                      <PresetChip
+                        key={preset.id}
+                        preset={preset}
+                        active={presetId === preset.id}
+                        onClick={() => handlePreset(preset.id)}
+                      />
+                    ))}
+                  </div>
+                  <MenuLabel>室内机位</MenuLabel>
+                  <div className="flex flex-wrap gap-1 px-0.5">
+                    {interiorPresets.map((preset) => (
+                      <PresetChip
+                        key={preset.id}
+                        preset={preset}
+                        active={presetId === preset.id}
+                        onClick={() => handlePreset(preset.id)}
+                      />
+                    ))}
+                  </div>
+                  <p className="mt-1.5 px-1 text-[10px] leading-snug text-[color:var(--color-ink)]/45">
+                    当前：{currentPresetLabel} · {viewLabel}
+                  </p>
+                </div>
+              )}
+
+              {/* 主入口：默认只有这三个 */}
+              <div className="pointer-events-auto flex items-center gap-1 rounded-xl border border-[color:var(--color-gold)]/35 bg-[#FBF6EB]/88 p-1 backdrop-blur-md">
                 <button
                   type="button"
-                  onClick={() => {
-                    setPanelOpen(!panelOpen);
-                    handleMode('curation');
-                  }}
-                  className={`inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[11.5px] transition ${
-                    panelOpen
-                      ? 'bg-[color:var(--color-primary)] text-white'
-                      : 'text-[color:var(--color-ink)]/65 hover:bg-black/5'
-                  }`}
+                  onClick={openExploreMenu}
+                  aria-expanded={menu === 'explore'}
+                  className={dockButtonClass(mode !== 'curation')}
                 >
-                  <PackageOpen size={11} />
-                  器物{diyCount > 0 ? ` · ${diyCount}` : ''}
+                  <Compass size={12} />
+                  探索模式
+                  <ChevronDown size={11} className="opacity-60" />
                 </button>
                 <button
                   type="button"
-                  onClick={resetAll}
-                  className="inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[11.5px] text-[color:var(--color-ink)]/65 transition hover:bg-black/5 hover:text-[color:var(--color-primary)]"
+                  onClick={() => (menu === 'curation' ? setMenu(null) : enterCuration())}
+                  aria-expanded={menu === 'curation'}
+                  className={dockButtonClass(mode === 'curation')}
                 >
-                  <RotateCcw size={11} />
-                  重置布展
+                  <Frame size={12} />
+                  布展模式
+                  <ChevronDown size={11} className="opacity-60" />
                 </button>
                 <button
                   type="button"
-                  onClick={() => setImmersive(true)}
-                  className="inline-flex items-center gap-1.5 rounded px-2.5 py-1 text-[11.5px] text-[color:var(--color-ink)]/65 transition hover:bg-black/5 hover:text-[color:var(--color-primary)]"
+                  onClick={() => toggleMenu('view')}
+                  aria-expanded={menu === 'view'}
+                  title={`视角 · ${viewLabel} · 机位 ${currentPresetLabel}`}
+                  className={dockButtonClass(menu === 'view')}
                 >
-                  <EyeOff size={11} />
-                  沉浸模式
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowHints((value) => !value)}
-                  aria-label="操作提示"
-                  className="flex h-6 w-6 items-center justify-center rounded text-[color:var(--color-ink)]/45 transition hover:bg-black/5"
-                >
-                  {showHints ? <Eye size={12} /> : <MousePointerClick size={12} />}
+                  <Eye size={12} />
+                  视角
+                  <ChevronDown size={11} className="opacity-60" />
                 </button>
               </div>
-
-              <TimeSwitch value={time} onChange={setTime} />
-              <ViewModeSwitch value={viewMode} onChange={setViewMode} />
             </div>
           </div>
 
-          {/* 操作提示：短时显示，不长期占屏 */}
-          {showHints && !mascotActive && (
-            <div className="pointer-events-none absolute bottom-5 right-4 z-20 sm:right-6">
-              <div className="flex items-center gap-3 rounded-full border border-[color:var(--color-gold)]/35 bg-[#FBF6EB]/88 px-4 py-1.5 text-[11px] text-[color:var(--color-ink)]/60 backdrop-blur-md">
-                <span className="inline-flex items-center gap-1">
-                  <Move size={11} />
-                  拖拽旋转
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <ZoomIn size={11} />
-                  滚轮缩放
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <MousePointerClick size={11} />
-                  点画框换画
-                </span>
-              </div>
-            </div>
-          )}
-
-          {/* 萌宠入口：展馆下方的空白区域，点一下就唤醒「纹纹」 */}
-          {!mascotActive && (
-            <button
-              type="button"
-              data-testid="mascot-wake"
-              onClick={wakeMascot}
-              className="group absolute bottom-1 left-1/2 z-20 w-[min(560px,74vw)] -translate-x-1/2 pb-2 pt-5 text-center"
-            >
-              <span className="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-gold)]/50 bg-[#FBF6EB]/92 px-4 py-1.5 text-[12px] text-[color:var(--color-ink)]/70 shadow-sm backdrop-blur-md transition group-hover:border-[color:var(--color-primary)] group-hover:text-[color:var(--color-primary)]">
-                <span className="text-[13px]">🐾</span>
-                随意点击，唤醒展馆萌宠
-                <span className="text-[10.5px] text-[color:var(--color-ink)]/45">纹纹 · 非遗灵猫</span>
-              </span>
-            </button>
-          )}
-
-          {/* 萌宠探索模式控制条 */}
+          {/* 灵宠探索 HUD：视角统一走「视角」菜单，这里不再单开一套第一/第三人称 */}
           {mascotActive && (
             <div
               data-testid="mascot-hud"
@@ -491,12 +759,13 @@ export default function HeritageGallery() {
               <div className="flex items-center justify-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setMascotView(mascotView === 'third' ? 'first' : 'third')}
+                  onClick={() => toggleMenu('view')}
                   data-testid="mascot-view-toggle"
+                  aria-label={`切换视角（当前${viewLabel}）`}
                   className="inline-flex items-center gap-1.5 rounded border border-[color:var(--color-gold)]/50 px-2.5 py-1 text-[11.5px] text-[color:var(--color-ink)]/75 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
                 >
                   <Eye size={11} />
-                  {mascotView === 'third' ? '切到第一视角' : '切到第三视角'}
+                  视角 · {viewLabel}
                 </button>
                 <button
                   type="button"

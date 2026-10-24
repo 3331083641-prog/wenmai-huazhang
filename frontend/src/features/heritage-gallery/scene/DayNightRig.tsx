@@ -13,9 +13,12 @@
  * 所有预设集中放在 TIME_PRESETS，消费方只依赖 id 与其字段，不关心内部实现。
  */
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import type { JSX } from 'react';
+import { useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+
+import { EXHIBIT_WASHERS } from './lookdev';
 
 /* ------------------------------------------------------------------ 契约类型 */
 
@@ -46,6 +49,13 @@ export interface TimePreset {
   interior: number;
   /** 夜晚星空 */
   stars: boolean;
+  /** 轮廓光（逆光边缘）：给屋脊与柱身一条亮边，白天不能抢主光 */
+  rimColor: string;
+  rimIntensity: number;
+  /** PMREM 环境贴图里地面的反弹色（木地板/石台基的暖反光） */
+  envGround: string;
+  /** scene.environmentIntensity：金属/漆面/瓷器的反射强弱 */
+  envIntensity: number;
 }
 
 /* ------------------------------------------------------------------ 预设 */
@@ -66,22 +76,28 @@ export const TIME_PRESETS: Record<TimeOfDay, TimePreset> = {
     skyTop: '#5FA3CE',
     skyHorizon: '#DCEBF2',
     skyGround: '#EFE7D6',
-    sunColor: '#FFF7E8',
-    sunIntensity: 2.35,
+    sunColor: '#FFF4E2',
+    // 主光从 2.35 降到 1.95：让出高光余量，白灰泥墙与石台基不再一片死白，
+    // 体量交给半球光与补光去撑，而不是靠主光硬顶。
+    sunIntensity: 1.95,
     sunPosition: [13, 21, -9],
     ambient: '#C9D8EA',
-    ambientIntensity: 0.4,
+    ambientIntensity: 0.32,
     hemisphereSky: '#C6DEF2',
-    hemisphereGround: '#7A6550',
-    hemisphereIntensity: 1.06,
+    hemisphereGround: '#6E5A46',
+    hemisphereIntensity: 0.92,
     fill: '#BFD4EA',
-    fillIntensity: 0.62,
+    fillIntensity: 0.48,
     fogColor: '#D9E8EF',
-    fogNear: 70,
-    fogFar: 260,
-    exposure: 1.24,
-    interior: 0.72,
+    fogNear: 78,
+    fogFar: 275,
+    exposure: 1.02,
+    interior: 0.52,
     stars: false,
+    rimColor: '#EAF3FF',
+    rimIntensity: 0.3,
+    envGround: '#8A7256',
+    envIntensity: 0.62,
   },
   dusk: {
     id: 'dusk',
@@ -90,21 +106,25 @@ export const TIME_PRESETS: Record<TimeOfDay, TimePreset> = {
     skyHorizon: '#F5A05E',
     skyGround: '#6A4A5B',
     sunColor: '#FF9B4A',
-    sunIntensity: 2.55,
+    sunIntensity: 2.35,
     sunPosition: [15, 5.6, 8],
     ambient: '#7B6E86',
-    ambientIntensity: 0.42,
+    ambientIntensity: 0.4,
     hemisphereSky: '#F0A874',
     hemisphereGround: '#4E3B48',
-    hemisphereIntensity: 0.86,
+    hemisphereIntensity: 0.8,
     fill: '#7E86C0',
-    fillIntensity: 0.55,
+    fillIntensity: 0.52,
     fogColor: '#D89C74',
-    fogNear: 55,
-    fogFar: 215,
-    exposure: 1.14,
-    interior: 0.98,
+    fogNear: 60,
+    fogFar: 225,
+    exposure: 1.04,
+    interior: 0.88,
     stars: false,
+    rimColor: '#C79BE0',
+    rimIntensity: 0.36,
+    envGround: '#6B4A44',
+    envIntensity: 0.56,
   },
   night: {
     id: 'night',
@@ -113,21 +133,26 @@ export const TIME_PRESETS: Record<TimeOfDay, TimePreset> = {
     skyHorizon: '#1E2E52',
     skyGround: '#141C30',
     sunColor: '#C4D6F2',
-    sunIntensity: 1.15,
+    sunIntensity: 1.0,
     sunPosition: [-11, 19, 7],
     ambient: '#4A5C80',
-    ambientIntensity: 0.62,
-    hemisphereSky: '#33456E',
-    hemisphereGround: '#3A3A44',
-    hemisphereIntensity: 0.9,
+    // 夜里最怕「整栋黑成剪影」：环境光与补光都往上抬，让屋瓦、栏杆还留得住轮廓
+    ambientIntensity: 0.72,
+    hemisphereSky: '#3A4F7C',
+    hemisphereGround: '#3F3A44',
+    hemisphereIntensity: 0.98,
     fill: '#7089BE',
-    fillIntensity: 0.6,
+    fillIntensity: 0.82,
     fogColor: '#17203A',
-    fogNear: 60,
-    fogFar: 230,
-    exposure: 1.05,
-    interior: 1.45,
+    fogNear: 66,
+    fogFar: 245,
+    exposure: 1.18,
+    interior: 1.32,
     stars: true,
+    rimColor: '#8FAEE4',
+    rimIntensity: 0.5,
+    envGround: '#2A3348',
+    envIntensity: 0.8,
   },
 };
 
@@ -186,6 +211,12 @@ function skyTextureFor(time: TimeOfDay): THREE.CanvasTexture {
   skyTextureCache.set(time, texture);
   return texture;
 }
+
+/**
+ * 同一张渐变色也用来生成 PMREM 环境贴图（GalleryEnvironment）。
+ * 导出成公开 API，避免环境球再画一份渐变色标、两处天色对不上。
+ */
+export const createSkyTexture = skyTextureFor;
 
 /** 释放缓存的天空贴图（仅在整页卸载时调用，正常切时段不需要） */
 export function disposeSkyTextures(): void {
@@ -260,12 +291,21 @@ function NightStars(): JSX.Element {
 /* ------------------------------------------------------------------ 灯光 */
 
 /** 阴影参数集中在这里：改一处就够，切换时段时元组引用不变，不会触发阴影图重建 */
-const SHADOW_MAP_SIZE: [number, number] = [2048, 2048];
-const SHADOW_CAMERA: [number, number, number, number, number, number] = [-11, 11, 11, -11, 1, 60];
+const SHADOW_MAP_SIZE: [number, number] = [1536, 1536];
+/**
+ * 阴影相机范围：模型主体（建筑 + 台阶）投影在 ±11 m 内，旧值 ±11 但 far=60 会把
+ * 大半深度精度浪费在远处。这里收到 ±11.5 / near 6 / far 55，
+ * 同时把贴图从 2048 降到 1536（显存与填充率都省 44%），
+ * 净效果是「每米纹素更多」——阴影边缘反而更实，不会更糊。
+ */
+const SHADOW_CAMERA: [number, number, number, number, number, number] = [-11.5, 11.5, 11.5, -11.5, 6, 55];
 
 /**
  * 三盏室内暖光。位置沿用旧场景的手调值（一层、二层、顶棚洗光），
  * 强度用 base × preset.interior 缩放：白天几乎只补暗部，夜里让窗格透出灯光。
+ *
+ * 旧值（17 / 14 / 24）在 0.4~0.9 m 的近距上会把顶棚直接顶到 1.0 以上的雪白，
+ * 这是「室内一片死白」的主因；现在整体下调，把亮度交给环境光与洗墙灯去铺。
  */
 const INTERIOR_LIGHTS: {
   position: [number, number, number];
@@ -273,15 +313,61 @@ const INTERIOR_LIGHTS: {
   distance: number;
   color: string;
 }[] = [
-  { position: [0, 2.55, 0.4], base: 17, distance: 11, color: '#ffd4a4' },
-  { position: [0, 5.35, -0.6], base: 14, distance: 10, color: '#ffdcb8' },
-  { position: [0, 5.3, -0.2], base: 24, distance: 5.4, color: '#ffeecd' },
+  { position: [0, 2.6, 0.4], base: 8.5, distance: 11, color: '#ffd4a4' },
+  { position: [0, 5.05, -0.6], base: 6.5, distance: 10, color: '#ffdcb8' },
+  { position: [0, 4.85, -0.2], base: 9, distance: 5.4, color: '#ffeecd' },
 ];
 
 /* ------------------------------------------------------------------ 组件 */
 
 /**
- * 时段灯光总成：天空球 + 雾 + 7 个光源。
+ * 洗墙灯：给主展墙（作品最密的三面）一盏无阴影的软边 spot。
+ * spotLight 的 target 必须是场景里的对象，所以在挂载时手动塞进 scene、
+ * 卸载时取出来——不这么做，灯会朝着默认的 (0,0,0) 打，墙面照不到。
+ */
+function WallWasher({
+  position,
+  target,
+  color,
+  intensity,
+  distance,
+  angle,
+}: {
+  position: [number, number, number];
+  target: [number, number, number];
+  color: string;
+  intensity: number;
+  distance: number;
+  angle: number;
+}): JSX.Element {
+  const light = useRef<THREE.SpotLight>(null);
+  const { scene } = useThree();
+  useEffect(() => {
+    const spot = light.current;
+    if (!spot) return undefined;
+    spot.target.position.set(...target);
+    scene.add(spot.target);
+    return () => {
+      scene.remove(spot.target);
+    };
+  }, [scene, target]);
+  return (
+    <spotLight
+      ref={light}
+      position={position}
+      color={color}
+      intensity={intensity}
+      distance={distance}
+      angle={angle}
+      penumbra={0.9}
+      decay={2}
+      castShadow={false}
+    />
+  );
+}
+
+/**
+ * 时段灯光总成：天空球 + 雾 + 光源。
  *
  * 幂等：只把 preset 的数值挂到已有对象上（颜色/强度/位置都是对象属性），
  * 切换 time 不会重建 Canvas，也不会重建灯光/阴影对象。
@@ -289,6 +375,7 @@ const INTERIOR_LIGHTS: {
 export function DayNightRig({ time }: { time: TimeOfDay }): JSX.Element {
   const preset = TIME_PRESETS[time];
   const skyTexture = useMemo(() => skyTextureFor(time), [time]);
+  const exposureIndex = time === 'day' ? 0 : time === 'dusk' ? 1 : 2;
 
   return (
     <>
@@ -325,15 +412,18 @@ export function DayNightRig({ time }: { time: TimeOfDay }): JSX.Element {
         intensity={preset.sunIntensity}
         castShadow
         shadow-mapSize={SHADOW_MAP_SIZE}
-        shadow-bias={-0.0008}
-        shadow-normalBias={0.02}
-        shadow-radius={5}
+        shadow-bias={-0.0005}
+        shadow-normalBias={0.03}
+        shadow-radius={4}
       >
         <orthographicCamera attach="shadow-camera" args={SHADOW_CAMERA} />
       </directionalLight>
 
       {/* 补光：不提阴影，只把背光面从死黑里拉回来 */}
       <directionalLight position={[-12, 9, 13]} color={preset.fill} intensity={preset.fillIntensity} />
+
+      {/* 轮廓光：从主光反方向斜后方打，给屋脊/柱身一条细亮边，夜里靠它保住剪影层次 */}
+      <directionalLight position={[-6, 12, 14]} color={preset.rimColor} intensity={preset.rimIntensity} />
 
       {/* 室内暖光：大范围低强度，靠衰减铺开，不打硬斑点 */}
       {INTERIOR_LIGHTS.map((light) => (
@@ -344,6 +434,19 @@ export function DayNightRig({ time }: { time: TimeOfDay }): JSX.Element {
           intensity={light.base * preset.interior}
           distance={light.distance}
           decay={2}
+        />
+      ))}
+
+      {/* 展品重点照明：作品最密的三面主墙，强度按时段给 */}
+      {EXHIBIT_WASHERS.map((washer) => (
+        <WallWasher
+          key={washer.key}
+          position={washer.position}
+          target={washer.target}
+          color={washer.color}
+          intensity={washer.intensity[exposureIndex]}
+          distance={washer.distance}
+          angle={washer.angle}
         />
       ))}
     </>

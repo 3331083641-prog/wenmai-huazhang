@@ -10,7 +10,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { frameSlots, frameById, wallById, clampToWall } from '../../../data/heritageGalleryConfig';
-import { getArtwork } from '../../../data/galleryArtworks';
+import { findArtwork } from '../../../data/artworkRegistry';
 
 export interface CurationStore {
   /** frameId -> artworkId */
@@ -69,8 +69,9 @@ export const useCurationStore = create<CurationStore>()(
       selectFrame: (frameId) => set({ selectedFrameId: frameId }),
 
       assignArtwork: (frameId, artworkId) => {
-        // 只接受真实存在的作品，防止持久化数据里塞入无效 id
-        if (artworkId && !getArtwork(artworkId)) return;
+        // 只接受已注册的作品（精选 + 运行期 Case Service 拉取到的），
+        // 防止持久化数据里塞入无效 id。
+        if (artworkId && !findArtwork(artworkId)) return;
         set((state) => ({
           assignments: { ...state.assignments, [frameId]: artworkId },
         }));

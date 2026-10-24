@@ -17,9 +17,21 @@ import {
   clampToHall,
   groundHeightAt,
 } from './mascotConfig';
+import {
+  MASCOT_MODEL,
+  clipName,
+  computeMascotFit,
+  describeMascotModel,
+  isMascotModelAvailable,
+  isOneShotClip,
+  type MascotClip,
+} from './mascotModel';
 
 export type MascotView = 'third' | 'first';
 export type MascotPhase = 'spawning' | 'ready';
+
+/** 竖直轴：每帧构造 Vector3 会产生垃圾，这里共用一份 */
+const UP_AXIS = new THREE.Vector3(0, 1, 0);
 
 export interface MascotProbe {
   active: boolean;
@@ -27,7 +39,10 @@ export interface MascotProbe {
   view: MascotView;
   position: [number, number, number];
   yaw: number;
-  action: string;
+  /** 当前语义动作（idle/walk/run/...），不是 GLB 里的动画名 */
+  action: MascotClip;
+  /** 当前速度（米/秒），验收用来看加减速是否生效 */
+  speed: number;
   floor: 1 | 2;
   nearestFrame: string | null;
   hasModel: boolean;
@@ -44,8 +59,6 @@ export interface MascotCompanionProps {
   /** 靠近展品 / 按 E 时回调，页面据此打开已有文化卡。 */
   onExhibit: (frameId: string) => void;
 }
-
-const ONE_SHOT = new Set(['Spawn', 'Happy', 'Interact']);
 
 /* ------------------------------------------------------------------ 占位角色 */
 
@@ -83,13 +96,23 @@ function PlaceholderCat() {
 
 /* ------------------------------------------------------------------ 正式模型 */
 
+/**
+ * 正式模型：所有「怎么摆」的算术都在 mascotModel.ts 的配置与 computeMascotFit 里，
+ * 这里只负责把结果套到一个包裹组上（不直接改 useGLTF 缓存里的 scene 变换，
+ * 否则第二次挂载会把上一次的缩放带进来）。
+ */
 function MascotModel({
   onReady,
 }: {
   onReady: (mixer: THREE.AnimationMixer, actions: Record<string, THREE.AnimationAction>) => void;
 }) {
-  const { scene, animations } = useGLTF(`${import.meta.env.BASE_URL}models/wenmai_mascot_ww.glb`);
+  const { scene, animations } = useGLTF(MASCOT_MODEL.url);
+  const fit = useMemo(() => computeMascotFit(scene), [scene]);
   const mixer = useMemo(() => new THREE.AnimationMixer(scene), [scene]);
+
+  useEffect(() => {
+    if (import.meta.env.DEV) describeMascotModel(scene, animations);
+  }, [scene, animations]);
 
   useEffect(() => {
     const actions: Record<string, THREE.AnimationAction> = {};
@@ -102,7 +125,16 @@ function MascotModel({
     };
   }, [animations, mixer, onReady]);
 
-  return <primitive object={scene} />;
+  return (
+    <group
+      name="MASCOT_MODEL_FIT"
+      rotation={[0, MASCOT_MODEL.yawOffset, 0]}
+      scale={fit.scale}
+      position={[0, fit.offsetY, 0]}
+    >
+      <primitive object={scene} />
+    </group>
+  );
 }
 
 /* ------------------------------------------------------------------ 楼梯 */
@@ -114,7 +146,8 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
   const rootRef = useRef<THREE.Group>(null);
   const mixerRef = useRef<THREE.AnimationMixer | null>(null);
   const actionsRef = useRef<Record<string, THREE.AnimationAction>>({});
-  const currentClip = useRef('Idle');
+  /** 当前语义动作（idle/walk/...），GLB 里的动画名只在 fadeTo 内部出现 */
+  const currentAction = useRef<MascotClip>('idle');
 
   const [hasModel, setHasModel] = useState(false);
   const [phase, setPhase] = useState<MascotPhase>('spawning');
@@ -128,6 +161,14 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
     moved: 0,
     oneShotUntil: 0,
     camBlend: 0,
+    /** 平滑后的速度（米/秒）：按键目标速度 -> 加速度 -> 实际位移 */
+    speed: 0,
+    /** 平滑后的角速度（弧度/秒） */
+    yawVel: 0,
+    /** 相机遮挡检测的降频计数 */
+    camTick: 0,
+    /** 遮挡检测允许的相机距离（缓存上一次采样结果，避免每帧 raycast） */
+    camClear: CAMERA.thirdDistance,
   });
   const keys = useRef<Set<string>>(new Set());
   const s0 = state;
@@ -137,18 +178,12 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
   const spawnTarget = useRef(new THREE.Vector3(...SPAWN.inside));
   collisionMeshesRef.current = collisionMeshes ?? [];
 
-  /* 模型可用性：dev server 对缺失文件会回落 index.html，必须先验 magic */
+  /* 模型可用性：地址与 magic 校验都在 mascotModel.ts，换模型不用改这里 */
   useEffect(() => {
     let cancelled = false;
-    fetch(`${import.meta.env.BASE_URL}models/wenmai_mascot_ww.glb`, { cache: 'no-store' })
-      .then((res) => res.arrayBuffer())
-      .then((buf) => {
-        if (cancelled) return;
-        setHasModel(String.fromCharCode(...new Uint8Array(buf.slice(0, 4))) === 'glTF');
-      })
-      .catch(() => {
-        if (!cancelled) setHasModel(false);
-      });
+    isMascotModelAvailable().then((ok) => {
+      if (!cancelled) setHasModel(ok);
+    });
     return () => {
       cancelled = true;
     };
@@ -264,24 +299,29 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
     setPhase('spawning');
   }, [active, pickSpawn]);
 
-  const fadeTo = useCallback((name: string, duration = 0.25) => {
-    if (currentClip.current === name) return;
-    const prev = actionsRef.current[currentClip.current];
-    const next = actionsRef.current[name];
+  /**
+ * 切动作：入口与出口都用语义名（'walk'），GLB 的真实动画名只在 clipName() 里出现，
+ * 换模型时改 mascotModel.ts 的 clips 表即可。
+ */
+  const fadeTo = useCallback((action: MascotClip, duration = 0.25) => {
+    if (currentAction.current === action) return;
+    const prev = actionsRef.current[clipName(currentAction.current)];
+    const next = actionsRef.current[clipName(action)];
+    const oneShot = isOneShotClip(action);
     if (next) {
       next.reset();
-      next.setLoop(ONE_SHOT.has(name) ? THREE.LoopOnce : THREE.LoopRepeat, ONE_SHOT.has(name) ? 1 : Infinity);
-      next.clampWhenFinished = name !== 'Spawn';
+      next.setLoop(oneShot ? THREE.LoopOnce : THREE.LoopRepeat, oneShot ? 1 : Infinity);
+      next.clampWhenFinished = action !== 'spawn';
       next.fadeIn(duration).play();
     }
     if (prev && prev !== next) prev.fadeOut(duration);
-    currentClip.current = name;
+    currentAction.current = action;
   }, []);
 
   const playOneShot = useCallback(
-    (name: string) => {
-      fadeTo(name, 0.16);
-      const duration = actionsRef.current[name]?.getClip().duration ?? 0.9;
+    (action: MascotClip) => {
+      fadeTo(action, 0.16);
+      const duration = actionsRef.current[clipName(action)]?.getClip().duration ?? 0.9;
       state.current.oneShotUntil = performance.now() + duration * 1000;
     },
     [fadeTo]
@@ -291,17 +331,18 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
     (mixer: THREE.AnimationMixer, actions: Record<string, THREE.AnimationAction>) => {
       mixerRef.current = mixer;
       actionsRef.current = actions;
-      if (actions.Idle) {
-        actions.Idle.play();
-        currentClip.current = 'Idle';
+      const idle = actions[clipName('idle')];
+      if (idle) {
+        idle.play();
+        currentAction.current = 'idle';
       }
-      if (actions.Spawn) {
-        const spawn = actions.Spawn;
+      const spawn = actions[clipName('spawn')];
+      if (spawn) {
         spawn.reset();
         spawn.setLoop(THREE.LoopOnce, 1);
         spawn.clampWhenFinished = false;
         spawn.play();
-        currentClip.current = 'Spawn';
+        currentAction.current = 'spawn';
       }
     },
     []
@@ -323,7 +364,7 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
       if (code === 'KeyE') {
         if (state.current.nearest) {
           onExhibit(state.current.nearest);
-          playOneShot('Interact');
+          playOneShot('interact');
         }
         return;
       }
@@ -371,7 +412,7 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
       if (s.spawnT >= 1) {
         s.position.copy(spawnTarget.current);
         setPhase('ready');
-        fadeTo('Idle', 0.2);
+        fadeTo('idle', 0.2);
       }
     } else {
       const forwardKey =
@@ -387,34 +428,64 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
             ? -1
             : 0;
       const running = keys.current.has('ShiftLeft') || keys.current.has('ShiftRight');
-      s.yaw += turnKey * MOTION.turnSpeed * dt;
 
-      const speed = forwardKey > 0 ? (running ? MOTION.runSpeed : MOTION.walkSpeed) : forwardKey < 0 ? -MOTION.backSpeed : 0;
-      if (speed !== 0) {
-        s.moved += Math.abs(speed * dt);
-        const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(new THREE.Vector3(0, 1, 0), s.yaw);
-        const step = THREE.MathUtils.clamp(speed * dt, -MOTION.maxStep, MOTION.maxStep);
-        const [cx, cz] = clampToHall(s.position.x + forward.x * step, s.position.z + forward.z * step);
-        // 只按障碍盒判碰撞：楼梯踏步/栏杆本身就是通道，用射线打会把自己挡住
-        const blocked = blockedAt(cx, cz, s.position.y);
-        if (!blocked && canStandAt(cx, cz, s.position.y)) {
+      // 转向：目标角速度 -> 平滑逼近。旧版是「按键瞬间给满转速」，
+      // 松手立刻停，看起来像贴图在转；现在有角加速度，起转/收转都有过渡。
+      s.yawVel = THREE.MathUtils.damp(s.yawVel, turnKey * MOTION.turnSpeed, MOTION.turnAccel, dt);
+      s.yaw += s.yawVel * dt;
+
+      // 速度同样走加速/减速，不再按帧硬切；低于 2 cm/s 归零，避免残余漂移。
+      const targetSpeed =
+        forwardKey > 0 ? (running ? MOTION.runSpeed : MOTION.walkSpeed) : forwardKey < 0 ? -MOTION.backSpeed : 0;
+      s.speed = THREE.MathUtils.damp(s.speed, targetSpeed, MOTION.accel, dt);
+      if (Math.abs(s.speed) < 0.02) s.speed = 0;
+
+      if (s.speed !== 0) {
+        const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(UP_AXIS, s.yaw);
+        const distance = THREE.MathUtils.clamp(s.speed * dt, -MOTION.maxStep, MOTION.maxStep);
+        s.moved += Math.abs(distance);
+        // 子步推进：一帧最多 0.35 m，但薄墙/栏杆只有 0.1 m 厚，
+        // 按 0.1 m 切成子步逐段判定，一步跨穿墙的情况基本消失。
+        const steps = Math.max(1, Math.ceil(Math.abs(distance) / MOTION.subStep));
+        const stepLength = distance / steps;
+        for (let i = 0; i < steps; i += 1) {
+          const [cx, cz] = clampToHall(
+            s.position.x + forward.x * stepLength,
+            s.position.z + forward.z * stepLength,
+          );
+          // 只按障碍盒判碰撞：楼梯踏步/栏杆本身就是通道，用射线打会把自己挡住
+          if (blockedAt(cx, cz, s.position.y) || !canStandAt(cx, cz, s.position.y)) {
+            s.speed = 0;
+            break;
+          }
           s.position.x = cx;
           s.position.z = cz;
-          s.position.y = groundHeightAt(cx, cz, s.position.y);
+          const nextY = groundHeightAt(cx, cz, s.position.y);
+          if (Number.isFinite(nextY)) s.position.y = nextY;
+        }
+
+        // 坠落保护：脚下滑出楼板（数值异常或踩到洞）时回到最近的合法落点，
+        // 而不是继续往下掉、最后飘在场景外。
+        if (!Number.isFinite(s.position.y) || s.position.y < FLOOR1_Y - MOTION.fallGuard) {
+          const [sx, sz] = clampToHall(s.position.x, s.position.z);
+          const fallbackY = groundHeightAt(sx, sz, FLOOR1_Y);
+          s.position.set(sx, Number.isFinite(fallbackY) ? fallbackY : FLOOR1_Y, sz);
+          s.speed = 0;
+          s.yawVel = 0;
         }
       }
 
       const now = performance.now();
       const oneShot = now < s.oneShotUntil;
       if (!oneShot) {
-        if (Math.abs(turnKey) > 0 && speed === 0) fadeTo('Turn');
-        else if (speed > 1.9) fadeTo('Run');
-        else if (speed !== 0) fadeTo('Walk');
-        else fadeTo('Idle');
+        if (Math.abs(turnKey) > 0 && Math.abs(s.speed) < 0.05) fadeTo('turn');
+        else if (s.speed > 1.9) fadeTo('run');
+        else if (Math.abs(s.speed) > 0.12) fadeTo('walk');
+        else fadeTo('idle');
       }
       if (keys.current.has('Space') && !oneShot) {
         keys.current.delete('Space');
-        playOneShot('Happy');
+        playOneShot('happy');
       }
     }
 
@@ -435,7 +506,7 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
     if (inRange && nearest && nearest !== s.nearest && s.moved > 0.6 && now - s.lastExhibitAt > EXHIBIT.cooldownMs) {
       s.lastExhibitAt = now;
       onExhibit(nearest);
-      playOneShot('Curious');
+      playOneShot('curious');
     }
     s.nearest = inRange ? nearest : null;
 
@@ -444,19 +515,36 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
 
     // 相机：第三人称跟随 / 第一人称（第一人称时隐藏头部网格）
     s.camBlend = Math.min(1, s.camBlend + dt / CAMERA.spawnBlendSeconds);
-    const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(new THREE.Vector3(0, 1, 0), s.yaw);
+    const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(UP_AXIS, s.yaw);
     if (view === 'third') {
-      const desired = new THREE.Vector3()
+      // 室内家具多，第三人称用「高位后上方」的引导机位：越过展柜看角色。
+      const pivot = new THREE.Vector3()
         .copy(s.position)
+        .add(new THREE.Vector3(0, CAMERA.thirdLookHeight, 0));
+      const offset = new THREE.Vector3()
         .addScaledVector(forward, -CAMERA.thirdDistance)
         .add(new THREE.Vector3(0, CAMERA.thirdHeight, 0));
-      // 室内家具多，第三人称改用「高位后上方」的引导机位：
-      // 越过展柜看角色，比贴着地面做射线碰撞稳，也不会把相机挤进家具里。
+      const wantDistance = offset.length();
+
+      // 相机遮挡：从角色头顶朝机位打一条射线，撞到墙/梁就把相机拉近到撞点前。
+      // 每 2 帧采样一次并缓存结果——角色移动慢，肉眼无差，但省掉一半 raycast。
+      s.camTick += 1;
+      if (s.camTick % CAMERA.occlusionEvery === 0 && collisionMeshesRef.current.length) {
+        const dir = offset.clone().normalize();
+        camRay.set(pivot, dir);
+        camRay.far = wantDistance;
+        const hits = camRay.intersectObjects(collisionMeshesRef.current, true);
+        s.camClear = hits.length
+          ? Math.max(CAMERA.thirdMinDistance, hits[0].distance - CAMERA.occlusionMargin)
+          : wantDistance;
+      }
+      const allowed = THREE.MathUtils.clamp(s.camClear, CAMERA.thirdMinDistance, wantDistance);
+      const desired = pivot.clone().addScaledVector(offset.clone().normalize(), allowed);
       desired.x = THREE.MathUtils.clamp(desired.x, HALL.minX + 0.35, HALL.maxX - 0.35);
       desired.z = THREE.MathUtils.clamp(desired.z, HALL.minZ + 0.35, HALL.maxZ - 0.35);
       desired.y = THREE.MathUtils.clamp(desired.y, FLOOR1_Y + 1.6, FLOOR2_Y + 2.6);
       camera.position.lerp(desired, 1 - Math.exp(-CAMERA.followLambda * s.camBlend * dt));
-      camera.lookAt(new THREE.Vector3().copy(s.position).add(new THREE.Vector3(0, CAMERA.thirdLookHeight, 0)));
+      camera.lookAt(pivot);
     } else {
       const desired = new THREE.Vector3()
         .copy(s.position)
@@ -477,7 +565,8 @@ export function MascotCompanion({ active, view, collisionMeshes, onExit, onViewC
       view,
       position: [Number(s.position.x.toFixed(2)), Number(s.position.y.toFixed(2)), Number(s.position.z.toFixed(2))],
       yaw: Number(s.yaw.toFixed(2)),
-      action: currentClip.current,
+      action: currentAction.current,
+      speed: Number(s.speed.toFixed(2)),
       floor: s.position.y > (FLOOR1_Y + FLOOR2_Y) / 2 ? 2 : 1,
       nearestFrame: s.nearest,
       hasModel,

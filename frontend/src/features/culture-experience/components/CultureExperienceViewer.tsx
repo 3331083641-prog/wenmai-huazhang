@@ -208,7 +208,7 @@ export function CultureExperienceViewer({ experience }: ViewerProps) {
             className="mb-2 inline-flex items-center gap-1.5 text-[12px] text-[color:var(--color-ink)]/55 transition hover:text-[color:var(--color-primary)]"
           >
             <ArrowLeft size={13} />
-            文化作品展厅
+            作品展厅
           </Link>
           <p className="text-[11px] tracking-[0.34em] text-[color:var(--color-ink)]/45">
             {experience.styleName} · 画中有话

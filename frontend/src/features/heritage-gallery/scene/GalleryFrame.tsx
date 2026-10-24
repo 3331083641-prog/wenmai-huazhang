@@ -17,7 +17,7 @@ import * as THREE from 'three';
 import { useTexture } from '@react-three/drei';
 import { frameById, wallById, wallPointToWorld } from '../../../data/heritageGalleryConfig';
 import { useFrameHoverStore } from '../state/frameHoverStore';
-import { getArtwork } from '../../../data/galleryArtworks';
+import { findArtwork } from '../../../data/artworkRegistry';
 import { PALETTE, toonMaterial } from './materials';
 import { ToonBox } from './primitives';
 
@@ -49,17 +49,28 @@ function ArtworkPlane({ url, accent, w, h }: { url: string; accent: string; w: n
   const texture = useTexture(url);
   const memoTexture = useMemo(() => {
     texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = 4;
+    texture.anisotropy = 8;
     return texture;
   }, [texture]);
 
+  // 按图片真实比例「contain」进画心，绝不拉伸：横图左右留卡纸，竖图上下留卡纸。
+  const fitted = useMemo<[number, number]>(() => {
+    const image = texture.image as { width?: number; height?: number } | undefined;
+    const iw = Number(image?.width) || 1;
+    const ih = Number(image?.height) || 1;
+    const imageAspect = iw / ih;
+    const frameAspect = w / h;
+    if (imageAspect >= frameAspect) return [w, w / imageAspect];
+    return [h * imageAspect, h];
+  }, [texture, w, h]);
+
   return (
     <mesh position={[0, 0, 0.031]}>
-      <planeGeometry args={[w, h]} />
+      <planeGeometry args={[fitted[0], fitted[1]]} />
       <meshBasicMaterial map={memoTexture} toneMapped={false} />
       {/* 选中时的细描边，用作品主题色，不涂红圈 */}
       <mesh position={[0, 0, 0.001]} scale={1.03}>
-        <planeGeometry args={[w, h]} />
+        <planeGeometry args={[fitted[0], fitted[1]]} />
         <meshBasicMaterial color={accent} transparent opacity={0.9} side={THREE.BackSide} />
       </mesh>
     </mesh>
@@ -86,7 +97,7 @@ export function GalleryFrame({
 }: FrameProps) {
   const frame = frameById.get(frameId);
   const wall = frame ? wallById.get(frame.wallId) : undefined;
-  const artwork = getArtwork(artworkId);
+  const artwork = findArtwork(artworkId);
 
   const [hovered, setHovered] = useState(false);
 

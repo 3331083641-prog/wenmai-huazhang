@@ -11,8 +11,16 @@ from pydantic import BaseModel, Field
 from image_analyzer import analyze_image, get_analysis_mode
 from provider_service import GenerationService
 from style_config import OUTPUT_DIR, STYLE_REFS_DIR, ensure_runtime_dirs
-from case_store import auto_save_enabled, delete_case, list_cases, save_case
-from interactive_jobs import list_jobs, start_interactive_build
+from case_store import (
+    auto_save_enabled,
+    delete_case,
+    delete_case_assets,
+    get_case,
+    list_cases,
+    load_experience,
+    save_case,
+)
+from interactive_jobs import get_job, list_jobs, start_interactive_build
 
 
 class GenerateRequest(BaseModel):
@@ -111,14 +119,88 @@ def generate(request_body: GenerateRequest, request: Request) -> dict[str, Any]:
 
 @app.get("/cases")
 def cases(request: Request) -> dict[str, object]:
-    """展厅用的案例清单：内置五件 + 运行期自动保存的案例，含可直接使用的图片地址。"""
+    """作品展厅用的案例清单：内置精选 + 运行期自动保存，含互动构建状态。"""
     items = list_cases(base_url=str(request.base_url))
+    jobs = {str(job.get("caseId")): job for job in list_jobs()}
+    for item in items:
+        item["interaction"] = _interaction_summary(item, jobs.get(str(item.get("caseId"))))
     return {
         "success": True,
         "count": len(items),
         "cases": items,
         "error": None,
     }
+
+
+def _interaction_summary(case: dict[str, Any], job: dict[str, Any] | None) -> dict[str, Any]:
+    """把「磁盘上真实有什么」与「后台任务在哪一步」合并成一个状态。
+
+    前端只认这个结构，避免再按 styleId 猜互动是否存在。
+    """
+    has_experience = bool(case.get("hasExperience"))
+    has_world = bool(case.get("hasWorld"))
+    job_status = str((job or {}).get("status") or "")
+    metadata_status = str(((case.get("metadata") or {}).get("interactive") or {}).get("status") or "")
+
+    if job_status in {"queued", "processing"}:
+        status = job_status
+    elif has_experience and has_world:
+        status = "ready"
+    elif has_experience:
+        status = "partial"
+    elif job_status in {"failed", "ready", "partial"}:
+        status = job_status
+    elif metadata_status in {"ready", "partial"}:
+        status = metadata_status
+    else:
+        status = "none"
+
+    return {
+        "status": status,
+        "stages": {
+            "hotspots": has_experience,
+            "story": has_experience,
+            "world": has_world,
+        },
+        "hasExperience": has_experience,
+        "hasWorld": has_world,
+        "experienceId": str(case.get("experienceId") or ""),
+        "job": job,
+    }
+
+
+@app.get("/cases/{case_id}")
+def case_detail(case_id: str, request: Request) -> dict[str, object]:
+    """单件作品：图片/参考图/文化卡 + 它自己的 experience.json + 任务状态。
+
+    这是前端运行期互动体验的唯一入口，作品身份严格由 caseId 决定。
+    """
+    case = get_case(case_id, base_url=str(request.base_url))
+    if not case:
+        raise HTTPException(status_code=404, detail="作品不存在")
+    job = get_job(case_id)
+    experience = load_experience(case_id)
+    return {
+        "success": True,
+        "case": case,
+        "experience": experience,
+        "interaction": _interaction_summary(case, job),
+        "error": None,
+    }
+
+
+@app.post("/cases/{case_id}/interactions/rebuild")
+def rebuild_interactions(case_id: str, request: Request) -> dict[str, object]:
+    """重新构建三种互动。只允许运行期案例，内置精选内容不可被覆盖。"""
+    case = get_case(case_id, base_url=str(request.base_url))
+    if not case:
+        raise HTTPException(status_code=404, detail="作品不存在")
+    if str((case.get("metadata") or {}).get("caseOrigin")) != "runtime":
+        raise HTTPException(status_code=400, detail="内置精选作品的互动内容受保护，不能重建")
+    job = start_interactive_build(case_id, force=True)
+    if not job.get("enabled", True):
+        raise HTTPException(status_code=400, detail=str(job.get("status")))
+    return {"success": True, "caseId": case_id, "job": job, "error": None}
 
 
 @app.get("/interactive-jobs")
@@ -138,4 +220,6 @@ def remove_case(case_id: str) -> dict[str, object]:
     removed = delete_case(case_id)
     if not removed:
         raise HTTPException(status_code=400, detail="只能删除运行期自动保存的案例（内置案例受保护）")
+    # 案例删除后，它自己的画境资产也一并清理，避免留下无主目录。
+    delete_case_assets(case_id)
     return {"success": True, "caseId": case_id}

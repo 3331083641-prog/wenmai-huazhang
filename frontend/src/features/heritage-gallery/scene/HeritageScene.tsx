@@ -28,6 +28,7 @@ import { PALETTE } from './materials';
 import { useGalleryAssets } from './GalleryModel';
 import { GalleryFrame } from './GalleryFrame';
 import { DayNightRig, useTimeExposure, type TimeOfDay } from './DayNightRig';
+import { GalleryEnvironment } from './GalleryEnvironment';
 import { CinemaRig, FirstPersonRig } from './CameraModes';
 import { DiYLayer } from './DiYLayer';
 import { findHangTarget } from './placement';
@@ -36,6 +37,35 @@ import { DoorInteraction } from './DoorInteraction';
 import { MascotCompanion, type MascotView } from '../mascot/MascotCompanion';
 import type { ViewMode } from '../components/ViewModeSwitch';
 import type { GalleryMode } from '../types';
+
+/* ------------------------------------------------------------------ 渲染观感 */
+
+/**
+ * 色调映射：PBR Neutral（Khronos 提出的 NeutralToneMapping）。
+ *
+ * 之前用 ACESFilmic：它的高光肩部会把暖木的橙压成灰、把白灰泥顶到死白，
+ * 室内顶棚与石台基大面积丢层次。Neutral 的肩部更窄、保留原色相，
+ * 在「暖木 + 朱红 + 纸白」这种低饱和东方色板上更接近真实漆面/宣纸。
+ */
+const TONE_MAPPING = THREE.NeutralToneMapping;
+
+/** 纹理各向异性上限：地板/瓦面在斜视角下不糊成一片 */
+function applyAnisotropy(root: THREE.Object3D, maxAnisotropy: number): void {
+  if (maxAnisotropy <= 1) return;
+  const cap = Math.min(8, maxAnisotropy);
+  root.traverse((object) => {
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    const raw = mesh.material as THREE.Material | THREE.Material[];
+    for (const material of Array.isArray(raw) ? raw : [raw]) {
+      const standard = material as THREE.MeshStandardMaterial;
+      if (!standard || !standard.map) continue;
+      if (standard.map.anisotropy >= cap) continue;
+      standard.map.anisotropy = cap;
+      standard.map.needsUpdate = true;
+    }
+  });
+}
 
 /* ------------------------------------------------------------------ 曝光 */
 
@@ -323,6 +353,76 @@ function HangProbe({ structural }: { structural: THREE.Object3D[] }) {
   return null;
 }
 
+/* ------------------------------------------------------------------ 性能探针 */
+
+/**
+ * 帧率探针：把「实测帧率 / 单帧耗时 / draw call / 三角形数 / 当前 pixelRatio」
+ * 发布到 window.__galleryPerf，每 500 ms 更新一次。仅开发构建启用。
+ *
+ * 测量方法（报告里可直接复现）：
+ *  1. `npm run dev`，打开 /heritage-gallery，等 __galleryStats 出现（模型加载完）；
+ *  2. 按 F12 → Console：`await new Promise(r => setTimeout(r, 4000)); __galleryPerf`
+ *     读稳定后的 fps / frameMs / drawCalls；
+ *  3. 对照组：`document.dispatchEvent(new Event('visibilitychange'))` 不便于模拟，
+ *     改用切到别的标签页 10 秒再回来，观察 fps 立即回到满帧（说明后台已停渲）；
+ *  4. 也可以直接用 Performance 面板录制 10 s，看 Frames 曲线与 GPU 占用，
+ *     与本探针的 fps 应互相印证（差值 < 2 fps）。
+ */
+function PerfProbe() {
+  const { gl, scene, setDpr, viewport } = useThree();
+  const stat = useRef({ frames: 0, elapsed: 0, last: 0, low: 0, high: 0 });
+  useFrame((_, delta) => {
+    const t = stat.current;
+    t.frames += 1;
+    t.elapsed += delta;
+    if (t.elapsed - t.last < 0.5) return;
+    const span = t.elapsed - t.last;
+    t.last = t.elapsed;
+    const fps = t.frames / span;
+    let lights = 0;
+    scene.traverse((object) => {
+      if ((object as THREE.Light).isLight) lights += 1;
+    });
+
+    // ---- 动态分辨率：真正会生效的那一档优化 ----
+    // 连续两次 < 46 fps 就退 0.25 档（最低 1.0）；连续 8 次 > 57 fps 再升回去。
+    // 上限 1.75 与 Canvas 的 dpr 上限一致，避免在 4K 屏上把像素量重新顶爆。
+    const current = viewport.dpr;
+    if (fps < 46) {
+      t.low += 1;
+      t.high = 0;
+    } else if (fps > 57) {
+      t.high += 1;
+      t.low = 0;
+    } else {
+      t.low = 0;
+      t.high = 0;
+    }
+    if (t.low >= 2 && current > 1.0) {
+      setDpr(Math.max(1, Number((current - 0.25).toFixed(2))));
+      t.low = 0;
+    } else if (t.high >= 8 && current < 1.75) {
+      setDpr(Math.min(1.75, Number((current + 0.25).toFixed(2))));
+      t.high = 0;
+    }
+
+    if (import.meta.env.PROD) return;
+    (window as unknown as { __galleryPerf?: unknown }).__galleryPerf = {
+      fps: Number(fps.toFixed(1)),
+      frameMs: Number(((span / t.frames) * 1000).toFixed(2)),
+      drawCalls: gl.info.render.calls,
+      triangles: gl.info.render.triangles,
+      programs: gl.info.programs?.length ?? 0,
+      dpr: Number(current.toFixed(2)),
+      lights,
+      textures: gl.info.memory.textures,
+      geometries: gl.info.memory.geometries,
+    };
+    t.frames = 0;
+  });
+  return null;
+}
+
 /* ------------------------------------------------------------------ 场景 */
 
 function SceneContent({
@@ -356,6 +456,12 @@ function SceneContent({
 }) {
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const { root, layers, stats } = useGalleryAssets();
+  const { gl } = useThree();
+
+  // 斜视角下地板/瓦面的贴图 anisotropy 拉到硬件的 8 倍以内，避免糊成一条灰带
+  useEffect(() => {
+    applyAnisotropy(root, gl.capabilities.getMaxAnisotropy());
+  }, [root, gl]);
   // 只有「看房间」的两个机位需要收屋顶；梁架/檐下要看的就是屋顶本身，
   // 收掉它们会直接看到天。
   const interior = HIDE_ROOF_PRESETS.has(presetId);
@@ -395,6 +501,7 @@ function SceneContent({
     <>
       <DayNightRig time={time} />
       <ExposureRig time={time} />
+      <GalleryEnvironment time={time} />
       <primitive object={root} />
       <DoorInteraction root={root} />
 
@@ -434,12 +541,15 @@ function SceneContent({
 
       <ContactShadows
         position={[0, -0.67, 0]}
-        opacity={0.34}
-        // 底座 14 m：阴影面收到 17 m 就够托住模型，再大就摊成一片灰地
-        scale={17}
-        blur={2.2}
-        far={6}
-        resolution={1024}
+        // 只有一层「贴地暗部」：不透明度略提高，弥补分辨率下调后的边界变软
+        opacity={0.38}
+        // 底座 14 m：阴影面收到 16 m 就够托住模型，再大就摊成一片灰地
+        scale={16}
+        blur={2.6}
+        far={5.6}
+        // 768² 而不是 1024²：一次性烘焙（frames=1）下省 44% 显存/填充率，
+        // blur 2.6 本来就把边界糊开，肉眼分辨不出差别。
+        resolution={768}
         color="#2a1d16"
         // 建筑与展品都是静态的，接触阴影烘一次就够；
         // 每帧重算会让低端 GPU 直接掉到个位数帧率。
@@ -477,6 +587,7 @@ function SceneContent({
       <FrameProbe />
       <PickingProbe />
       <HangProbe structural={layers.meshes} />
+      <PerfProbe />
     </>
   );
 }
@@ -515,6 +626,16 @@ export function HeritageScene({
   mascot,
 }: HeritageSceneProps) {
   const [dragging, setDragging] = useState(false);
+  // 页面切到后台/别的标签页时把渲染循环停下（frameloop="never"）：
+  // 这是最实在的一条省电/省 GPU 措施，回来时自动续上，交互无感。
+  const [pageVisible, setPageVisible] = useState<boolean>(() =>
+    typeof document === 'undefined' ? true : !document.hidden,
+  );
+  useEffect(() => {
+    const onVisibility = () => setPageVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
   const initial = presetById.get(presetId) ?? cameraPresets[0];
   // 初始视场角按参考图的 4:3 换算，与 CameraRig 的取景口径保持一致
   const initialFov =
@@ -541,17 +662,26 @@ export function HeritageScene({
     >
       <Canvas
         shadows
-        dpr={[1, 1.8]}
+        // dpr 上限 1.75：4K/Retina 上把像素量压到 1/1.9，观感几乎无差；
+        // PerfProbe 里的动态分辨率还会在掉帧时继续往 1.0 退。
+        dpr={[1, 1.75]}
+        frameloop={pageVisible ? 'always' : 'never'}
         camera={{
           position: initial.position,
           fov: initialFov,
           near: 0.1,
           far: 320,
         }}
-        gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
+        gl={{
+          antialias: true,
+          alpha: false,
+          powerPreference: 'high-performance',
+          // 场景里没有任何地方用模板缓冲，关掉省一份带宽
+          stencil: false,
+        }}
         style={{ background: PALETTE.sky, cursor: dragging ? 'grabbing' : 'grab' }}
         onCreated={({ gl }) => {
-          gl.toneMapping = THREE.ACESFilmicToneMapping;
+          gl.toneMapping = TONE_MAPPING;
           gl.toneMappingExposure = useTimeExposure(time);
           gl.shadowMap.type = THREE.PCFSoftShadowMap;
           gl.shadowMap.enabled = true;

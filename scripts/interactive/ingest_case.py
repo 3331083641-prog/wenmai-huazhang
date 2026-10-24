@@ -38,7 +38,7 @@ from datetime import datetime
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 EXAMPLES_DIR = PROJECT_ROOT / "docs" / "examples"
@@ -150,12 +150,75 @@ def load_depth_functions():
 
 
 def estimate_depth(image_path: Path, slug: str, gamma: float = 0.72):
-    bpw = load_depth_functions()
+    """优先用 Depth Anything V2；模型/权重不可用时退回可解释的近似深度。
+
+    降级不是假数据：近似深度只由这张图自身的亮度、中心权重与垂直梯度构成，
+    明确标记 depthSource=fallback_luminance，画境仍可打开但只提供有限视差。
+    这样「深度模型缺失」不会让整条互动流水线失败。
+    """
+    global DEPTH_SOURCE
     cache = PROJECT_ROOT / "scripts" / "interactive" / "_probe" / f"{slug}-depth.npy"
-    raw = bpw.run_depth(str(image_path), "depth-anything/Depth-Anything-V2-Small-hf", str(cache), False)
-    depth = bpw.normalise_depth(raw, gamma)
-    depth = bpw.smooth_depth(depth, 3.0)
-    return depth
+    source_file = cache.with_name(cache.stem + "-source.txt")
+
+    try:
+        bpw = load_depth_functions()
+        if cache.is_file() and source_file.is_file():
+            DEPTH_SOURCE = source_file.read_text(encoding="utf-8-sig").strip() or "depth-anything-v2-small"
+        else:
+            DEPTH_SOURCE = "depth-anything-v2-small"
+        raw = bpw.run_depth(str(image_path), "depth-anything/Depth-Anything-V2-Small-hf", str(cache), False)
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        source_file.write_text(DEPTH_SOURCE, encoding="utf-8")
+        depth = bpw.normalise_depth(raw, gamma)
+        depth = bpw.smooth_depth(depth, 3.0)
+        return depth
+    except Exception as exc:  # noqa: BLE001 - 缺模型时必须还能产出降级体验
+        log(f"    ! 深度模型不可用（{type(exc).__name__}: {str(exc)[:120]}），改用近似深度")
+        DEPTH_SOURCE = "fallback_luminance"
+        raw = fallback_depth(image_path)
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        np.save(cache, raw.astype(np.float32))
+        source_file.write_text(DEPTH_SOURCE, encoding="utf-8")
+        depth = _normalise_depth(raw, gamma)
+        depth = _smooth_depth(depth, 3.0)
+        return depth
+
+
+DEPTH_SOURCE = "depth-anything-v2-small"
+
+
+def fallback_depth(image_path: Path) -> np.ndarray:
+    """模型不可用时的近似深度：亮度 + 中心权重 + 垂直梯度，只描述本图。"""
+    with Image.open(image_path) as im:
+        small = im.convert("RGB").resize((512, 512))
+    arr = np.asarray(small, dtype=np.float32) / 255.0
+    lum = 0.299 * arr[..., 0] + 0.587 * arr[..., 1] + 0.114 * arr[..., 2]
+    blur = Image.fromarray((lum * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(8))
+    lum_blur = np.asarray(blur, dtype=np.float32) / 255.0
+
+    h, w = lum.shape
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+    cx, cy = (w - 1) / 2.0, (h - 1) / 2.0
+    radial = np.clip(1.0 - np.sqrt(((xx - cx) / (w * 0.62)) ** 2 + ((yy - cy) / (h * 0.62)) ** 2), 0.0, 1.0)
+    vertical = 1.0 - yy / max(h - 1, 1)
+
+    depth = 0.55 * lum_blur + 0.30 * radial + 0.15 * vertical
+    lo, hi = np.percentile(depth, [3, 97])
+    return np.clip((depth - lo) / max(float(hi - lo), 1e-6), 0.0, 1.0).astype(np.float32)
+
+
+def _normalise_depth(raw: np.ndarray, gamma: float) -> np.ndarray:
+    lo, hi = np.percentile(raw, [2, 98])
+    n = np.clip((raw - lo) / max(float(hi - lo), 1e-6), 0.0, 1.0)
+    return np.power(n, gamma)
+
+
+def _smooth_depth(depth: np.ndarray, radius: float = 3.0) -> np.ndarray:
+    if radius <= 0:
+        return depth
+    img = Image.fromarray((np.clip(depth, 0.0, 1.0) * 255).astype(np.uint8))
+    blur = img.filter(ImageFilter.GaussianBlur(radius))
+    return np.asarray(blur, dtype=np.float32) / 255.0
 
 
 def dominant_palette(image: Image.Image, k: int = 3) -> list[str]:
@@ -354,9 +417,11 @@ VOCAB: dict[str, list[str]] = {
 # --------------------------------------------------------------------------- #
 def build_experience(*, slug: str, title: str, style_id: str, image: Image.Image,
                      hotspots_raw: list[dict], titles: list[str], raw_labels: list[str],
-                     vlm_used: bool) -> dict:
+                     vlm_used: bool, subjects: list[str] | None = None) -> dict:
     style = STYLES[style_id]
     w, h = image.size
+    known_subjects = [str(item).strip() for item in (subjects or []) if str(item).strip()]
+    subject_text = "、".join(known_subjects[:3])
 
     kinds = ["主体", "纹样", "局部"]
     hotspots = []
@@ -390,12 +455,19 @@ def build_experience(*, slug: str, title: str, style_id: str, image: Image.Image
         # 镜头放大倍数：焦点越靠边，放大后越容易露出画外，收着用
         edge = max(abs(cx - 0.5), abs(cy - 0.5))
         scale = float(np.clip(1.85 - 0.8 * edge * 2, 1.15, 1.85))
+        # 第一折把「这张画自己可见的主体」带进叙事，而不是只讲通用风格知识。
+        body_text = body
+        if ci == 1 and subject_text:
+            body_text = (
+                f"{body} 回到《{title}》这张画：画面可见{subject_text}，"
+                f"可先看它们与背景的明暗和前后关系，再读画法。"
+            )
         chapters.append({
             "id": f"fold-{ci}",
             "index": ci,
             "eyebrow": eyebrow,
             "title": ctitle,
-            "body": body,
+            "body": body_text,
             "focusHotspotIds": [s["id"] for s in group],
             "frame": {"scale": round(scale, 2), "focusX": round(cx, 4), "focusY": round(cy, 4)},
             "sourceIds": style["sources"],
@@ -407,15 +479,18 @@ def build_experience(*, slug: str, title: str, style_id: str, image: Image.Image
         "styleName": style["name"],
         "title": title,
         "subtitle": "自动生成的三重互动",
-        "lead": f"这一张是用{style['name']}的视觉语言生成的。"
-                f"下面三折讲的是这套画法的读法，热点位置由画面自动估计。",
+        "lead": (
+            f"这一张《{title}》是用{style['name']}的视觉语言生成的。"
+            + (f"画面可见{subject_text}。" if subject_text else "")
+            + "下面三折讲的是这套画法的读法，热点位置由画面自动估计。"
+        ),
         "artworkSize": {"width": w, "height": h},
         "theme": {"accent": style["accent"], "accentSoft": style["accentSoft"],
                   "paper": style["paper"], "ink": style["ink"], "gold": style["gold"]},
         "visualAnalysis": {
             "source": "auto_ingest",
             "model": OLLAMA_MODEL if vlm_used else "",
-            "observedSubjects": [t for t in titles if t][:6] or [title],
+            "observedSubjects": known_subjects[:6] or [t for t in titles if t][:6] or [title],
             "visualFeatures": [h["title"] for h in hotspots][:6],
             "dominantColors": dominant_palette(image),
         },
@@ -458,7 +533,7 @@ def ingest(args) -> int:
             return 2
         slug = folder.name
         meta_path = folder / "metadata.json"
-        meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
+        meta = json.loads(meta_path.read_text(encoding="utf-8-sig")) if meta_path.exists() else {}
         style_id = str(args.style_id or meta.get("styleId") or "zhuxianzhen")
         title = str(args.title or meta.get("artworkTitle") or slug)
         image_path = folder / "generated.png"
@@ -498,7 +573,7 @@ def ingest(args) -> int:
 
     # 2) 深度
     depth = estimate_depth(image_path, slug, args.gamma)
-    log(f"2/6 深度完成  近景占比 {(depth > 0.8).mean() * 100:.1f}%  远景占比 {(depth < 0.35).mean() * 100:.1f}%")
+    log(f"2/6 深度完成（{DEPTH_SOURCE}）  近景占比 {(depth > 0.8).mean() * 100:.1f}%  远景占比 {(depth < 0.35).mean() * 100:.1f}%")
 
     # 3) 热点候选 + 命名
     spots = pick_hotspots(arr, depth, args.hotspots)
@@ -517,13 +592,26 @@ def ingest(args) -> int:
             vlm_used = vlm_used or bool(labels[-1])
     labels += [""] * (len(spots) - len(labels))
     titles = resolve_titles(style_id, spots, labels)
+    # 本作品生成时由 Qwen3-VL 得到的画面主体（属于这张图自己的元数据），
+    # 用来让叙事对得上这张图；没有就退化为通用占位，不跨作品借用。
+    meta_subjects = [
+        str(item).strip()
+        for item in (((meta.get("visionAnalysis") or {}).get("observed_subjects")) or [])
+        if str(item).strip()
+    ][:6]
     log("3/6 热点 " + ", ".join(
         f"({s['x']:.2f},{s['y']:.2f})→{t}" for s, t in zip(spots, titles)))
 
     # 4) experience.json
     draft = build_experience(slug=slug, title=title, style_id=style_id, image=image,
                              hotspots_raw=spots, titles=titles, raw_labels=labels,
-                             vlm_used=vlm_used)
+                             vlm_used=vlm_used, subjects=meta_subjects)
+    if DEPTH_SOURCE != "depth-anything-v2-small":
+        # 降级必须对用户可见：仍然能打开画境，但明确说明只有近似深度。
+        draft["animation"]["world"]["depthNote"] = (
+            "单图近似深度（本机深度模型不可用时的降级），仅支持有限视差；"
+            "不是三维重建，可稍后重新构建以获得更准确的画境。"
+        )
     exp_path = folder / "experience.json"
     exp_path.write_text(json.dumps(draft, ensure_ascii=False, indent=2), encoding="utf-8")
     log(f"4/6 experience.json  {exp_path.stat().st_size / 1024:.1f} KB  "
@@ -579,6 +667,7 @@ def ingest(args) -> int:
             "world": f"frontend/public/interactive/{slug}/world/world.json" if world_ok else "",
             "hotspots": len(draft["hotspots"]),
             "hotspotMethod": "auto-approximate",
+            "depthSource": DEPTH_SOURCE,
             "builtAt": datetime.now().astimezone().isoformat(),
         },
     })
@@ -592,6 +681,7 @@ def ingest(args) -> int:
         "title": title,
         "image": {"width": W, "height": H, "bytes": image_path.stat().st_size},
         "depth": {
+            "source": DEPTH_SOURCE,
             "nearShare": round(float((depth > 0.8).mean()), 4),
             "farShare": round(float((depth < 0.35).mean()), 4),
             "percentiles": [round(float(v), 4) for v in np.percentile(depth, [2, 10, 50, 90, 98])],
@@ -606,6 +696,7 @@ def ingest(args) -> int:
         "warnings": ([w for w in [
             "热点为自动估计，未逐点裁切复核，请人工确认后再对外展示。",
             "热点名称由 4b 视觉模型判读，可能有偏差。" if vlm_used else "未使用视觉模型，热点标题为占位名。",
+            "本机深度模型不可用，画境使用近似深度，只提供有限视差。" if DEPTH_SOURCE.startswith("fallback") else "",
         ] if w]),
         "elapsedSec": round(time.time() - started, 1),
     }

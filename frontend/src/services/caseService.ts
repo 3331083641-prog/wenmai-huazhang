@@ -38,6 +38,41 @@ export interface GalleryCase {
   referenceUrl?: string;
   imageUrl: string;
   cardUrl?: string;
+  folder?: string;
+  worldUrl?: string;
+  hasExperience?: boolean;
+  hasWorld?: boolean;
+  interaction?: CaseInteraction;
+}
+
+export type InteractionStatus = 'none' | 'queued' | 'processing' | 'ready' | 'partial' | 'failed';
+
+export interface InteractionStages {
+  hotspots: boolean;
+  story: boolean;
+  world: boolean;
+}
+
+export interface InteractiveJob {
+  caseId?: string;
+  status?: string;
+  attempts?: number;
+  error?: string;
+  message?: string;
+  elapsedSec?: number;
+  updatedAt?: string;
+  stages?: Partial<InteractionStages>;
+  assets?: { experience?: string; world?: string; worldFiles?: string[] };
+}
+
+/** 后端只用一个结构描述「这件作品的三种互动到底到了哪一步」。 */
+export interface CaseInteraction {
+  status: InteractionStatus;
+  stages: InteractionStages;
+  hasExperience: boolean;
+  hasWorld: boolean;
+  experienceId: string;
+  job?: InteractiveJob | null;
 }
 
 const EMPTY_ANALYSIS: VisionAnalysis = {
@@ -90,7 +125,7 @@ export function normalizeAnalysis(raw: unknown): VisionAnalysis {
 export function normalizeCase(raw: Record<string, unknown>): GalleryCase | null {
   const imageUrl = asText(raw.imageUrl);
   if (!imageUrl) return null;
-  const caseId = asText(raw.caseId) || asText(raw.styleId);
+  const caseId = asText(raw.caseId) || asText(raw.folder);
   if (!caseId) return null;
   return {
     caseId,
@@ -112,6 +147,33 @@ export function normalizeCase(raw: Record<string, unknown>): GalleryCase | null 
     referenceUrl: asText(raw.referenceUrl) || undefined,
     imageUrl,
     cardUrl: asText(raw.cardUrl) || undefined,
+    folder: asText(raw.folder) || undefined,
+    worldUrl: asText(raw.worldUrl) || undefined,
+    hasExperience: Boolean(raw.hasExperience),
+    hasWorld: Boolean(raw.hasWorld),
+    interaction: normalizeInteraction(raw.interaction),
+  };
+}
+
+const INTERACTION_STATUSES: InteractionStatus[] = ['none', 'queued', 'processing', 'ready', 'partial', 'failed'];
+
+function normalizeInteraction(raw: unknown): CaseInteraction | undefined {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const source = raw as Record<string, unknown>;
+  const status = asText(source.status) as InteractionStatus;
+  const stagesRaw = (source.stages && typeof source.stages === 'object' ? source.stages : {}) as Record<string, unknown>;
+  const jobRaw = source.job && typeof source.job === 'object' ? (source.job as InteractiveJob) : null;
+  return {
+    status: INTERACTION_STATUSES.includes(status) ? status : 'none',
+    stages: {
+      hotspots: Boolean(stagesRaw.hotspots),
+      story: Boolean(stagesRaw.story),
+      world: Boolean(stagesRaw.world),
+    },
+    hasExperience: Boolean(source.hasExperience),
+    hasWorld: Boolean(source.hasWorld),
+    experienceId: asText(source.experienceId),
+    job: jobRaw,
   };
 }
 
@@ -160,4 +222,78 @@ export async function fetchRuntimeCases(options: FetchCasesOptions = {}): Promis
     window.clearTimeout(timer);
     signal?.removeEventListener('abort', onAbort);
   }
+}
+
+export interface CaseDetail {
+  case: GalleryCase;
+  experience: Record<string, unknown> | null;
+  interaction?: CaseInteraction;
+}
+
+const DEFAULT_DETAIL_TIMEOUT = 6000;
+
+/**
+ * 单件作品的运行期详情。
+ *
+ * 这是「新作品立刻能用互动」的关键：不依赖 Vite 重新编译，也不需要改源码。
+ * 作品身份只认 caseId；返回的 experience 是这件作品自己的 experience.json。
+ */
+export async function fetchCaseDetail(
+  caseId: string,
+  options: FetchCasesOptions = {},
+): Promise<CaseDetail | null> {
+  const { timeoutMs = DEFAULT_DETAIL_TIMEOUT, signal } = options;
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+  const onAbort = () => controller.abort();
+  signal?.addEventListener('abort', onAbort);
+  try {
+    const response = await fetch(`${API_BASE_URL}/cases/${encodeURIComponent(caseId)}`, {
+      method: 'GET',
+      signal: controller.signal,
+      headers: { Accept: 'application/json' },
+    });
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error(`case detail api ${response.status}`);
+    const payload = (await response.json()) as {
+      case?: unknown;
+      experience?: unknown;
+      interaction?: unknown;
+    };
+    if (!payload.case || typeof payload.case !== 'object') return null;
+    const normalized = normalizeCase(payload.case as Record<string, unknown>);
+    if (!normalized) return null;
+    const interaction = normalizeInteraction(payload.interaction);
+    if (interaction) normalized.interaction = interaction;
+    return {
+      case: normalized,
+      experience: payload.experience && typeof payload.experience === 'object'
+        ? (payload.experience as Record<string, unknown>)
+        : null,
+      interaction,
+    };
+  } finally {
+    window.clearTimeout(timer);
+    signal?.removeEventListener('abort', onAbort);
+  }
+}
+
+/** 显式重试：只对运行期案例开放，后端会拒绝覆盖内置精选项。 */
+export async function rebuildCaseInteractions(caseId: string): Promise<InteractiveJob | null> {
+  const response = await fetch(`${API_BASE_URL}/cases/${encodeURIComponent(caseId)}/interactions/rebuild`, {
+    method: 'POST',
+    headers: { Accept: 'application/json' },
+  });
+  if (!response.ok) {
+    let detail = `rebuild api ${response.status}`;
+    try {
+      const body = (await response.json()) as { detail?: unknown };
+      if (body?.detail) detail = String(body.detail);
+    } catch {
+      // keep the status message
+    }
+    throw new Error(detail);
+  }
+  const payload = (await response.json()) as { job?: InteractiveJob };
+  return payload.job ?? null;
 }

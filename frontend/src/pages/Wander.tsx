@@ -3,7 +3,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useReducedMotion } from 'motion/react';
 import { ArrowLeft, BookOpen, Eye, Layers, MousePointer2, RotateCcw } from 'lucide-react';
-import { getExperience } from '../data/experiences';
+import { useExperience } from '../hooks/useExperience';
+import type { CultureExperience } from '../features/culture-experience/types';
 import { clamp } from '../features/culture-experience/utils/geometry';
 import { publicUrl } from '../features/culture-experience/utils/assets';
 import ExperienceErrorBoundary from '../features/culture-experience/components/ExperienceErrorBoundary';
@@ -21,7 +22,7 @@ const PERSPECTIVE = 1400;
 /** 单层最大前后位移（px）。越小越稳，越大越「立体」。 */
 const LAYER_GAP = 46;
 
-function WanderContent({ experience }: { experience: NonNullable<ReturnType<typeof getExperience>> }) {
+function WanderContent({ experience }: { experience: CultureExperience }) {
   const layers = experience.animation.layers ?? [];
   const prefersReduced = useReducedMotion();
   const [parallaxOn, setParallaxOn] = useState(!prefersReduced);
@@ -90,7 +91,7 @@ function WanderContent({ experience }: { experience: NonNullable<ReturnType<type
           className="mb-2 inline-flex items-center gap-1.5 text-[12px] text-[color:var(--color-ink)]/55 transition hover:text-[color:var(--color-primary)]"
         >
           <ArrowLeft size={13} />
-          文化作品展厅
+          作品展厅
         </Link>
         <p className="text-[11px] tracking-[0.34em] text-[color:var(--color-ink)]/45">{experience.styleName} · 画境漫游</p>
         <h1 className="mt-1 font-serif text-2xl leading-tight text-[color:var(--color-ink)] sm:text-3xl">
@@ -319,24 +320,47 @@ function WanderContent({ experience }: { experience: NonNullable<ReturnType<type
 
 export function Wander() {
   const { id } = useParams();
-  const experience = getExperience(id);
+  const { experience, state, retry } = useExperience(id);
+
+  if (state === 'loading') {
+    return (
+      <div className="mx-auto flex min-h-[60vh] max-w-xl flex-col items-center justify-center px-6 text-center">
+        <p className="text-[13px] text-[color:var(--color-ink)]/60">
+          正在读取这件作品的画境资产……
+        </p>
+      </div>
+    );
+  }
 
   if (!experience) {
     return (
       <div className="mx-auto max-w-xl px-6 py-28 text-center">
-        <p className="mb-3 text-[11px] tracking-[0.3em] text-[color:var(--color-ink)]/45">未找到作品</p>
+        <p className="mb-3 text-[11px] tracking-[0.3em] text-[color:var(--color-ink)]/45">
+          {state === 'error' ? '读取失败' : '未找到作品'}
+        </p>
         <h1 className="mb-5 font-serif text-2xl text-[color:var(--color-ink)]">
-          展厅里暂时没有「{id}」这件作品
+          展厅里暂时没有「{id}」这件作品的画境
         </h1>
         <p className="mb-6 text-[13px] leading-relaxed text-[color:var(--color-ink)]/60">
-          请回到展厅从五件案例里选一件。展厅里的作品都带真实生成图与文化说明。
+          如果它刚刚生成，画境资产可能仍在后台构建；回到作品展厅可以看到实时状态。
         </p>
-        <Link
-          to="/gallery"
-          className="inline-flex items-center rounded border border-[color:var(--color-gold)] px-5 py-2 text-sm text-[color:var(--color-primary)] transition hover:bg-[color:var(--color-primary)] hover:text-white"
-        >
-          返回文化作品展厅
-        </Link>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Link
+            to="/gallery"
+            className="inline-flex items-center rounded border border-[color:var(--color-gold)] px-5 py-2 text-sm text-[color:var(--color-primary)] transition hover:bg-[color:var(--color-primary)] hover:text-white"
+          >
+            返回作品展厅
+          </Link>
+          {state === 'error' && (
+            <button
+              type="button"
+              onClick={retry}
+              className="rounded border border-[color:var(--color-gold)]/60 px-4 py-2 text-sm text-[color:var(--color-ink)]/70 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
+            >
+              重试
+            </button>
+          )}
+        </div>
       </div>
     );
   }
@@ -358,14 +382,14 @@ export function Wander() {
           这一卷还没有可漫游的画境资产
         </h1>
         <p className="mb-6 text-[13px] leading-relaxed text-[color:var(--color-ink)]/60">
-          画境需要为每件作品单独估计深度并烘焙资产，目前只完成了《云鹤临水楼》。
-          其余作品仍可在「画中有话」里逐处探索。
+          这件作品的画境资产尚未完成。回到作品展厅可以看到构建状态并重新构建；
+          其他互动仍可在「画中有话」与「一图一境」里逐处体验。
         </p>
         <Link
           to="/gallery"
           className="inline-flex items-center rounded border border-[color:var(--color-gold)] px-5 py-2 text-sm text-[color:var(--color-primary)] transition hover:bg-[color:var(--color-primary)] hover:text-white"
         >
-          返回文化作品展厅
+          返回作品展厅
         </Link>
       </div>
     );

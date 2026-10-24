@@ -22,6 +22,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import shutil
 from datetime import datetime
 from pathlib import Path
@@ -419,7 +420,7 @@ def list_cases(*, base_url: str) -> list[dict[str, Any]]:
         if not meta_path.exists():
             continue
         try:
-            metadata = json.loads(meta_path.read_text(encoding="utf-8"))
+            metadata = json.loads(meta_path.read_text(encoding="utf-8-sig"))
         except (OSError, json.JSONDecodeError):
             continue
 
@@ -436,6 +437,11 @@ def list_cases(*, base_url: str) -> list[dict[str, Any]]:
         if not (folder / generated_name).exists():
             continue
 
+        experience_path = folder / "experience.json"
+        world_path = PROJECT_ROOT / "frontend" / "public" / "interactive" / folder.name / "world" / "world.json"
+        has_experience = experience_path.is_file()
+        has_world = world_path.is_file()
+
         metadata.setdefault("caseId", case_id)
         metadata.setdefault("caseOrigin", "curated")
         items.append({
@@ -445,7 +451,10 @@ def list_cases(*, base_url: str) -> list[dict[str, Any]]:
             "referenceUrl": reference_url,
             "imageUrl": generated_url,
             "cardUrl": card_url,
-            "experienceId": metadata.get("experienceId") or "",
+            "experienceId": metadata.get("experienceId") or (folder.name if has_experience else ""),
+            "hasExperience": has_experience,
+            "hasWorld": has_world,
+            "worldUrl": f"interactive/{folder.name}/world/world.json" if has_world else "",
         })
 
     items.sort(key=lambda item: str(item.get("generatedAt") or ""), reverse=True)
@@ -464,7 +473,7 @@ def _prune_cases() -> None:
         if not meta_path.exists():
             continue
         try:
-            metadata = json.loads(meta_path.read_text(encoding="utf-8"))
+            metadata = json.loads(meta_path.read_text(encoding="utf-8-sig"))
         except (OSError, json.JSONDecodeError):
             continue
         if metadata.get("caseOrigin") == "runtime":
@@ -489,10 +498,99 @@ def delete_case(case_id: str) -> bool:
     if not meta_path.exists():
         return False
     try:
-        metadata = json.loads(meta_path.read_text(encoding="utf-8"))
+        metadata = json.loads(meta_path.read_text(encoding="utf-8-sig"))
     except (OSError, json.JSONDecodeError):
         return False
     if metadata.get("caseOrigin") != "runtime":
         return False
     shutil.rmtree(folder, ignore_errors=True)
     return True
+
+
+# --------------------------------------------------------------------------- #
+# 按 caseId 读取单件作品（运行期互动）
+# --------------------------------------------------------------------------- #
+
+CASE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
+
+
+def _case_id_is_safe(case_id: str) -> bool:
+    return bool(case_id and CASE_ID_RE.match(case_id))
+
+
+def load_experience(case_id: str) -> dict[str, Any] | None:
+    """读取某件作品自己的 experience.json（热点/章节），不做任何跨作品复用。"""
+    if not _case_id_is_safe(case_id):
+        return None
+    path = EXAMPLES_DIR / case_id / "experience.json"
+    if not path.is_file():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def get_case(case_id: str, *, base_url: str) -> dict[str, Any] | None:
+    """单件作品的完整描述：图片、参考图、文化卡、互动资产与元数据。
+
+    作品身份只由 caseId（案例目录名）决定；styleId 仅用于展示与知识包，
+    绝不参与作品查找。
+    """
+    if not _case_id_is_safe(case_id):
+        return None
+    folder = EXAMPLES_DIR / case_id
+    meta_path = folder / "metadata.json"
+    if not folder.is_dir() or not meta_path.is_file():
+        return None
+    try:
+        metadata = json.loads(meta_path.read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(metadata, dict):
+        return None
+
+    files = metadata.get("caseFiles") or {}
+    generated_name = files.get("generated") or "generated.png"
+    card_name = files.get("cultureCard") or "culture_card.png"
+    reference_name = files.get("reference") or metadata.get("referenceFilename") or ""
+    generated_path = folder / generated_name
+    if not generated_path.is_file():
+        return None
+
+    root = base_url.rstrip("/")
+    experience_path = folder / "experience.json"
+    world_path = PROJECT_ROOT / "frontend" / "public" / "interactive" / folder.name / "world" / "world.json"
+    has_experience = experience_path.is_file()
+    has_world = world_path.is_file()
+
+    return {
+        **metadata,
+        "caseId": str(metadata.get("caseId") or folder.name),
+        "folder": folder.name,
+        "referenceUrl": f"{root}/examples/{folder.name}/{reference_name}"
+                        if reference_name and (folder / reference_name).is_file() else "",
+        "imageUrl": f"{root}/examples/{folder.name}/{generated_name}",
+        "cardUrl": f"{root}/examples/{folder.name}/{card_name}" if (folder / card_name).is_file() else "",
+        "experienceId": str(metadata.get("experienceId") or (folder.name if has_experience else "")),
+        "hasExperience": has_experience,
+        "hasWorld": has_world,
+        "worldUrl": f"interactive/{folder.name}/world/world.json" if has_world else "",
+        "experienceFile": str(experience_path.relative_to(PROJECT_ROOT)) if has_experience else "",
+        "metadata": metadata,
+    }
+
+
+def delete_case_assets(case_id: str) -> bool:
+    """删除运行期案例对应的画境资产（frontend/public/interactive/<case>）。
+
+    只在该案例已经被确认删除、且目录名合法时调用；内置案例有独立目录保护。
+    """
+    if not _case_id_is_safe(case_id):
+        return False
+    world_dir = PROJECT_ROOT / "frontend" / "public" / "interactive" / case_id
+    if world_dir.is_dir():
+        shutil.rmtree(world_dir, ignore_errors=True)
+        return True
+    return False
