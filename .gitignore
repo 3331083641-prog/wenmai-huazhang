@@ -85,3 +85,4 @@ coverage/
 # Local VNext work products: verification scripts, raw screenshots, task/job
 # snapshots and patches. Kept on disk inside the project, never committed.
 .work/
+temp_review/
