@@ -235,9 +235,7 @@ def build_finish(col):
         grid_ceiling("COFFER_1F_L%d" % sx, FY2 - 0.30, xa, xb, -IN_Z + 0.05, IN_Z - 0.05)
     for sz, (za, zb) in enumerate(((-IN_Z + 0.05, -2.40), (2.40, IN_Z - 0.05))):
         grid_ceiling("COFFER_1F_F%d" % sz, FY2 - 0.30, -3.40, 3.40, za, zb)
-    # 二层：满铺（先加一层顶板，否则格眼里会直接看到瓦背）
-    K.box("COFFER_2F_Slab", (0.0, FY2 + COL_H2 - 0.04, 0.0), (IN_X * 2 - 0.1, 0.05, IN_Z * 2 - 0.1),
-          "M_wall_plaster", col)
+    # 二层：满铺
     grid_ceiling("COFFER_2F", FY2 + COL_H2 - 0.10, -IN_X + 0.05, IN_X - 0.05, -IN_Z + 0.05, IN_Z - 0.05)
 
     # ---- 地面拼花：中央大方砖 + 四周深色边线 ----
