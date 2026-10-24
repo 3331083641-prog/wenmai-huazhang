@@ -23,7 +23,6 @@ if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
 import hz_kit as K  # noqa: E402
-import hall_dressing as D  # noqa: E402
 
 BLEND_OUT = os.path.join(K.G3D, "blender", "wenmai_huazhang.blend")
 GLB_OUT = os.path.join(K.G3D, "exports", "wenmai_gallery_huazhang.glb")
@@ -94,12 +93,6 @@ FRAME_PLAN = {
     "f2-right": [(1.05, 1.25, 0.20, 0.52, "二层 · 右墙 · 后"), (1.50, 1.00, 0.50, 0.52, "二层 · 右墙 · 中"), (1.05, 1.25, 0.80, 0.52, "二层 · 右墙 · 前")],
     "f2-front": [(0.95, 1.20, 0.20, 0.52, "二层 · 前墙 · 左"), (1.35, 1.05, 0.50, 0.52, "二层 · 前墙 · 中"), (0.95, 1.20, 0.80, 0.52, "二层 · 前墙 · 右")],
 }
-
-
-# 室内软装模块独立迭代：把它的展墙/画框拓位接进来（33 个画框位）
-WALLS[:] = D.WALLS2
-FRAME_PLAN.clear()
-FRAME_PLAN.update(D.FRAME_PLAN2)
 
 
 def wall_point(wall, u, v, offset=0.06):
@@ -566,48 +559,6 @@ def build_anchors(col):
     return col
 
 
-# ---------------------------------------------------------------- 画框框饰
-
-
-def build_frame_preview(col):
-    """在每个画框锚点上放一层实体框饰（木框 + 卡纸 + 画心底色）。
-
-    为什么不只靠前端画框：
-      · Blender 渲染室内图时，锚点如果只是空坐标，整面墙就是一片白，
-        室内细节根本看不出「这里挂了画」；
-      · 网页端由 GalleryFrame 在墙面 +0.06 处画完整画框，正好盖住这层框饰
-        （框饰贴在 +0.02），所以不会出现两套画框打架。
-
-    尺寸与 FRAME_PLAN 完全一致，换画时前端按同一份 layout 定位。
-    """
-    wall_map = {w[0]: w for w in WALLS}
-    seq = 0
-    for wall_id, items in FRAME_PLAN.items():
-        wall = wall_map[wall_id]
-        facing = wall[3]
-        nx, nz = math.sin(facing), math.cos(facing)
-        # 不用欧拉旋转：按法线方向直接指定尺寸轴。
-        # 旋转一走偏，宽/厚就会互换，画框会变成一块垂直于墙的窄板，
-        # 远看等于墙上什么都没挂。
-        along_z = abs(nz) > 0.5
-        for w, h, u, v, _label in items:
-            seq += 1
-            x, y, z = wall_point(wall, u, v, 0.015)
-            tag = "PW_%02d" % seq
-
-            def slab(suffix, material, width, height, depth, push):
-                cx = x + nx * push
-                cz = z + nz * push
-                size = (width, height, depth) if along_z else (depth, height, width)
-                return K.box(tag + suffix, (cx, y, cz), size, material, col)
-
-            slab("_Frame", "M_wood_dark", w, h, 0.05, 0.02)
-            slab("_Mat", "M_paper", w - 0.14, h - 0.14, 0.02, 0.05)
-            slab("_Art", "M_ceramic", w - 0.28, h - 0.28, 0.01, 0.07)
-    K.log("frame dressing: %d frames" % seq)
-    return col
-
-
 # ---------------------------------------------------------------- 灯光
 
 
@@ -931,10 +882,8 @@ def main():
     build_upper_frame(c_frame)
     build_upper_roof(c_roof)
     build_walls(c_wall)
-    D.build_finish(c_wall)
-    D.build_interior(c_interior)
+    build_interior(c_interior)
     build_anchors(c_anchor)
-    build_frame_preview(c_interior)
 
     apply_modifiers()
     batch_merge()
