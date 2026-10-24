@@ -39,6 +39,7 @@ flowchart LR
 - **展馆观感与性能**：现有 GLB 上重做色调映射、曝光、阴影范围、重点照明与暖木/石材/铜/纸材质参数；限制 DPR、收敛阴影相机、页面隐藏时降频。
 - **新作品进入展馆作品池**：图库按 `caseId` 读取后端作品池，新生成作品带“新生成”标记，可直接挂到画框；画框按图片真实比例 contain，不拉伸；布展经 localStorage 持久化。
 - **灵宠模块可替换**：模型 URL、动画映射、缩放与朝向适配集中封装，后续换最终版 GLB 只改配置。
+- **应用场景页恢复沉浸式展示**：八个场景改为纵向左右交替的大图 + 独立文字，滚动时图片与文字分侧浮现；取消图片状态角标，能力边界写入正文。
 
 | 本轮真实验证 | 结果 |
 |---|---|
@@ -89,7 +90,7 @@ flowchart LR
 
 | 文创转化 | 应用场景 |
 |:---:|:---:|
-| [![八类文创载体预览](docs/screenshots/vnext/products.jpg)](docs/screenshots/vnext/products.jpg) | [![应用场景：已实现能力与应用构想](docs/screenshots/vnext/scenarios.jpg)](docs/screenshots/vnext/scenarios.jpg) |
+| [![八类文创载体预览](docs/screenshots/vnext/products.jpg)](docs/screenshots/vnext/products.jpg) | [![应用场景：八组场景交错图文展示](docs/screenshots/vnext/scenarios.jpg)](docs/screenshots/vnext/scenarios.jpg) |
 | 八类载体，按比例预览并可导出 PNG | 已实现场景配真实截图；未部署场景明确标“应用构想” |
 
 | 关于项目 | 移动端 |
