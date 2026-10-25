@@ -5,6 +5,7 @@
  * 画框、详情面板、布展校验都只通过 id 查这里，绝不按风格猜作品。
  */
 import { galleryArtworks } from './galleryArtworks';
+import { isCaseDeleted } from '../services/deletedCases';
 import type { GalleryArtwork } from '../features/heritage-gallery/types';
 
 const registry = new Map<string, GalleryArtwork>();
@@ -20,7 +21,7 @@ function loadCachedRuntime(): GalleryArtwork[] {
     return parsed.filter((item): item is GalleryArtwork => {
       if (!item || typeof item !== 'object') return false;
       const candidate = item as GalleryArtwork;
-      return Boolean(candidate.id && candidate.imageUrl && candidate.title);
+      return Boolean(candidate.id && candidate.imageUrl && candidate.title && !isCaseDeleted(candidate.id));
     });
   } catch {
     return [];

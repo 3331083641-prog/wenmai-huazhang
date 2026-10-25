@@ -12,15 +12,14 @@ from image_analyzer import analyze_image, get_analysis_mode
 from provider_service import GenerationService
 from style_config import OUTPUT_DIR, STYLE_REFS_DIR, ensure_runtime_dirs
 from case_store import (
+    archive_runtime_case,
     auto_save_enabled,
-    delete_case,
-    delete_case_assets,
     get_case,
     list_cases,
     load_experience,
     save_case,
 )
-from interactive_jobs import get_job, list_jobs, start_interactive_build
+from interactive_jobs import get_job, list_jobs, start_interactive_build, idle_case_mutation, InteractiveJobBusy
 
 
 class GenerateRequest(BaseModel):
@@ -63,10 +62,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware('http')
+async def preserve_asset_cors_variant(request: Request, call_next):
+    response = await call_next(request)
+    # Browsers first show these as <img>, then load them as WebGL textures.
+    # Plain image requests carry no Origin. They must not cache a response that
+    # masks the CORS-enabled variant required by the later texture request.
+    if request.url.path.startswith(('/examples/', '/outputs/', '/style_refs/', '/interactive/')):
+        vary = [item.strip() for item in response.headers.get('vary', '').split(',') if item.strip()]
+        if not any(item.lower() == 'origin' for item in vary):
+            response.headers['Vary'] = ', '.join(vary + ['Origin'])
+    return response
+
 app.mount("/outputs", StaticFiles(directory=str(OUTPUT_DIR)), name="outputs")
 app.mount("/style_refs", StaticFiles(directory=str(STYLE_REFS_DIR)), name="style_refs")
 
 app.mount("/examples", StaticFiles(directory=str(Path(__file__).resolve().parents[1] / "docs/examples")), name="examples")
+app.mount('/interactive', StaticFiles(directory=str(Path(__file__).resolve().parents[1] / 'frontend/public/interactive')), name='interactive')
 
 service = GenerationService()
 
@@ -104,8 +117,8 @@ def generate(request_body: GenerateRequest, request: Request) -> dict[str, Any]:
             result["savedCase"] = saved
             result["autoSave"] = {"enabled": True, "saved": bool(saved), "error": None}
             # 落盘之后顺手把「三重互动」也做出来：三折叙事 + 自动热点 + 画境资产。
-            # 深度推理要十几秒，绝不能阻塞这次出图响应，所以丢到后台线程里跑；
-            # 跑完 ingest 会把 metadata.json 的 experienceId 写回去，前端下次加载就能用。
+            # 本地 Qwen3-VL 解析与画境资产在后台构建，不阻塞返回已保存的作品；
+            # 展厅轮询最新状态，完成后自动出现三个入口，无需重启前端。
             if saved and saved.get("caseId"):
                 result["interactiveJob"] = start_interactive_build(str(saved["caseId"]))
         except Exception as exc:  # noqa: BLE001 - 保存失败不能影响出图
@@ -144,6 +157,8 @@ def _interaction_summary(case: dict[str, Any], job: dict[str, Any] | None) -> di
 
     if job_status in {"queued", "processing"}:
         status = job_status
+    elif job_status == "failed":
+        status = "failed"
     elif has_experience and has_world:
         status = "ready"
     elif has_experience:
@@ -207,8 +222,8 @@ def rebuild_interactions(case_id: str, request: Request) -> dict[str, object]:
 def interactive_jobs() -> dict[str, object]:
     """出图后自动生成「三折叙事 + 热点 + 画境」的后台任务状态。
 
-    任务跑完会把 experienceId 写进案例的 metadata.json；前端重新构建/重启开发服务器后
-    该案例的卡片上就会出现三个互动入口。
+    任务跑完会把 experienceId 写进案例的 metadata.json；展厅自动回读最新状态，
+    无需重新构建或重启前端即可出现三个互动入口。
     """
     jobs = list_jobs()
     return {"success": True, "count": len(jobs), "jobs": jobs, "error": None}
@@ -217,9 +232,10 @@ def interactive_jobs() -> dict[str, object]:
 @app.delete("/cases/{case_id}")
 def remove_case(case_id: str) -> dict[str, object]:
     """删除运行期案例；内置的真实案例受保护，不允许删除。"""
-    removed = delete_case(case_id)
-    if not removed:
-        raise HTTPException(status_code=400, detail="只能删除运行期自动保存的案例（内置案例受保护）")
-    # 案例删除后，它自己的画境资产也一并清理，避免留下无主目录。
-    delete_case_assets(case_id)
+    try:
+        with idle_case_mutation(case_id):
+            if not archive_runtime_case(case_id):
+                raise HTTPException(status_code=400, detail="只能删除运行期自动保存的案例（内置案例受保护）")
+    except InteractiveJobBusy as exc:
+        raise HTTPException(status_code=409,detail=str(exc)) from exc
     return {"success": True, "caseId": case_id}

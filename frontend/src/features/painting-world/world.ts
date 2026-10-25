@@ -35,6 +35,7 @@ export interface WorldCutout {
   bbox_norm: number[];
   size: number[];
   alpha_coverage: number;
+  depth?: number;
 }
 
 export interface WorldHotspot {
@@ -68,13 +69,14 @@ export interface PaintingWorldManifest {
   slug: string;
   title: string;
   art: WorldArt;
+  surface?: { file: string } | null;
   depth: WorldDepth;
   backdrop: { file: string };
   masks: WorldMasks;
   cutouts: WorldCutout[];
   hotspots: WorldHotspot[];
   camera: WorldCamera;
-  provenance: { depth_model: string; depth_generated_at: string; note: string };
+  provenance: { depth_model: string; depth_generated_at: string; note: string; asset_revision?: string };
 }
 
 /** 把清单里的相对文件名拼成可加载的 URL。
@@ -87,18 +89,20 @@ export function resolveWorldAsset(baseUrl: string, file: string): string {
   if (/^(https?:|data:|\/\/)/.test(file)) return file;
   const idx = baseUrl.lastIndexOf('/');
   const dir = idx >= 0 ? baseUrl.slice(0, idx + 1) : '';
-  return withBase(`${dir}${file}`);
+  const revision = new URLSearchParams(baseUrl.split('?')[1] ?? '').get('v');
+  return withBase(`${dir}${file}`) + (revision ? `?v=${encodeURIComponent(revision)}` : '');
 }
 
 /** 与 publicUrl 行为一致的兜底：Vite BASE_URL 不是根目录时也能用。 */
 export function withBase(path: string): string {
-  const base = import.meta.env.BASE_URL || '/';
+  if (/^(https?:|data:|\/\/)/.test(path)) return path;
+  const base = (import.meta as unknown as { env?: Record<string, string> }).env?.BASE_URL || '/';
   const clean = path.replace(/^\/+/, '');
   return base.endsWith('/') ? `${base}${clean}` : `${base}/${clean}`;
 }
 
 export async function loadWorldManifest(path: string): Promise<PaintingWorldManifest> {
-  const res = await fetch(withBase(path));
+  const res = await fetch(withBase(path), { cache: 'no-store' });
   if (!res.ok) throw new Error(`画境清单读取失败：${res.status} ${path}`);
   const data = (await res.json()) as PaintingWorldManifest;
   if (!data?.art?.file || !data?.depth?.file) throw new Error('画境清单缺少贴图或深度');

@@ -26,6 +26,7 @@ import re
 import subprocess
 import sys
 import threading
+from contextlib import contextmanager
 import time
 from datetime import datetime
 from pathlib import Path
@@ -41,6 +42,21 @@ CASE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 ACTIVE_STATES = {"queued", "processing"}
 
 _LOCK = threading.RLock()
+
+
+class InteractiveJobBusy(RuntimeError):
+    pass
+
+
+@contextmanager
+def idle_case_mutation(case_id):
+    _load()
+    with _LOCK:
+        if _JOBS.get(case_id,{}).get('status') in ACTIVE_STATES:
+            raise InteractiveJobBusy('作品的互动正在构建，请完成后再删除。')
+        yield
+        _JOBS.pop(case_id,None)
+        _save_locked()
 _JOBS: dict[str, dict[str, Any]] = {}
 _LOADED = False
 
@@ -184,6 +200,9 @@ def _run(case_id: str, timeout: int) -> None:
         message="正在生成文化热点、章节叙事与画境资产……",
     )
     cmd = [sys.executable, "-X", "utf8", str(INGEST_SCRIPT), "--refresh", case_id]
+    # Local Qwen3-VL and explicitly installed depth weights only; no background downloads.
+    worker_env = dict(os.environ)
+    worker_env.setdefault("HF_HUB_OFFLINE", "1")
     try:
         proc = subprocess.run(
             cmd,
@@ -192,9 +211,10 @@ def _run(case_id: str, timeout: int) -> None:
             text=True,
             encoding="utf-8",
             timeout=timeout,
+            env=worker_env,
         )
         state = _read_artifacts(case_id)
-        status = _status_from_artifacts(state)
+        status = _status_from_artifacts(state) if proc.returncode == 0 else "failed"
         tail = (proc.stdout or "").strip().splitlines()[-12:]
         stderr = (proc.stderr or "").strip()
         if proc.returncode != 0 and not state.get("hasExperience"):
@@ -230,7 +250,7 @@ def _run(case_id: str, timeout: int) -> None:
         state = _read_artifacts(case_id)
         _update(
             case_id,
-            status=_status_from_artifacts(state) if state.get("hasExperience") else "failed",
+            status="failed",
             finishedAt=_now(),
             elapsedSec=round(time.time() - started, 1),
             error=f"超过 {timeout}s 未完成；可重试。",
@@ -265,8 +285,10 @@ def start_interactive_build(case_id: str, timeout: int = 900, *, force: bool = F
         return {"enabled": False, "status": "case_not_found", "caseId": case_id}
 
     with _LOCK:
+        if not (EXAMPLES_DIR / case_id).is_dir():
+            return {"enabled":False,"status":"case_not_found","caseId":case_id}
         existing = _JOBS.get(case_id)
-        if existing and str(existing.get("status")) in ACTIVE_STATES and not force:
+        if existing and str(existing.get("status")) in ACTIVE_STATES:
             return {"enabled": True, "status": existing["status"], "reused": True, "job": dict(existing)}
         if existing and str(existing.get("status")) in {"ready", "partial"} and not force:
             return {"enabled": True, "status": existing["status"], "reused": True, "job": dict(existing)}

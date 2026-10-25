@@ -11,4 +11,4 @@
 | `build_painting_world.py.bak2` | [起始提交中的备份](https://github.com/3331083641-prog/wenmai-huazhang/blob/74cb74d4a1e3d85b1884eaec19c4a2a41157eb46/scripts/interactive/build_painting_world.py.bak2) | [build_painting_world.py](../../scripts/interactive/build_painting_world.py) |
 | `tmp_f2map.js` | [起始提交中的临时检查工具](https://github.com/3331083641-prog/wenmai-huazhang/blob/74cb74d4a1e3d85b1884eaec19c4a2a41157eb46/scripts/tmp_f2map.js) | 当前展馆使用预制 GLB、场景配置和正式布展模块 |
 
-旧 `docs/images/`、各轮互动和展馆验收文档继续保留原始日期与证据；当前展示截图在 [screenshots](../screenshots/README.md)。原 iCAN 演示视频与方案仍在 [v1.0.0 Release](https://github.com/3331083641-prog/wenmai-huazhang/releases/tag/v1.0.0)，没有移动或删除 Release。
+旧 `docs/images/`、各轮互动和展馆验收文档继续保留原始日期与证据；[2026-10-24 截图](screenshots-20261024/standard/README.md)已归档，[当前正式截图](../screenshots/current/README.md)另行维护。原 iCAN 演示视频与方案仍在 [v1.0.0 Release](https://github.com/3331083641-prog/wenmai-huazhang/releases/tag/v1.0.0)，没有移动或删除 Release。

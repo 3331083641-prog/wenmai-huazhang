@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 2,
+  "contentSource": "qwen3_vl_image",
+  "inputImageSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125",
+  "contextSha256": "a927dea567f9114a6500cc0eebb041a6c78af00b54bc15af2226be6b6d948100",
+  "promptSha256": "9306d559695ac2c00d701a4a5f16bd5b2e599c89fab33873cb669f704918673e",
+  "model": "qwen3-vl:4b-instruct-q4_K_M",
+  "inputImageCount": 1,
+  "inputImageBytes": 728992,
+  "analysis": {
+    "title": "红焰奔马：剪纸之舞",
+    "subtitle": "一匹以花卉镂空为肌理的红色剪纸马，动态轮廓中蕴藏繁复纹样",
+    "lead": "红白对比的剪纸马，鬃尾如焰，花影如歌，每一处镂空都诉说流动的韵律与东方美学的精妙。",
+    "observed_subjects": [
+      "一匹红色剪纸马",
+      "马身内部镂空花卉纹样",
+      "马鬃与马尾的线条细节",
+      "马蹄与腿部的结构轮廓"
+    ],
+    "dominant_colors": [
+      "红色",
+      "白色"
+    ],
+    "visual_features": [
+      "镂空剪纸技法",
+      "花卉纹样填充马身",
+      "马形动态姿态",
+      "红白对比强烈"
+    ],
+    "scene_kind": "flat_artwork",
+    "motion_regions": {
+      "water": false,
+      "mist": false,
+      "foliage": false
+    },
+    "hotspots": [
+      {
+        "title": "马头侧面，鬃毛与花卉纹样交叠",
+        "x": 0.22,
+        "y": 0.25,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "红色马头轮廓，鬃毛呈流动线条，左眼旁有白色花朵纹样，面部有镂空雕刻感线条",
+        "interpretation": "红白对比强化轮廓张力，花卉纹样与鬃毛线条交织，营造动态美感与装饰层次"
+      },
+      {
+        "title": "马颈侧部的花卉镂空纹样",
+        "x": 0.52,
+        "y": 0.38,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "红色马颈侧部，以白色镂空花卉图案为主，辅以细密叶脉与毛发线条，呈现层叠绽放的牡丹形态。",
+        "interpretation": "繁复花纹与流畅鬃毛线条交织，红白对比鲜明，视觉张力强，传递出古典剪纸的精致与生命力。"
+      },
+      {
+        "title": "马身中部的花卉镂空纹样",
+        "x": 0.68,
+        "y": 0.52,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "红色马形剪纸，背部与臀部区域布满白色镂空的牡丹花图案，花瓣层叠，边缘呈锯齿状，周围点缀小花与叶纹。",
+        "interpretation": "繁复的花纹在红色底色上形成强烈对比，镂空处透出明亮，线条流畅而富有韵律，视觉上充满生机与装饰美感。"
+      },
+      {
+        "title": "马鬃细节：密集红色线条与镂空花卉纹样交织",
+        "x": 0.85,
+        "y": 0.45,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "密集红色线条模拟鬃毛，其间穿插白色镂空花卉纹样，线条方向从左上向右下倾斜，呈现动态飘逸感。",
+        "interpretation": "红白对比强化视觉张力，线条疏密变化赋予鬃毛流动感，镂空花纹增添层次，整体呈现轻盈而富有装饰性的美感。"
+      }
+    ],
+    "chapters": [
+      {
+        "title": "马首之舞",
+        "eyebrow": "马头侧面，鬃毛与花卉纹样交叠",
+        "body": "红白对比强化轮廓张力，花卉纹样与鬃毛线条交织，营造动态美感与装饰层次。马眼旁的花影如初绽，鬃毛如风中之舞，赋予静止之形以呼吸。",
+        "focus_indices": [
+          0
+        ]
+      },
+      {
+        "title": "颈身之韵",
+        "eyebrow": "马颈侧部的花卉镂空纹样",
+        "body": "繁复花纹与流畅鬃毛线条交织，红白对比鲜明，视觉张力强，传递出古典剪纸的精致与生命力。颈侧牡丹层叠绽放，叶脉细密如笔触，是静默中的喧哗。",
+        "focus_indices": [
+          1
+        ]
+      },
+      {
+        "title": "尾鬃之流",
+        "eyebrow": "马鬃细节：密集红色线条与镂空花卉",
+        "body": "红白对比强化视觉张力，线条疏密变化赋予鬃毛流动感，镂空花纹增添层次，整体呈现轻盈而富有装饰性的美感。尾部如焰，鬃毛如瀑，是风的回响。",
+        "focus_indices": [
+          3
+        ]
+      }
+    ]
+  },
+  "totalDurationNs": 17540741800,
+  "localReview": {
+    "kind": "qwen3_vl_actual_crop_grounding",
+    "hotspots": [
+      {
+        "index": 0,
+        "inputCropSha256": "48e45fed38f96e08eaed7e67115396997c86b2316d36457e86e78fe45e16caf9",
+        "cropBox": [
+          87,
+          118,
+          364,
+          394
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "马头侧面，鬃毛与花卉纹样交叠",
+          "observation": "红色马头轮廓，鬃毛呈流动线条，左眼旁有白色花朵纹样，面部有镂空雕刻感线条",
+          "interpretation": "红白对比强化轮廓张力，花卉纹样与鬃毛线条交织，营造动态美感与装饰层次"
+        }
+      },
+      {
+        "index": 1,
+        "inputCropSha256": "9ece6875e4d8f499ac829da3c340461de4450a71ef188bad599999d6b91bc31c",
+        "cropBox": [
+          394,
+          251,
+          671,
+          527
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "马颈侧部的花卉镂空纹样",
+          "observation": "红色马颈侧部，以白色镂空花卉图案为主，辅以细密叶脉与毛发线条，呈现层叠绽放的牡丹形态。",
+          "interpretation": "繁复花纹与流畅鬃毛线条交织，红白对比鲜明，视觉张力强，传递出古典剪纸的精致与生命力。"
+        }
+      },
+      {
+        "index": 2,
+        "inputCropSha256": "62016ba3d780ce84facfb139b6c03103042f1810628a41676934e90f122c759c",
+        "cropBox": [
+          558,
+          394,
+          835,
+          671
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "马身中部的花卉镂空纹样",
+          "observation": "红色马形剪纸，背部与臀部区域布满白色镂空的牡丹花图案，花瓣层叠，边缘呈锯齿状，周围点缀小花与叶纹。",
+          "interpretation": "繁复的花纹在红色底色上形成强烈对比，镂空处透出明亮，线条流畅而富有韵律，视觉上充满生机与装饰美感。"
+        }
+      },
+      {
+        "index": 3,
+        "inputCropSha256": "6afecd5d3f0b886246353e796387c4a339ec3aa6d5fe17cb37cf34e3b643584a",
+        "cropBox": [
+          732,
+          323,
+          1009,
+          599
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "马鬃细节：密集红色线条与镂空花卉纹样交织",
+          "observation": "密集红色线条模拟鬃毛，其间穿插白色镂空花卉纹样，线条方向从左上向右下倾斜，呈现动态飘逸感。",
+          "interpretation": "红白对比强化视觉张力，线条疏密变化赋予鬃毛流动感，镂空花纹增添层次，整体呈现轻盈而富有装饰性的美感。"
+        }
+      }
+    ],
+    "storySource": "same-image whole view plus local-Qwen crop observations"
+  },
+  "reviewModel": "qwen3-vl:4b-instruct-q4_K_M",
+  "reviewInput": "same-image whole view and deterministic hotspot crops"
+}

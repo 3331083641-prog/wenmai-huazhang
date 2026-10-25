@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "slug": "bianxiu-20261025-010853-f7cd",
+  "title": "粉霞绽放：一朵牡丹的静谧叙事",
+  "art": {
+    "file": "art.webp",
+    "width": 1024,
+    "height": 1024,
+    "aspect": 1.0
+  },
+  "surface": {
+    "file": "surface.webp"
+  },
+  "depth": {
+    "file": "depth-rg.png",
+    "width": 768,
+    "height": 768,
+    "gamma": 0.72
+  },
+  "backdrop": {
+    "file": "backdrop.webp"
+  },
+  "masks": {
+    "file": "masks.png",
+    "width": 768,
+    "height": 768,
+    "coverage": {
+      "water": 0.0,
+      "mist": 0.0,
+      "foliage": 0.0
+    }
+  },
+  "cutouts": [
+    {
+      "bbox_norm": [
+        0.1240234375,
+        0.0458984375,
+        0.783203125,
+        0.939453125
+      ],
+      "size": [
+        802,
+        962
+      ],
+      "alpha_coverage": 0.5748829589228591,
+      "method": "white-background-connected-subject",
+      "completeSubject": true,
+      "id": "subject",
+      "label": "牡丹花冠",
+      "file": "cutout-subject.webp",
+      "depth": 0.7140189409255981,
+      "bytes": 209842
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "14bee1d62164-spot-1",
+      "x": 0.5,
+      "y": 0.35,
+      "depth": 0.714,
+      "depth_measured": 0.8739,
+      "depth_overridden": true
+    },
+    {
+      "id": "14bee1d62164-spot-2",
+      "x": 0.3,
+      "y": 0.6,
+      "depth": 0.714,
+      "depth_measured": 0.555,
+      "depth_overridden": true
+    },
+    {
+      "id": "14bee1d62164-spot-3",
+      "x": 0.5,
+      "y": 0.75,
+      "depth": 0.714,
+      "depth_measured": 0.2854,
+      "depth_overridden": true
+    },
+    {
+      "id": "14bee1d62164-spot-4",
+      "x": 0.75,
+      "y": 0.3,
+      "depth": 0.714,
+      "depth_measured": 0.7516,
+      "depth_overridden": true
+    }
+  ],
+  "camera": {
+    "fov": 34.0,
+    "plane_height": 1.0,
+    "plane_width": 1.0,
+    "distance_fill": 1.6354,
+    "depth_amplitude": 0.24,
+    "yaw_limit_deg": 10.0,
+    "pitch_limit_deg": 7.0,
+    "dolly_near": 0.62,
+    "dolly_far": 1.55,
+    "entry": {
+      "from_scale": 1.74,
+      "duration_ms": 2600
+    }
+  },
+  "provenance": {
+    "asset_revision": "3bdd31ef8c9a6786c01d",
+    "depth_model": "depth-anything-v2-small",
+    "render_mode": "complete-subject-layers",
+    "depth_inference": {
+      "source": "depth-anything-v2-small",
+      "modelUsed": true,
+      "approximate": true,
+      "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+      "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+      "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+      "license": "Apache-2.0",
+      "inputImageSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48"
+    },
+    "source_image_sha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
+    "semantic_motion": {
+      "water": false,
+      "mist": false,
+      "foliage": false
+    },
+    "scene_kind": "flat_artwork",
+    "depth_anchors": [
+      {
+        "x": 0.5,
+        "y": 0.35,
+        "depth": 0.5
+      },
+      {
+        "x": 0.3,
+        "y": 0.6,
+        "depth": 0.5
+      },
+      {
+        "x": 0.5,
+        "y": 0.75,
+        "depth": 0.5
+      },
+      {
+        "x": 0.75,
+        "y": 0.3,
+        "depth": 0.5
+      }
+    ],
+    "depth_generated_at": "2026-10-25T02:05:46",
+    "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
+  }
+}

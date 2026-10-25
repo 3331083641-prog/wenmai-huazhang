@@ -1,0 +1,218 @@
+{
+  "date": "2026-10-25",
+  "paidWhiteReferenceRequests": 5,
+  "extraEarlierRealGenerationRequests": 1,
+  "interactionContent": "local Qwen3-VL only; no human-authored per-work content",
+  "results": [
+    {
+      "caseId": "zhuxianzhen-20261025-010746-595e",
+      "style": "zhuxianzhen",
+      "title": "红鳞游动：金鱼的东方韵律",
+      "referenceSource": "user-requested AI white-background input from built-in imagegen; not a photograph",
+      "generationProvider": "dashscope_qwen_image",
+      "generationModel": "qwen-image-3.0",
+      "generationSucceeded": true,
+      "referenceImageUsed": true,
+      "autoSaved": true,
+      "imageSha256": "1ef7ec1047be3d436c604a39e7802b416b5235fadbe7dab3c767fb20c254e5b8",
+      "analysisModel": "qwen3-vl:4b-instruct-q4_K_M",
+      "cropGroundingCount": 4,
+      "hotspots": 4,
+      "chapters": 3,
+      "depth": {
+        "source": "depth-anything-v2-small",
+        "modelUsed": true,
+        "approximate": true,
+        "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+        "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+        "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+        "license": "Apache-2.0",
+        "inputImageSha256": "1ef7ec1047be3d436c604a39e7802b416b5235fadbe7dab3c767fb20c254e5b8"
+      },
+      "renderMode": "complete-subject-layers",
+      "browser": {
+        "ownWorld": true,
+        "clickWorks": true,
+        "rotationWorks": true,
+        "allHotspotsVisible": true,
+        "canvas": 1,
+        "errors": []
+      },
+      "degradedDuringCheck": false,
+      "screenshots": {
+        "hotspots": "white-reference/zhuxianzhen-hotspots.jpg",
+        "story": "white-reference/zhuxianzhen-story.jpg",
+        "world-front": "white-reference/zhuxianzhen-world-front.jpg",
+        "world-side": "white-reference/zhuxianzhen-world-side.jpg"
+      }
+    },
+    {
+      "caseId": "bianxiu-20261025-010853-f7cd",
+      "style": "bianxiu",
+      "title": "粉霞绽放：一朵牡丹的静谧叙事",
+      "referenceSource": "user-requested AI white-background input from built-in imagegen; not a photograph",
+      "generationProvider": "dashscope_qwen_image",
+      "generationModel": "qwen-image-3.0",
+      "generationSucceeded": true,
+      "referenceImageUsed": true,
+      "autoSaved": true,
+      "imageSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
+      "analysisModel": "qwen3-vl:4b-instruct-q4_K_M",
+      "cropGroundingCount": 4,
+      "hotspots": 4,
+      "chapters": 3,
+      "depth": {
+        "source": "depth-anything-v2-small",
+        "modelUsed": true,
+        "approximate": true,
+        "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+        "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+        "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+        "license": "Apache-2.0",
+        "inputImageSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48"
+      },
+      "renderMode": "complete-subject-layers",
+      "browser": {
+        "ownWorld": true,
+        "clickWorks": true,
+        "rotationWorks": true,
+        "allHotspotsVisible": true,
+        "canvas": 1,
+        "errors": []
+      },
+      "degradedDuringCheck": false,
+      "screenshots": {
+        "hotspots": "white-reference/bianxiu-hotspots.jpg",
+        "story": "white-reference/bianxiu-story.jpg",
+        "world-front": "white-reference/bianxiu-world-front.jpg",
+        "world-side": "white-reference/bianxiu-world-side.jpg"
+      }
+    },
+    {
+      "caseId": "songhua-20261025-011015-679b",
+      "style": "songhua",
+      "title": "山径幽亭：松影与石语",
+      "referenceSource": "user-requested AI white-background input from built-in imagegen; not a photograph",
+      "generationProvider": "dashscope_qwen_image",
+      "generationModel": "qwen-image-3.0",
+      "generationSucceeded": true,
+      "referenceImageUsed": true,
+      "autoSaved": true,
+      "imageSha256": "50b9cac5c56f5e45ce072c194f83e749411cc908edf268813e7db660ea208b3d",
+      "analysisModel": "qwen3-vl:4b-instruct-q4_K_M",
+      "cropGroundingCount": 4,
+      "hotspots": 4,
+      "chapters": 3,
+      "depth": {
+        "source": "depth-anything-v2-small",
+        "modelUsed": true,
+        "approximate": true,
+        "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+        "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+        "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+        "license": "Apache-2.0",
+        "inputImageSha256": "50b9cac5c56f5e45ce072c194f83e749411cc908edf268813e7db660ea208b3d"
+      },
+      "renderMode": "continuous-depth-mesh",
+      "browser": {
+        "ownWorld": true,
+        "clickWorks": true,
+        "rotationWorks": true,
+        "allHotspotsVisible": true,
+        "canvas": 1,
+        "errors": []
+      },
+      "degradedDuringCheck": false,
+      "screenshots": {
+        "hotspots": "white-reference/songhua-hotspots.jpg",
+        "story": "white-reference/songhua-story.jpg",
+        "world-front": "white-reference/songhua-world-front.jpg",
+        "world-side": "white-reference/songhua-world-side.jpg"
+      }
+    },
+    {
+      "caseId": "qinghua-20261025-011202-dbc8",
+      "style": "qinghua",
+      "title": "青瓷鹤影：纹饰与羽翼的静谧交响",
+      "referenceSource": "user-requested AI white-background input from built-in imagegen; not a photograph",
+      "generationProvider": "dashscope_qwen_image",
+      "generationModel": "qwen-image-3.0",
+      "generationSucceeded": true,
+      "referenceImageUsed": true,
+      "autoSaved": true,
+      "imageSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb",
+      "analysisModel": "qwen3-vl:4b-instruct-q4_K_M",
+      "cropGroundingCount": 4,
+      "hotspots": 4,
+      "chapters": 3,
+      "depth": {
+        "source": "depth-anything-v2-small",
+        "modelUsed": true,
+        "approximate": true,
+        "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+        "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+        "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+        "license": "Apache-2.0",
+        "inputImageSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb"
+      },
+      "renderMode": "complete-subject-layers",
+      "browser": {
+        "ownWorld": true,
+        "clickWorks": true,
+        "rotationWorks": true,
+        "allHotspotsVisible": true,
+        "canvas": 1,
+        "errors": []
+      },
+      "degradedDuringCheck": false,
+      "screenshots": {
+        "hotspots": "white-reference/qinghua-hotspots.jpg",
+        "story": "white-reference/qinghua-story.jpg",
+        "world-front": "white-reference/qinghua-world-front.jpg",
+        "world-side": "white-reference/qinghua-world-side.jpg"
+      }
+    },
+    {
+      "caseId": "jianzhi-20261025-011330-32fe",
+      "style": "jianzhi",
+      "title": "红焰奔马：剪纸之舞",
+      "referenceSource": "user-requested AI white-background input from built-in imagegen; not a photograph",
+      "generationProvider": "dashscope_qwen_image",
+      "generationModel": "qwen-image-3.0",
+      "generationSucceeded": true,
+      "referenceImageUsed": true,
+      "autoSaved": true,
+      "imageSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125",
+      "analysisModel": "qwen3-vl:4b-instruct-q4_K_M",
+      "cropGroundingCount": 4,
+      "hotspots": 4,
+      "chapters": 3,
+      "depth": {
+        "source": "depth-anything-v2-small",
+        "modelUsed": true,
+        "approximate": true,
+        "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+        "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+        "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+        "license": "Apache-2.0",
+        "inputImageSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125"
+      },
+      "renderMode": "complete-subject-layers",
+      "browser": {
+        "ownWorld": true,
+        "clickWorks": true,
+        "rotationWorks": true,
+        "allHotspotsVisible": true,
+        "canvas": 1,
+        "errors": []
+      },
+      "degradedDuringCheck": false,
+      "screenshots": {
+        "hotspots": "white-reference/jianzhi-hotspots.jpg",
+        "story": "white-reference/jianzhi-story.jpg",
+        "world-front": "white-reference/jianzhi-world-front.jpg",
+        "world-side": "white-reference/jianzhi-world-side.jpg"
+      }
+    }
+  ]
+}

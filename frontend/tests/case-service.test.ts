@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { mergeCases, normalizeAnalysis, normalizeCase, type GalleryCase } from '../src/services/caseService.ts';
+import { deleteRuntimeCase, mergeCases, normalizeAnalysis, normalizeCase, type GalleryCase } from '../src/services/caseService.ts';
 
 const base = {
   caseId: 'zhuxianzhen',
@@ -76,4 +76,31 @@ test('mergeCases：运行期案例排在最前，同 caseId 时不重复且内�
 test('mergeCases：没有运行期案例时原样返回内置列表', () => {
   const curated = [{ ...base } as GalleryCase];
   assert.deepEqual(mergeCases(curated, []), curated);
+});
+
+test('deleteRuntimeCase：删除准确的 caseId，后端拒绝时保留错误说明', async () => {
+  const original=globalThis.fetch;
+  const calls:Array<{url:string;method:string|undefined}>=[];
+  try {
+    globalThis.fetch=async(input,options)=>{
+      calls.push({url:String(input),method:options?.method});
+      return new Response(JSON.stringify({success:true}),{status:200});
+    };
+    await deleteRuntimeCase('own-case');
+    assert.deepEqual(calls,[{url:'http://127.0.0.1:8000/cases/own-case',method:'DELETE'}]);
+    globalThis.fetch=async()=>new Response(JSON.stringify({detail:'互动构建完成后可删除'}),{status:409});
+    await assert.rejects(deleteRuntimeCase('own-case'),/互动构建完成后可删除/);
+  } finally {globalThis.fetch=original;}
+});
+
+test('mergeCases：后端最新互动状态覆盖构建时的运行期快照', () => {
+  const old = { ...base, caseId: 'new-picture', caseOrigin: 'runtime', experienceId: undefined } as GalleryCase;
+  const fresh = { ...old, experienceId: 'new-picture', interaction: {
+    status: 'ready', hasExperience: true, hasWorld: true,
+    stages: { hotspots: true, story: true, world: true }, job: null,
+  }} as GalleryCase;
+  const merged = mergeCases([old], [fresh]);
+  assert.equal(merged.length, 1);
+  assert.equal(merged[0].interaction?.status, 'ready');
+  assert.equal(merged[0].experienceId, 'new-picture');
 });

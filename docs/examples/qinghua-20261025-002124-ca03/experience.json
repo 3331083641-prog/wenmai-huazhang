@@ -1,0 +1,194 @@
+{
+  "id": "qinghua-20261025-002124-ca03",
+  "styleId": "qinghua",
+  "styleName": "青花瓷纹样",
+  "title": "青瓷蝶影：蓝白交响的静谧之翼",
+  "subtitle": "三章叙事：触角的轻语、腹节的沉静、纹样的韵律",
+  "lead": "蓝白交织的蝶翼如瓷画般静谧，触角轻颤似诉说，腹节沉稳如古器，纹样在透光中低语——这是一场视觉的青瓷诗篇，无言却满载工笔的呼吸。",
+  "artworkSize": {
+    "width": 1024,
+    "height": 1024
+  },
+  "theme": {
+    "accent": "#22508F",
+    "accentSoft": "#CBD9EC",
+    "paper": "#F3F5F8",
+    "ink": "#243040",
+    "gold": "#9C8556"
+  },
+  "visualAnalysis": {
+    "source": "qwen3_vl_image",
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "observedSubjects": [
+      "蝴蝶主体",
+      "翅膀纹样",
+      "背景云纹",
+      "边缘留白"
+    ],
+    "visualFeatures": [
+      "蝴蝶翅膀呈对称结构",
+      "翅膀上分布青花瓷风格花卉纹样",
+      "背景为浅蓝云纹",
+      "边缘留白区域清晰"
+    ],
+    "sceneKind": "flat_artwork",
+    "dominantColors": [
+      "深蓝",
+      "白",
+      "浅蓝"
+    ]
+  },
+  "hotspots": [
+    {
+      "id": "b974928e45df-spot-1",
+      "title": "蝴蝶触角特写",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.45,
+        "cy": 0.25,
+        "r": 0.04
+      },
+      "shortDescription": "两根细长蓝色触角，顶端略粗，呈椭圆形，从头部延伸而出，背景为纯白。",
+      "visualObservation": "两根细长蓝色触角，顶端略粗，呈椭圆形，从头部延伸而出，背景为纯白。",
+      "culturalExplanation": "蓝白对比下触角线条纤细，形态优雅，与蝴蝶整体设计呼应，带来清冷而精致的视觉感受。",
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-1"
+    },
+    {
+      "id": "b974928e45df-spot-2",
+      "title": "蝴蝶腹部与翼缘交界处的蓝白纹样",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.49,
+        "cy": 0.65,
+        "r": 0.04
+      },
+      "shortDescription": "深蓝腹节分段清晰，两侧翼缘透出浅蓝卷草纹，边缘缀有细密白点，纹样呈对称分布。",
+      "visualObservation": "深蓝腹节分段清晰，两侧翼缘透出浅蓝卷草纹，边缘缀有细密白点，纹样呈对称分布。",
+      "culturalExplanation": "深蓝与透白的对比带来沉静张力，纹样疏密有致，如薄纱轻拂，显出工笔般的细腻与空灵感。",
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-2"
+    },
+    {
+      "id": "b974928e45df-spot-3",
+      "title": "蝴蝶右下翼缘的蓝白纹样与圆点装饰",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.75,
+        "cy": 0.75,
+        "r": 0.04
+      },
+      "shortDescription": "深蓝色翼缘边缘布满白色圆点，内侧为白色底面，绘有蓝彩卷草纹与花卉纹样，纹路清晰，边缘呈锯齿状。",
+      "visualObservation": "深蓝色翼缘边缘布满白色圆点，内侧为白色底面，绘有蓝彩卷草纹与花卉纹样，纹路清晰，边缘呈锯齿状。",
+      "culturalExplanation": "深蓝与白的对比带来沉静感，卷草纹的流动与圆点的规律形成视觉韵律，边缘锯齿增添自然的张力。",
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-3"
+    },
+    {
+      "id": "b974928e45df-spot-4",
+      "title": "蝴蝶腹部与前翅内侧纹样特写",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.45,
+        "cy": 0.75,
+        "r": 0.04
+      },
+      "shortDescription": "深蓝腹节分段清晰，前翅内侧有浅蓝卷草纹与花卉图案，边缘饰白点，翅脉呈半透明质感。",
+      "visualObservation": "深蓝腹节分段清晰，前翅内侧有浅蓝卷草纹与花卉图案，边缘饰白点，翅脉呈半透明质感。",
+      "culturalExplanation": "深蓝与浅蓝的层次对比，纹样疏密有致，线条柔美，营造出静谧雅致的视觉韵律。",
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-1"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "fold-1",
+      "index": 1,
+      "eyebrow": "0",
+      "title": "触角的轻语",
+      "body": "两根细长蓝触角自头颅轻扬，如墨线勾勒的呼吸，顶端微圆，静默中透出灵性。蓝白对比下，纤细如丝，优雅如诗，与蝶身呼应，是静谧之始。",
+      "focusHotspotIds": [
+        "b974928e45df-spot-1"
+      ],
+      "frame": {
+        "scale": 1.55,
+        "focusX": 0.45,
+        "focusY": 0.25
+      },
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ]
+    },
+    {
+      "id": "fold-2",
+      "index": 2,
+      "eyebrow": "2",
+      "title": "腹节的沉静",
+      "body": "深蓝腹节分段清晰，如古瓷胎骨，两侧翼缘透出浅蓝卷草纹，缀以细密白点，如薄纱轻拂。纹样疏密有致，静谧中藏韵律，是沉静之魂。",
+      "focusHotspotIds": [
+        "b974928e45df-spot-2"
+      ],
+      "frame": {
+        "scale": 1.61,
+        "focusX": 0.49,
+        "focusY": 0.65
+      },
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ]
+    },
+    {
+      "id": "fold-3",
+      "index": 3,
+      "eyebrow": "3",
+      "title": "纹样的韵律",
+      "body": "右下翼缘深蓝边缘布满白点，内侧绘卷草与花卉，锯齿边缘添自然张力。蓝白对比间，纹路流动如溪，韵律如歌，是静谧中的律动。",
+      "focusHotspotIds": [
+        "b974928e45df-spot-3"
+      ],
+      "frame": {
+        "scale": 1.55,
+        "focusX": 0.75,
+        "focusY": 0.75
+      },
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ]
+    }
+  ],
+  "animation": {
+    "mode": "world",
+    "world": {
+      "url": "interactive/qinghua-20261025-002124-ca03/world/world.json"
+    },
+    "capabilityNote": "画境贴图、热点与深度均对应这张成图；支持推进与有限转头，不恢复遮挡背面，不是完整三维重建。",
+    "layerSource": "本图深度与颜色派生素材；微动类别按本图视觉解析启用。"
+  },
+  "provenance": {
+    "sourceCaseId": "qinghua-20261025-002124-ca03",
+    "sourceImageSha256": "b974928e45df94bf096d912b7f2f4252cafab16e210a186f248c2efc5636319f",
+    "knowledgeVersion": "1.0.0",
+    "hotspotMethod": "Qwen3-VL 直接读取本图，估计归一化热点；自动定位不冒充人工复核。",
+    "designNote": "热点观察、局部审美解读与三折叙事均来自本图专属视觉策划；来源条目用于文化背景，不认证AI画面。"
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "id": "songhua-20261025-011015-679b",
+  "styleId": "songhua",
+  "styleName": "宋画青绿山水",
+  "title": "山径幽亭：松影与石语",
+  "subtitle": "云雾轻笼的山巅，古亭静立，松枝低语，石阶诉说千年风霜。",
+  "lead": "山石嶙峋，松树盘根，亭子如诗，石阶如歌。四者相依，构成一幅静谧而有韵律的山水叙事。",
+  "artworkSize": {
+    "width": 1024,
+    "height": 1024
+  },
+  "theme": {
+    "accent": "#2F6B5E",
+    "accentSoft": "#CBDCC8",
+    "paper": "#F4F1E6",
+    "ink": "#2A3630",
+    "gold": "#A8894F"
+  },
+  "visualAnalysis": {
+    "source": "qwen3_vl_image",
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "observedSubjects": [
+      "石阶",
+      "松树",
+      "亭子",
+      "山岩"
+    ],
+    "visualFeatures": [
+      "石阶呈阶梯状，边缘有自然磨损痕迹",
+      "松树主干粗壮，枝叶向一侧舒展",
+      "亭子为六角攒尖顶，屋檐微翘",
+      "山岩层叠，表面有皴擦笔触"
+    ],
+    "sceneKind": "spatial_scene",
+    "dominantColors": [
+      "青灰",
+      "墨绿",
+      "赭褐",
+      "浅灰"
+    ]
+  },
+  "hotspots": [
+    {
+      "id": "50b9cac5c56f-spot-1",
+      "title": "松树主干与枝叶结构",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.35,
+        "cy": 0.55,
+        "r": 0.04
+      },
+      "shortDescription": "深褐色粗壮树干，表面有纵向裂纹与凹凸纹理；分叉枝干向两侧伸展，枝头密布深绿色针叶，呈簇状分布。",
+      "visualObservation": "深褐色粗壮树干，表面有纵向裂纹与凹凸纹理；分叉枝干向两侧伸展，枝头密布深绿色针叶，呈簇状分布。",
+      "culturalExplanation": "粗干的肌理与针叶的密集形成对比，枝干的弧线带来自然韵律，色彩沉稳，整体显出古朴静谧的山林气息。",
+      "sourceIds": [
+        "SRC-SH-QINGLU-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-1"
+    },
+    {
+      "id": "50b9cac5c56f-spot-2",
+      "title": "亭子屋檐与顶部装饰",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.65,
+        "cy": 0.45,
+        "r": 0.04
+      },
+      "shortDescription": "深灰色瓦片层叠成曲面屋檐，檐角微翘，顶部有圆球状装饰，木质结构呈暖棕色，栏杆有几何镂空纹样。",
+      "visualObservation": "深灰色瓦片层叠成曲面屋檐，檐角微翘，顶部有圆球状装饰，木质结构呈暖棕色，栏杆有几何镂空纹样。",
+      "culturalExplanation": "瓦片的深灰与木色的暖棕形成沉静对比，檐角的弧线与顶部的圆球带来柔和的视觉引导，整体显出古典建筑的稳重与精致。",
+      "sourceIds": [
+        "SRC-SH-QINGLU-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-2"
+    },
+    {
+      "id": "50b9cac5c56f-spot-3",
+      "title": "石阶旁的青苔与岩壁",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.55,
+        "cy": 0.65,
+        "r": 0.04
+      },
+      "shortDescription": "石阶两侧覆盖青苔与杂草，岩壁呈灰蓝调，石阶为浅灰，边缘有自然磨损痕迹，植被色彩以黄绿为主。",
+      "visualObservation": "石阶两侧覆盖青苔与杂草，岩壁呈灰蓝调，石阶为浅灰，边缘有自然磨损痕迹，植被色彩以黄绿为主。",
+      "culturalExplanation": "青苔与石阶的自然交融，灰蓝岩壁的沉静与黄绿植被的生机形成对比，线条柔和，留白处显出山野的静谧感。",
+      "sourceIds": [
+        "SRC-SH-QINGLU-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-3"
+    },
+    {
+      "id": "50b9cac5c56f-spot-4",
+      "title": "山石坡面与松树根部交界处",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.45,
+        "cy": 0.75,
+        "r": 0.04
+      },
+      "shortDescription": "灰蓝色岩石表面有自然裂纹与苔藓斑驳，松树粗壮根系盘踞其上，周围点缀黄绿草丛，光影柔和。",
+      "visualObservation": "灰蓝色岩石表面有自然裂纹与苔藓斑驳，松树粗壮根系盘踞其上，周围点缀黄绿草丛，光影柔和。",
+      "culturalExplanation": "岩石的冷灰与草木的暖绿形成对比，裂纹与根系的交错带来野趣，光影柔和让画面静谧而有生命力。",
+      "sourceIds": [
+        "SRC-SH-QINGLU-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-1"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "fold-1",
+      "index": 1,
+      "eyebrow": "0",
+      "title": "松树主干与枝叶结构",
+      "body": "深褐色粗干肌理与密布针叶形成沉静对比，枝干弧线如自然韵律，色彩沉稳，显古朴山林气息。松树根系盘踞岩面，与石壁共生，静默如老者。松影斜照，山气氤氲。松树主干与枝叶结构0。松树主干与枝叶结构0。松树主干与枝叶结构0。松树主干与枝叶结构0。松树主干与枝叶结构0。松树主干与枝叶结构0。松",
+      "focusHotspotIds": [
+        "50b9cac5c56f-spot-1"
+      ],
+      "frame": {
+        "scale": 1.61,
+        "focusX": 0.35,
+        "focusY": 0.55
+      },
+      "sourceIds": [
+        "SRC-SH-QINGLU-001"
+      ]
+    },
+    {
+      "id": "fold-2",
+      "index": 2,
+      "eyebrow": "1",
+      "title": "亭子屋檐与顶部装饰",
+      "body": "深灰瓦片层叠，檐角微翘，顶部圆球装饰，木色暖棕，栏杆镂空精致。亭子如诗，静立山巅，与松树相望，与石阶相接，是山野中的静谧之眼。亭子屋檐与顶部装饰1。亭子屋檐与顶部装饰1。亭子屋檐与顶部装饰1。亭子屋檐与顶部装饰1。亭子屋檐与顶部装饰1。亭子屋檐与顶部装饰1。亭子屋檐与顶部装饰1。",
+      "focusHotspotIds": [
+        "50b9cac5c56f-spot-2"
+      ],
+      "frame": {
+        "scale": 1.61,
+        "focusX": 0.65,
+        "focusY": 0.45
+      },
+      "sourceIds": [
+        "SRC-SH-QINGLU-001"
+      ]
+    },
+    {
+      "id": "fold-3",
+      "index": 3,
+      "eyebrow": "2",
+      "title": "石阶旁的青苔与岩壁",
+      "body": "青苔与杂草覆盖石阶，灰蓝岩壁沉静，浅灰石阶斑驳，黄绿植被生机盎然。石阶如诗，青苔如画，岩壁如书，静默诉说岁月。石阶旁的青苔与岩壁2。石阶旁的青苔与岩壁2。石阶旁的青苔与岩壁2。石阶旁的青苔与岩壁2。石阶旁的青苔与岩壁2。石阶旁的青苔与岩壁2。石阶旁的青苔与岩壁2。",
+      "focusHotspotIds": [
+        "50b9cac5c56f-spot-3"
+      ],
+      "frame": {
+        "scale": 1.61,
+        "focusX": 0.55,
+        "focusY": 0.65
+      },
+      "sourceIds": [
+        "SRC-SH-QINGLU-001"
+      ]
+    }
+  ],
+  "animation": {
+    "mode": "world",
+    "world": {
+      "url": "interactive/songhua-20261025-011015-679b/world/world.json"
+    },
+    "capabilityNote": "画境贴图、热点与深度均对应这张成图；支持推进与有限转头，不恢复遮挡背面，不是完整三维重建。",
+    "layerSource": "本图深度与颜色派生素材；微动类别按本图视觉解析启用。"
+  },
+  "provenance": {
+    "sourceCaseId": "songhua-20261025-011015-679b",
+    "sourceImageSha256": "50b9cac5c56f5e45ce072c194f83e749411cc908edf268813e7db660ea208b3d",
+    "knowledgeVersion": "1.0.0",
+    "hotspotMethod": "Qwen3-VL 直接读取本图，估计归一化热点；自动定位不冒充人工复核。",
+    "designNote": "热点观察、局部审美解读与三折叙事均来自本图专属视觉策划；来源条目用于文化背景，不认证AI画面。"
+  }
+}

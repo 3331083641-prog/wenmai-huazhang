@@ -13,6 +13,8 @@ const API_BASE_URL: string = (() => {
   }
 })();
 
+const STATIC_SHOWCASE = (import.meta as unknown as { env?: Record<string, string> }).env?.VITE_STATIC_SHOWCASE === 'true';
+
 /**
  * 展厅的案例来源有两种：
  *  - curated：随仓库一起提交的五件真实案例（编译期打包，离线可用，带互动解读）
@@ -177,12 +179,14 @@ function normalizeInteraction(raw: unknown): CaseInteraction | undefined {
   };
 }
 
-/** 内置案例优先，运行期案例按 caseId 去重后追加。 */
+/** 精选案例保留本地定义；运行期案例优先采用后端最新状态。 */
 export function mergeCases(base: GalleryCase[], incoming: GalleryCase[]): GalleryCase[] {
   const seen = new Set(base.map((item) => item.caseId));
   const extra = incoming.filter((item) => !seen.has(item.caseId));
   // 运行期案例按生成时间倒序，最新的一件排在最前
-  return [...extra, ...base];
+  const latest = new Map(incoming.map((item) => [item.caseId, item]));
+  return [...extra, ...base.map((item) => item.caseOrigin === 'runtime'
+    ? latest.get(item.caseId) ?? item : item)];
 }
 
 export interface FetchCasesOptions {
@@ -196,6 +200,7 @@ export interface FetchCasesOptions {
  * 展厅会退回只显示内置五件并给出一句提示，离线能力不因为新功能而退化。
  */
 export async function fetchRuntimeCases(options: FetchCasesOptions = {}): Promise<GalleryCase[]> {
+  if (STATIC_SHOWCASE) throw new Error('静态演示使用已打包的作品，不连接本机后端');
   const { timeoutMs = 2500, signal } = options;
   const controller = new AbortController();
   const timer = window.setTimeout(() => controller.abort(), timeoutMs);
@@ -242,6 +247,7 @@ export async function fetchCaseDetail(
   caseId: string,
   options: FetchCasesOptions = {},
 ): Promise<CaseDetail | null> {
+  if (STATIC_SHOWCASE) return null;
   const { timeoutMs = DEFAULT_DETAIL_TIMEOUT, signal } = options;
   const controller = new AbortController();
   const timer = window.setTimeout(() => controller.abort(), timeoutMs);
@@ -296,4 +302,16 @@ export async function rebuildCaseInteractions(caseId: string): Promise<Interacti
   }
   const payload = (await response.json()) as { job?: InteractiveJob };
   return payload.job ?? null;
+}
+
+/** Delete only after the caller confirms the exact runtime work. */
+export async function deleteRuntimeCase(caseId:string):Promise<void> {
+  if (STATIC_SHOWCASE) throw new Error('在线展示不可删除作品，请在本地运行项目。');
+  const response=await fetch(`${API_BASE_URL}/cases/${encodeURIComponent(caseId)}`,{
+    method:'DELETE',headers:{Accept:'application/json'},
+  });
+  if (!response.ok) {
+    const body=await response.json().catch(()=>null) as {detail?:string}|null;
+    throw new Error(body?.detail??'删除失败，请确认后端服务正常。');
+  }
 }

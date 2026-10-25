@@ -28,13 +28,13 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
-import creatorShot from '../../../docs/screenshots/creation-workspace.png';
-import experienceShot from '../../../docs/interactive_v2/screens/exp-zxz-selected.png';
-import cultureCardShot from '../../../docs/screenshots/culture-card.png';
-import interiorShot from '../../../docs/screenshots/heritage-interior.png';
-import productShot from '../../../docs/screenshots/creative-products.png';
-import wanderShot from '../../../docs/screenshots/vnext/wander.jpg';
-import storyShot from '../../../docs/screenshots/vnext/story.jpg';
+import creatorShot from '../../../docs/screenshots/current/creation-workspace.jpg';
+import experienceShot from '../../../docs/screenshots/current/interactive-artwork.jpg';
+import cultureCardShot from '../../../docs/screenshots/current/culture-card.jpg';
+import interiorShot from '../../../docs/screenshots/current/heritage-interior.jpg';
+import productShot from '../../../docs/screenshots/current/creative-products.jpg';
+import wanderShot from '../../../docs/screenshots/current/painting-world.jpg';
+import storyShot from '../../../docs/screenshots/current/story-reading.jpg';
 
 type FeatureItem = {
   icon: LucideIcon;
@@ -77,7 +77,7 @@ const SCENARIOS: Scenario[] = [
     tag: '空间展陈',
     title: '三维数字展馆与空间展陈',
     summary:
-      '为传统文化艺术构筑可漫游、可布展的中式三维虚拟美术馆。既能在两层实体建筑中换画布展，亦可全景投映至现代艺术馆超宽曲面大屏，实现虚拟沉浸与实体策展的交融。',
+      '为传统文化艺术构筑可漫游、可布展的中式三维虚拟美术馆。可在预制的两层虚拟展馆中换画布展；环幕配图展示空间策展构想，不代表已经接入实体投影设备。',
     features: [
       {
         icon: Compass,
@@ -92,7 +92,7 @@ const SCENARIOS: Scenario[] = [
       {
         icon: MonitorPlay,
         title: '环幕空间映射',
-        desc: '支持曲面超高清数字展厅投影，营造只此青绿的沉浸场域。',
+        desc: '概念图展示曲面大屏展陈设想，尚未对接实体投影设备。',
       },
     ],
     to: '/heritage-gallery',
@@ -121,21 +121,21 @@ const SCENARIOS: Scenario[] = [
     tag: '美育研学',
     title: '非遗活化与现代美育研学',
     summary:
-      '将朱仙镇年画、汴绣、宋画、青花瓷与剪纸五大非遗的构图、配色与线条特征转化为结构化教学资源。课堂上一键同题多风格生成并排比对，结合结构化文化卡深度解析工艺脉络。',
+      '将朱仙镇年画、汴绣、宋画、青花瓷与剪纸五类传统文化风格的构图、配色与线条特征转化为结构化教学资源。课堂上可围绕同题切换风格逐次创作并人工比较，结合结构化文化卡深度解析工艺脉络。',
     features: [
       {
         icon: Palette,
-        title: '五大非遗解构',
+        title: '五类传统文化风格解构',
         desc: '提取传统设色、版刻墨线与针法经纬，建立可视美育知识库。',
       },
       {
         icon: Layers,
         title: '同题多维比对',
-        desc: '同一文化主题并排生成多种风格作品，直观讲解流变传承。',
+        desc: '围绕同一主题切换风格逐次创作，结合保存作品进行人工比较。',
       },
       {
         icon: FileText,
-        title: '双语研学知识卡',
+        title: '文化研学知识卡',
         desc: '深度解析作品工艺背景与文化典故，一键导出 CultureCard。',
       },
     ],
@@ -154,7 +154,7 @@ const SCENARIOS: Scenario[] = [
         label: '非遗实物典藏',
         shot: import.meta.env.BASE_URL + 'scenarios/product-embroidery-lifestyle.jpg',
         alt: '宋代汴绣双面绣丝绸真丝团扇与长巾',
-        badge: '宋韵汴绣实物打样',
+        badge: '宋韵汴绣概念效果图',
       },
     ],
   },
@@ -238,7 +238,7 @@ const SCENARIOS: Scenario[] = [
       {
         icon: ShieldCheck,
         title: '哈希证据全生命周期',
-        desc: '原图与成图 SHA-256 存证防伪，成图元数据自动入库落盘。',
+        desc: '记录原图与成图 SHA-256 便于追溯，成图元数据自动入库落盘。',
       },
     ],
     to: '/creator',
@@ -268,7 +268,7 @@ const SCENARIOS: Scenario[] = [
       {
         icon: Move3d,
         title: '2.5D 深度视差漫游',
-        desc: '独创分层深度着色器，随视角微移推镜入画，实现沉浸式游历。',
+        desc: '单图深度与自定义着色器，随视角微移推镜入画，实现沉浸式游历。',
       },
     ],
     to: '/experience/zhuxianzhen-ruimao',

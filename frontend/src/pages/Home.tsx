@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { experienceById } from '../data/experiences';
-import galleryExterior from '../../../docs/screenshots/vnext/gallery-exterior.jpg';
+import galleryExterior from '../../../docs/screenshots/current/heritage-gallery.jpg';
 
 /**
  * 首页「进入画里，再看一遍」的三件互动作品

@@ -1,0 +1,108 @@
+{
+  "caseId": "qinghua-20261025-002124-ca03",
+  "caseOrigin": "runtime",
+  "experienceId": "qinghua-20261025-002124-ca03",
+  "styleId": "qinghua",
+  "styleName": "青花瓷纹样",
+  "referenceSubject": "蝴蝶",
+  "artworkTitle": "青瓷蝶影：蓝白交响的静谧之翼",
+  "theme": "青花蝶韵：一只蝴蝶与缠枝花纹，蓝白青花瓷纹样风格",
+  "referenceSource": "user_upload",
+  "sourceFilename": "reference.png",
+  "referenceFilename": "reference.png",
+  "referenceSha256": "80a3249016156d47c1f12eb0152db3f08a70067c06160d5a7dd15cb997eed058",
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "styleStrength": 0.65,
+  "compositionMode": "portrait",
+  "outputType": "postcard",
+  "negativePrompt": "水印、文字、额外动物",
+  "inputImageCount": 1,
+  "generatedAt": "2026-10-25T00:21:24.848031+08:00",
+  "generationAttempt": "runtime_auto_save",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": 1,
+  "analysisSource": "qwen3_vl",
+  "visionProvider": "ollama_local",
+  "visionModel": "",
+  "cultureCardAnalysisSource": "qwen3_vl",
+  "generationHistory": [
+    {
+      "generation": "runtime_auto_save",
+      "generatedAt": "2026-10-25T00:21:24.848031+08:00",
+      "model": "qwen-image-3.0",
+      "styleStrength": 0.65,
+      "referenceImageUsed": true,
+      "modelInputImageCount": 1,
+      "generatedSha256": "b974928e45df94bf096d912b7f2f4252cafab16e210a186f248c2efc5636319f",
+      "analysisSource": "qwen3_vl"
+    }
+  ],
+  "outputImageCount": 1,
+  "generatedSha256": "b974928e45df94bf096d912b7f2f4252cafab16e210a186f248c2efc5636319f",
+  "generatedBytes": 1492780,
+  "artworkSize": {
+    "width": 1024,
+    "height": 1024
+  },
+  "visionAnalysis": {
+    "title": "青花蝶韵",
+    "theme_summary": "青花瓷风蝴蝶，蝶翼绘缠枝花，云纹衬托，蓝白相映。",
+    "composition": "蝴蝶居中对称，背景云纹环绕，构图稳定平衡。",
+    "style_interpretation": "画面以青花瓷纹样为视觉语言，蓝白对比鲜明，纹饰流畅，体现传统陶瓷装饰的精致与宁静。",
+    "culture_interpretation": "蝴蝶蝶翼满布缠枝花卉，云纹轻柔环绕，蓝白相映间流露温润雅致。缠枝纹如藤蔓延展，喻生命绵延，云纹则引向无垠天宇，静谧中蕴含悠远意境，恰似青花瓷上凝固的时光诗篇。线条婉转处，亦如古瓷釉下之妙，不喧哗却自成天地。",
+    "observed_subjects": [
+      "蝴蝶",
+      "缠枝花卉纹",
+      "云纹",
+      "蓝白配色"
+    ],
+    "dominant_colors": [
+      "蓝色",
+      "白色"
+    ],
+    "visual_features": [
+      "蓝白配色",
+      "缠枝花卉纹",
+      "云纹背景",
+      "蝶翼透光感",
+      "细节勾线清晰"
+    ],
+    "recommended_scenes": [
+      "杯垫图案",
+      "明信片"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionAnalysisRuntime": {},
+  "cultureCard": {
+    "title": "青花蝶韵",
+    "cultureSource": "青花瓷器纹样",
+    "visualFeatures": "蓝白配色、缠枝花卉纹、云纹背景、蝶翼透光感、细节勾线清晰",
+    "symbolicMeaning": "蝴蝶蝶翼满布缠枝花卉，云纹轻柔环绕，蓝白相映间流露温润雅致。缠枝纹如藤蔓延展，喻生命绵延，云纹则引向无垠天宇，静谧中蕴含悠远意境，恰似青花瓷上凝固的时光诗篇。线条婉转处，亦如古瓷釉下之妙，不喧哗却自成天地。",
+    "applicationScenario": "杯垫图案、明信片"
+  },
+  "enhancedPrompt": "最高优先级主体约束：画面唯一主要主体为“蝴蝶”。必须保留该主体在参考图中可见的身份、关键外形和姿态；不得替换、删除、混合成其他主体。传统风格只改变主体的绘画技法、纹样、色彩和材质表现，不改变主体身份；风格库中的花鸟、瑞兽等装饰题材不得覆盖此主体约束。核心主题：青花蝶韵：一只蝴蝶与缠枝花纹，蓝白青花瓷纹样风格。所选传统文化视觉风格：青花瓷纹样（青花瓷纹样）。风格来源：青花瓷器纹样。视觉特征：蓝白配色、缠枝莲、云纹、水波纹、白瓷质感、釉下青花韵味。文化寓意：莲花、云纹与水波等可作器物装饰纹样参考；具体寓意需结合器物语境理解。风格提示强度：0.65，提示词中等程度强调所选视觉风格的色彩、构图和纹样描述。参考图基础信息：用户上传的参考图将作为图像条件参与本次生成；请将其用于理解主体、主要关系与画面构图，并在保持创作主题和所选传统风格的前提下进行再创作。后端另由 Pillow 进行本地基础统计（不识别主体或场景）：尺寸 1254x1254；平均色彩与明暗 主色调约为 橙黄色系（#C6A98D），整体偏亮；画幅方向 接近方形画幅，尺寸 1254x1254。输出类型：文旅明信片效果预览，travel postcard layout, scenic composition。构图要求：竖向主体布局提示，vertical visual emphasis, strong foreground subject。用户排除清单：水印、文字、额外动物。清单是需要避开的画面元素，不是创作题材，不能把清单词语绘制到作品中。画面只呈现图像内容，不生成任何可读文字、数字、标题、署名、印章字符、标识、二维码或水印；该限制优先于海报、票券等版式提示。生成要求：主体清晰，层次丰富，传统视觉元素自然融入现代设计，避免无意义文字，画面完整，细节清楚，high quality, detailed texture.",
+  "cultureCardGeneratedSha256": "b974928e45df94bf096d912b7f2f4252cafab16e210a186f248c2efc5636319f",
+  "cultureCardSha256": "74b31b208ea8c5bf43828077042569382fdd51d8e00066fa612883008f9fc939",
+  "cultureCardExport": "pillow_png",
+  "caseFiles": {
+    "generated": "generated.png",
+    "reference": "reference.png",
+    "cultureCard": "culture_card.png"
+  },
+  "interactive": {
+    "status": "ready",
+    "experience": "experience.json",
+    "world": "frontend/public/interactive/qinghua-20261025-002124-ca03/world/world.json",
+    "hotspots": 4,
+    "hotspotMethod": "qwen3-vl-image-plan",
+    "contentSource": "qwen3_vl_image",
+    "analysisImageSha256": "b974928e45df94bf096d912b7f2f4252cafab16e210a186f248c2efc5636319f",
+    "interactionPlanVersion": 2,
+    "depthSource": "depth-anything-v2-small",
+    "builtAt": "2026-10-25T02:23:08.055234+08:00"
+  }
+}

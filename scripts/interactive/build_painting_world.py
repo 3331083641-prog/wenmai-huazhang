@@ -31,6 +31,7 @@ from __future__ import annotations
 
 import argparse
 import glob
+import hashlib
 import json
 import math
 import os
@@ -38,13 +39,16 @@ import time
 
 import numpy as np
 from PIL import Image, ImageFilter
+from image_geometry import DEPTH_SOURCE, image_depth
+from depth_estimation import estimate_image_depth
+from white_subject import extract_white_subject
 
 CONFIG_DIR = os.path.join("scripts", "interactive", "artworks")
 PROBE_DIR = os.path.join("scripts", "interactive", "_probe")
 DEFAULT_REPORT = os.path.join(PROBE_DIR, "world-build-report.json")
 DEFAULT_STYLE = "songhua"   # 什么都没给时的默认作品
 
-DEPTH_REPO = "depth-anything/Depth-Anything-V2-Small-hf"
+DEPTH_REPO = DEPTH_SOURCE  # Historical configuration names cannot activate another model.
 
 DEPTH_TEX_W = 768          # 深度贴图宽度（着色器里线性采样，够用）
 MASK_TEX_W = 768
@@ -154,7 +158,15 @@ def normalise_config(cfg: dict) -> dict:
         "mask_targets": targets,
         "gamma": cfg.get("gamma"),
         "depth_smooth": cfg.get("depth_smooth"),
-        "depth_repo": cfg.get("depth_repo") or DEPTH_REPO,
+        "depth_repo": DEPTH_SOURCE,
+        "depth_source": DEPTH_SOURCE,
+        "depth_provenance": cfg.get('depthProvenance'),
+        "source_sha256": cfg.get("sourceSha256", ""),
+        "semantic_motion": cfg.get("semanticMotion"),
+        "scene_kind": cfg.get("sceneKind", "flat_artwork"),
+        "depth_anchors": cfg.get("depthAnchors"),
+        "subject_seed": cfg.get('subjectSeed'),
+        "subject_label": cfg.get('subjectLabel','本图主体'),
     }
 
 
@@ -184,34 +196,11 @@ def select_configs(args) -> list[dict]:
 # 深度
 # --------------------------------------------------------------------------- #
 def run_depth(art_path: str, repo: str, cache: str, force: bool) -> np.ndarray:
-    """返回原始深度（float32, 全图分辨率, 值越大越近）。"""
-    if os.path.exists(cache) and not force:
-        print(f"depth: 复用缓存 {cache}")
-        return np.load(cache).astype(np.float32)
-
-    # 只在真正需要跑模型时导入 torch：缓存（含降级近似深度）可用时，
-    # 这台机器不需要安装 torch/transformers 也能构建画境资产。
-    import torch
-    from transformers import AutoImageProcessor, DepthAnythingForDepthEstimation
-
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    img = Image.open(art_path).convert("RGB")
-    t0 = time.time()
-    processor = AutoImageProcessor.from_pretrained(repo)
-    model = DepthAnythingForDepthEstimation.from_pretrained(repo).to(device).eval()
-    print(f"depth: model ready in {time.time() - t0:.1f}s on {device}")
-
-    inputs = processor(images=img, return_tensors="pt").to(device)
-    with torch.inference_mode():
-        outputs = model(**inputs)
-    depth = processor.post_process_depth_estimation(
-        outputs, target_sizes=[(img.height, img.width)]
-    )[0]["predicted_depth"].detach().float().cpu().numpy()
-
+    """兼容旧调用签名；始终从本图重新计算确定性近似深度，不读旧模型缓存。"""
+    depth = image_depth(art_path)
     os.makedirs(os.path.dirname(cache), exist_ok=True)
-    np.save(cache, depth.astype(np.float32))
-    print(f"depth: {depth.shape} in {time.time() - t0:.1f}s")
-    return depth.astype(np.float32)
+    np.save(cache, depth)
+    return depth
 
 
 def normalise_depth(raw: np.ndarray, gamma: float = 0.72) -> np.ndarray:
@@ -672,12 +661,17 @@ def build_artwork(cfg: dict, args) -> dict:
     H, W = img.shape[:2]
     print(f"artwork: {art_path} {W}x{H}  aspect={W / H:.4f}")
 
-    raw = run_depth(art_path, cfg["depth_repo"], cache, args.force_depth)
+    raw, depth_info = estimate_image_depth(art_path,{'hotspots':cfg.get('depth_anchors'),
+        'scene_kind':cfg.get('scene_kind','flat_artwork')})
     depth = normalise_depth(raw, gamma)
     # 轻平滑：未经平滑的深度在边界处落差很陡，做成网格后那些地方是近乎垂直的
     # 「墙」，斜看时被拉成细长条纹（试看时被读成「画被撕裂」）。模糊 3px 后
     # 落差摊开，位移更连贯；代价是最锐的边稍微变软，这与设色画的观感是一致的。
-    depth = smooth_depth(depth, smooth)
+    depth = smooth_depth(depth, max(smooth, 7.0))
+    subject = extract_white_subject(img,cfg['subject_seed']) if (
+        cfg.get('scene_kind') == 'flat_artwork' and cfg.get('subject_seed')) else None
+    display_depth = np.zeros_like(depth) if subject else depth
+    subject_depth = float(np.median(depth[subject['mask']])) if subject else None
     dec = np.percentile(depth, [2, 10, 25, 50, 75, 90, 98])
     near_share = float((depth > 0.8).mean())
     far_share = float((depth < 0.35).mean())
@@ -688,15 +682,18 @@ def build_artwork(cfg: dict, args) -> dict:
     # 1) 画作贴图
     art_out = os.path.join(out_dir, "art.webp")
     Image.fromarray(img).save(art_out, quality=92, method=6)
+    if subject:
+        Image.fromarray(subject['surface']).save(os.path.join(out_dir,'surface.webp'),quality=94,method=6)
     print(f"art.webp: {os.path.getsize(art_out) / 1024:.0f} KB")
 
     # 2) 深度
     depth_out = os.path.join(out_dir, "depth-rg.png")
-    pack_depth_rg(depth, depth_out, DEPTH_TEX_W)
+    pack_depth_rg(display_depth, depth_out, DEPTH_TEX_W)
+    if subject:pack_depth_rg(depth,os.path.join(out_dir,'model-depth-rg.png'),DEPTH_TEX_W)
     print(f"depth-rg.png: {os.path.getsize(depth_out) / 1024:.0f} KB")
 
     # 3) 兜底背景
-    backdrop = edge_extend(img)
+    backdrop = edge_extend(subject['surface'] if subject else img)
     bd_out = os.path.join(out_dir, "backdrop.webp")
     Image.fromarray(backdrop).resize(
         (max(512, W // 2), max(342, H // 2)), Image.LANCZOS
@@ -705,6 +702,16 @@ def build_artwork(cfg: dict, args) -> dict:
 
     # 4) 遮罩
     masks, mstats = build_masks(img, depth, MASK_TEX_W, cfg["mask_targets"])
+    # Motion is enabled only for categories observed in this actual image.
+    # Generic colour heuristics must not turn every blue pattern into water.
+    if cfg.get("semantic_motion") is not None:
+        for channel, category in enumerate(("water", "mist", "foliage")):
+            if not cfg["semantic_motion"].get(category, False):
+                masks[:, :, channel] = 0
+                mstats[category] = 0.0
+    if subject:
+        masks[:]=0
+        mstats={key:0.0 for key in mstats}
     mk_out = os.path.join(out_dir, "masks.png")
     Image.fromarray(masks, mode="RGB").save(mk_out, optimize=True)
     print(f"masks.png: {os.path.getsize(mk_out) / 1024:.0f} KB  coverage={mstats}")
@@ -712,7 +719,13 @@ def build_artwork(cfg: dict, args) -> dict:
     # 5) 近景抠像（失败会换参数重试，最终仍失败就允许没有 cutout）
     cut_meta = []
     cut_report = []
-    for spec in cfg["cutouts"]:
+    if subject:
+        cut_path=os.path.join(out_dir,'cutout-subject.webp')
+        subject['image'].save(cut_path,quality=94,method=6)
+        info={**subject['info'],'id':'subject','label':cfg['subject_label'],'file':'cutout-subject.webp',
+            'depth':subject_depth,'bytes':os.path.getsize(cut_path)}
+        cut_meta.append(info);cut_report.append({**info,'ok':True,'retried':False})
+    for spec in ([] if subject else cfg["cutouts"]):
         got = build_cutout_with_retry(img, depth, spec)
         if not got["ok"]:
             print(f"cutout {spec['id']}: 3 组参数都没抠出来，跳过（不硬抠）")
@@ -744,6 +757,11 @@ def build_artwork(cfg: dict, args) -> dict:
 
     # 7) 热点取深度，给前端定位用
     spots = measure_hotspots(depth, cfg)
+    if subject:
+        for spot in spots:
+            x=min(W-1,max(0,round(spot['x']*(W-1))));y=min(H-1,max(0,round(spot['y']*(H-1))))
+            spot['depth']=round(subject_depth if subject['mask'][y,x] else 0.0,4)
+            spot['depth_overridden']=True
 
     # 8) 相机参数：按画面长宽比推一个「看得完」的入场终点
     aspect = W / H
@@ -754,6 +772,7 @@ def build_artwork(cfg: dict, args) -> dict:
         "slug": slug,
         "title": cfg["title"],
         "art": {"file": "art.webp", "width": W, "height": H, "aspect": round(aspect, 4)},
+        "surface": {"file":"surface.webp"} if subject else None,
         "depth": {"file": "depth-rg.png", "width": DEPTH_TEX_W,
                   "height": round(H * DEPTH_TEX_W / W), "gamma": gamma},
         "backdrop": {"file": "backdrop.webp"},
@@ -766,15 +785,24 @@ def build_artwork(cfg: dict, args) -> dict:
             "plane_height": 1.0,
             "plane_width": round(aspect, 4),
             "distance_fill": round(dist_to_fill, 4),
-            "depth_amplitude": 0.30,
-            "yaw_limit_deg": 18.0,
-            "pitch_limit_deg": 12.0,
+            "depth_amplitude": 0.24 if cfg.get('scene_kind') == 'flat_artwork' else 0.30,
+            "yaw_limit_deg": 10.0,
+            "pitch_limit_deg": 7.0,
             "dolly_near": 0.62,
             "dolly_far": 1.55,
             "entry": {"from_scale": 1.74, "duration_ms": 2600},
         },
         "provenance": {
-            "depth_model": cfg["depth_repo"],
+            "asset_revision": hashlib.sha256(json.dumps({'image':cfg.get('source_sha256'),
+                'depth':hashlib.sha256(depth.tobytes()).hexdigest(),'hotspots':spots,'cutouts':cut_meta},
+                sort_keys=True).encode()).hexdigest()[:20],
+            "depth_model": depth_info['source'],
+            "render_mode": 'complete-subject-layers' if subject else 'continuous-depth-mesh',
+            "depth_inference": depth_info,
+            "source_image_sha256": cfg.get("source_sha256", ""),
+            "semantic_motion": cfg.get("semantic_motion"),
+            "scene_kind": cfg.get("scene_kind"),
+            "depth_anchors": cfg.get("depth_anchors"),
             "depth_generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
             "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，"
                     "不能绕视到物体背后。",
@@ -808,7 +836,7 @@ def build_artwork(cfg: dict, args) -> dict:
         "source_size": {"width": W, "height": H, "bytes": os.path.getsize(art_path)},
         "out_dir": out_dir.replace("\\", "/"),
         "depth": {
-            "model": cfg["depth_repo"],
+            "model": depth_info['source'],
             "gamma": gamma,
             "smooth_radius": smooth,
             "percentiles": {
@@ -860,7 +888,7 @@ def _collect_anomalies(files: dict, near_share: float, far_share: float,
     for c in cut_report:
         if not c["ok"]:
             out.append(f"cutout {c['id']} 三组参数都没抠出来，该作品无此抠像")
-        elif c["retried"]:
+        elif c.get("retried", False):
             out.append(f"cutout {c['id']} 换过参数才成功（用了 "
                        f"depth_min={c['params_used']['depth_min']}）")
     if cutout_specs and not any(c["ok"] for c in cut_report):

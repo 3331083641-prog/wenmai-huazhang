@@ -64,9 +64,19 @@ Pages 使用 HashRouter，例如 `/wenmai-huazhang/#/gallery`；静态资源沿�
 
 `AUTO_BUILD_INTERACTIVE=true`（默认）启动后台线程执行 `scripts/interactive/ingest_case.py --refresh <case>`，进度查 `/interactive-jobs`。流水线生成三折叙事、自动热点和画境；定位标为 approximate / pending，需人工复核。深度是单图估计的 2.5D 视差素材。
 
-扩展流水线还需要 NumPy、PyTorch、Transformers 和 Depth Anything V2 Small 权重，基础 `backend/requirements.txt` 没有完整包含，标准安装不保证后台构建成功。未准备扩展环境时设置 `AUTO_BUILD_INTERACTIVE=false`，不影响生成和保存。五件既有画境已保存素材，浏览无需运行深度模型。
+基础依赖包含 NumPy。完整自动构建还需安装本地深度推理依赖和固定版本权重：
 
-任务状态仅在内存，重启即丢失。新互动清单由 Vite glob 在构建期加载，后台完成后需重启开发服务器或重新构建；Pages 需要重新部署。刷新展厅可取得运行期普通案例，不会自动增加已编译的互动数据。
+```powershell
+.\backend\venv\Scripts\python.exe -m pip install -r backend/requirements-interactive.txt
+.\backend\venv\Scripts\python.exe scripts/setup_interactive_models.py
+.\backend\venv\Scripts\python.exe scripts/setup_interactive_models.py --check
+```
+
+下载器只在手动安装时联网；后台默认 `WENMAI_DEPTH_MODE=model`，只读取本地权重，缺失会明确失败。模型、许可和交付方式见 [模型说明](../models/README.md)。已构建案例无需模型即可浏览。`AUTO_BUILD_INTERACTIVE=false` 可显式关闭自动构建，但这不属于完整创作模式。
+
+任务状态持久化到 `backend/outputs/interactive_jobs.json`；服务重启后保留历史，中断的任务会明确标记失败，可在展厅重试。每件成图先由本地 Qwen3-VL 读取，再逐热点读取原图及实际裁切区域，生成专属观察和三章故事；文化风格资料仅提供背景，不套用通用章节。不使用其他云端文本模型，也不人工补写作品内容。
+
+展厅通过 `/cases` 持续刷新，后台完成后自动开放三个入口，无需重启前端。新画境资产由后端 `/interactive/` 动态提供，避免依赖 Vite 启动时的静态目录索引。构建失败不撤销已保存图像，也不会把旧文件误报为新构建成功。Pages 只能展示构建时已打包的案例，新增作品仍需重新部署。
 
 ## 问题处理
 
@@ -76,7 +86,7 @@ Pages 使用 HashRouter，例如 `/wenmai-huazhang/#/gallery`；静态资源沿�
 | 生成失败 | 个人服务开通、额度、配置和网络；错误返回不算生成通过 |
 | 文化卡标记模板 | Ollama、配置模型与后端健康状态；模板不是实际看图结论 |
 | 风格图不显示 | 执行 `scripts/prepare_style_assets.py`，检查规范素材 |
-| 新作缺互动入口 | 查后台任务、扩展依赖与资产，重启 dev / 重新构建 |
+| 新作缺互动入口 | 查 `/cases/{caseId}` 与 `/interactive-jobs`、本地 Qwen3-VL、深度依赖及权重；失败时重试，不需要重启 dev |
 | 画境降为静态 | WebGL2、低性能设备或低帧率触发降级，仍可阅读说明 |
 | 展馆打不开 | 检查 WebGL、GLB 与控制台；展馆是预制场景，不是图片重建 |
 | 改配置无效 | 重启相应服务，构建变量需重新构建 |

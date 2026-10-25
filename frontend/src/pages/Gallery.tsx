@@ -10,6 +10,7 @@ import {
   Loader2,
   RefreshCw,
   Sparkles,
+  Trash2,
 } from 'lucide-react';
 import { autoSavedCases, savedCases, loadSavedCase } from '../data/savedCases';
 import { experienceById, experienceByStyle, cultureSourcesVersion } from '../data/experiences';
@@ -17,11 +18,16 @@ import {
   fetchRuntimeCases,
   mergeCases,
   rebuildCaseInteractions,
+  deleteRuntimeCase,
   type CaseInteraction,
   type GalleryCase,
 } from '../services/caseService';
 import CultureCard from '../components/creator/CultureCard';
 import ArtworkCompare from '../features/culture-experience/components/ArtworkCompare';
+import { clearRuntimeExperience } from '../data/runtimeExperiences';
+import { deletedCaseIds, markCaseDeleted, DELETED_CASES_KEY } from '../services/deletedCases';
+import { forgetRuntimeArtwork, refreshGalleryPool } from '../data/galleryPool';
+import { useCurationStore } from '../features/heritage-gallery/state/curationStore';
 
 /**
  * 作品展厅。
@@ -81,6 +87,8 @@ export default function Gallery() {
   const [styleFilter, setStyleFilter] = useState<string>('all');
   const [busyCase, setBusyCase] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string>('');
+  const [deletedIds, setDeletedIds] = useState(deletedCaseIds);
+  const [deletingCase, setDeletingCase] = useState<string | null>(null);
 
   const load = useCallback(async (): Promise<GalleryCase[]> => {
     try {
@@ -94,6 +102,9 @@ export default function Gallery() {
     }
   }, []);
 
+  const hasActiveBuild = runtimeCases.some((item) =>
+    item.interaction?.status === 'queued' || item.interaction?.status === 'processing');
+
   useEffect(() => {
     let alive = true;
     let timer: number | undefined;
@@ -105,24 +116,36 @@ export default function Gallery() {
         const status = item.interaction?.status;
         return status === 'queued' || status === 'processing';
       });
-      if (building) timer = window.setTimeout(tick, 4000);
+      if (!import.meta.env.VITE_STATIC_SHOWCASE || import.meta.env.VITE_STATIC_SHOWCASE !== 'true') {
+        timer = window.setTimeout(tick, building ? 2000 : 8000);
+      }
+    };
+    const refresh = () => { if (!document.hidden) void load(); };
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === 'wenmai_latest_result') refresh();
+      if (event.key === DELETED_CASES_KEY) { setDeletedIds(deletedCaseIds()); refresh(); }
     };
 
     void tick();
+    window.addEventListener('focus', refresh);
+    window.addEventListener('storage', onStorage);
     return () => {
       alive = false;
       if (timer) window.clearTimeout(timer);
+      window.removeEventListener('focus', refresh);
+      window.removeEventListener('storage', onStorage);
     };
-  }, [load]);
+  }, [load, hasActiveBuild]);
 
   const cases = useMemo(() => {
-    const merged = mergeCases([...savedCases, ...autoSavedCases], runtimeCases);
-    return merged.slice().sort((a, b) => {
+    const base = runtimeState === 'ready' ? savedCases : [...savedCases, ...autoSavedCases];
+    const merged = mergeCases(base, runtimeCases);
+    return merged.filter(item => !deletedIds.has(item.caseId)).sort((a, b) => {
       const left = a.generatedAt || '';
       const right = b.generatedAt || '';
       return left < right ? 1 : left > right ? -1 : 0;
     });
-  }, [runtimeCases]);
+  }, [runtimeCases, runtimeState, deletedIds]);
 
   const runtimeCount = cases.filter((item) => item.caseOrigin === 'runtime').length;
 
@@ -160,6 +183,7 @@ export default function Gallery() {
     setBusyCase(caseId);
     setActionError('');
     try {
+      clearRuntimeExperience(caseId);
       await rebuildCaseInteractions(caseId);
       await load();
     } catch (error) {
@@ -167,6 +191,28 @@ export default function Gallery() {
     } finally {
       setBusyCase(null);
     }
+  };
+
+  const handleDelete = async (item: GalleryCase) => {
+    if (item.caseOrigin !== 'runtime' || deletingCase) return;
+    if (!window.confirm(`删除《${item.artworkTitle}》？该作品及对应的三种互动将从展厅移除。`)) return;
+    setDeletingCase(item.caseId); setActionError('');
+    try {
+      await deleteRuntimeCase(item.caseId);
+      setDeletedIds(markCaseDeleted(item.caseId));
+      clearRuntimeExperience(item.caseId);
+      forgetRuntimeArtwork(item.caseId);
+      const curation = useCurationStore.getState();
+      for (const [frameId, artworkId] of Object.entries(curation.assignments)) {
+        if (artworkId === item.caseId) curation.clearFrame(frameId);
+      }
+      setRuntimeCases(current => current.filter(entry => entry.caseId !== item.caseId));
+      if (openCard === item.caseId) setOpenCard(null);
+      await load();
+      void refreshGalleryPool();
+    } catch (error) {
+      setActionError(error instanceof Error ? error.message : '删除失败，请稍后重试。');
+    } finally { setDeletingCase(null); }
   };
 
   return (
@@ -302,6 +348,18 @@ export default function Gallery() {
                     title={item.artworkTitle}
                     accent={accent}
                   />
+                  {isRuntime && (
+                    <div className="flex justify-end px-1 pb-1 pt-2">
+                      <button type="button" aria-label={`删除作品《${item.artworkTitle}》`}
+                        onClick={() => void handleDelete(item)}
+                        disabled={building || deletingCase !== null || runtimeState !== 'ready'}
+                        title={building ? '互动构建完成后可删除' : runtimeState !== 'ready' ? '连接本地后端后可删除' : '删除这件作品及对应互动'}
+                        className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-red-700/75 transition hover:bg-red-50 hover:text-red-800 disabled:cursor-not-allowed disabled:opacity-40">
+                        {deletingCase === item.caseId ? <Loader2 size={13} className="animate-spin" /> : <Trash2 size={13} />}
+                        {deletingCase === item.caseId ? '删除中…' : '删除作品'}
+                      </button>
+                    </div>
+                  )}
 
                   {/* 仅在后台正在构建或明确构建失败时显示低干扰状态提示；已就绪的精选作品与常规作品不盖角标 */}
                   {(building || interaction.status === 'failed') && (

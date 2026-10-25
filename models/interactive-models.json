@@ -1,0 +1,22 @@
+{
+  "depth": {
+    "name": "Depth Anything V2 Small",
+    "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+    "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+    "license": "Apache-2.0",
+    "purpose": "Local relative depth for image-specific 2.5D worlds; never writes hotspots or stories",
+    "directory": ".cache/models/depth-anything-v2-small",
+    "files": {
+      "config.json": "c56698d3643dde1f83ea2212759e6b31a22b8f827246a36dd007ee8a22b3ff75",
+      "preprocessor_config.json": "d41175c0d889477ca8fc67191e540faef14baf6275157b3fdecf78469e6bbf84",
+      "model.safetensors": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+      "README.md": "319566441daaac0c5ed83e75a8fd19bae0863f3275e23f147c06fe0906edf6fb"
+    }
+  },
+  "semantic": {
+    "name": "Qwen3-VL",
+    "runtime": "Ollama on localhost",
+    "defaultTag": "qwen3-vl:4b-instruct-q4_K_M",
+    "purpose": "Only source of image observations, hotspots, stories and semantic motion choices"
+  }
+}

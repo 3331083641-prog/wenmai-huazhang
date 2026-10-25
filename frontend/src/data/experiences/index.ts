@@ -22,12 +22,16 @@ import qinghuaExperience from './qinghua';
 import jianzhiExperience from './jianzhi';
 import sourcesJson from '../../../../culture_knowledge/sources.json';
 
-const drafts: CultureExperienceDraft[] = [
+const curatedDrafts: CultureExperienceDraft[] = [
   zhuxianzhenExperience,
   bianxiuExperience,
   songhuaExperience,
   qinghuaExperience,
   jianzhiExperience,
+];
+export const curatedExperienceIds = new Set(curatedDrafts.map((item) => item.id));
+const drafts: CultureExperienceDraft[] = [
+  ...curatedDrafts,
   // 流水线自动入库的案例：docs/examples/<case>/experience.json
   ...autoExperiences.map((item) => item.draft),
 ];
@@ -62,7 +66,8 @@ export const experiences: CultureExperience[] = drafts.map((draft) => {
 });
 
 export const experienceById = new Map(experiences.map((item) => [item.id, item]));
-export const experienceByStyle = new Map(experiences.map((item) => [item.styleId, item]));
+export const experienceByStyle = new Map(experiences.filter((item) => curatedExperienceIds.has(item.id))
+  .map((item) => [item.styleId, item]));
 
 export function getExperience(id: string | undefined): CultureExperience | undefined {
   if (!id) return undefined;

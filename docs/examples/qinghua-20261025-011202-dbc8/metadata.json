@@ -1,0 +1,114 @@
+{
+  "caseId": "qinghua-20261025-011202-dbc8",
+  "caseOrigin": "runtime",
+  "experienceId": "qinghua-20261025-011202-dbc8",
+  "styleId": "qinghua",
+  "styleName": "青花瓷纹样",
+  "referenceSubject": "丹顶鹤",
+  "artworkTitle": "青瓷鹤影：纹饰与羽翼的静谧交响",
+  "theme": "一只完整丹顶鹤，保留鹤颈、长喙与双足，以青花瓷蓝白纹样转译，纯白背景，不增加其他动物",
+  "referenceSource": "user_upload",
+  "sourceFilename": "reference.png",
+  "referenceFilename": "reference.png",
+  "referenceSha256": "4ce3b6506e5e6e6409d4bca579cbc03832af71a2952b9385e6d004b009f84708",
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "styleStrength": 0.7,
+  "compositionMode": "portrait",
+  "outputType": "poster",
+  "negativePrompt": "文字、水印、边框、模糊、裁掉主体、重复动物、错误解剖",
+  "inputImageCount": 1,
+  "generatedAt": "2026-10-25T01:12:02.413222+08:00",
+  "generationAttempt": "runtime_auto_save",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": 1,
+  "analysisSource": "qwen3_vl",
+  "visionProvider": "ollama_local",
+  "visionModel": "",
+  "cultureCardAnalysisSource": "qwen3_vl",
+  "generationHistory": [
+    {
+      "generation": "runtime_auto_save",
+      "generatedAt": "2026-10-25T01:12:02.413222+08:00",
+      "model": "qwen-image-3.0",
+      "styleStrength": 0.7,
+      "referenceImageUsed": true,
+      "modelInputImageCount": 1,
+      "generatedSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb",
+      "analysisSource": "qwen3_vl"
+    }
+  ],
+  "outputImageCount": 1,
+  "generatedSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb",
+  "generatedBytes": 419189,
+  "artworkSize": {
+    "width": 1024,
+    "height": 1024
+  },
+  "visionAnalysis": {
+    "title": "青花丹顶鹤",
+    "theme_summary": "青花瓷纹样转译丹顶鹤，白底蓝纹，清雅灵动，具传统陶瓷装饰语汇。",
+    "composition": "鹤立纯白背景，侧身舒展，纹样沿躯体延展，构图留白充分，视觉重心清晰。",
+    "style_interpretation": "青花瓷纹样以钴蓝勾勒缠枝莲与云纹，沿鹤体蔓延，呈现器物装饰语言；白瓷底色与鹤形结合，强化清雅静穆之气，非写实，乃意象转译。",
+    "culture_interpretation": "缠枝莲纹沿鹤身蜿蜒，如生命之脉绵延不绝；云纹与尾羽深蓝相接，似天光流转至足下。蓝白间清雅丰盈，不染尘俗，唤起‘鱼戏莲叶’的水岸静谧与‘出淤泥而不染’的高洁意象，余韵悠长。",
+    "observed_subjects": [
+      "丹顶鹤",
+      "青花瓷纹样",
+      "缠枝莲纹",
+      "云纹"
+    ],
+    "dominant_colors": [
+      "青蓝",
+      "纯白",
+      "深蓝",
+      "红顶"
+    ],
+    "visual_features": [
+      "蓝白配色",
+      "缠枝莲纹",
+      "云纹缠绕",
+      "白瓷质感",
+      "尾羽深蓝"
+    ],
+    "recommended_scenes": [
+      "杯垫图案",
+      "明信片",
+      "家居纹样"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionAnalysisRuntime": {},
+  "cultureCard": {
+    "title": "青花丹顶鹤",
+    "cultureSource": "青花瓷器纹样",
+    "visualFeatures": "蓝白配色、缠枝莲纹、云纹缠绕、白瓷质感、尾羽深蓝",
+    "symbolicMeaning": "缠枝莲纹沿鹤身蜿蜒，如生命之脉绵延不绝；云纹与尾羽深蓝相接，似天光流转至足下。蓝白间清雅丰盈，不染尘俗，唤起‘鱼戏莲叶’的水岸静谧与‘出淤泥而不染’的高洁意象，余韵悠长。",
+    "applicationScenario": "杯垫图案、明信片、家居纹样"
+  },
+  "enhancedPrompt": "最高优先级主体约束：画面唯一主要主体为“丹顶鹤”。必须保留该主体在参考图中可见的身份、关键外形和姿态；不得替换、删除、混合成其他主体。传统风格只改变主体的绘画技法、纹样、色彩和材质表现，不改变主体身份；风格库中的花鸟、瑞兽等装饰题材不得覆盖此主体约束。核心主题：一只完整丹顶鹤，保留鹤颈、长喙与双足，以青花瓷蓝白纹样转译，纯白背景，不增加其他动物。所选传统文化视觉风格：青花瓷纹样（青花瓷纹样）。风格来源：青花瓷器纹样。视觉特征：蓝白配色、缠枝莲、云纹、水波纹、白瓷质感、釉下青花韵味。文化寓意：莲花、云纹与水波等可作器物装饰纹样参考；具体寓意需结合器物语境理解。风格提示强度：0.70，提示词较强强调所选视觉风格描述；实际画面效果受生成模型影响。参考图基础信息：用户上传的参考图将作为图像条件参与本次生成；请将其用于理解主体、主要关系与画面构图，并在保持创作主题和所选传统风格的前提下进行再创作。后端另由 Pillow 进行本地基础统计（不识别主体或场景）：尺寸 1254x1254；平均色彩与明暗 主色调约为 低饱和灰白色系（#EEEEEE），整体偏亮；画幅方向 接近方形画幅，尺寸 1254x1254。输出类型：数字海报视觉稿，poster layout, clear visual center, readable composition。构图要求：竖向主体布局提示，vertical visual emphasis, strong foreground subject。用户排除清单：文字、水印、边框、模糊、裁掉主体、重复动物、错误解剖。清单是需要避开的画面元素，不是创作题材，不能把清单词语绘制到作品中。画面只呈现图像内容，不生成任何可读文字、数字、标题、署名、印章字符、标识、二维码或水印；该限制优先于海报、票券等版式提示。生成要求：主体清晰，层次丰富，传统视觉元素自然融入现代设计，避免无意义文字，画面完整，细节清楚，high quality, detailed texture.",
+  "cultureCardGeneratedSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb",
+  "cultureCardSha256": "74af0a38cb7a770785eebfc1ecf1f7359d6d9f877e9623c1e8a1ac07fdb6d103",
+  "cultureCardExport": "pillow_png",
+  "caseFiles": {
+    "generated": "generated.png",
+    "reference": "reference.png",
+    "cultureCard": "culture_card.png"
+  },
+  "referenceOrigin": "AI-generated white-background reference, requested by the user for this verification",
+  "referenceProvider": "built-in imagegen tool; not a photograph",
+  "verificationRun": "20261025-white-reference-five-styles",
+  "interactive": {
+    "status": "ready",
+    "experience": "experience.json",
+    "world": "frontend/public/interactive/qinghua-20261025-011202-dbc8/world/world.json",
+    "hotspots": 4,
+    "hotspotMethod": "qwen3-vl-image-plan",
+    "contentSource": "qwen3_vl_image",
+    "analysisImageSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb",
+    "interactionPlanVersion": 2,
+    "depthSource": "depth-anything-v2-small",
+    "builtAt": "2026-10-25T02:08:31.985398+08:00"
+  }
+}

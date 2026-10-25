@@ -14,6 +14,7 @@
 import type { CultureExperience, CultureExperienceDraft } from '../features/culture-experience/types';
 import { parseExperienceDraft } from '../features/culture-experience/schema';
 import { fetchCaseDetail } from '../services/caseService';
+import { isCaseDeleted } from '../services/deletedCases';
 
 const cache = new Map<string, CultureExperience>();
 const inflight = new Map<string, Promise<CultureExperience | null>>();
@@ -27,10 +28,10 @@ export function clearRuntimeExperience(id?: string): void {
   else cache.clear();
 }
 
-export async function loadRuntimeExperience(id: string): Promise<CultureExperience | null> {
-  if (!id) return null;
+export async function loadRuntimeExperience(id: string, refresh = false): Promise<CultureExperience | null> {
+  if (!id || isCaseDeleted(id)) return null;
   const cached = cache.get(id);
-  if (cached) return cached;
+  if (cached && !refresh) return cached;
 
   const running = inflight.get(id);
   if (running) return running;
@@ -40,9 +41,12 @@ export async function loadRuntimeExperience(id: string): Promise<CultureExperien
     if (!detail || !detail.experience) return null;
     const raw = detail.experience;
     const styleId = String(raw.styleId || detail.case.styleId || '');
+    const animation = raw.animation as CultureExperienceDraft['animation'];
     // 资源的唯一可信来源是 Case Service 返回的这件作品自己的地址。
     const draft = {
       ...raw,
+      animation: animation?.mode === 'world' && detail.case.worldUrl
+        ? { ...animation, world: { ...animation.world, url: detail.case.worldUrl } } : animation,
       artworkUrl: detail.case.imageUrl,
       referenceUrl: detail.case.referenceUrl ?? '',
       cultureCardUrl: detail.case.cardUrl ?? '',

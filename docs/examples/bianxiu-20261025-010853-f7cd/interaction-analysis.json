@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 2,
+  "contentSource": "qwen3_vl_image",
+  "inputImageSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
+  "contextSha256": "5d34b3d3646221be73a1665b6c0148c0866ce44b8a7ea07caae0b3dd0197ba92",
+  "promptSha256": "9306d559695ac2c00d701a4a5f16bd5b2e599c89fab33873cb669f704918673e",
+  "model": "qwen3-vl:4b-instruct-q4_K_M",
+  "inputImageCount": 1,
+  "inputImageBytes": 1032696,
+  "analysis": {
+    "title": "粉霞绽放：一朵牡丹的静谧叙事",
+    "subtitle": "细观纹理，静听花语",
+    "lead": "在纯白背景中，一朵牡丹以针线般的细腻展现其丰腴之姿。花瓣层层叠叠，从外缘浅粉到花心深红，纹理如丝如缕，叶脉与茎部的肌理则诉说着自然生长的静谧韵律。",
+    "observed_subjects": [
+      "牡丹花冠",
+      "花心绒毛",
+      "叶片脉络",
+      "茎部纹理"
+    ],
+    "dominant_colors": [
+      "粉红",
+      "深绿",
+      "橙黄"
+    ],
+    "visual_features": [
+      "花瓣边缘呈锯齿状起伏",
+      "叶脉以平行线纹表现",
+      "茎部有细密纵向针迹"
+    ],
+    "scene_kind": "flat_artwork",
+    "motion_regions": {
+      "water": false,
+      "mist": false,
+      "foliage": false
+    },
+    "hotspots": [
+      {
+        "title": "牡丹花心与花瓣纹理特写",
+        "x": 0.5,
+        "y": 0.35,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "中心橙黄色花蕊簇拥，周围粉红至深红渐变花瓣层层叠叠，每片花瓣布满细密平行纹理，边缘呈自然波浪状。",
+        "interpretation": "色彩由内向外渐变，纹理走向统一，营造出花瓣饱满柔韧的质感，中心花蕊的暖色与花瓣的冷调形成视觉焦点，富有层次感。"
+      },
+      {
+        "title": "左下叶片的脉络与纹理",
+        "x": 0.3,
+        "y": 0.6,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "深绿色叶片，叶面布满细密平行纹理，叶脉呈浅黄绿色，从叶尖向叶基延伸，边缘略卷曲。",
+        "interpretation": "叶面纹理的细密感与脉络的柔韧线条形成对比，绿与黄的色调搭配带来自然的生机，视觉上轻盈而有层次。"
+      },
+      {
+        "title": "花茎与叶片连接处的纹理细节",
+        "x": 0.5,
+        "y": 0.75,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "绿色茎干上分叉出两片叶子，叶脉清晰，茎部有细微纵向纹理，叶与茎交接处可见微小芽点。",
+        "interpretation": "深绿与浅绿的层次感，叶脉如细线勾勒，茎部肌理自然，整体呈现植物生长的有机质感，静谧而富有生命力。"
+      },
+      {
+        "title": "牡丹花瓣边缘的褶皱与纹理",
+        "x": 0.75,
+        "y": 0.3,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "粉红色花瓣边缘呈波浪状，表面有细密平行纹理，颜色由外缘浅粉向内渐深，层次分明。",
+        "interpretation": "细腻的纹理与柔和的色彩过渡，营造出花瓣的柔韧质感与自然生长的层次感，视觉上轻盈而富有生命力。"
+      }
+    ],
+    "chapters": [
+      {
+        "title": "花心之焰，花瓣之纱",
+        "eyebrow": "0",
+        "body": "中心橙黄花蕊如火苗般簇拥，外层粉红花瓣层层包裹，纹理平行如织，边缘波浪起伏。色彩由内向外渐变，赋予花朵饱满而柔韧的生命质感。视觉焦点凝聚于花心，静谧中蕴藏爆发力。",
+        "focus_indices": [
+          0
+        ]
+      },
+      {
+        "title": "叶脉之舞，茎节之语",
+        "eyebrow": "2",
+        "body": "茎干分叉处叶脉清晰如笔触，深绿与浅绿交织，叶缘微卷，茎部纹理自然。叶与茎交接处微小芽点暗示生长之始，整体构图静谧而充满生机，如自然之书的一页。",
+        "focus_indices": [
+          2
+        ]
+      },
+      {
+        "title": "边缘之韵，色彩之流",
+        "eyebrow": "3",
+        "body": "花瓣边缘波浪状，纹理细密如织，颜色由浅粉向深红过渡，层次分明。边缘褶皱如呼吸般自然，赋予花朵轻盈而丰盈的视觉张力，仿佛在静默中诉说绽放的韵律。",
+        "focus_indices": [
+          3
+        ]
+      }
+    ]
+  },
+  "totalDurationNs": 39762892200,
+  "localReview": {
+    "kind": "qwen3_vl_actual_crop_grounding",
+    "hotspots": [
+      {
+        "index": 0,
+        "inputCropSha256": "0336ec1ee7fd363e8866f23c9fbf6f56e2a81d6ed346206450193aee23e75c44",
+        "cropBox": [
+          374,
+          220,
+          650,
+          497
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "牡丹花心与花瓣纹理特写",
+          "observation": "中心橙黄色花蕊簇拥，周围粉红至深红渐变花瓣层层叠叠，每片花瓣布满细密平行纹理，边缘呈自然波浪状。",
+          "interpretation": "色彩由内向外渐变，纹理走向统一，营造出花瓣饱满柔韧的质感，中心花蕊的暖色与花瓣的冷调形成视觉焦点，富有层次感。"
+        }
+      },
+      {
+        "index": 1,
+        "inputCropSha256": "04055576cd4af7074e1ea22c54c082c5807f46e6e816fd7d1163dd4a02f05fe5",
+        "cropBox": [
+          169,
+          476,
+          445,
+          753
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "左下叶片的脉络与纹理",
+          "observation": "深绿色叶片，叶面布满细密平行纹理，叶脉呈浅黄绿色，从叶尖向叶基延伸，边缘略卷曲。",
+          "interpretation": "叶面纹理的细密感与脉络的柔韧线条形成对比，绿与黄的色调搭配带来自然的生机，视觉上轻盈而有层次。"
+        }
+      },
+      {
+        "index": 2,
+        "inputCropSha256": "c5cbbd537de7de4d8977910ebfc792bbfc91d80c390a3950a965dd3070f4f712",
+        "cropBox": [
+          374,
+          630,
+          650,
+          906
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "花茎与叶片连接处的纹理细节",
+          "observation": "绿色茎干上分叉出两片叶子，叶脉清晰，茎部有细微纵向纹理，叶与茎交接处可见微小芽点。",
+          "interpretation": "深绿与浅绿的层次感，叶脉如细线勾勒，茎部肌理自然，整体呈现植物生长的有机质感，静谧而富有生命力。"
+        }
+      },
+      {
+        "index": 3,
+        "inputCropSha256": "01462baf5f7fe224f771c86fab4d05791ae496fcff7113e596e3c78f481e7730",
+        "cropBox": [
+          630,
+          169,
+          906,
+          445
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "牡丹花瓣边缘的褶皱与纹理",
+          "observation": "粉红色花瓣边缘呈波浪状，表面有细密平行纹理，颜色由外缘浅粉向内渐深，层次分明。",
+          "interpretation": "细腻的纹理与柔和的色彩过渡，营造出花瓣的柔韧质感与自然生长的层次感，视觉上轻盈而富有生命力。"
+        }
+      }
+    ],
+    "storySource": "same-image whole view plus local-Qwen crop observations"
+  },
+  "reviewModel": "qwen3-vl:4b-instruct-q4_K_M",
+  "reviewInput": "same-image whole view and deterministic hotspot crops"
+}

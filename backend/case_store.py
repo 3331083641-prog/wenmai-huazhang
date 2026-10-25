@@ -333,7 +333,7 @@ def save_case(*, payload: Mapping[str, Any], response: Mapping[str, Any], base_u
     metadata = {
         "caseId": case_id,
         "caseOrigin": "runtime",
-        # 互动解读（热点/章节）需要人工标注，运行期案例默认没有，前端据此不显示互动入口
+        # 先完成作品保存；后台图片解析成功后回写这件作品自己的互动标识。
         "experienceId": "",
         "styleId": style.id,
         "styleName": style.name,
@@ -378,7 +378,7 @@ def save_case(*, payload: Mapping[str, Any], response: Mapping[str, Any], base_u
         "visionAnalysisRuntime": response.get("visionAnalysisRuntime") or {},
         "cultureCard": culture_card,
         "enhancedPrompt": str(response.get("enhancedPrompt") or ""),
-        "cultureCardGeneratedSha256": card_sha,
+        "cultureCardGeneratedSha256": generated_sha,
         "cultureCardSha256": card_sha,
         "cultureCardExport": card_export,
         "caseFiles": {
@@ -398,7 +398,7 @@ def save_case(*, payload: Mapping[str, Any], response: Mapping[str, Any], base_u
         "styleName": style.name,
         "generatedAt": metadata["generatedAt"],
         "images": {
-            "generated": f"{base_url.rstrip('/')}/examples/{case_id}/generated.png",
+            "generated": f"{base_url.rstrip('/')}/examples/{case_id}/generated.png?v={generated_sha[:16]}",
             "reference": f"{base_url.rstrip('/')}/examples/{case_id}/reference.png" if reference_name else "",
             "cultureCard": f"{base_url.rstrip('/')}/examples/{case_id}/culture_card.png",
         },
@@ -449,12 +449,12 @@ def list_cases(*, base_url: str) -> list[dict[str, Any]]:
             "caseId": case_id,
             "folder": folder.name,
             "referenceUrl": reference_url,
-            "imageUrl": generated_url,
+            "imageUrl": generated_url + ("?v=" + str(metadata["generatedSha256"])[:16] if metadata.get("generatedSha256") else ""),
             "cardUrl": card_url,
             "experienceId": metadata.get("experienceId") or (folder.name if has_experience else ""),
             "hasExperience": has_experience,
             "hasWorld": has_world,
-            "worldUrl": f"interactive/{folder.name}/world/world.json" if has_world else "",
+            "worldUrl": f"{root}/interactive/{folder.name}/world/world.json" if has_world else "",
         })
 
     items.sort(key=lambda item: str(item.get("generatedAt") or ""), reverse=True)
@@ -504,6 +504,31 @@ def delete_case(case_id: str) -> bool:
     if metadata.get("caseOrigin") != "runtime":
         return False
     shutil.rmtree(folder, ignore_errors=True)
+    return True
+
+
+def archive_runtime_case(case_id: str) -> bool:
+    """Remove one runtime case from public paths, keeping a private recovery copy."""
+    from uuid import uuid4
+    if not _case_id_is_safe(case_id):return False
+    case=(EXAMPLES_DIR/case_id).resolve()
+    if case.parent!=EXAMPLES_DIR.resolve() or not case.is_dir():return False
+    try:metadata=json.loads((case/'metadata.json').read_text(encoding='utf-8-sig'))
+    except (OSError,ValueError):return False
+    if metadata.get('caseOrigin')!='runtime':return False
+    archive_root=(PROJECT_ROOT/'.cache/deleted_cases').resolve()
+    if not archive_root.is_relative_to(PROJECT_ROOT.resolve()):return False
+    target=(archive_root/(case_id+'-'+uuid4().hex[:12])).resolve()
+    world_root=(PROJECT_ROOT/'frontend/public/interactive').resolve()
+    world=(world_root/case_id).resolve()
+    if target.parent!=archive_root or world.parent!=world_root:return False
+    target.mkdir(parents=True,exist_ok=False)
+    shutil.move(str(case),str(target/'case'))
+    try:
+        if world.is_dir():shutil.move(str(world),str(target/'interactive'))
+    except Exception:
+        shutil.move(str(target/'case'),str(case))
+        raise
     return True
 
 
@@ -571,12 +596,12 @@ def get_case(case_id: str, *, base_url: str) -> dict[str, Any] | None:
         "folder": folder.name,
         "referenceUrl": f"{root}/examples/{folder.name}/{reference_name}"
                         if reference_name and (folder / reference_name).is_file() else "",
-        "imageUrl": f"{root}/examples/{folder.name}/{generated_name}",
+        "imageUrl": f"{root}/examples/{folder.name}/{generated_name}" + ("?v=" + str(metadata["generatedSha256"])[:16] if metadata.get("generatedSha256") else ""),
         "cardUrl": f"{root}/examples/{folder.name}/{card_name}" if (folder / card_name).is_file() else "",
         "experienceId": str(metadata.get("experienceId") or (folder.name if has_experience else "")),
         "hasExperience": has_experience,
         "hasWorld": has_world,
-        "worldUrl": f"interactive/{folder.name}/world/world.json" if has_world else "",
+        "worldUrl": f"{root}/interactive/{folder.name}/world/world.json" if has_world else "",
         "experienceFile": str(experience_path.relative_to(PROJECT_ROOT)) if has_experience else "",
         "metadata": metadata,
     }

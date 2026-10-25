@@ -3,6 +3,7 @@ import { useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fib
 import * as THREE from 'three';
 import { paintingFragmentShader, paintingVertexShader } from './shaders';
 import { resolveWorldAsset, uvToPlane, type PaintingWorldManifest } from './world';
+import { fitArtworkCamera, pickHotspotFromUv } from './geometry';
 
 /** 画境运行期状态，DOM 层与探针都读这一个对象，避免两套真相。 */
 export interface WorldRuntime {
@@ -68,7 +69,7 @@ const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t 
 
 function texturesFor(manifest: PaintingWorldManifest, baseUrl: string) {
   return [
-    resolveWorldAsset(baseUrl, manifest.art.file),
+    resolveWorldAsset(baseUrl, manifest.surface?.file ?? manifest.art.file),
     resolveWorldAsset(baseUrl, manifest.depth.file),
     resolveWorldAsset(baseUrl, manifest.masks.file),
     resolveWorldAsset(baseUrl, manifest.backdrop.file),
@@ -122,14 +123,7 @@ function DepthMesh({
   const pickAt = (event: ThreeEvent<PointerEvent | MouseEvent>): string | null => {
     const uv = event.uv;
     if (!uv) return null;
-    let best: { id: string; d: number } | null = null;
-    for (const spot of manifest.hotspots) {
-      const dx = uv.x - spot.x;
-      const dy = uv.y - spot.y;
-      const d = Math.hypot(dx, dy);
-      if (d < 0.085 && (!best || d < best.d)) best = { id: spot.id, d };
-    }
-    return best?.id ?? null;
+    return pickHotspotFromUv(manifest.hotspots, uv.x, uv.y);
   };
 
   return (
@@ -188,7 +182,7 @@ function NearCutout({
       cx: (bx + bw / 2 - 0.5) * aspect * H,
       cy: (0.5 - (by + bh / 2)) * H,
       // 略微比最近的网格再往前一点，保证它真的「在镜头前」
-      z: amp * 1.06,
+      z: amp * (cut.depth ?? 1.06),
     };
   }, [cut, aspect, H, amp]);
 
@@ -204,7 +198,16 @@ function NearCutout({
 
   if (!cut) return null;
   return (
-    <mesh ref={meshRef} position={[dims.cx, dims.cy, dims.z]} renderOrder={2}>
+    <mesh ref={meshRef} position={[dims.cx, dims.cy, dims.z]} renderOrder={2}
+      onClick={(event) => {
+        if (!event.uv) return;
+        event.stopPropagation();
+        const [bx, by, bw, bh] = cut.bbox_norm;
+        const x = bx + event.uv.x * bw;
+        const y = by + (1-event.uv.y) * bh;
+        const id = pickHotspotFromUv(manifest.hotspots, x, 1-y);
+        if (id) control.select(id);
+      }}>
       <planeGeometry args={[dims.w, dims.h]} />
       <meshBasicMaterial map={tex} transparent depthWrite={false} toneMapped={false} />
     </mesh>
@@ -327,16 +330,14 @@ function CameraRig({
   manifest: PaintingWorldManifest;
   control: WorldControl;
 }) {
-  const { camera, gl } = useThree();
+  const { camera, gl, size } = useThree();
   const cam = manifest.camera;
-  const startDistance = cam.distance_fill * cam.entry.from_scale;
-  // 入场落点：停在「整幅画基本铺满视口」的位置，而不是贴到最前。
-  // 之前这里取的是 dolly_near（最近端），方形画作一进场就只剩中间 38%，
-  // 看到的是局部纹理而不是画 —— 漫游应该先看清全画，再由滚轮往里推。
-  const insideDistance = Math.min(
-    cam.dolly_far,
-    Math.max(cam.distance_fill, cam.depth_amplitude + 0.16),
-  );
+  const framing = fitArtworkCamera({planeHeight:cam.plane_height,planeWidth:cam.plane_width,
+    fov:cam.fov,amplitude:cam.depth_amplitude,width:size.width,height:size.height,
+    entryScale:cam.entry.from_scale});
+  const startDistance = framing.start;
+  const insideDistance = framing.rest;
+  const nearDistance = framing.near;
 
   /** 起手就把画外位置摆好，避免首帧闪一下 */
   const stateRef = useRef({
@@ -395,7 +396,7 @@ function CameraRig({
       if (control.runtime.phase !== 'inside') return;
       event.preventDefault();
       const rt = control.runtime;
-      const next = clamp(rt.targetDistance + event.deltaY * 0.0016, insideDistance, startDistance);
+      const next = clamp(rt.targetDistance + event.deltaY * 0.0016, nearDistance, startDistance);
       rt.targetDistance = next;
     };
 
@@ -409,7 +410,7 @@ function CameraRig({
       window.removeEventListener('pointerup', onUp);
       el.removeEventListener('wheel', onWheel);
     };
-  }, [gl, control, cam.yaw_limit_deg, cam.pitch_limit_deg, insideDistance, startDistance]);
+  }, [gl, control, cam.yaw_limit_deg, cam.pitch_limit_deg, insideDistance, startDistance, nearDistance]);
 
   useFrame((state, delta) => {
     const rt = control.runtime;

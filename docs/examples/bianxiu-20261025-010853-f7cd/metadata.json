@@ -1,0 +1,112 @@
+{
+  "caseId": "bianxiu-20261025-010853-f7cd",
+  "caseOrigin": "runtime",
+  "experienceId": "bianxiu-20261025-010853-f7cd",
+  "styleId": "bianxiu",
+  "styleName": "汴绣",
+  "referenceSubject": "牡丹",
+  "artworkTitle": "粉霞绽放：一朵牡丹的静谧叙事",
+  "theme": "一朵粉红牡丹与绿叶，完整花枝，汴绣纹样的丝线方向与色阶表现，纯白背景，花瓣清晰，不增添动物",
+  "referenceSource": "user_upload",
+  "sourceFilename": "reference.png",
+  "referenceFilename": "reference.png",
+  "referenceSha256": "17f5129e2c07fbce7f7c97f5283440bcbf412b14e2b9268064de523450cff738",
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "styleStrength": 0.7,
+  "compositionMode": "portrait",
+  "outputType": "poster",
+  "negativePrompt": "文字、水印、边框、模糊、裁掉主体、重复动物、错误解剖",
+  "inputImageCount": 1,
+  "generatedAt": "2026-10-25T01:08:53.910122+08:00",
+  "generationAttempt": "runtime_auto_save",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": 1,
+  "analysisSource": "qwen3_vl",
+  "visionProvider": "ollama_local",
+  "visionModel": "",
+  "cultureCardAnalysisSource": "qwen3_vl",
+  "generationHistory": [
+    {
+      "generation": "runtime_auto_save",
+      "generatedAt": "2026-10-25T01:08:53.910122+08:00",
+      "model": "qwen-image-3.0",
+      "styleStrength": 0.7,
+      "referenceImageUsed": true,
+      "modelInputImageCount": 1,
+      "generatedSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
+      "analysisSource": "qwen3_vl"
+    }
+  ],
+  "outputImageCount": 1,
+  "generatedSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
+  "generatedBytes": 1032696,
+  "artworkSize": {
+    "width": 1024,
+    "height": 1024
+  },
+  "visionAnalysis": {
+    "title": "粉牡丹枝",
+    "theme_summary": "粉红牡丹盛开，绿叶衬托，纯白背景突出刺绣质感。",
+    "composition": "花居画面中央，叶分左右，茎居中下，构图对称平衡。",
+    "style_interpretation": "汴绣针法细密温润，丝线方向表现花瓣与叶脉走向，色彩温润过渡，整体呈现传统刺绣装饰的典雅与细腻。",
+    "culture_interpretation": "牡丹花瓣层层叠叠，色彩由外缘浅粉向中心深粉过渡，叶脉清晰如织锦。叶与花茎以自然之态相依，无声诉说东方花木的静美与坚韧。其丰茂之姿，恰如刺绣中温婉的针法，传递出传统工艺对自然神韵的敬意。",
+    "observed_subjects": [
+      "粉红牡丹花",
+      "绿叶",
+      "花茎"
+    ],
+    "dominant_colors": [
+      "粉红",
+      "深绿",
+      "橙黄",
+      "纯白"
+    ],
+    "visual_features": [
+      "丝线质感明显",
+      "花瓣层次丰富",
+      "针脚细密均匀",
+      "色彩渐变柔和",
+      "枝叶纹理清晰"
+    ],
+    "recommended_scenes": [
+      "文创海报",
+      "明信片"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionAnalysisRuntime": {},
+  "cultureCard": {
+    "title": "粉牡丹枝",
+    "cultureSource": "河南汴绣",
+    "visualFeatures": "丝线质感明显、花瓣层次丰富、针脚细密均匀、色彩渐变柔和、枝叶纹理清晰",
+    "symbolicMeaning": "牡丹花瓣层层叠叠，色彩由外缘浅粉向中心深粉过渡，叶脉清晰如织锦。叶与花茎以自然之态相依，无声诉说东方花木的静美与坚韧。其丰茂之姿，恰如刺绣中温婉的针法，传递出传统工艺对自然神韵的敬意。",
+    "applicationScenario": "文创海报、明信片"
+  },
+  "enhancedPrompt": "最高优先级主体约束：画面唯一主要主体为“牡丹”。必须保留该主体在参考图中可见的身份、关键外形和姿态；不得替换、删除、混合成其他主体。传统风格只改变主体的绘画技法、纹样、色彩和材质表现，不改变主体身份；风格库中的花鸟、瑞兽等装饰题材不得覆盖此主体约束。核心主题：一朵粉红牡丹与绿叶，完整花枝，汴绣纹样的丝线方向与色阶表现，纯白背景，花瓣清晰，不增添动物。所选传统文化视觉风格：汴绣纹样（汴绣纹样）。风格来源：河南汴绣。视觉特征：丝线质感、牡丹花鸟纹样、细密针脚、柔和渐变、典雅刺绣装饰。文化寓意：花鸟、牡丹等题材可作刺绣视觉参考；具体寓意因作品语境而异。风格提示强度：0.70，提示词较强强调所选视觉风格描述；实际画面效果受生成模型影响。参考图基础信息：用户上传的参考图将作为图像条件参与本次生成；请将其用于理解主体、主要关系与画面构图，并在保持创作主题和所选传统风格的前提下进行再创作。后端另由 Pillow 进行本地基础统计（不识别主体或场景）：尺寸 1254x1254；平均色彩与明暗 主色调约为 红色系（#E7C3C8），整体偏亮；画幅方向 接近方形画幅，尺寸 1254x1254。输出类型：数字海报视觉稿，poster layout, clear visual center, readable composition。构图要求：竖向主体布局提示，vertical visual emphasis, strong foreground subject。用户排除清单：文字、水印、边框、模糊、裁掉主体、重复动物、错误解剖。清单是需要避开的画面元素，不是创作题材，不能把清单词语绘制到作品中。画面只呈现图像内容，不生成任何可读文字、数字、标题、署名、印章字符、标识、二维码或水印；该限制优先于海报、票券等版式提示。生成要求：主体清晰，层次丰富，传统视觉元素自然融入现代设计，避免无意义文字，画面完整，细节清楚，high quality, detailed texture.",
+  "cultureCardGeneratedSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
+  "cultureCardSha256": "a2fdcfb680738032a1fa5b5b56f2a7b8d4b4937fcbc097dada92ebf39a661a10",
+  "cultureCardExport": "pillow_png",
+  "caseFiles": {
+    "generated": "generated.png",
+    "reference": "reference.png",
+    "cultureCard": "culture_card.png"
+  },
+  "interactive": {
+    "status": "ready",
+    "experience": "experience.json",
+    "world": "frontend/public/interactive/bianxiu-20261025-010853-f7cd/world/world.json",
+    "hotspots": 4,
+    "hotspotMethod": "qwen3-vl-image-plan",
+    "contentSource": "qwen3_vl_image",
+    "analysisImageSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
+    "interactionPlanVersion": 2,
+    "depthSource": "depth-anything-v2-small",
+    "builtAt": "2026-10-25T02:05:46.859093+08:00"
+  },
+  "referenceOrigin": "AI-generated white-background reference, requested by the user for this verification",
+  "referenceProvider": "built-in imagegen tool; not a photograph",
+  "verificationRun": "20261025-white-reference-five-styles"
+}

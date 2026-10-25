@@ -1,0 +1,193 @@
+{
+  "id": "jianzhi-20261025-011330-32fe",
+  "styleId": "jianzhi",
+  "styleName": "中国剪纸",
+  "title": "红焰奔马：剪纸之舞",
+  "subtitle": "一匹以花卉镂空为肌理的红色剪纸马，动态轮廓中蕴藏繁复纹样",
+  "lead": "红白对比的剪纸马，鬃尾如焰，花影如歌，每一处镂空都诉说流动的韵律与东方美学的精妙。",
+  "artworkSize": {
+    "width": 1024,
+    "height": 1024
+  },
+  "theme": {
+    "accent": "#B03A2E",
+    "accentSoft": "#F0CFC6",
+    "paper": "#FBF3EF",
+    "ink": "#3A2622",
+    "gold": "#B98B4E"
+  },
+  "visualAnalysis": {
+    "source": "qwen3_vl_image",
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "observedSubjects": [
+      "一匹红色剪纸马",
+      "马身内部镂空花卉纹样",
+      "马鬃与马尾的线条细节",
+      "马蹄与腿部的结构轮廓"
+    ],
+    "visualFeatures": [
+      "镂空剪纸技法",
+      "花卉纹样填充马身",
+      "马形动态姿态",
+      "红白对比强烈"
+    ],
+    "sceneKind": "flat_artwork",
+    "dominantColors": [
+      "红色",
+      "白色"
+    ]
+  },
+  "hotspots": [
+    {
+      "id": "f0242b7e1fc4-spot-1",
+      "title": "马头侧面，鬃毛与花卉纹样交叠",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.22,
+        "cy": 0.25,
+        "r": 0.04
+      },
+      "shortDescription": "红色马头轮廓，鬃毛呈流动线条，左眼旁有白色花朵纹样，面部有镂空雕刻感线条",
+      "visualObservation": "红色马头轮廓，鬃毛呈流动线条，左眼旁有白色花朵纹样，面部有镂空雕刻感线条",
+      "culturalExplanation": "红白对比强化轮廓张力，花卉纹样与鬃毛线条交织，营造动态美感与装饰层次",
+      "sourceIds": [
+        "SRC-JZ-PAPER-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-1"
+    },
+    {
+      "id": "f0242b7e1fc4-spot-2",
+      "title": "马颈侧部的花卉镂空纹样",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.52,
+        "cy": 0.38,
+        "r": 0.04
+      },
+      "shortDescription": "红色马颈侧部，以白色镂空花卉图案为主，辅以细密叶脉与毛发线条，呈现层叠绽放的牡丹形态。",
+      "visualObservation": "红色马颈侧部，以白色镂空花卉图案为主，辅以细密叶脉与毛发线条，呈现层叠绽放的牡丹形态。",
+      "culturalExplanation": "繁复花纹与流畅鬃毛线条交织，红白对比鲜明，视觉张力强，传递出古典剪纸的精致与生命力。",
+      "sourceIds": [
+        "SRC-JZ-PAPER-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-2"
+    },
+    {
+      "id": "f0242b7e1fc4-spot-3",
+      "title": "马身中部的花卉镂空纹样",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.68,
+        "cy": 0.52,
+        "r": 0.04
+      },
+      "shortDescription": "红色马形剪纸，背部与臀部区域布满白色镂空的牡丹花图案，花瓣层叠，边缘呈锯齿状，周围点缀小花与叶纹。",
+      "visualObservation": "红色马形剪纸，背部与臀部区域布满白色镂空的牡丹花图案，花瓣层叠，边缘呈锯齿状，周围点缀小花与叶纹。",
+      "culturalExplanation": "繁复的花纹在红色底色上形成强烈对比，镂空处透出明亮，线条流畅而富有韵律，视觉上充满生机与装饰美感。",
+      "sourceIds": [
+        "SRC-JZ-PAPER-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-1"
+    },
+    {
+      "id": "f0242b7e1fc4-spot-4",
+      "title": "马鬃细节：密集红色线条与镂空花卉纹样交织",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.85,
+        "cy": 0.45,
+        "r": 0.04
+      },
+      "shortDescription": "密集红色线条模拟鬃毛，其间穿插白色镂空花卉纹样，线条方向从左上向右下倾斜，呈现动态飘逸感。",
+      "visualObservation": "密集红色线条模拟鬃毛，其间穿插白色镂空花卉纹样，线条方向从左上向右下倾斜，呈现动态飘逸感。",
+      "culturalExplanation": "红白对比强化视觉张力，线条疏密变化赋予鬃毛流动感，镂空花纹增添层次，整体呈现轻盈而富有装饰性的美感。",
+      "sourceIds": [
+        "SRC-JZ-PAPER-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-3"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "fold-1",
+      "index": 1,
+      "eyebrow": "马头侧面，鬃毛与花卉纹样交叠",
+      "title": "马首之舞",
+      "body": "红白对比强化轮廓张力，花卉纹样与鬃毛线条交织，营造动态美感与装饰层次。马眼旁的花影如初绽，鬃毛如风中之舞，赋予静止之形以呼吸。",
+      "focusHotspotIds": [
+        "f0242b7e1fc4-spot-1"
+      ],
+      "frame": {
+        "scale": 1.53,
+        "focusX": 0.22,
+        "focusY": 0.25
+      },
+      "sourceIds": [
+        "SRC-JZ-PAPER-001"
+      ]
+    },
+    {
+      "id": "fold-2",
+      "index": 2,
+      "eyebrow": "马颈侧部的花卉镂空纹样",
+      "title": "颈身之韵",
+      "body": "繁复花纹与流畅鬃毛线条交织，红白对比鲜明，视觉张力强，传递出古典剪纸的精致与生命力。颈侧牡丹层叠绽放，叶脉细密如笔触，是静默中的喧哗。",
+      "focusHotspotIds": [
+        "f0242b7e1fc4-spot-2"
+      ],
+      "frame": {
+        "scale": 1.63,
+        "focusX": 0.52,
+        "focusY": 0.38
+      },
+      "sourceIds": [
+        "SRC-JZ-PAPER-001"
+      ]
+    },
+    {
+      "id": "fold-3",
+      "index": 3,
+      "eyebrow": "马鬃细节：密集红色线条与镂空花卉",
+      "title": "尾鬃之流",
+      "body": "红白对比强化视觉张力，线条疏密变化赋予鬃毛流动感，镂空花纹增添层次，整体呈现轻盈而富有装饰性的美感。尾部如焰，鬃毛如瀑，是风的回响。",
+      "focusHotspotIds": [
+        "f0242b7e1fc4-spot-4"
+      ],
+      "frame": {
+        "scale": 1.49,
+        "focusX": 0.85,
+        "focusY": 0.45
+      },
+      "sourceIds": [
+        "SRC-JZ-PAPER-001"
+      ]
+    }
+  ],
+  "animation": {
+    "mode": "world",
+    "world": {
+      "url": "interactive/jianzhi-20261025-011330-32fe/world/world.json"
+    },
+    "capabilityNote": "画境贴图、热点与深度均对应这张成图；支持推进与有限转头，不恢复遮挡背面，不是完整三维重建。",
+    "layerSource": "本图深度与颜色派生素材；微动类别按本图视觉解析启用。"
+  },
+  "provenance": {
+    "sourceCaseId": "jianzhi-20261025-011330-32fe",
+    "sourceImageSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125",
+    "knowledgeVersion": "1.0.0",
+    "hotspotMethod": "Qwen3-VL 直接读取本图，估计归一化热点；自动定位不冒充人工复核。",
+    "designNote": "热点观察、局部审美解读与三折叙事均来自本图专属视觉策划；来源条目用于文化背景，不认证AI画面。"
+  }
+}

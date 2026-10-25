@@ -1,0 +1,103 @@
+{
+  "slug": "qinghua-20261025-011202-dbc8",
+  "styleId": "qinghua",
+  "title": "青瓷鹤影：纹饰与羽翼的静谧交响",
+  "image": {
+    "width": 1024,
+    "height": 1024,
+    "bytes": 419189
+  },
+  "depth": {
+    "source": "depth-anything-v2-small",
+    "provenance": {
+      "source": "depth-anything-v2-small",
+      "modelUsed": true,
+      "approximate": true,
+      "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+      "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+      "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+      "license": "Apache-2.0",
+      "inputImageSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb"
+    },
+    "nearShare": 0.1171,
+    "farShare": 0.5869,
+    "percentiles": [
+      0.0039,
+      0.1059,
+      0.2863,
+      0.8392,
+      0.9961
+    ],
+    "gamma": 0.72
+  },
+  "hotspots": [
+    {
+      "id": "39ce0e556f42-spot-1",
+      "title": "鹤头冠部特写：红顶白羽与黑颈过渡",
+      "x": 0.32,
+      "y": 0.08,
+      "status": "approximate"
+    },
+    {
+      "id": "39ce0e556f42-spot-2",
+      "title": "丹顶鹤头部与颈部特写",
+      "x": 0.35,
+      "y": 0.18,
+      "status": "approximate"
+    },
+    {
+      "id": "39ce0e556f42-spot-3",
+      "title": "鹤身青花纹样局部",
+      "x": 0.48,
+      "y": 0.35,
+      "status": "approximate"
+    },
+    {
+      "id": "39ce0e556f42-spot-4",
+      "title": "鹤身尾羽交界处的青花纹样与深蓝羽翼",
+      "x": 0.7,
+      "y": 0.45,
+      "status": "approximate"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "fold-1",
+      "scale": 1.45
+    },
+    {
+      "id": "fold-2",
+      "scale": 1.61
+    },
+    {
+      "id": "fold-3",
+      "scale": 1.58
+    }
+  ],
+  "world": {
+    "built": true,
+    "files": [
+      "art.webp",
+      "backdrop.webp",
+      "cutout-subject.webp",
+      "depth-preview.png",
+      "depth-rg.png",
+      "masks.png",
+      "model-depth-rg.png",
+      "surface.webp",
+      "world.json"
+    ],
+    "bytes": 908517
+  },
+  "vlm": {
+    "used": true,
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "inputImageSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb",
+    "contentSource": "qwen3_vl_image"
+  },
+  "warnings": [
+    "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
+    "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
+  ],
+  "elapsedSec": 57.5
+}

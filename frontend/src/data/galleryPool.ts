@@ -10,6 +10,8 @@ import { galleryArtworks as curatedArtworks } from './galleryArtworks';
 import { resetArtworkRegistry } from './artworkRegistry';
 import { fetchRuntimeCases, type GalleryCase } from '../services/caseService';
 import type { GalleryArtwork } from '../features/heritage-gallery/types';
+import { isCaseDeleted } from '../services/deletedCases';
+import { autoSavedCases } from './savedCases';
 
 const STORAGE_KEY = 'wenmai_gallery_runtime_artworks_v1';
 
@@ -53,14 +55,18 @@ function loadCached(): GalleryArtwork[] {
     return parsed.filter((item): item is GalleryArtwork => {
       if (!item || typeof item !== 'object') return false;
       const candidate = item as GalleryArtwork;
-      return Boolean(candidate.id && candidate.imageUrl && candidate.title);
+      return Boolean(candidate.id && candidate.imageUrl && candidate.title && !isCaseDeleted(candidate.id));
     });
   } catch {
     return [];
   }
 }
 
-let runtimeArtworks: GalleryArtwork[] = loadCached();
+// Published runtime works remain available for curation in a static build too.
+let runtimeArtworks: GalleryArtwork[] = [...new Map([
+  ...loadCached(),
+  ...autoSavedCases.map(caseToArtwork).filter((item):item is GalleryArtwork => Boolean(item)),
+].filter(item => !isCaseDeleted(item.id)).map(item => [item.id,item])).values()];
 const listeners = new Set<() => void>();
 let snapshot: GalleryArtwork[] = [];
 let inflight: Promise<GalleryArtwork[]> | null = null;
@@ -81,6 +87,12 @@ export function getGallerySnapshot(): GalleryArtwork[] {
 
 export function getRuntimeArtworkCount(): number {
   return Math.max(0, snapshot.length - curatedArtworks.length);
+}
+
+export function forgetRuntimeArtwork(id:string):void {
+  runtimeArtworks=runtimeArtworks.filter(item=>item.id!==id);
+  try { localStorage.setItem(STORAGE_KEY,JSON.stringify(runtimeArtworks)); } catch { /* memory still clears */ }
+  publish();
 }
 
 export function subscribeGalleryPool(listener: () => void): () => void {

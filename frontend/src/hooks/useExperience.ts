@@ -5,9 +5,10 @@
  *  - 加载中 / 不存在 / 数据损坏 三种状态分开返回，页面不白屏。
  */
 import { useEffect, useState } from 'react';
-import { getExperience } from '../data/experiences';
+import { curatedExperienceIds, getExperience } from '../data/experiences';
 import { getRuntimeExperience, loadRuntimeExperience } from '../data/runtimeExperiences';
 import type { CultureExperience } from '../features/culture-experience/types';
+import { isCaseDeleted } from '../services/deletedCases';
 
 export type ExperienceLoadState = 'ready' | 'loading' | 'missing' | 'error';
 
@@ -18,7 +19,7 @@ export interface ExperienceLoadResult {
 }
 
 export function useExperience(id: string | undefined): ExperienceLoadResult {
-  const builtin = id ? getExperience(id) : undefined;
+  const builtin = id && !isCaseDeleted(id) ? getExperience(id) : undefined;
   const [experience, setExperience] = useState<CultureExperience | undefined>(
     builtin ?? getRuntimeExperience(id),
   );
@@ -28,13 +29,13 @@ export function useExperience(id: string | undefined): ExperienceLoadResult {
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    if (!id) {
+    if (!id || isCaseDeleted(id)) {
       setExperience(undefined);
       setState('missing');
       return;
     }
     const local = getExperience(id) ?? getRuntimeExperience(id);
-    if (local) {
+    if (local && (curatedExperienceIds.has(local.id))) {
       setExperience(local);
       setState('ready');
       return;
@@ -42,10 +43,10 @@ export function useExperience(id: string | undefined): ExperienceLoadResult {
 
     let alive = true;
     setState('loading');
-    loadRuntimeExperience(id).then((loaded) => {
+    loadRuntimeExperience(id, true).then((loaded) => {
       if (!alive) return;
-      if (loaded) {
-        setExperience(loaded);
+      if (loaded ?? local) {
+        setExperience(loaded ?? local);
         setState('ready');
       } else {
         setState('missing');

@@ -1,0 +1,101 @@
+{
+  "slug": "qinghua-20261025-002124-ca03",
+  "styleId": "qinghua",
+  "title": "青瓷蝶影：蓝白交响的静谧之翼",
+  "image": {
+    "width": 1024,
+    "height": 1024,
+    "bytes": 1492780
+  },
+  "depth": {
+    "source": "depth-anything-v2-small",
+    "provenance": {
+      "source": "depth-anything-v2-small",
+      "modelUsed": true,
+      "approximate": true,
+      "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+      "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+      "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+      "license": "Apache-2.0",
+      "inputImageSha256": "b974928e45df94bf096d912b7f2f4252cafab16e210a186f248c2efc5636319f"
+    },
+    "nearShare": 0.3975,
+    "farShare": 0.3446,
+    "percentiles": [
+      0.0235,
+      0.0902,
+      0.6431,
+      0.9255,
+      0.9961
+    ],
+    "gamma": 0.72
+  },
+  "hotspots": [
+    {
+      "id": "b974928e45df-spot-1",
+      "title": "蝴蝶触角特写",
+      "x": 0.45,
+      "y": 0.25,
+      "status": "approximate"
+    },
+    {
+      "id": "b974928e45df-spot-2",
+      "title": "蝴蝶腹部与翼缘交界处的蓝白纹样",
+      "x": 0.49,
+      "y": 0.65,
+      "status": "approximate"
+    },
+    {
+      "id": "b974928e45df-spot-3",
+      "title": "蝴蝶右下翼缘的蓝白纹样与圆点装饰",
+      "x": 0.75,
+      "y": 0.75,
+      "status": "approximate"
+    },
+    {
+      "id": "b974928e45df-spot-4",
+      "title": "蝴蝶腹部与前翅内侧纹样特写",
+      "x": 0.45,
+      "y": 0.75,
+      "status": "approximate"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "fold-1",
+      "scale": 1.55
+    },
+    {
+      "id": "fold-2",
+      "scale": 1.61
+    },
+    {
+      "id": "fold-3",
+      "scale": 1.55
+    }
+  ],
+  "world": {
+    "built": true,
+    "files": [
+      "art.webp",
+      "backdrop.webp",
+      "cutout-subject.webp",
+      "depth-preview.png",
+      "depth-rg.png",
+      "masks.png",
+      "world.json"
+    ],
+    "bytes": 950710
+  },
+  "vlm": {
+    "used": true,
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "inputImageSha256": "b974928e45df94bf096d912b7f2f4252cafab16e210a186f248c2efc5636319f",
+    "contentSource": "qwen3_vl_image"
+  },
+  "warnings": [
+    "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
+    "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
+  ],
+  "elapsedSec": 55.6
+}

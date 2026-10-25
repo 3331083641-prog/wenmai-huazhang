@@ -2,273 +2,181 @@
 
 # 纹脉华章
 
-### 传统文化视觉智能创作 · 互动赏析 · 沉浸展陈 · 文创应用
+### 传统文化视觉智能创作与沉浸式文创应用平台
 
-从五种传统视觉风格出发，把「创作 → 收藏 → 互动 → 布展 → 文创」串成一条可运行的产品链路。
+从五种传统视觉风格出发，将参考图与主题转为 AI 作品，再连接文化赏析、互动叙事、三维布展和文创预览。
 
-**[在线体验（静态演示）](https://3331083641-prog.github.io/wenmai-huazhang/#/)** · **[源码](https://github.com/3331083641-prog/wenmai-huazhang)** · **[MIT 许可](LICENSE)**
+[在线体验](https://3331083641-prog.github.io/wenmai-huazhang/#/) · [功能展示](#核心功能与真实界面) · [快速开始](#安装与运行) · [技术架构](#技术架构) · [项目源码](https://github.com/3331083641-prog/wenmai-huazhang)
 
 </div>
 
-![纹脉华章首页：传统视觉风格与智能创作入口](docs/screenshots/vnext/home.jpg)
+![纹脉华章最新首页](docs/screenshots/current/home-overview.jpg)
 
-> **在线体验是静态前端演示**：可浏览内置作品、文化卡、三种互动、三维展馆与文创模板；实时 AI 生成、运行期作品保存与新作品互动构建需要在本机启动 FastAPI 后端。在线页面不提供密钥，也不运行云端或本地模型。
+> 在线入口为静态演示，可浏览已保存作品、互动、经典展馆与文创模板。实时生图、自动保存和新作品互动构建需要在本机运行后端与模型；在线页面不提供作者的 API 密钥。
 
-## 一个平台，五个环节
+## 从文化风格到自己的展览
+
+纹脉华章面向传统文化创作、美育研学与文创设计探索。用户选择视觉风格，输入主题或参考图，获得作品与文化说明，再以热点、章节、画境和虚拟展馆继续阅读、展示与应用。
 
 ```mermaid
 flowchart LR
-  A[风格库<br/>五种传统视觉语言] --> B[智能生成<br/>主题 + 参考图 + 风格强度]
-  B --> C[作品展厅<br/>自动保存 / 文化卡]
-  C --> D[互动赏析<br/>画中有话 · 一图一境 · 画境漫游]
-  C --> E[纹脉展馆<br/>换画 · 器物布展 · 灵宠]
-  C --> F[文创转化<br/>八类载体预览]
-  D --> C
-  E --> C
+  A[文化风格库] --> B[智能生成]
+  B --> C[作品展厅 / 自动保存]
+  C --> D[互动赏析]
+  D --> H[画中有话 / 一图一境 / 画境漫游]
+  C --> E[经典纹脉展馆 / DIY]
+  C --> F[文创转化 / PNG 预览]
 ```
 
-## VNext 本轮升级
+## 核心功能与真实界面
 
-- **导航第一项恢复为“首页”**：首页 → 风格库 → 智能生成 → 作品展厅 → 纹脉展馆 → 文创转化 → 应用场景 → 关于项目；桌面单行、移动端折叠菜单。首页内容暂按用户要求回退到上一版，后续再单独调整。
-- **运行期作品闭环**：生成成功后自动保存原图、参考图、参数、文化卡与元数据；展厅按 `caseId` 拉取，新作品无需重启前端即可出现。
-- **三种互动按作品自动构建**：画中有话（热点 + 解读）、一图一境（三折叙事）、画境漫游（本图深度资产）；作品、热点、章节、画境、文化卡与展馆挂画全部绑定同一个 `caseId`，不再按 `styleId` 猜作品。
-- **任务状态持久化**：`queued → processing → ready / partial / failed` 落盘到 `backend/outputs/interactive_jobs.json`；后端重启不丢历史，失败可重试，已完成不会被重复覆盖。
-- **深度能力降级**：本机深度模型不可用时改用本图亮度/中心权重/垂直梯度的近似深度，画境仍可打开，并明确标注“有限视差、近似深度”。
-- **作品展厅重做**：作品图为主体，支持风格与来源筛选、最新优先、构建状态、三种互动入口、文创预览与进入展馆布展。
-- **纹脉展馆控件分层**：默认只保留 探索模式 / 布展模式 / 视角；机位收进“视角”，昼夜收进“环境”，重置只在布展二级菜单，说明合并到“帮助”。
-- **展馆观感与性能**：现有 GLB 上重做色调映射、曝光、阴影范围、重点照明与暖木/石材/铜/纸材质参数；限制 DPR、收敛阴影相机、页面隐藏时降频。
-- **新作品进入展馆作品池**：图库按 `caseId` 读取后端作品池，新生成作品带“新生成”标记，可直接挂到画框；画框按图片真实比例 contain，不拉伸；布展经 localStorage 持久化。
-- **灵宠模块可替换**：模型 URL、动画映射、缩放与朝向适配集中封装，后续换最终版 GLB 只改配置。
-- **应用场景页恢复沉浸式展示**：八个场景改为纵向左右交替的大图 + 独立文字，滚动时图片与文字分侧浮现；取消图片状态角标，能力边界写入正文。
+### 选择风格，控制创作
 
-| 本轮真实验证 | 结果 |
-|---|---|
-| TypeScript / 前端测试 / 构建 | `tsc` 0 错误；44/44 测试通过；`vite build` 成功 |
-| 运行期三案例（汴绣 / 朱仙镇 / 青花瓷） | 各自 `experienceId`、图片哈希、热点坐标、world slug 独立，`HOTSPOTS_DISTINCT=True` |
-| 部分失败与恢复 | 移走画境资产 → `partial`；重建 → `queued` → `ready`（约 15.2 s） |
-| 后端重启 | `/interactive-jobs` 仍返回 `ready`（attempts=2） |
-| 展馆布展 | 作品池 8 件；可把新作品挂到 `FRAME_F2_003`；刷新后 localStorage 保留该 caseId |
-| 浏览器 | 展厅、三种互动、展馆 canvas 无运行时异常 |
+五种正式风格为 **朱仙镇木版年画、汴绣纹样、宋画青绿山水、青花瓷纹样、中国剪纸**。创作台支持文本、参考图、主体、风格提示强度、负向提示、构图与用途控制。
 
-验证细节与过程脚本保存在本机 `.work/vnext-20261024/`（不随仓库分发）。
-
-## 界面实拍
-
-以下均为 **2026-10-24 在本机运行最新代码后的真实截图**，桌面 1440×900，移动端 390×844；不是 AI 生成的界面效果图。
-
-### 创作入口
-
-| 风格库 | 智能生成 |
+| 文化风格库 | 智能生成工作台 |
 |:---:|:---:|
-| [![五种传统视觉风格](docs/screenshots/vnext/styles.jpg)](docs/screenshots/vnext/styles.jpg) | [![国风智能创作工作台](docs/screenshots/vnext/creator.jpg)](docs/screenshots/vnext/creator.jpg) |
-| 五种风格统一取自 `styleLibrary`，每类一张正式图 | 主题、参考图、主体约束、风格强度与负向提示同屏 |
+| [![五种文化风格](docs/screenshots/current/culture-styles.jpg)](docs/screenshots/current/culture-styles.jpg) | [![真实创作工作台](docs/screenshots/current/creation-workspace.jpg)](docs/screenshots/current/creation-workspace.jpg) |
+| 查看风格资料与代表图 | 图示载入真实已保存作品，保留记录来源提示 |
 
-### 作品展厅与三种互动
+### 生成即入展，互动按本图自动构建
 
-| 作品展厅 | 画中有话 |
+成功作品自动保存参考图、成图、参数、文化卡与元数据。后台先由本地 Qwen3-VL 读取整图与实际局部，再生成本件专属热点和三章叙事，配合本地深度估计构建画境。展厅显示进度，完成后自动开放三个入口，**无需人工写作品文案或重启前端**。
+
+新生成作品的图片下方提供删除按钮；确认后移除本件作品与对应互动，更新展馆作品池。五件原始精选案例受保护。本机私有回收副本用于恢复，不进入公开仓库。
+
+[![作品展厅：真实作品、互动入口与删除按钮](docs/screenshots/current/gallery.jpg)](docs/screenshots/current/gallery.jpg)
+
+### 同一件作品，三种阅读方式
+
+| 画中有话 | 一图一境 |
 |:---:|:---:|
-| [![作品展厅：精选与新生成作品、互动构建状态](docs/screenshots/vnext/gallery.jpg)](docs/screenshots/vnext/gallery.jpg) | [![画中有话：热点与文化解读](docs/screenshots/vnext/experience.jpg)](docs/screenshots/vnext/experience.jpg) |
-| 按风格/来源筛选，最新优先，显示互动状态 | 热点缩放、局部观察、文化解读与来源 |
+| [![点击画面细节读取观察和解读](docs/screenshots/current/interactive-artwork.jpg)](docs/screenshots/current/interactive-artwork.jpg) | [![三章叙事与阅读焦点](docs/screenshots/current/story-reading.jpg)](docs/screenshots/current/story-reading.jpg) |
+| 热点、局部观察、审美解读与文化背景来源 | 三章图文阅读，章节焦点连接同件作品 |
 
-| 一图一境 | 画境漫游 |
+**画境漫游**使用本图深度与图层提供有限视角的 2.5D 体验，支持推进、转头和热点点击。山水采用平滑深度网格；确认白底的平面主体保留完整轮廓进行分层视差，减少细长轮廓的拉扯。它不恢复物体背面，也不是有骨骼的角色动画。
+
+[![新生成青花丹顶鹤的真实画境](docs/verification/20261025/white-reference/qinghua-world-side.jpg)](docs/verification/20261025/white-reference/qinghua-world-side.jpg)
+
+### 在经典纹脉展馆里布展
+
+保留原有两层经典展馆与 Antigravity 界面。Three.js 展示预制 Blender / GLB 建筑，支持室内外机位、第一/第三人称、昼夜、15 个画框换画、14 类器物 DIY、灵宠纹纹与本机布展保存。正式版本使用一座经典展馆。
+
+| 经典展馆 | 换画与布展 |
 |:---:|:---:|
-| [![一图一境：三折叙事](docs/screenshots/vnext/story.jpg)](docs/screenshots/vnext/story.jpg) | [![画境漫游：单图深度驱动](docs/screenshots/vnext/wander.jpg)](docs/screenshots/vnext/wander.jpg) |
-| 三折章节随阅读切换焦点 | 单图深度网格，支持推进与有限转头 |
+| [![经典展馆外观](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![新生成作品进入画框作品池](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
 
-### 纹脉展馆
+### 从作品到文创预览
 
-| 建筑外观 | 馆内空间 |
+支持明信片、海报、帆布袋、书签、杯垫、手机分享图、展陈屏与纪念票八类载体，提供版式预览和 **1600×1200 PNG** 输出；文化说明卡可导出 **1080×1440 PNG**。预览用于设计探索，不等于实物生产或印前交付文件。
+
+[![文创载体与实际导出界面](docs/screenshots/current/creative-products.jpg)](docs/screenshots/current/creative-products.jpg)
+
+<details>
+<summary>六组应用场景与六大动态能力矩阵</summary>
+
+| 应用场景 | 关于项目 |
 |:---:|:---:|
-| [![纹脉展馆外观](docs/screenshots/vnext/gallery-exterior.jpg)](docs/screenshots/vnext/gallery-exterior.jpg) | [![纹脉展馆内部展墙与画框](docs/screenshots/vnext/gallery-interior.jpg)](docs/screenshots/vnext/gallery-interior.jpg) |
-| 中式屋顶、台基与檐下灯光 | 展墙、画框、展柜与可探索动线 |
+| [![六组场景中的展陈板块](docs/screenshots/current/scenarios.jpg)](docs/screenshots/current/scenarios.jpg) | [![可展开的六大能力矩阵](docs/screenshots/current/about-gallery-capability.jpg)](docs/screenshots/current/about-gallery-capability.jpg) |
 
-[![布展模式：点击画框从作品池换画](docs/screenshots/vnext/gallery-diy.jpg)](docs/screenshots/vnext/gallery-diy.jpg)
+应用场景包括数字展馆、美育研学、文创器物、创作工坊、互动导览和线上传播。场景页部分配图是 AI 概念素材，表示应用构想，不是已部署的实体场馆或商品照片。界面排版与动态交互继续沿用 Antigravity 成果。
 
-布展模式中点击画框打开作品池；支持更换、取下、恢复默认，以及 14 件非遗器物的摆放、吸附、旋转、缩放与持久化。灵宠“纹纹”保留第一/第三人称探索，模型接入已模块化。
+</details>
 
-### 文创与应用说明
+## 产品特色
 
-| 文创转化 | 应用场景 |
-|:---:|:---:|
-| [![八类文创载体预览](docs/screenshots/vnext/products.jpg)](docs/screenshots/vnext/products.jpg) | [![应用场景：八组场景交错图文展示](docs/screenshots/vnext/scenarios.jpg)](docs/screenshots/vnext/scenarios.jpg) |
-| 八类载体，按比例预览并可导出 PNG | 已实现场景配真实截图；未部署场景明确标“应用构想” |
-
-| 关于项目 | 移动端 |
-|:---:|:---:|
-| [![关于项目：能力、架构与边界](docs/screenshots/vnext/about.jpg)](docs/screenshots/vnext/about.jpg) | [![移动端首页](docs/screenshots/vnext/home-mobile.jpg)](docs/screenshots/vnext/home-mobile.jpg) |
-| 十项能力说明、架构简图与技术限制 | 折叠导航与响应式排版 |
-
-## 自动互动流水线
-
-一次成功生成的完整链路：
-
-```text
-/generate 成功
-  → case_store 写入 docs/examples/<caseId>/
-      generated.png · reference.png · culture_card.png · metadata.json
-  → 返回 savedCase + interactiveJob
-  → 后台线程执行 scripts/interactive/ingest_case.py --refresh <caseId>
-      1. 深度估计（模型不可用时近似深度降级）
-      2. 自动热点（approximate / pending）
-      3. 三折叙事（沿用该风格知识包与来源编号）
-      4. 画境资产 → frontend/public/interactive/<caseId>/world/
-      5. experience.json + metadata.experienceId 回写
-  → 任务状态落盘，展厅轮询 /cases 自动更新
-  → 前端 /experience|story|wander/<caseId> 运行期读取该作品自己的数据
-```
-
-接口：
-
-| 接口 | 用途 |
-|---|---|
-| `GET /cases` | 作品清单（含 interaction 状态、图片地址） |
-| `GET /cases/{caseId}` | 单件作品 + 自己的 `experience.json` + 任务状态 |
-| `POST /cases/{caseId}/interactions/rebuild` | 重新构建（仅运行期案例；内置精选受保护） |
-| `GET /interactive-jobs` | 持久化任务状态：queued / processing / ready / partial / failed |
-
-前端不依赖 Vite 重新编译来“假装实时”：作品列表、详情与体验都通过统一 Case Service 运行期获取；静态 Pages 仍使用随包内置的五件作品作为演示数据。
-
-## 五件内置真实作品
-
-五组案例随仓库提交，包含参考图、成图、文化卡与完整 `metadata.json`（SHA-256、参数、分析来源），离线可读。
-
-| 风格 | 作品 | 参考 | 成图 | 文化卡 |
-|---|---|---|---|---|
-| 朱仙镇木版年画 | 瑞猫迎春 | [参考](docs/examples/zhuxianzhen/reference.png) | [成图](docs/examples/zhuxianzhen/generated.png) | [文化卡](docs/examples/zhuxianzhen/culture_card.png) |
-| 汴绣纹样 | 绣兔牡丹 | [参考](docs/examples/bianxiu/reference.png) | [成图](docs/examples/bianxiu/generated.png) | [文化卡](docs/examples/bianxiu/culture_card.png) |
-| 宋画青绿山水 | 云鹤临水楼 | [参考](docs/examples/songhua/reference.png) | [成图](docs/examples/songhua/generated.png) | [文化卡](docs/examples/songhua/culture_card.png) |
-| 青花瓷纹样 | 青花蝶韵 | [参考](docs/examples/qinghua/reference.png) | [成图](docs/examples/qinghua/generated.png) | [文化卡](docs/examples/qinghua/culture_card.png) |
-| 中国剪纸 | 剪影灵狐 | [参考](docs/examples/jianzhi/reference.png) | [成图](docs/examples/jianzhi/generated.png) | [文化卡](docs/examples/jianzhi/culture_card.png) |
-
-参考图包含经授权用于本项目的 AI 图像，不是历史实物照片；来源与权限见 [案例来源](docs/examples/reference_sources.md)。年画猫输出保留了题字，说明负向文字约束未完全生效；仓库不为展示效果修饰模型输出。
+- 五类风格资料与用户主题、参考图一起组织为可控生成条件。
+- 文化卡读取实际成图；新互动进一步逐局部读取，作品身份始终绑定独立 `caseId`。
+- 从自动入展、赏析、虚拟布展到文创预览共享作品数据。
+- 模型解析、后台任务、深度来源与图片哈希保留证据，失败明确呈现。
 
 ## 技术架构
 
 ```mermaid
 flowchart TD
-  UI[React 19 + TypeScript + Vite] --> CS[Case Service]
-  CS -->|GET /cases · /cases/:id| API[FastAPI]
-  UI -->|/generate| API
-  API --> PB[Prompt Builder + 五风格配置]
-  PB --> QI[DashScope Qwen Image 3.0]
-  QI --> STORE[case_store]
-  STORE --> EX[docs/examples/&lt;caseId&gt;<br/>原图 · 参考图 · 文化卡 · metadata]
-  STORE -->|后台任务| JOBS[interactive_jobs<br/>持久化状态]
-  JOBS --> INGEST[ingest_case.py<br/>深度 · 热点 · 叙事 · 画境]
-  INGEST --> EXP[experience.json]
-  INGEST --> WORLD[public/interactive/&lt;caseId&gt;/world]
-  EX --> API
-  EXP --> API
-  API --> CS
-  CS --> PAGES[展厅 / 画中有话 / 一图一境 / 画境漫游]
-  UI --> POOL[galleryPool<br/>精选 + 运行期作品]
-  POOL --> THREE[Three.js / R3F / Drei<br/>纹脉展馆]
-  UI --> PRODUCT[Canvas 文创预览 / PNG 导出]
-  VL[Ollama Qwen3-VL] -.可选.-> PB
+  UI[React / TypeScript / Vite] --> API[FastAPI]
+  API --> GEN[Qwen Image 3.0 / 用户云端配置]
+  GEN --> SAVE[本图文化卡 / 作品文件 / 元数据]
+  SAVE --> JOB[持久后台任务]
+  JOB --> VL[本地 Ollama Qwen3-VL<br/>整图与逐局部读取 / 热点 / 章节]
+  VL --> DEPTH[本地 Depth Anything V2 Small<br/>相对深度估计]
+  DEPTH --> WORLD[同图的 2.5D 资产]
+  SAVE --> CASES[Case Service / 最新状态]
+  VL --> CASES
+  CASES --> UI
+  WORLD --> UI
+  UI --> HALL[Three.js / Blender GLB / 经典展馆]
+  UI --> PNG[Canvas 文创预览与导出]
 ```
 
-- 前端：React Router、Tailwind CSS、Motion、Zod、Zustand。
-- 后端：FastAPI、Pydantic、Pillow；作品用本机文件保存，没有独立数据库。
-- 展馆：预构建 GLB + React Three Fiber；布展与器物状态用 localStorage。
-- 文化来源：`culture_knowledge/` 本地注册表，不声称在线检索或自动事实核查。
+Qwen3-VL 负责观察与叙事，深度模型只辅助空间呈现；项目使用第三方基础模型，不宣称自训练或自研这些模型。没有数据库或多用户账号系统。详见 [架构与接口](docs/architecture.md)、[自动构建流程](docs/interactive/NEW_CASE_PIPELINE.md)、[模型依赖与交付](models/README.md)。
 
-更多说明：[架构](docs/architecture.md) · [运行与故障处理](docs/running.md)
+## 真实作品案例
 
-## 快速开始
+原有五组参考图、真实成图、文化卡与来源证据完整保留：
 
-需要 **Python 3.10+、Node.js 20.19+ / 22.12+、npm**；运行前端 TypeScript 测试建议 Node.js 22.18+ 或 24。首次安装依赖需要联网；实时文化理解可选安装 Ollama 模型。
+| 年画 · 瑞猫迎春 | 汴绣 · 绣兔牡丹 | 宋画 · 云鹤临水楼 | 青花 · 青花蝶韵 | 剪纸 · 剪影灵狐 |
+|:---:|:---:|:---:|:---:|:---:|
+| [![年画猫](docs/examples/zhuxianzhen/generated.png)](docs/examples/zhuxianzhen/metadata.json) | [![汴绣兔](docs/examples/bianxiu/generated.png)](docs/examples/bianxiu/metadata.json) | [![青绿楼阁](docs/examples/songhua/generated.png)](docs/examples/songhua/metadata.json) | [![青花蝶](docs/examples/qinghua/generated.png)](docs/examples/qinghua/metadata.json) | [![剪纸狐](docs/examples/jianzhi/generated.png)](docs/examples/jianzhi/metadata.json) |
 
-### Windows 一键运行
+[查看参考图 → 参数 → 成图 → 文化卡的完整案例](docs/examples/README.md)。
+
+2026-10-25 另用五张不同的 AI 白底测试参考图，真实生成了年画金鱼、汴绣牡丹、青绿山亭、青花丹顶鹤和剪纸骏马，并检查自动入展与三种互动。[本轮真实结果、对照和浏览器记录](docs/verification/20261025/README.md)。
+
+## 安装与运行
+
+环境：Python 3.10+；Node.js 20.19+ 或 22.12+。运行现有 TypeScript 测试建议 Node.js 22.18+。完整创作还需要个人百炼配置、Ollama Qwen3-VL 和本地深度模型。
+
+在项目根目录执行：
 
 ```powershell
-.\check_environment.cmd
 .\setup_windows.cmd
-# 首次安装后编辑 backend/.env，填写自己的百炼配置
+
+# 完整自动互动环境：首次安装一次
+.\backend\venv\Scripts\python.exe -m pip install -r backend/requirements-interactive.txt
+.\backend\venv\Scripts\python.exe scripts/setup_interactive_models.py
+ollama pull qwen3-vl:4b-instruct-q4_K_M
+
+.\check_environment.cmd
 .\start_windows.cmd
 # 使用完毕
 .\stop_windows.cmd
 ```
 
-`setup_windows.cmd` 创建虚拟环境、安装前后端依赖并准备素材；`start_windows.cmd` 选择空闲端口并传递前后端地址；`stop_windows.cmd` 只关闭自身记录且启动时间匹配的进程，保留共享 Ollama。
+从 `backend/.env.example` 配置本机 `backend/.env`：填写个人 `DASHSCOPE_API_KEY` 与百炼业务空间专属 `DASHSCOPE_BASE_URL`；保留本地 `QWEN_VL_ENABLED=true`、实际模型名称和 `WENMAI_DEPTH_MODE=model`。密钥只留在后端，不提交 GitHub。
 
-### 手动启动
+Ollama 已运行时不用重复启动，模型已安装时不用重下。启动器打印实际前后端端口，默认打开展厅；停止脚本核对进程身份并保留 Ollama。已保存作品、经典展馆和文创预览无需调用付费生图服务。[完整运行说明与故障处理](docs/running.md)。
 
-```powershell
-# 后端（backend 目录）
-.\venv\Scripts\python.exe -m uvicorn app:app --host 127.0.0.1 --port 8000
-
-# 前端（frontend 目录）
-npm ci
-npm run dev
-```
-
-验证顺序：后端 `/health` → 后端 `/generate` → 前端 `npm run dev` → 浏览器。接口文档见运行中后端的 `/docs`。
-
-### 配置
-
-只在本地编辑 `backend/.env`，参照 [配置模板](backend/.env.example)。密钥不会进入前端或 Git。
-
-```dotenv
-GENERATION_PROVIDER=dashscope_qwen_image
-ALLOW_MOCK_FALLBACK=false
-DASHSCOPE_API_KEY=
-DASHSCOPE_BASE_URL=
-DASHSCOPE_IMAGE_MODEL=qwen-image-3.0
-QWEN_VL_ENABLED=true
-QWEN_VL_BASE_URL=http://127.0.0.1:11434
-QWEN_VL_MODEL=qwen3-vl:4b-instruct-q4_K_M
-# 新作品后台互动构建（默认开启）
-AUTO_BUILD_INTERACTIVE=true
-# 深度模型不可用时会自动降级为近似深度，画境仍可打开
-```
-
-没有生成密钥也可浏览内置作品、文化卡、三种互动、画境与三维展馆；实时生成与新作品互动构建需要本机后端。
-
-## 项目目录
+## 项目结构
 
 ```text
-wenmai-huazhang/
-├─ frontend/                 React 应用、页面、互动与三维展馆
-│  ├─ src/data/             风格库、案例、运行期体验与展馆作品池
-│  ├─ src/features/         画中有话、一图一境、画境、展馆场景与器物
-│  ├─ public/models/        运行时 GLB 模型
-│  ├─ public/interactive/   已烘焙画境资产
-│  └─ tests/                数据契约与几何测试
-├─ backend/                 FastAPI、生成、案例保存、持久化任务
-├─ culture_knowledge/       文化来源注册表
-├─ docs/examples/           五件内置作品与元数据
-├─ docs/screenshots/vnext/  本轮真实截图
-├─ scripts/interactive/     互动与画境构建流水线
-├─ .work/                   本地过程文件（不提交）
-├─ setup_windows.cmd
-├─ start_windows.cmd
-└─ stop_windows.cmd
+frontend/src/           页面、案例读取、互动体验、2.5D 与经典展馆
+frontend/public/       风格图、经典 GLB、已构建画境及场景素材
+backend/               FastAPI、模型调用、文化卡、案例与后台任务
+scripts/interactive/   本图解析接入、深度估计与画境构建
+models/                模型来源、固定版本、许可与校验说明
+culture_knowledge/     文化背景与来源注册表
+assets/                原始设计与正式模型工程
+docs/examples/         真实案例、输入、文化卡与互动数据
+docs/screenshots/current/  当前正式真实界面截图
+docs/verification/     可核查的运行验收资料
+docs/history/          保留的历史记录与旧截图
+tests/                 后端与流水线回归测试
 ```
 
 ## 功能状态与限制
 
-| 能力 | 状态 |
-|---|---|
-| 首页入口与导航、应用场景、关于项目 | 已实现（首页暂为回退版） |
-| 智能生成（Qwen Image 3.0，文本/参考图） | 已实现，需本机配置与额度 |
-| 生成后自动保存、作品展厅运行期刷新 | 已实现 |
-| 画中有话 / 一图一境 / 画境漫游自动构建 | 已实现；热点为自动约定位，需人工复核 |
-| 任务持久化、失败重试、部分完成 | 已实现 |
-| 新作品进入展馆作品池、画框换画、布展持久化 | 已实现 |
-| 14 件非遗器物布展、灵宠第一/第三人称 | 已实现；灵宠为可替换占位模型 |
-| 展馆建筑重建 / Blender 重新建模 | 本轮未做，仅优化现有 GLB 的灯光、材质与控件 |
-| 多用户账号、云端数据库、交易与实体生产 | 未实现 |
+本轮真实验证涵盖五种白底参考图生成、自动保存、本地整图与局部解析、三个互动入口及画境操作。TypeScript、前端测试、后端测试和构建结果详见 [正式审计记录](docs/RELEASE_AUDIT_20261025.md)，不沿用历史测试数字作为本轮结果。
 
-其他边界：
+- 云端生成需要合法服务与额度；没有密钥时仍可浏览已保存作品。
+- 新图自动互动需要本地 Qwen3-VL 与已安装的深度环境。构建异步完成，失败可重试，不撤销成图。
+- 自动观察、文化解读、热点和相对深度可能有偏差，不作历史事实核验或测量依据。
+- 2.5D 是有限视角，不是完整三维重建；弱设备可回落静态视差。
+- GitHub Pages 只读展示；实时推理、作品删除和新作品保存需要本地后端。
+- 场景概念图与文创样机表示设计探索，不代表商业部署或实物制造。
 
-- 单图深度只描述前后关系，画境不能绕到主体背后；低性能设备会降级。
-- 自动热点与自动文化解读标注为 approximate / AI 辅助，不冒充人工复核或文物认证。
-- 文创图是模板效果预览，不是印刷生产文件。
-- 三维场景与 11 MB 级 GLB 在低性能设备上可能加载较慢。
-- GitHub Pages 只托管静态前端，不运行 FastAPI、生成服务或深度模型。
+## 开源协议与来源
 
-## 历史版本与许可
+代码沿用 [MIT](LICENSE)，保留既有 Apache-2.0 声明及 [第三方组件说明](THIRD_PARTY_NOTICES.md)。模型遵循各自许可，MIT 不覆盖第三方权重与云端服务条款。
 
-保留 [iCAN v1.0.0 视频与方案 Release](https://github.com/3331083641-prog/wenmai-huazhang/releases/tag/v1.0.0) 与历史提交；[历史文件索引](docs/history/README.md) 记录已移出发布目录的开发备份。
-
-项目原创代码采用 [MIT](LICENSE)，保留既有 Apache-2.0 声明与 [第三方许可说明](THIRD_PARTY_NOTICES.md)。模型、云端服务与素材按各自条款使用，MIT 不重新授权这些内容。
+[素材与模型资产](assets/README.md) · [案例参考图来源](docs/examples/reference_sources.md) · [截图来源](docs/screenshots/README.md) · [历史资料](docs/history/)

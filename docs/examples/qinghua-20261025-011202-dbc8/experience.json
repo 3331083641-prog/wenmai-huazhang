@@ -1,0 +1,195 @@
+{
+  "id": "qinghua-20261025-011202-dbc8",
+  "styleId": "qinghua",
+  "styleName": "青花瓷纹样",
+  "title": "青瓷鹤影：纹饰与羽翼的静谧交响",
+  "subtitle": "红顶白羽的优雅，青花卷草的灵动，深蓝尾羽的沉静",
+  "lead": "一只丹顶鹤以青花瓷纹为衣，红顶黑颈勾勒出古典轮廓，尾羽深蓝如墨染，整幅画面在纯白背景下静立，似一幅未完成的东方水墨。",
+  "artworkSize": {
+    "width": 1024,
+    "height": 1024
+  },
+  "theme": {
+    "accent": "#22508F",
+    "accentSoft": "#CBD9EC",
+    "paper": "#F3F5F8",
+    "ink": "#243040",
+    "gold": "#9C8556"
+  },
+  "visualAnalysis": {
+    "source": "qwen3_vl_image",
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "observedSubjects": [
+      "鹤首红顶",
+      "鹤颈黑羽",
+      "鹤身青花纹样",
+      "尾羽深蓝"
+    ],
+    "visualFeatures": [
+      "青花纹样分布于鹤身",
+      "尾羽深蓝与身体蓝纹形成对比",
+      "鹤颈黑羽与红顶形成视觉焦点",
+      "整体构图简洁，留白充分"
+    ],
+    "sceneKind": "flat_artwork",
+    "dominantColors": [
+      "白",
+      "蓝",
+      "黑",
+      "红"
+    ]
+  },
+  "hotspots": [
+    {
+      "id": "39ce0e556f42-spot-1",
+      "title": "鹤头冠部特写：红顶白羽与黑颈过渡",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.32,
+        "cy": 0.08,
+        "r": 0.04
+      },
+      "shortDescription": "红色冠顶、白羽眼周、黑颈过渡，喙尖细长，眼珠棕褐，羽毛纹理细腻",
+      "visualObservation": "红色冠顶、白羽眼周、黑颈过渡，喙尖细长，眼珠棕褐，羽毛纹理细腻",
+      "culturalExplanation": "红白黑三色对比鲜明，线条流畅，色彩层次分明，视觉上具雕塑感与优雅张力。",
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-1"
+    },
+    {
+      "id": "39ce0e556f42-spot-2",
+      "title": "丹顶鹤头部与颈部特写",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.35,
+        "cy": 0.18,
+        "r": 0.04
+      },
+      "shortDescription": "红顶、黑颈、白羽，喙尖长，眼圆褐，颈曲如弓，颈侧有青花纹样。",
+      "visualObservation": "红顶、黑颈、白羽，喙尖长，眼圆褐，颈曲如弓，颈侧有青花纹样。",
+      "culturalExplanation": "红黑白三色对比鲜明，青花纹样沿颈蜿蜒，线条婉转，赋予静穆之姿以雅致韵律。",
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-1"
+    },
+    {
+      "id": "39ce0e556f42-spot-3",
+      "title": "鹤身青花纹样局部",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.48,
+        "cy": 0.35,
+        "r": 0.05
+      },
+      "shortDescription": "白色背景上布满蓝色卷草与花卉纹样，线条流畅，疏密有致，部分纹样呈团簇状，边缘略带晕染。",
+      "visualObservation": "白色背景上布满蓝色卷草与花卉纹样，线条流畅，疏密有致，部分纹样呈团簇状，边缘略带晕染。",
+      "culturalExplanation": "蓝白相间，纹样灵动，疏密错落间显雅致，线条轻盈如风拂，整体清透而富有韵律感。",
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-2"
+    },
+    {
+      "id": "39ce0e556f42-spot-4",
+      "title": "鹤身尾羽交界处的青花纹样与深蓝羽翼",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.7,
+        "cy": 0.45,
+        "r": 0.04
+      },
+      "shortDescription": "白色羽毛上布满蓝彩卷草纹，与深蓝色尾羽形成对比，羽翼边缘有自然过渡的黑白渐变。",
+      "visualObservation": "白色羽毛上布满蓝彩卷草纹，与深蓝色尾羽形成对比，羽翼边缘有自然过渡的黑白渐变。",
+      "culturalExplanation": "蓝白相间的纹样疏密有致，深蓝羽翼如墨染，整体呈现清雅静谧的东方韵味，线条流畅不显繁复。",
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-3"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "fold-1",
+      "index": 1,
+      "eyebrow": "focus_indices: 0",
+      "title": "鹤首红顶：三色交界处的雕塑感",
+      "body": "红顶白羽与黑颈过渡处，色彩对比鲜明，线条流畅，视觉上具雕塑感与优雅张力。喙尖细长，眼珠棕褐，羽毛纹理细腻，静立如画中仙鹤。",
+      "focusHotspotIds": [
+        "39ce0e556f42-spot-1"
+      ],
+      "frame": {
+        "scale": 1.45,
+        "focusX": 0.32,
+        "focusY": 0.08
+      },
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ]
+    },
+    {
+      "id": "fold-2",
+      "index": 2,
+      "eyebrow": "focus_indices: 2",
+      "title": "青花之舞：身披卷草纹的静谧韵律",
+      "body": "白色背景上布满蓝色卷草与花卉纹样，线条流畅，疏密有致，部分纹样呈团簇状，边缘略带晕染。蓝白相间，纹样灵动，整体清透而富有韵律感。",
+      "focusHotspotIds": [
+        "39ce0e556f42-spot-3"
+      ],
+      "frame": {
+        "scale": 1.61,
+        "focusX": 0.48,
+        "focusY": 0.35
+      },
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ]
+    },
+    {
+      "id": "fold-3",
+      "index": 3,
+      "eyebrow": "focus_indices: 3",
+      "title": "尾羽之墨：深蓝与青花的静谧对话",
+      "body": "白色羽毛上布满蓝彩卷草纹，与深蓝色尾羽形成对比，羽翼边缘有自然过渡的黑白渐变。蓝白相间的纹样疏密有致，深蓝羽翼如墨染，整体呈现清雅静谧的东方韵味。",
+      "focusHotspotIds": [
+        "39ce0e556f42-spot-4"
+      ],
+      "frame": {
+        "scale": 1.58,
+        "focusX": 0.7,
+        "focusY": 0.45
+      },
+      "sourceIds": [
+        "SRC-QH-JINGDEZHEN-001"
+      ]
+    }
+  ],
+  "animation": {
+    "mode": "world",
+    "world": {
+      "url": "interactive/qinghua-20261025-011202-dbc8/world/world.json"
+    },
+    "capabilityNote": "画境贴图、热点与深度均对应这张成图；支持推进与有限转头，不恢复遮挡背面，不是完整三维重建。",
+    "layerSource": "本图深度与颜色派生素材；微动类别按本图视觉解析启用。"
+  },
+  "provenance": {
+    "sourceCaseId": "qinghua-20261025-011202-dbc8",
+    "sourceImageSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb",
+    "knowledgeVersion": "1.0.0",
+    "hotspotMethod": "Qwen3-VL 直接读取本图，估计归一化热点；自动定位不冒充人工复核。",
+    "designNote": "热点观察、局部审美解读与三折叙事均来自本图专属视觉策划；来源条目用于文化背景，不认证AI画面。"
+  }
+}

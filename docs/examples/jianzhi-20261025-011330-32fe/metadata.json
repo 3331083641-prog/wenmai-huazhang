@@ -1,0 +1,110 @@
+{
+  "caseId": "jianzhi-20261025-011330-32fe",
+  "caseOrigin": "runtime",
+  "experienceId": "jianzhi-20261025-011330-32fe",
+  "styleId": "jianzhi",
+  "styleName": "中国剪纸",
+  "referenceSubject": "马",
+  "artworkTitle": "红焰奔马：剪纸之舞",
+  "theme": "一匹完整骏马，保留马头四蹄与尾巴，中国红剪纸镂空纹样，纯白背景，轮廓清楚，不加其他动物",
+  "referenceSource": "user_upload",
+  "sourceFilename": "reference.png",
+  "referenceFilename": "reference.png",
+  "referenceSha256": "dcb27306d3daac706ef7202db74cd780450e3f613a35b8ce1792c2dd0ef8fa35",
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "styleStrength": 0.7,
+  "compositionMode": "portrait",
+  "outputType": "poster",
+  "negativePrompt": "文字、水印、边框、模糊、裁掉主体、重复动物、错误解剖",
+  "inputImageCount": 1,
+  "generatedAt": "2026-10-25T01:13:30.497732+08:00",
+  "generationAttempt": "runtime_auto_save",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": 1,
+  "analysisSource": "qwen3_vl",
+  "visionProvider": "ollama_local",
+  "visionModel": "",
+  "cultureCardAnalysisSource": "qwen3_vl",
+  "generationHistory": [
+    {
+      "generation": "runtime_auto_save",
+      "generatedAt": "2026-10-25T01:13:30.497732+08:00",
+      "model": "qwen-image-3.0",
+      "styleStrength": 0.7,
+      "referenceImageUsed": true,
+      "modelInputImageCount": 1,
+      "generatedSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125",
+      "analysisSource": "qwen3_vl"
+    }
+  ],
+  "outputImageCount": 1,
+  "generatedSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125",
+  "generatedBytes": 728992,
+  "artworkSize": {
+    "width": 1024,
+    "height": 1024
+  },
+  "visionAnalysis": {
+    "title": "红马献瑞",
+    "theme_summary": "红纸镂空骏马，饰以繁复花卉，寓意吉祥与生机。",
+    "composition": "骏马侧立，四肢舒展，尾部飘逸，构图饱满，视觉重心清晰。",
+    "style_interpretation": "剪纸风格强化红白对比，线条利落勾勒马形，花卉镂空填满肌理，呈现民间工艺的精巧与节庆氛围的热烈。",
+    "culture_interpretation": "骏马身披繁花，鬃尾如流，花枝与马骨交错，暗合‘花马’之吉兆。花鸟剪纸常入窗，寓意团圆繁盛，此作以动势马形承载静美花语，红纸象征喜庆，白底衬托洁净，传递民间对丰年与祥瑞的朴素信仰。",
+    "observed_subjects": [
+      "骏马",
+      "中国红剪纸",
+      "镂空花卉纹样",
+      "纯白背景"
+    ],
+    "dominant_colors": [
+      "红色",
+      "白色"
+    ],
+    "visual_features": [
+      "红色剪纸镂空",
+      "花卉纹样密布",
+      "轮廓分明利落",
+      "纯白背景衬托"
+    ],
+    "recommended_scenes": [
+      "节庆窗花",
+      "文创书签"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionAnalysisRuntime": {},
+  "cultureCard": {
+    "title": "红马献瑞",
+    "cultureSource": "中国民间剪纸",
+    "visualFeatures": "红色剪纸镂空、花卉纹样密布、轮廓分明利落、纯白背景衬托",
+    "symbolicMeaning": "骏马身披繁花，鬃尾如流，花枝与马骨交错，暗合‘花马’之吉兆。花鸟剪纸常入窗，寓意团圆繁盛，此作以动势马形承载静美花语，红纸象征喜庆，白底衬托洁净，传递民间对丰年与祥瑞的朴素信仰。",
+    "applicationScenario": "节庆窗花、文创书签"
+  },
+  "enhancedPrompt": "最高优先级主体约束：画面唯一主要主体为“马”。必须保留该主体在参考图中可见的身份、关键外形和姿态；不得替换、删除、混合成其他主体。传统风格只改变主体的绘画技法、纹样、色彩和材质表现，不改变主体身份；风格库中的花鸟、瑞兽等装饰题材不得覆盖此主体约束。核心主题：一匹完整骏马，保留马头四蹄与尾巴，中国红剪纸镂空纹样，纯白背景，轮廓清楚，不加其他动物。所选传统文化视觉风格：中国剪纸（中国剪纸）。风格来源：中国民间剪纸。视觉特征：红色剪纸、镂空结构、对称构图、民俗花卉、节庆氛围。文化寓意：红色、对称纹样与花卉题材常见于节庆剪纸表达；具体寓意因地区与主题而异。风格提示强度：0.70，提示词较强强调所选视觉风格描述；实际画面效果受生成模型影响。参考图基础信息：用户上传的参考图将作为图像条件参与本次生成；请将其用于理解主体、主要关系与画面构图，并在保持创作主题和所选传统风格的前提下进行再创作。后端另由 Pillow 进行本地基础统计（不识别主体或场景）：尺寸 1254x1254；平均色彩与明暗 主色调约为 低饱和灰白色系（#D6C9C2），整体偏亮；画幅方向 接近方形画幅，尺寸 1254x1254。输出类型：数字海报视觉稿，poster layout, clear visual center, readable composition。构图要求：竖向主体布局提示，vertical visual emphasis, strong foreground subject。用户排除清单：文字、水印、边框、模糊、裁掉主体、重复动物、错误解剖。清单是需要避开的画面元素，不是创作题材，不能把清单词语绘制到作品中。画面只呈现图像内容，不生成任何可读文字、数字、标题、署名、印章字符、标识、二维码或水印；该限制优先于海报、票券等版式提示。生成要求：主体清晰，层次丰富，传统视觉元素自然融入现代设计，避免无意义文字，画面完整，细节清楚，high quality, detailed texture.",
+  "cultureCardGeneratedSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125",
+  "cultureCardSha256": "8e960bf938d21ac869eb81bb0d21ca41142dcfc7b0332839d0aac4eafbf404e4",
+  "cultureCardExport": "pillow_png",
+  "caseFiles": {
+    "generated": "generated.png",
+    "reference": "reference.png",
+    "cultureCard": "culture_card.png"
+  },
+  "interactive": {
+    "status": "ready",
+    "experience": "experience.json",
+    "world": "frontend/public/interactive/jianzhi-20261025-011330-32fe/world/world.json",
+    "hotspots": 4,
+    "hotspotMethod": "qwen3-vl-image-plan",
+    "contentSource": "qwen3_vl_image",
+    "analysisImageSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125",
+    "interactionPlanVersion": 2,
+    "depthSource": "depth-anything-v2-small",
+    "builtAt": "2026-10-25T02:09:19.051844+08:00"
+  },
+  "referenceOrigin": "AI-generated white-background reference, requested by the user for this verification",
+  "referenceProvider": "built-in imagegen tool; not a photograph",
+  "verificationRun": "20261025-white-reference-five-styles"
+}

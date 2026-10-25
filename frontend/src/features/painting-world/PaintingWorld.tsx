@@ -164,6 +164,7 @@ export default function PaintingWorld({ experience }: { experience: CultureExper
   const handleFps = useCallback(
     (value: number) => {
       setFps(value);
+      if (document.hidden) { lowSince.current = null; return; }
       if (degraded || !inside) return;
       if (value < FPS_FLOOR) {
         lowSince.current = lowSince.current ?? Date.now();
@@ -390,7 +391,8 @@ export default function PaintingWorld({ experience }: { experience: CultureExper
         {manifest ? (
           <WorldScene
             manifest={manifest}
-            baseUrl={experience.animation.world?.url ?? ''}
+            baseUrl={(experience.animation.world?.url ?? '') + (manifest.provenance.asset_revision
+              ? `?v=${manifest.provenance.asset_revision}` : '')}
             control={control}
             selectedId={selectedId}
             onHoverChange={setHoveredId}

@@ -1,0 +1,103 @@
+{
+  "slug": "bianxiu-20261025-010853-f7cd",
+  "styleId": "bianxiu",
+  "title": "粉霞绽放：一朵牡丹的静谧叙事",
+  "image": {
+    "width": 1024,
+    "height": 1024,
+    "bytes": 1032696
+  },
+  "depth": {
+    "source": "depth-anything-v2-small",
+    "provenance": {
+      "source": "depth-anything-v2-small",
+      "modelUsed": true,
+      "approximate": true,
+      "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+      "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+      "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+      "license": "Apache-2.0",
+      "inputImageSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48"
+    },
+    "nearShare": 0.1543,
+    "farShare": 0.5759,
+    "percentiles": [
+      0.0118,
+      0.0784,
+      0.3098,
+      0.8824,
+      0.9922
+    ],
+    "gamma": 0.72
+  },
+  "hotspots": [
+    {
+      "id": "14bee1d62164-spot-1",
+      "title": "牡丹花心与花瓣纹理特写",
+      "x": 0.5,
+      "y": 0.35,
+      "status": "approximate"
+    },
+    {
+      "id": "14bee1d62164-spot-2",
+      "title": "左下叶片的脉络与纹理",
+      "x": 0.3,
+      "y": 0.6,
+      "status": "approximate"
+    },
+    {
+      "id": "14bee1d62164-spot-3",
+      "title": "花茎与叶片连接处的纹理细节",
+      "x": 0.5,
+      "y": 0.75,
+      "status": "approximate"
+    },
+    {
+      "id": "14bee1d62164-spot-4",
+      "title": "牡丹花瓣边缘的褶皱与纹理",
+      "x": 0.75,
+      "y": 0.3,
+      "status": "approximate"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "fold-1",
+      "scale": 1.61
+    },
+    {
+      "id": "fold-2",
+      "scale": 1.55
+    },
+    {
+      "id": "fold-3",
+      "scale": 1.55
+    }
+  ],
+  "world": {
+    "built": true,
+    "files": [
+      "art.webp",
+      "backdrop.webp",
+      "cutout-subject.webp",
+      "depth-preview.png",
+      "depth-rg.png",
+      "masks.png",
+      "model-depth-rg.png",
+      "surface.webp",
+      "world.json"
+    ],
+    "bytes": 1166264
+  },
+  "vlm": {
+    "used": true,
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "inputImageSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
+    "contentSource": "qwen3_vl_image"
+  },
+  "warnings": [
+    "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
+    "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
+  ],
+  "elapsedSec": 91.5
+}

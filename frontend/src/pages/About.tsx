@@ -28,15 +28,15 @@ import {
 } from 'lucide-react';
 import { STYLES } from '../data/styleLibrary';
 
-import creatorShot from '../../../docs/screenshots/creation-workspace.png';
-import galleryShot from '../../../docs/screenshots/gallery.png';
-import experienceShot from '../../../docs/screenshots/interactive-artwork.png';
-import storyShot from '../../../docs/screenshots/story-reading.png';
-import wanderShot from '../../../docs/screenshots/painting-world.png';
-import heritageExterior from '../../../docs/screenshots/vnext/gallery-exterior.jpg';
-import heritageInterior from '../../../docs/screenshots/heritage-interior.png';
-import productShot from '../../../docs/screenshots/creative-products.png';
-import cultureCardShot from '../../../docs/screenshots/culture-card.png';
+import creatorShot from '../../../docs/screenshots/current/creation-workspace.jpg';
+import galleryShot from '../../../docs/screenshots/current/gallery.jpg';
+import experienceShot from '../../../docs/screenshots/current/interactive-artwork.jpg';
+import storyShot from '../../../docs/screenshots/current/story-reading.jpg';
+import wanderShot from '../../../docs/screenshots/current/painting-world.jpg';
+import heritageExterior from '../../../docs/screenshots/current/heritage-gallery.jpg';
+import heritageInterior from '../../../docs/screenshots/current/heritage-interior.jpg';
+import productShot from '../../../docs/screenshots/current/creative-products.jpg';
+import cultureCardShot from '../../../docs/screenshots/current/culture-card.jpg';
 
 /**
  * 六大核心能力定义
@@ -74,8 +74,8 @@ const CAPABILITIES: CapabilityItem[] = [
     summary:
       '以千年文脉为审美先验，支持文本主题与上限 10MB 的构图姿态参考图双驱动创作。服务端精准校验并真实返回 referenceImageUsed 凭据，确保推理过程透明可信。',
     highlights: [
-      '文本主题与参考图双向约束，0% ~ 100% 风格强度精准可调',
-      '提炼非遗核心构图与设色法则，毫秒级注入结构化 Prompt 语法',
+      '文本主题与参考图双向约束，0% ~ 100% 提示词风格强调可调',
+      '提炼非遗核心构图与设色法则，写入结构化 Prompt 提示',
       '云端原生接入阿里云百炼官方 Qwen Image 3.0，杜绝伪概念伪生成',
     ],
     badges: ['阿里云百炼 DashScope', 'Qwen Image 3.0', '10MB 参考图支持', '真实凭证校验'],
@@ -99,9 +99,9 @@ const CAPABILITIES: CapabilityItem[] = [
     summary:
       '本地部署 Ollama Qwen3-VL 4B 视觉多模态大模型。成图后自动分析构图元素、色彩基调与非遗工艺特征，一键导出精致 CultureCard 文化说明卡。',
     highlights: [
-      '本地部署 Ollama Qwen3-VL 4B 视觉多模态模型，保护创作者数据隐私',
+      '本地部署 Ollama Qwen3-VL 4B 视觉多模态模型，成图分析在本机执行，图像生成仍使用云端服务',
       '自动化提取非遗工艺特征、色彩象征意涵与文创转化建议',
-      '精美排版 CultureCard 说明卡，支持一键高清保存与印刷打样',
+      '精美排版 CultureCard 说明卡，支持一键高清保存与设计评估',
     ],
     badges: ['Ollama 本地部署', 'Qwen3-VL 4B', '自动化特征提取', 'CultureCard 导出'],
     image: cultureCardShot,
@@ -120,15 +120,15 @@ const CAPABILITIES: CapabilityItem[] = [
     tag: '作品展厅',
     title: '作品展厅与自动保存管理',
     shortTitle: '作品展厅与存储',
-    subtitle: '生成即入库 · 本地持久化管理 · 防误改哈希校验',
+    subtitle: '生成即入库 · 本地持久化管理 · SHA-256 溯源记录',
     summary:
       '彻底告别单次运行的临时页面。成图与元数据通过本地 Case Store 自动落盘入库，并自动构建互动赏析入口；内置 5 件已核验精选名作离线可览。',
     highlights: [
       'Case Store 本地持久化存储，原图、成图与参数元数据全生命周期管理',
-      '内置 5 件官方精选核验名作，无网或无 API 环境下离线完整可用',
-      'SHA-256 证据哈希追踪，具备作品来源筛选与防误改校验机制',
+      '内置 5 组带来源和参数的精选生成案例，无 API 也可浏览',
+      'SHA-256 证据哈希追踪，具备作品来源筛选与文件哈希追溯记录',
     ],
-    badges: ['Case Store 本地存储', '5 件核验名作', 'SHA-256 审计', '离线完整可用'],
+    badges: ['Case Store 本地存储', '5 组精选案例', 'SHA-256 审计', '离线完整可用'],
     image: galleryShot,
     alt: '作品展厅与作品管理',
     to: '/gallery',
@@ -177,7 +177,7 @@ const CAPABILITIES: CapabilityItem[] = [
     shortTitle: '三维展馆与布展',
     subtitle: 'Three.js 双层中式虚拟展厅 · 自由换画布展 · 灵宠伴游',
     summary:
-      '基于 Three.js 独立渲染完整双层中式实体木构建筑。创作者可自由漫游、将作品挂入 15 处画框、自由陈列 14 件传统道具，并支持昼夜光影切换与灵宠领路。',
+      '基于 Three.js 渲染预制的双层中式虚拟展馆。创作者可自由漫游、将作品挂入 15 处画框、自由陈列 14 件传统道具，并支持昼夜光影切换与灵宠领路。',
     highlights: [
       'WebGL / Three.js 独立渲染经典中式木构双层建筑，支持第一/第三人称视角',
       '自由策展模式：15 处画框一键陈列生成作品，14 件传统器物随心摆放',
@@ -192,7 +192,7 @@ const CAPABILITIES: CapabilityItem[] = [
     accentBg: 'rgba(139, 58, 43, 0.08)',
     accentBorder: 'rgba(139, 58, 43, 0.28)',
     icon: Compass,
-    previewNote: '双层木构实体漫游',
+    previewNote: '双层木构虚拟展馆',
     subShots: [
       { label: '展馆内景 · 画框布展', img: heritageInterior },
       { label: '建筑外景 · 中式重檐', img: heritageExterior },
@@ -212,7 +212,7 @@ const CAPABILITIES: CapabilityItem[] = [
       '根据载体物理比例自适应版式构图与纹理光影材质模拟',
       '支持导出 1600×1200 像素的高清打样图，赋能文创设计前期快速推演',
     ],
-    badges: ['8 类文创载体', '1600×1200 导出', '材质真实模拟', '自适应排版'],
+    badges: ['8 类文创载体', '1600×1200 导出', '载体效果预览', '自适应排版'],
     image: productShot,
     alt: '文创转化工坊与衍生打样',
     to: '/products',
@@ -221,7 +221,7 @@ const CAPABILITIES: CapabilityItem[] = [
     accentBg: 'rgba(184, 115, 51, 0.08)',
     accentBorder: 'rgba(184, 115, 51, 0.28)',
     icon: Layout,
-    previewNote: '8 类文创实体打样',
+    previewNote: '8 类文创效果预览',
   },
 ];
 
@@ -322,12 +322,12 @@ const ARCH_LAYERS: ArchItem[] = [
     subtitle: 'Multi-Modal Foundation Models & Local Vision',
     icon: Cpu,
     desc: '采用「云端多模态图像生成 + 本地轻量化视觉大模型解读」的混合 AI 协同架构。云端对接阿里云百炼官方 Qwen Image 3.0，本地部署 Ollama Qwen3-VL 4B 视觉多模态模型，兼顾生成品质与隐私可控性。',
-    dataFlow: '云端 DashScope 生成成图 -> 本地 Qwen3-VL 提取工艺特征 -> 生成文化说明卡',
+    dataFlow: '云端生成成图 -> 本地 Qwen3-VL 读图与互动叙事 -> 本地深度估计与 2.5D 资产',
     technologies: [
       { name: 'Qwen Image 3.0 (DashScope)', role: '文本主题 + 参考图 + 风格约束双驱动图像生成', badge: '云端 API' },
       { name: 'Qwen3-VL:4b (Ollama Local)', role: '本地自动化视觉特征提取、文化意涵解读与文化卡生成', badge: '本地推理' },
-      { name: 'DashScope Wanx (Fallback)', role: '通义万相云端图像备用生成支持', badge: '备用' },
-      { name: 'Rule-based Template Engine', role: 'AI 服务未配置或离线时的优雅回退兜底', badge: '离线兜底' },
+      { name: 'Depth Anything V2 Small', role: '本地相对深度估计与 2.5D 画境资产构建', badge: '本地推理' },
+      { name: 'Rule-based Template Engine', role: '文化卡失败时明确标记模板；不替代新图互动解析', badge: '文化卡兜底' },
     ],
     boundaryNote:
       '本项目直接调用通义千问官方 Qwen Image 3.0 与 Qwen3-VL 开源权重，未声称自研或全参数微调基础大模型。Prompt Visual Features 来自项目团队对非遗文献与代表作的人工结构化提炼。',
@@ -519,7 +519,7 @@ export default function About() {
           <strong className="text-primary font-serif font-semibold">Three.js </strong>
           双层中式虚拟展馆与
           <strong className="text-primary font-serif font-semibold"> 8 类文创转化打样</strong>
-          ，构筑从灵感触发、多维赏析到实体布展的完整闭环。
+          ，构筑从灵感触发、多维赏析到虚拟布展的完整闭环。
         </motion.p>
 
         {/* 关键特性轻量徽章 */}

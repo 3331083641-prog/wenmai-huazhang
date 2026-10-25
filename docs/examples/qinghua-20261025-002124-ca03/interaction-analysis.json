@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 2,
+  "contentSource": "qwen3_vl_image",
+  "inputImageSha256": "b974928e45df94bf096d912b7f2f4252cafab16e210a186f248c2efc5636319f",
+  "contextSha256": "accc510781f78fc8f6f7d20cbf4af1031a158cd1514b25016ec0b98dd316c09f",
+  "promptSha256": "9306d559695ac2c00d701a4a5f16bd5b2e599c89fab33873cb669f704918673e",
+  "model": "qwen3-vl:4b-instruct-q4_K_M",
+  "inputImageCount": 1,
+  "inputImageBytes": 1492780,
+  "analysis": {
+    "title": "青瓷蝶影：蓝白交响的静谧之翼",
+    "subtitle": "三章叙事：触角的轻语、腹节的沉静、纹样的韵律",
+    "lead": "蓝白交织的蝶翼如瓷画般静谧，触角轻颤似诉说，腹节沉稳如古器，纹样在透光中低语——这是一场视觉的青瓷诗篇，无言却满载工笔的呼吸。",
+    "observed_subjects": [
+      "蝴蝶主体",
+      "翅膀纹样",
+      "背景云纹",
+      "边缘留白"
+    ],
+    "dominant_colors": [
+      "深蓝",
+      "白",
+      "浅蓝"
+    ],
+    "visual_features": [
+      "蝴蝶翅膀呈对称结构",
+      "翅膀上分布青花瓷风格花卉纹样",
+      "背景为浅蓝云纹",
+      "边缘留白区域清晰"
+    ],
+    "scene_kind": "flat_artwork",
+    "motion_regions": {
+      "water": false,
+      "mist": false,
+      "foliage": false
+    },
+    "hotspots": [
+      {
+        "title": "蝴蝶触角特写",
+        "x": 0.45,
+        "y": 0.25,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "两根细长蓝色触角，顶端略粗，呈椭圆形，从头部延伸而出，背景为纯白。",
+        "interpretation": "蓝白对比下触角线条纤细，形态优雅，与蝴蝶整体设计呼应，带来清冷而精致的视觉感受。"
+      },
+      {
+        "title": "蝴蝶腹部与翼缘交界处的蓝白纹样",
+        "x": 0.49,
+        "y": 0.65,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "深蓝腹节分段清晰，两侧翼缘透出浅蓝卷草纹，边缘缀有细密白点，纹样呈对称分布。",
+        "interpretation": "深蓝与透白的对比带来沉静张力，纹样疏密有致，如薄纱轻拂，显出工笔般的细腻与空灵感。"
+      },
+      {
+        "title": "蝴蝶右下翼缘的蓝白纹样与圆点装饰",
+        "x": 0.75,
+        "y": 0.75,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "深蓝色翼缘边缘布满白色圆点，内侧为白色底面，绘有蓝彩卷草纹与花卉纹样，纹路清晰，边缘呈锯齿状。",
+        "interpretation": "深蓝与白的对比带来沉静感，卷草纹的流动与圆点的规律形成视觉韵律，边缘锯齿增添自然的张力。"
+      },
+      {
+        "title": "蝴蝶腹部与前翅内侧纹样特写",
+        "x": 0.45,
+        "y": 0.75,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "深蓝腹节分段清晰，前翅内侧有浅蓝卷草纹与花卉图案，边缘饰白点，翅脉呈半透明质感。",
+        "interpretation": "深蓝与浅蓝的层次对比，纹样疏密有致，线条柔美，营造出静谧雅致的视觉韵律。"
+      }
+    ],
+    "chapters": [
+      {
+        "title": "触角的轻语",
+        "eyebrow": "0",
+        "body": "两根细长蓝触角自头颅轻扬，如墨线勾勒的呼吸，顶端微圆，静默中透出灵性。蓝白对比下，纤细如丝，优雅如诗，与蝶身呼应，是静谧之始。",
+        "focus_indices": [
+          0
+        ]
+      },
+      {
+        "title": "腹节的沉静",
+        "eyebrow": "2",
+        "body": "深蓝腹节分段清晰，如古瓷胎骨，两侧翼缘透出浅蓝卷草纹，缀以细密白点，如薄纱轻拂。纹样疏密有致，静谧中藏韵律，是沉静之魂。",
+        "focus_indices": [
+          1
+        ]
+      },
+      {
+        "title": "纹样的韵律",
+        "eyebrow": "3",
+        "body": "右下翼缘深蓝边缘布满白点，内侧绘卷草与花卉，锯齿边缘添自然张力。蓝白对比间，纹路流动如溪，韵律如歌，是静谧中的律动。",
+        "focus_indices": [
+          2
+        ]
+      }
+    ]
+  },
+  "totalDurationNs": 27723854400,
+  "localReview": {
+    "kind": "qwen3_vl_actual_crop_grounding",
+    "hotspots": [
+      {
+        "index": 0,
+        "inputCropSha256": "c904a734b2896b34b08577491df250f8f0044c818cb7a4bee2bc7b399af4d096",
+        "cropBox": [
+          323,
+          118,
+          599,
+          394
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "蝴蝶触角特写",
+          "observation": "两根细长蓝色触角，顶端略粗，呈椭圆形，从头部延伸而出，背景为纯白。",
+          "interpretation": "蓝白对比下触角线条纤细，形态优雅，与蝴蝶整体设计呼应，带来清冷而精致的视觉感受。"
+        }
+      },
+      {
+        "index": 1,
+        "inputCropSha256": "6b472f6f911eb28dfa3728d842b98f33ebd611695aea67896d7f8b6483ae6d83",
+        "cropBox": [
+          364,
+          527,
+          640,
+          804
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "蝴蝶腹部与翼缘交界处的蓝白纹样",
+          "observation": "深蓝腹节分段清晰，两侧翼缘透出浅蓝卷草纹，边缘缀有细密白点，纹样呈对称分布。",
+          "interpretation": "深蓝与透白的对比带来沉静张力，纹样疏密有致，如薄纱轻拂，显出工笔般的细腻与空灵感。"
+        }
+      },
+      {
+        "index": 2,
+        "inputCropSha256": "717caeffa6fac82347ca37f49f130a985618b14ad5aa38df45d0c368f3fce8be",
+        "cropBox": [
+          630,
+          630,
+          906,
+          906
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "蝴蝶右下翼缘的蓝白纹样与圆点装饰",
+          "observation": "深蓝色翼缘边缘布满白色圆点，内侧为白色底面，绘有蓝彩卷草纹与花卉纹样，纹路清晰，边缘呈锯齿状。",
+          "interpretation": "深蓝与白的对比带来沉静感，卷草纹的流动与圆点的规律形成视觉韵律，边缘锯齿增添自然的张力。"
+        }
+      },
+      {
+        "index": 3,
+        "inputCropSha256": "1cfdfe8f79cc031b880d6bf1a86837141ad3e8d93c9e56dda0bac5ab768a9154",
+        "cropBox": [
+          323,
+          630,
+          599,
+          906
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "蝴蝶腹部与前翅内侧纹样特写",
+          "observation": "深蓝腹节分段清晰，前翅内侧有浅蓝卷草纹与花卉图案，边缘饰白点，翅脉呈半透明质感。",
+          "interpretation": "深蓝与浅蓝的层次对比，纹样疏密有致，线条柔美，营造出静谧雅致的视觉韵律。"
+        }
+      }
+    ],
+    "storySource": "same-image whole view plus local-Qwen crop observations"
+  },
+  "reviewModel": "qwen3-vl:4b-instruct-q4_K_M",
+  "reviewInput": "same-image whole view and deterministic hotspot crops"
+}
