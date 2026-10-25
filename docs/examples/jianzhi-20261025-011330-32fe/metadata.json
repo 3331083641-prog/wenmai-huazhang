@@ -5,7 +5,7 @@
   "styleId": "jianzhi",
   "styleName": "中国剪纸",
   "referenceSubject": "马",
-  "artworkTitle": "红焰奔马：剪纸之舞",
+  "artworkTitle": "红焰奔马·花影生风",
   "theme": "一匹完整骏马，保留马头四蹄与尾巴，中国红剪纸镂空纹样，纯白背景，轮廓清楚，不加其他动物",
   "referenceSource": "user_upload",
   "sourceFilename": "reference.png",
@@ -102,9 +102,19 @@
     "analysisImageSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125",
     "interactionPlanVersion": 2,
     "depthSource": "depth-anything-v2-small",
-    "builtAt": "2026-10-25T02:09:19.051844+08:00"
+    "builtAt": "2026-10-25T11:30:01.669136+08:00"
   },
   "referenceOrigin": "AI-generated white-background reference, requested by the user for this verification",
   "referenceProvider": "built-in imagegen tool; not a photograph",
-  "verificationRun": "20261025-white-reference-five-styles"
+  "verificationRun": "20261025-white-reference-five-styles",
+  "qualityReview": {
+    "status": "unverified",
+    "rounds": 1,
+    "selectedRound": null,
+    "baselineScore": 78.5,
+    "finalScore": null,
+    "improved": false,
+    "reviewerModel": "deepseek-flash",
+    "reportFile": "quality-review.json"
+  }
 }

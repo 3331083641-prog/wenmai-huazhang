@@ -1,0 +1,978 @@
+{
+  "date": "2026-10-25",
+  "officialConnectivity": {
+    "success": true,
+    "provider": "official",
+    "model": "deepseek-flash",
+    "summary": "仅作图像输入与JSON连通性验证，非完整画境质量评价。图中为纯白背景上的一只侧立仙鹤：黑颈、头顶红冠、白灰长喙，身体羽毛呈青花瓷纹样（白底蓝花），尾羽深蓝，腿足深蓝细长，姿态静止。",
+    "usage": {
+      "prompt_tokens": 978,
+      "completion_tokens": 140,
+      "total_tokens": 1118,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      }
+    },
+    "requestId": "f9693cf4-8a46-4b4f-877f-35f117106cc2",
+    "note": "connectivity only, not a benchmark"
+  },
+  "postfixBatch": [
+    {
+      "caseId": "songhua-20261025-011015-679b",
+      "status": "needs_review",
+      "rounds": 3,
+      "selectedRound": null,
+      "baselineScore": 74.7,
+      "finalScore": null,
+      "improved": false,
+      "requestCount": 3,
+      "usage": {
+        "prompt_tokens": 35305,
+        "completion_tokens": 2162,
+        "total_tokens": 37467
+      },
+      "errorType": null,
+      "stopReason": "round_limit",
+      "history": [
+        {
+          "round": 0,
+          "score": 74.7,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "blocker",
+              "code": "OCCLUSION_VERTICAL_SEAM",
+              "description": "right 与 near 视角中，中部亭子下方至石阶、前景岩石出现明显的垂直硬接缝：右侧补全区与左侧原图区域错位，画面被硬切成两半，属于遮挡补全和边缘连续的阻断缺陷。"
+            },
+            {
+              "severity": "major",
+              "code": "INPAINT_REPEAT_ARTIFACT",
+              "description": "right 视角的接缝右侧，山石和石阶纹理出现与原图不一致的重复/拖影感，补全不是可信的背面，而是像素推断纹理，侧视下暴露。"
+            },
+            {
+              "severity": "major",
+              "code": "PARALLAX_FLATTENING",
+              "description": "front/left/right/near 中，松树、亭子、远山与前山基本随整张纸面同幅移动；远山、亭子和前景岩石缺少随深度分层的相对位移，视差更像整体平移而非本地深度视差。"
+            },
+            {
+              "severity": "major",
+              "code": "SUBJECT_RELIEF_INSUFFICIENT",
+              "description": "亭子檐角、松树主干与枝干、石阶在推进和侧视时相对起伏较弱，主体像贴在纸面上；平面纹样未被误造空间，但主体浅浮雕不足，未达到参照的浮雕层次。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_SEMANTIC_MISMATCH",
+              "description": "当前热点④“山石坡面与松树根部交界处”在 story 页面中显示在亭子下方山石处，而非松树根部；与语义位置存在明显偏差，截图已见。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_MARKER_SCALE",
+              "description": "hotspot 交互态圆形遮罩较大，盖住亭子顶部与瓦片细节，点击后原图局部被遮挡，影响观察檐角细节。"
+            },
+            {
+              "severity": "minor",
+              "code": "PAPER_EDGE_UNSTABLE",
+              "description": "left/right/near 中纸面外轮廓边缘有轻微弯曲和宽白边，与参照的平整纸面观感相比略不稳定；未见明显网格撕裂，但边缘连续感需改善。"
+            }
+          ],
+          "summary": "语义上保留松、亭、石阶、远山与云雾，风格接近青绿山水，热点与章节可点击且浏览器检查通过。但 right/near 出现阻断性的垂直硬接缝与补全重复纹理；整体视差偏平移，主体浮雕不足；热点④位置与说明语义不符，需先修复遮挡补全和侧视接缝，再评估是否达到 90 分目标。建议将 depth_amplitude 降至 0.24、framing_margin 调至 1.18、yaw_limit_deg 至 7、pitch_limit_deg 至 5，以减小侧视暴露和过度起伏，但接缝问题主要依赖补全策略，参数只能缓解。"
+        },
+        {
+          "round": 1,
+          "score": 87.4,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "PARALLAX_DEPTH_AMBIGUOUS",
+              "description": "在 front/left/right/near 与 motionBefore/motionAfter 中，前后山体、亭子与松树的相对错位极小，远山与前山几乎随整张纸面同幅移动，视差更接近整体平移和轻微弯曲，而非清晰的多层本地深度视差。"
+            },
+            {
+              "severity": "major",
+              "code": "OCCLUSION_EDGE_SOFT_HOLE",
+              "description": "在 right/near 视角下，山体左右外轮廓与纸面交界处出现较宽、偏软的白边/雾化边；底部岩石边缘也略糊，侧视下细节收敛不足，未见明显垂直硬接缝，但纸面外轮廓和山体边缘的连续感仍不稳定。"
+            },
+            {
+              "severity": "minor",
+              "code": "SUBJECT_RELIEF_WEAK",
+              "description": "亭子檐角、松树主干和石阶在推进与侧视时起伏较弱，主体更接近贴在纸面上的浮雕，未达到参照中较为明确的浅浮雕层次。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_MARKER_TOO_LARGE",
+              "description": "在 hotspot 截图以及 front/left/right/near 中，圆形热点标记较大，盖住亭子顶部与瓦片细节；点击后观察檐角细节时仍有遮挡感。"
+            },
+            {
+              "severity": "minor",
+              "code": "MOTION_VISIBILITY_LIMITED",
+              "description": "motionBefore 与 motionAfter 的变化很克制，截图不足以直观看出云雾或主体局部动作；浏览器检查记录了 motion=true，但肉眼可见的动态幅度偏小，无法确认是否形成有效运动层。"
+            },
+            {
+              "severity": "minor",
+              "code": "PAPER_FLEX_ZERO",
+              "description": "paper_flex 为 0，纸面保持平整；这避免了漂移感，但与参照中纸面随视角轻微弯曲的观感相比，侧视时纸面边缘略显僵硬。"
+            }
+          ],
+          "summary": "原图主体（亭、松、石阶、山体）没有被明显改写，青绿山水风格、设色与构图保真较好；浏览器检查通过，热点可点击，语义未发现前轮所述的明显错位。但当前画面视差更偏整张纸面的平移，前后山体分层不足；侧视外轮廓有偏软白边，主体浮雕感偏弱；热点标记仍偏大，动态幅度在截图中不易确认。未达到 minimumOcclusion 90 与 targetScore 90，因此不通过。建议小幅提高 depth_amplitude 与 subject_relief 以增强本地层次，yaw_limit_deg 限制在 8 度附近，haze 略微增加以柔化边缘但不要掩盖主体。"
+        },
+        {
+          "round": 2,
+          "score": 85.5,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "PARALLAX_DEPTH_INSUFFICIENT",
+              "description": "front/left/right 对比中，主峰、两侧远山、亭子、松树与底部岩石的错位幅度很接近，整体更像单张深度网格轻微平移，前后山体缺少可辨识的分层相对位移。"
+            },
+            {
+              "severity": "major",
+              "code": "OCCLUSION_HARD_CUT_RIGHT",
+              "description": "right 视角从亭子左侧、石阶下方到前景岩石出现一条接近垂直的硬切接缝，接缝两侧岩面明暗与纹理不连续，属于补全边界暴露。"
+            },
+            {
+              "severity": "major",
+              "code": "SILHOUETTE_SOFT_WHITE_EDGE",
+              "description": "right/near 视角山体外轮廓与白色纸面交界处偏软并出现较宽泛白，底部岩石边缘同样收敛不足，精细节奏被削弱。"
+            },
+            {
+              "severity": "minor",
+              "code": "SUBJECT_RELIEF_WEAK",
+              "description": "亭檐、栏杆、松干与石阶在推进和侧视时起伏较弱，主体层次更接近平面纸雕，未达到参照中较明确的浅浮雕感。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_MARKER_OCCLUDES_ROOF",
+              "description": "hotspot 状态下圆形热点遮住亭子屋脊与瓦片中心，放大观察檐角细节时存在遮挡。"
+            },
+            {
+              "severity": "minor",
+              "code": "MOTION_VISIBILITY_LIMITED",
+              "description": "motionBefore 与 motionAfter 肉眼差异很小，云雾与松枝的局部动态幅度偏弱，无法从截图确认有效运动层。"
+            },
+            {
+              "severity": "minor",
+              "code": "PAPER_FLEX_ABSENT",
+              "description": "paper_flex 为 0，纸面边缘在侧视时保持刚硬，与参照的轻微纸面弯曲观感有差距。"
+            }
+          ],
+          "summary": "本件较好保留了原图的松、亭、石阶、远山与青绿设色，浏览器检查通过，热点与章节基本吻合。但当前仍存在 major 问题：侧视下前后山体视差偏整张平移，right 视角可见垂直硬切和补全边界，山体轮廓白边偏软；主体浮雕与动态幅度也偏弱。未达到 minimumOcclusion 88 与 targetScore 90，因此不通过。建议小幅提高 depth_amplitude 与 subject_relief 增强本地分层和浅浮雕，收紧 yaw_limit_deg、pitch_limit_deg 降低侧视暴露；硬切接缝和白边主要依赖补全策略，参数只能缓解。"
+        }
+      ]
+    },
+    {
+      "caseId": "qinghua-20261025-011202-dbc8",
+      "status": "needs_review",
+      "rounds": 3,
+      "selectedRound": null,
+      "baselineScore": 86.95,
+      "finalScore": null,
+      "improved": false,
+      "requestCount": 3,
+      "usage": {
+        "prompt_tokens": 34797,
+        "completion_tokens": 1830,
+        "total_tokens": 36627
+      },
+      "errorType": null,
+      "stopReason": "round_limit",
+      "history": [
+        {
+          "round": 0,
+          "score": 86.95,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "SUBJECT_FLAT_RELIEF",
+              "description": "front/near/left/right 多视角中，鹤身青花纹样的卷草、花卉与尾羽分叉在侧视和推进时几乎一体平移，缺少由原图局部明暗可推断的轻微纵向浮雕；主体仍为单层完整平面层，layer 的 completeSubject 为 true 但内部起伏证据不足。"
+            },
+            {
+              "severity": "major",
+              "code": "OCCLUSION_NOT_LAYERED",
+              "description": "left/right 视图仅见纸面与鹤整体有限视差，未出现鹤颈与肩身、尾羽与身体之间可验证的多层遮挡关系；当前为单一 subject 深度层，不能据此声称内部前后遮挡成立。"
+            },
+            {
+              "severity": "major",
+              "code": "MOTION_NOT_OBSERVABLE",
+              "description": "motionBefore 与 motionAfter 的可见差异极小，尾羽、颈项或纹样未见克制可辨的动态；不能从现有截图确认存在安全部件运动，程序虽记录 motion:true，但肉眼证据不足。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_ALIGNMENT_DRIFT",
+              "description": "hotspot 截图中鹤头冠热点圈落在头侧偏上位置，未严格贴合红顶与黑颈过渡；第 2、3、4 个热点在推进和侧视中的圆心与局部青花纹样/尾羽交界有轻微偏离，影响图文依据的精确吻合。"
+            },
+            {
+              "severity": "minor",
+              "code": "EDGE_SOFTNESS_INCONSISTENT",
+              "description": "near 与 right 视角下，鹤喙尖、尾羽末端及足趾边缘出现轻微柔化/拉丝感，和原图清晰像素轮廓相比不够锐利；未见明显白边或断肢，但精细轮廓保真仍有提升空间。"
+            }
+          ],
+          "summary": "本件保留白底青花鹤的可见题材、设色与主要形体，正面构图和原图风格保真较好，交互入口与热点可见性通过程序记录。主要不足在于主体仍偏单层平面，局部青花纹样与尾羽缺少可验证的浅浮雕和内部遮挡，动态帧差异过小，热点圆在头冠处有轻微漂移。建议小幅提高深度幅度与主体浮雕、收窄偏航并略增取景边距，以增强有限视差和边缘安全；但遮挡补全与真实背面仍不可由参数恢复。"
+        },
+        {
+          "round": 1,
+          "score": 87.5,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "SUBJECT_FLAT_RELIEF",
+              "description": "front/left/right/near 多视角中，鹤身青花卷草、花卉与尾羽分叉几乎随主体整体平移，缺少由原图局部明暗可推断的轻微纵向浮雕；renderLayers 仅一层 subject，内部起伏证据不足。"
+            },
+            {
+              "severity": "major",
+              "code": "OCCLUSION_NOT_LAYERED",
+              "description": "left/right 视图仅见纸面与鹤整体有限视差，鹤颈与肩身、尾羽与身体之间未出现可验证的多层遮挡；单 subject 深度层不能据此声称内部前后遮挡成立。"
+            },
+            {
+              "severity": "major",
+              "code": "MOTION_NOT_OBSERVABLE",
+              "description": "motionBefore 与 motionAfter 肉眼差异极小，尾羽、颈项或纹样未见克制可辨的动态；程序记录 motion:true，但截图不能确认存在安全部件运动。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_ALIGNMENT_DRIFT",
+              "description": "hotspot 截图中鹤头冠热点圈落在红顶下方偏前位置，未严格贴合红顶与黑颈过渡；第 2、3、4 个热点圆与青花纹样/尾羽交界有轻微偏离。"
+            },
+            {
+              "severity": "minor",
+              "code": "EDGE_SOFTNESS_INCONSISTENT",
+              "description": "near 与 right 视角下，鹤喙尖、尾羽末端及足趾边缘出现轻微柔化/拉丝感，与原图清晰像素轮廓相比不够锐利；未见明显白边或断肢。"
+            }
+          ],
+          "summary": "本件保留白底青花鹤的可见题材、设色与主要形体，正面构图和原图风格保真较好，交互入口与热点可见性通过程序记录。主要不足在于主体仍偏单层平面，局部青花纹样与尾羽缺少可验证的浅浮雕和内部遮挡，动态帧差异过小，热点圆在头冠处有轻微漂移。建议小幅提高深度幅度与主体浮雕、收窄偏航并维持取景边距，以增强有限视差和边缘安全；但遮挡补全与真实背面仍不可由参数恢复。"
+        },
+        {
+          "round": 2,
+          "score": 86.95,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "SUBJECT_FLAT_RELIEF",
+              "description": "front/left/right/near 多视角中，鹤身青花卷草、花卉与尾羽分叉几乎随主体整体平移，缺少由原图局部明暗可推断的轻微纵向起伏；renderLayers 仅一层 subject，层内浅浮雕证据不足。"
+            },
+            {
+              "severity": "major",
+              "code": "OCCLUSION_NOT_LAYERED",
+              "description": "left/right 视图仅见纸面与鹤整体有限视差，鹤颈与肩身、尾羽与身体之间未出现可验证的多层遮挡关系；当前为单一 subject 深度层，不能据此声称内部前后遮挡成立，侧视也不可能补全真实背面。"
+            },
+            {
+              "severity": "major",
+              "code": "MOTION_NOT_OBSERVABLE",
+              "description": "motionBefore 与 motionAfter 肉眼差异极小，尾羽、颈项或足部未见克制可辨的动态；程序虽记录 motion:true，但截图不能确认存在安全部件运动，也没有可信的骨骼动画证据。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_ALIGNMENT_DRIFT",
+              "description": "hotspot 截图中鹤头冠热点圈落在红顶与黑颈过渡偏上方，未严格贴合冠顶；第 2、3、4 个热点圆与青花纹样、尾羽交界也有轻微偏离，影响图文依据的精确吻合。"
+            },
+            {
+              "severity": "minor",
+              "code": "EDGE_SOFTNESS_INCONSISTENT",
+              "description": "near 与 right 视角下，鹤喙尖、尾羽末端及足趾边缘出现轻微柔化或拉丝感，与原图清晰像素轮廓相比不够锐利；未见明显白边或断肢，但精细轮廓保真仍有提升空间。"
+            }
+          ],
+          "summary": "本件保留白底青花鹤的可见题材、设色与主要形体，正面构图和原图风格保真较好，交互入口与热点可见性通过程序记录。主要不足在于主体仍偏单层平面，局部青花纹样与尾羽缺少可验证的浅浮雕和内部遮挡，动态帧差异过小，热点圈在头冠处有轻微漂移。建议小幅提高深度幅度与主体浮雕、略收窄偏航并增加取景边距，以增强有限视差和边缘安全；遮挡补全与真实背面无法由允许参数恢复，动态可辨性若截图差异仍小也不应伪称解决。"
+        }
+      ]
+    },
+    {
+      "caseId": "jianzhi-20261025-011330-32fe",
+      "status": "unverified",
+      "rounds": 1,
+      "selectedRound": null,
+      "baselineScore": 78.5,
+      "finalScore": null,
+      "improved": false,
+      "requestCount": 1,
+      "usage": {
+        "prompt_tokens": 11025,
+        "completion_tokens": 730,
+        "total_tokens": 11755
+      },
+      "errorType": "VisionAnalysisError",
+      "stopReason": "review_unavailable",
+      "history": [
+        {
+          "round": 0,
+          "score": 78.5,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "blocker",
+              "code": "HOTSPOT_SEMANTIC_MISMATCH",
+              "description": "hotspot 2 标注于 (0.85,0.45) 的“马颈鬃毛与肩部花卉纹样交界处”，其坐标落在马体右侧臀部/大腿镂空花处，并非颈鬃与肩部交界；hotspot 3 标注于 (0.25,0.6)“马腿内侧花卉”，在正面/左视中落点偏近抬起的左前腿下缘，侧视时圆点更贴近马蹄外轮廓。图文依据与可见位置不一致，属语义错配，非参数可修复。"
+            },
+            {
+              "severity": "major",
+              "code": "SUBJECT_EDGE_ERODE",
+              "description": "侧视与推进帧中，马首鼻端、前蹄蹄尖、尾梢、鬃毛细线出现轻微轮廓侵蚀和局部发虚，剪纸硬边保真度下降；尤其 near 视图下鬃毛末端有拉丝感。"
+            },
+            {
+              "severity": "major",
+              "code": "DEPTH_PLANE_OVERFLAT",
+              "description": "马体本身是单层完整主体，但内部白花镂空与红色体块被同一深度层压平；侧视时躯干像一整块浮雕平移，缺少鬃毛、尾、前后腿之间的内部相对起伏，未达到参照作品纸面与主体分离、层次可见的审美水平。"
+            },
+            {
+              "severity": "minor",
+              "code": "HALO_ON_WHITE_BG",
+              "description": "马体外缘与纯白背景交界处可见极淡的暖灰投影/光晕，在 front 与 left 帧中靠近蹄部、尾梢处最明显，轻微削弱剪纸的干净白底感。"
+            },
+            {
+              "severity": "minor",
+              "code": "MOTION_SUBTLE_NO_LIMB",
+              "description": "motionBefore/After 差异极小，仅全景轻微起伏，适合运动的鬃毛与尾梢未见独立克制摆动；静态保留可以接受，但未利用图中适合运动的细部。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_NUMBER_COMPRESSED",
+              "description": "story 页正文中可见“0,1,2,3…”数字串被压缩进正文，非画面内热点编号的呈现方式，削弱了“从任意一处开始”的图文指引清晰度。"
+            }
+          ],
+          "summary": "整体保留红白剪纸骏马主体与花卉镂空，正面保真较好；但热点 2/3 与真实可见部位明显错配，侧视与推进中鬃尾、蹄尖出现轻侵蚀和主体内部过平，白色背景有极淡晕影，动态几乎只有整体克制起伏。按目标 90 分与最低保真 90、遮挡 88 均未达标，结论为不通过。建议仅微调深度幅度、水平视角、构图留白与主体微浮雕，以减轻边缘侵蚀和过平平移；热点语义错配与正文数字串不在参数白名单内，无法靠调整修复。"
+        }
+      ]
+    },
+    {
+      "caseId": "zhuxianzhen-20261025-010746-595e",
+      "status": "unverified",
+      "rounds": 2,
+      "selectedRound": null,
+      "baselineScore": 84.45,
+      "finalScore": null,
+      "improved": false,
+      "requestCount": 2,
+      "usage": {
+        "prompt_tokens": 22612,
+        "completion_tokens": 1333,
+        "total_tokens": 23945
+      },
+      "errorType": "VisionAnalysisError",
+      "stopReason": "review_unavailable",
+      "history": [
+        {
+          "round": 0,
+          "score": 84.45,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "HOTSPOT_COUNT_MISMATCH",
+              "description": "体验页总览标注“4处文化线索”，但页面顶栏又显示“4处文化线索·每处都来源”，而热点侧栏只列出4条；其中第4条“金鱼尾鳍与下方红花的局部”在实际画面内右下红花与鱼尾并未相交，热点位置与观察描述存在语义偏差，不能仅靠参数掩盖。"
+            },
+            {
+              "severity": "major",
+              "code": "FLAT_ARTWORK_FORCED_PARALLAX",
+              "description": "画面为白底平面套色纹样，原图没有明确前后景物；当前near与left/right只是整体轻微平移/缩放，鱼身、云纹、浪纹之间几乎无真正分层遮挡，导致浅浮雕感偏弱，不符合“依据本图遮挡与本地深度形成合理视差”的目标。"
+            },
+            {
+              "severity": "major",
+              "code": "SUBJECT_RELIEF_FLAT",
+              "description": "金鱼主体内部（头、鳞、鳍、尾）在near与热点图中缺少内部相对起伏，主体像一个整片贴片抬起；subject_relief仅0.025，使多色套印的线版与色块之间没有克制的前后关系。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_TITLE_TEXT_OVERFLOW",
+              "description": "热点弹窗标题“金鱼头部特写：红润鱼眼与鳞片过渡”在窄卡片中折行且首行被裁，长标题可读性受影响；侧栏同条目标题也偏长。"
+            },
+            {
+              "severity": "minor",
+              "code": "STORY_IMAGE_LEFT_CROP",
+              "description": "故事页“眼眸深邃”配图左侧边缘被硬裁，金鱼嘴部与原图左侧云纹不完整；该页配图未保留原图四周边距，属于展示层裁切问题。"
+            },
+            {
+              "severity": "minor",
+              "code": "MOTION_SCOPE_UNCLEAR",
+              "description": "motionBefore/motionAfter两帧肉眼几乎无差异；语义标注water=true，但绿色浪纹实际是否在动、动的是浪纹还是鱼尾无法从现有截图确认，限制应记录而非默认已做骨骼动画。"
+            }
+          ],
+          "summary": "保真度较高，原图金鱼、云纹、浪纹、花饰与设色基本保留，热点点击与视角变化有程序证据。但平面纹样被整体平移式视差处理，主体内部缺少克制起伏，热点第4条与画面语义不完全吻合，故事页配图有硬裁；因此未达90分目标，判定不通过。建议仅对深度幅度、主体浮雕、偏航上限和取景边距做有限调整，热点语义与裁切问题需另行修正，不能靠参数掩盖。"
+        },
+        {
+          "round": 1,
+          "score": 83.9,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "FLAT_ARTWORK_FORCED_PARALLAX",
+              "description": "当前画境为白底平面套色纹样，原图没有明确的前后景；left/right与front仅呈整体轻微平移和缩放，金鱼、云纹、浪纹、花饰之间缺少依据遮挡形成的真实分层视差，浅浮雕感不足。"
+            },
+            {
+              "severity": "major",
+              "code": "SUBJECT_RELIEF_FLAT",
+              "description": "near视角下金鱼头、鳞、鳍、尾仍像一整片贴片抬起，主体内部缺少克制的相对起伏；subject_relief仅0.06，未能体现线版与色块之间应有的浅层前后关系。"
+            },
+            {
+              "severity": "major",
+              "code": "HOTSPOT_4_SEMANTIC_MISMATCH",
+              "description": "热点第4条“右下角红花与绿叶”坐标约(0.878,0.894)，但画面右下角红花位于约(0.835,0.855)，该热点实际落在鱼尾与花之间的白底/浪纹附近，热点位置与观察描述存在可见偏差；应记录为语义或定位问题，不能仅用参数掩盖。"
+            },
+            {
+              "severity": "minor",
+              "code": "MOTION_SCOPE_UNCLEAR",
+              "description": "motionBefore与motionAfter两帧肉眼几乎无差异；语义标注water=true，但绿色浪纹是否在动、动的是浪纹还是鱼尾无法从现有截图确认，应记录为动画范围限制，而非默认已有骨骼动画。"
+            },
+            {
+              "severity": "minor",
+              "code": "STORY_IMAGE_LEFT_CROP",
+              "description": "故事页“眼眸深邃”配图左侧边缘被硬裁，金鱼嘴部与左侧云纹不完整；该配图未保留原图四周边距，属于展示层裁切问题。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_TITLE_WRAP",
+              "description": "热点弹窗标题“金鱼头部特写：红润鱼眼与橙白渐变鳞片”在窄卡片中折行，首行偏紧，长标题可读性受影响。"
+            }
+          ],
+          "summary": "保真度较高，原图金鱼、云纹、浪纹、花饰与设色基本保留；热点点击、视角变化、非空帧与相机变化有程序证据。但本件仍呈整体平移式视差，主体内部缺少克制起伏，第4条热点定位与描述存在语义偏差，故事页配图有硬裁；因此未达90分目标，判定不通过。建议仅对深度幅度、主体浮雕、偏航上限和取景边距做有限调整，热点定位与展示裁切需另行修正，不能靠参数掩盖。"
+        }
+      ]
+    },
+    {
+      "caseId": "bianxiu-20261025-010853-f7cd",
+      "status": "needs_review",
+      "rounds": 3,
+      "selectedRound": null,
+      "baselineScore": 84.2,
+      "finalScore": null,
+      "improved": false,
+      "requestCount": 3,
+      "usage": {
+        "prompt_tokens": 35065,
+        "completion_tokens": 2228,
+        "total_tokens": 37293
+      },
+      "errorType": null,
+      "stopReason": "round_limit",
+      "history": [
+        {
+          "round": 0,
+          "score": 84.2,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "MARGIN_CAKE_FRAME",
+              "description": "本件 front/left/right 视图下，画面四周出现明显的浅色矩形衬底边缘（类似硬矩形画框/纸边），与外围模糊背景交界生硬；参照 bianxiu 也存在同类轻微白边，但本件在窄幅视图下暴露更明显，不符合“无硬矩形边缘/明显白边”的精细轮廓要求。"
+            },
+            {
+              "severity": "major",
+              "code": "SUBJECT_RELIEF_FLAT",
+              "description": "牡丹花瓣、花心花蕊与叶片之间几乎没有内部相对起伏和浅浮雕感，front 与 near 视图下花心橙黄花蕊与周围花瓣的遮挡关系平坦，层次弱于参照 bianxiu 的兔毛/花瓣立体感。"
+            },
+            {
+              "severity": "major",
+              "code": "PARALLAX_NO_DEPTH_BREAK",
+              "description": "left/right 视图的视差主要表现为整体轻微平移，花瓣前后层、花心与叶片之间未形成合理的前后分离视差；renderLayers 仅有单一 subject 层（depth 0.697），多节奏层次不足。"
+            },
+            {
+              "severity": "major",
+              "code": "MOTION_LIMITED_NO_SAFE_PARTS",
+              "description": "motionBefore/motionAfter 两帧变化极小，几乎不可见；语义 motion_regions 中 water/mist/foliage 全为 false，程序也未声明独立可动部件，实际动态仅依赖相机与高度受限的 sway/ripple。记录限制：本件无安全骨骼动画，不宜强造花瓣开合或叶片摆动。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_SEMANTIC_DRIFT",
+              "description": "热点2“左侧叶片的脉络与纹理细节”位于画面左侧偏上叶片，但该处叶片纹理在图中偏细，热点半径小（0.04），front 视图点击目标为可见青绿圆点；热点4“牡丹花瓣边缘的褶皱与纹理”落在右侧花瓣中部，与“边缘”语义略偏，属轻微语义漂移，未阻断交互。"
+            },
+            {
+              "severity": "minor",
+              "code": "WHITE_BACKGROUND_INCOMPLETE",
+              "description": "background_completion 为 white-background，negativeSpacePreserved 为 false，侧视/推进时白色负空间虽被保留但未形成真正的纸面或绣布底纹，与参照 bianxiu 的米色绣布质感相比略显单薄。"
+            }
+          ],
+          "summary": "本件对原图牡丹、叶片、花茎与设色保留完整，fidelity 高；但存在四周浅色硬矩形衬底边、内部浮雕与花瓣前后层视差不足、动态几乎不可见等问题。根据程序证据，交互热点可见、点击成功、相机与视差均有效；但语义运动全为 false，无法把蓝色纹样当水面，也不应强造花瓣开合。建议小幅提高深度幅度与主体浮雕、外扩取景余量、压低摆动，以改善层次和硬边，同时保留静态克制。因仍有 major 层与动态限制，passed 为 false。"
+        },
+        {
+          "round": 1,
+          "score": 83.4,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "HARD_RECT_FRAME_EDGE",
+              "description": "在本件的 front/left/right/near 视图中，主体所在的白底中央区域与两侧浅米色的留白之间形成明显的竖直矩形分界，尤其在左右视图边缘处，出现硬矩形边和浅色边框，不符合精细轮廓中“无硬矩形边缘、明显白边”的要求。"
+            },
+            {
+              "severity": "major",
+              "code": "SUBJECT_RELIEF_FLAT",
+              "description": "花瓣的前后叠压、花心橙黄花蕊与周围花瓣之间几乎没有内部相对起伏和浅浮雕感；在 near 视图下，整朵花仍大体接近平坦贴片，层次弱于参照 bianxiu 中兔毛与花瓣的立体起伏。"
+            },
+            {
+              "severity": "major",
+              "code": "PARALLAX_NO_DEPTH_BREAK",
+              "description": "在 left/right 视图中，花瓣前后层、花心、叶片与花茎之间没有形成合理的前后分离视差；程序 renderLayers 只有单一 subject 层（depth≈0.697），视差主要呈现为整体轻微平移，多节奏层次不足。"
+            },
+            {
+              "severity": "major",
+              "code": "MOTION_IMPERCEPTIBLE",
+              "description": "motionBefore 与 motionAfter 两帧之间几乎不可见变化；语义 motion_regions 中 water/mist/foliage 全为 false，程序未声明独立可动部件。实际动态仅依赖相机与受限 sway/ripple。记录限制：本件无安全骨骼动画，不宜强造花瓣开合或叶片摆动。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_EDGE_SEMANTIC_DRIFT",
+              "description": "第4处热点“牡丹花瓣边缘的褶皱与纹理”的可见圆点位于右侧花瓣中部，并非花瓣边缘，存在轻微语义漂移；未阻断热点可见性与点击。"
+            },
+            {
+              "severity": "minor",
+              "code": "WHITE_BG_NO_TEXTURE",
+              "description": "background_completion 为 white-background，negativeSpacePreserved 为 false；侧视与推进时白底未形成真正的纸面或绣布底纹，与参照 bianxiu 的米色绣布质感相比略显单薄。"
+            }
+          ],
+          "summary": "本件对原图牡丹、叶片、花茎与设色保留完整，fidelity 高；交互热点可见、点击成功，相机与视差有效。但仍有四周白底与浅米色留白之间的硬矩形分界、内部浮雕与花瓣前后层视差不足、动态几乎不可见等问题。程序证据显示语义运动全为 false，不应把静态纹样强造为水面或骨骼动画，动态限制需要保留。建议小幅提高深度幅度与主体浮雕、外扩取景余量并压低摆动，以改善层次与硬边；但因存在 major 层与动态限制，passed 为 false。"
+        },
+        {
+          "round": 2,
+          "score": 83.4,
+          "passed": false,
+          "issues": [
+            {
+              "severity": "major",
+              "code": "HARD_RECT_FRAME_EDGE",
+              "description": "front/left/right/near 视图中，中央白底区域与两侧浅米色留白之间出现明显的竖直硬矩形分界，尤其在左右视图边缘处形成浅色边框，不符合精细轮廓要求中‘无硬矩形边缘、明显白边’这一条。"
+            },
+            {
+              "severity": "major",
+              "code": "SUBJECT_RELIEF_FLAT",
+              "description": "牡丹花瓣之间、花心橙黄花蕊与周围花瓣之间几乎没有内部相对起伏和浅浮雕感；在 near 视图下整朵花仍近似平面贴片，立体层次弱于参照 bianxiu 中兔毛与花瓣的起伏。"
+            },
+            {
+              "severity": "major",
+              "code": "PARALLAX_NO_DEPTH_BREAK",
+              "description": "在 left/right 视图中，花瓣前后层、花心、叶片与花茎之间没有形成合理的前后分离视差；renderLayers 只有单一 subject 层（depth≈0.697），视差主要呈现为整体轻微平移，多节奏层次不足。"
+            },
+            {
+              "severity": "major",
+              "code": "MOTION_IMPERCEPTIBLE",
+              "description": "motionBefore 与 motionAfter 两帧之间几乎看不到变化；语义 motion_regions 中 water/mist/foliage 全为 false，程序未声明独立可动部件，实际动态仅依赖相机与受限 sway/ripple。限制记录：本件无安全骨骼动画，不宜强造花瓣开合或叶片摆动。"
+            },
+            {
+              "severity": "minor",
+              "code": "HOTSPOT_EDGE_SEMANTIC_DRIFT",
+              "description": "第4处热点‘牡丹花瓣边缘的褶皱与纹理’的可见圆点位于右侧花瓣中部，并非花瓣边缘，存在轻微语义漂移；未阻断热点可见性与点击。"
+            },
+            {
+              "severity": "minor",
+              "code": "WHITE_BG_NO_TEXTURE",
+              "description": "background_completion 为 white-background，negativeSpacePreserved 为 false；侧视与推进时白底未形成纸面或绣布底纹，与参照 bianxiu 的米色绣布质感相比略显单薄。"
+            }
+          ],
+          "summary": "本件对原图牡丹、叶片、花茎与设色保留完整，fidelity 高；交互热点可见、点击成功，相机与视差有效。但仍有白底与浅米色留白之间的硬矩形分界、内部浮雕与花瓣前后层视差不足、动态几乎不可见等问题。程序证据显示语义运动全为 false，不应把静态纹样强造为水面或骨骼动画，动态限制需要保留。建议小幅提高深度幅度与主体浮雕、外扩取景余量并压低摆动，以改善层次与硬边；因存在 major 层与动态限制，passed 为 false。"
+        }
+      ]
+    }
+  ],
+  "finalCases": [
+    {
+      "caseId": "songhua-20261025-011015-679b",
+      "status": "unverified",
+      "rounds": 0,
+      "baselineScore": null,
+      "finalScore": null,
+      "stopReason": "review_unavailable",
+      "errorType": "ReviewError",
+      "sourceImageSha256": "50b9cac5c56f5e45ce072c194f83e749411cc908edf268813e7db660ea208b3d",
+      "sourceBindingsMatch": true,
+      "model": "qwen3-vl:4b-instruct-q4_K_M",
+      "hotspots": 4,
+      "chapters": 3,
+      "actualCropReads": 4,
+      "requestCount": 1,
+      "usage": {
+        "prompt_tokens": 10791,
+        "completion_tokens": 582,
+        "total_tokens": 11373
+      }
+    },
+    {
+      "caseId": "qinghua-20261025-011202-dbc8",
+      "status": "needs_review",
+      "rounds": 3,
+      "baselineScore": 86.95,
+      "finalScore": null,
+      "stopReason": "round_limit",
+      "errorType": null,
+      "sourceImageSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb",
+      "sourceBindingsMatch": true,
+      "model": "qwen3-vl:4b-instruct-q4_K_M",
+      "hotspots": 4,
+      "chapters": 3,
+      "actualCropReads": 4,
+      "requestCount": 3,
+      "usage": {
+        "prompt_tokens": 34797,
+        "completion_tokens": 1830,
+        "total_tokens": 36627
+      }
+    },
+    {
+      "caseId": "jianzhi-20261025-011330-32fe",
+      "status": "unverified",
+      "rounds": 1,
+      "baselineScore": 78.5,
+      "finalScore": null,
+      "stopReason": "review_unavailable",
+      "errorType": "VisionAnalysisError",
+      "sourceImageSha256": "f0242b7e1fc430a66d51073a94e6ec19d9bd534849002a4d71b7f238c3dc1125",
+      "sourceBindingsMatch": true,
+      "model": "qwen3-vl:4b-instruct-q4_K_M",
+      "hotspots": 4,
+      "chapters": 3,
+      "actualCropReads": 4,
+      "requestCount": 1,
+      "usage": {
+        "prompt_tokens": 11025,
+        "completion_tokens": 730,
+        "total_tokens": 11755
+      }
+    },
+    {
+      "caseId": "zhuxianzhen-20261025-010746-595e",
+      "status": "unverified",
+      "rounds": 2,
+      "baselineScore": 84.45,
+      "finalScore": null,
+      "stopReason": "review_unavailable",
+      "errorType": "VisionAnalysisError",
+      "sourceImageSha256": "1ef7ec1047be3d436c604a39e7802b416b5235fadbe7dab3c767fb20c254e5b8",
+      "sourceBindingsMatch": true,
+      "model": "qwen3-vl:4b-instruct-q4_K_M",
+      "hotspots": 4,
+      "chapters": 3,
+      "actualCropReads": 4,
+      "requestCount": 2,
+      "usage": {
+        "prompt_tokens": 22612,
+        "completion_tokens": 1333,
+        "total_tokens": 23945
+      }
+    },
+    {
+      "caseId": "bianxiu-20261025-010853-f7cd",
+      "status": "needs_review",
+      "rounds": 3,
+      "baselineScore": 84.2,
+      "finalScore": null,
+      "stopReason": "round_limit",
+      "errorType": null,
+      "sourceImageSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
+      "sourceBindingsMatch": true,
+      "model": "qwen3-vl:4b-instruct-q4_K_M",
+      "hotspots": 4,
+      "chapters": 3,
+      "actualCropReads": 4,
+      "requestCount": 3,
+      "usage": {
+        "prompt_tokens": 35065,
+        "completion_tokens": 2228,
+        "total_tokens": 37293
+      }
+    },
+    {
+      "caseId": "qinghua-20261025-133153-2d80",
+      "status": "needs_review",
+      "rounds": 3,
+      "baselineScore": 86.1,
+      "finalScore": null,
+      "stopReason": "round_limit",
+      "errorType": null,
+      "sourceImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+      "sourceBindingsMatch": true,
+      "model": "qwen3-vl:4b-instruct-q4_K_M",
+      "hotspots": 4,
+      "chapters": 3,
+      "actualCropReads": 4,
+      "requestCount": 3,
+      "usage": {
+        "prompt_tokens": 34247,
+        "completion_tokens": 1642,
+        "total_tokens": 35889
+      }
+    }
+  ],
+  "freshGeneration": {
+    "httpStatus": 200,
+    "success": true,
+    "autoSave": {
+      "enabled": true,
+      "saved": true,
+      "error": null
+    },
+    "caseId": "qinghua-20261025-133153-2d80",
+    "interactiveJob": {
+      "enabled": true,
+      "status": "queued",
+      "reused": false,
+      "job": {
+        "caseId": "qinghua-20261025-133153-2d80",
+        "status": "queued",
+        "attempts": 1,
+        "queuedAt": "2026-10-25T13:31:56+08:00",
+        "startedAt": "",
+        "finishedAt": "",
+        "error": "",
+        "message": "已进入队列，等待构建……",
+        "stages": {
+          "hotspots": false,
+          "story": false,
+          "world": false
+        },
+        "assets": {},
+        "updatedAt": "2026-10-25T13:31:56+08:00"
+      }
+    },
+    "elapsedSeconds": 60.75,
+    "referenceCaseId": "bianxiu-20261025-010853-f7cd"
+  },
+  "freshFinalState": {
+    "status": "ready",
+    "stages": {
+      "hotspots": true,
+      "story": true,
+      "world": true
+    },
+    "hasExperience": true,
+    "hasWorld": true,
+    "experienceId": "qinghua-20261025-133153-2d80",
+    "job": {
+      "caseId": "qinghua-20261025-133153-2d80",
+      "status": "ready",
+      "attempts": 1,
+      "queuedAt": "2026-10-25T13:31:56+08:00",
+      "startedAt": "",
+      "finishedAt": "2026-10-25T13:34:36+08:00",
+      "error": "",
+      "message": "三种互动已就绪。",
+      "stages": {
+        "hotspots": true,
+        "story": true,
+        "world": true
+      },
+      "assets": {
+        "experience": "docs\\examples\\qinghua-20261025-133153-2d80\\experience.json",
+        "world": "frontend\\public\\interactive\\qinghua-20261025-133153-2d80\\world\\world.json",
+        "worldFiles": [
+          "art.webp",
+          "backdrop.webp",
+          "cutout-subject.webp",
+          "depth-preview.png",
+          "depth-rg.png",
+          "masks.png",
+          "model-depth-rg.png",
+          "subject-relief.png",
+          "surface.webp",
+          "world.json"
+        ]
+      },
+      "updatedAt": "2026-10-25T13:34:36+08:00",
+      "beganAt": "2026-10-25T13:31:56+08:00",
+      "elapsedSec": 159.9,
+      "exitCode": 0,
+      "detail": {
+        "hasExperience": true,
+        "hasWorld": true,
+        "hotspots": 4,
+        "chapters": 3,
+        "experiencePath": "docs\\examples\\qinghua-20261025-133153-2d80\\experience.json",
+        "worldPath": "frontend\\public\\interactive\\qinghua-20261025-133153-2d80\\world\\world.json",
+        "worldFiles": [
+          "art.webp",
+          "backdrop.webp",
+          "cutout-subject.webp",
+          "depth-preview.png",
+          "depth-rg.png",
+          "masks.png",
+          "model-depth-rg.png",
+          "subject-relief.png",
+          "surface.webp",
+          "world.json"
+        ],
+        "depthSource": "depth-anything-v2-small",
+        "vlmUsed": true,
+        "warnings": [
+          "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
+          "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
+        ],
+        "metadataStatus": "ready",
+        "experienceId": "qinghua-20261025-133153-2d80",
+        "artworkTitle": "蓝韵牡丹图",
+        "qualityReview": {
+          "status": "needs_review",
+          "rounds": 3,
+          "selectedRound": null,
+          "baselineScore": 86.1,
+          "finalScore": null,
+          "improved": false,
+          "reviewerModel": "deepseek-flash",
+          "reportFile": "quality-review.json"
+        }
+      },
+      "tail": [
+        "5/6 生成画境资产 …",
+        "    world.json: 4.0 KB",
+        "    hotspot depth: 17bc27c4aa1e-spot-1=0.6973, 17bc27c4aa1e-spot-2=0.6973, 17bc27c4aa1e-spot-3=0.6973, 17bc27c4aa1e-spot-4=0.6973",
+        "    total bytes: 1258.5 KB",
+        "    anomalies: mask coverage water=0.0% 超出 2%–45%; mask coverage mist=0.0% 超出 2%–45%; mask coverage foliage=0.0% 超出 2%–45%",
+        "    ",
+        "    report: scripts\\interactive\\_probe\\world-build-report.json（16 件）",
+        "    DeepSeek视觉复审：needs_review；轮数 3",
+        "6/6 完成  qinghua-20261025-133153-2d80  用时 86.5s",
+        "    三入口：/experience/qinghua-20261025-133153-2d80 · /story/qinghua-20261025-133153-2d80 · /wander/qinghua-20261025-133153-2d80",
+        "    ! 热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
+        "    ! 热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
+      ]
+    },
+    "qualityReview": {
+      "status": "needs_review",
+      "rounds": 3,
+      "selectedRound": null,
+      "baselineScore": 86.1,
+      "finalScore": null,
+      "improved": false,
+      "reviewerModel": "deepseek-flash",
+      "reportFile": "quality-review.json"
+    }
+  },
+  "finalBrowserChecks": {
+    "fresh": {
+      "canvas": true,
+      "slug_matches": true,
+      "not_degraded": true,
+      "no_page_errors": true,
+      "no_render_errors": true,
+      "no_failed_requests": true,
+      "hotspots_visible": true,
+      "hotspot_click": true,
+      "nonblank_frames": true,
+      "camera_changed": true,
+      "parallax": true,
+      "motion": true,
+      "passed": true
+    },
+    "songhua": {
+      "canvas": true,
+      "slug_matches": true,
+      "not_degraded": true,
+      "no_page_errors": true,
+      "no_render_errors": true,
+      "no_failed_requests": true,
+      "hotspots_visible": true,
+      "hotspot_click": true,
+      "nonblank_frames": true,
+      "camera_changed": true,
+      "parallax": true,
+      "motion": true,
+      "passed": true
+    }
+  },
+  "dailyLedger": {
+    "date": "2026-10-25",
+    "attemptedCalls": 29
+  },
+  "screenshots": [
+    {
+      "file": "fresh-world-front.jpg",
+      "sha256": "bde8a9a2b12e22892f583a6c2e17d619106ed3f14fa6359f7eeac26d9e3fc2a0",
+      "source": ".cache/deepseek-review/final-capture/fresh/front.jpg",
+      "type": "real-browser-screenshot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1
+    },
+    {
+      "file": "fresh-world-side.jpg",
+      "sha256": "92582351f9988cbf61a0865eadc91ceb3d247c7f16d1c288799c1d251fd3604f",
+      "source": ".cache/deepseek-review/final-capture/fresh/right.jpg",
+      "type": "real-browser-screenshot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1
+    },
+    {
+      "file": "fresh-hotspots.jpg",
+      "sha256": "bdbb428e7c8c8fbb7e914b7948e2f95e09f2742d3f7ced25c86f406cf5120e11",
+      "source": ".cache/deepseek-review/final-capture/fresh/experience.jpg",
+      "type": "real-browser-screenshot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1
+    },
+    {
+      "file": "fresh-story.jpg",
+      "sha256": "5216ea364865cd19d48fe951d831a1c4015b65f6859c6994549dd8e6397a074a",
+      "source": ".cache/deepseek-review/final-capture/fresh/story.jpg",
+      "type": "real-browser-screenshot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1
+    },
+    {
+      "file": "songhua-before-seam.jpg",
+      "sha256": "389509ddfe97050e1dae284cde52d76a5039f7b2e4fc43696161b45ffea2b622",
+      "source": ".cache/world-reviews/songhua-20261025-011015-679b/20261025-132246-271736/round-0/right.jpg",
+      "type": "real-browser-screenshot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1
+    },
+    {
+      "file": "songhua-after-seam.jpg",
+      "sha256": "47f210d65ebfa6f2ee336053a2b9efe2e32611c900e2d7f6eb3c3690602f27b3",
+      "source": ".cache/deepseek-review/final-capture/songhua/right.jpg",
+      "type": "real-browser-screenshot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1
+    },
+    {
+      "file": "qinghua-world-side.jpg",
+      "sha256": "53f33f0299cbe36ac4e0c165155b801c6f60cede26ebb0905cc970c7f1edef0b",
+      "source": ".cache/world-reviews/qinghua-20261025-011202-dbc8/20261025-132554-948516/round-0/right.jpg",
+      "type": "real-browser-screenshot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1
+    },
+    {
+      "file": "jianzhi-world-side.jpg",
+      "sha256": "af34f5b0c98967b9e3ca9c947edeb8e28f7857df472bec87e3ab159229aafb33",
+      "source": ".cache/world-reviews/jianzhi-20261025-011330-32fe/20261025-132708-518636/round-0/right.jpg",
+      "type": "real-browser-screenshot",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1
+    }
+  ],
+  "note": "模型评分为主观评价；截图为真实浏览器，不是生成界面。完整本机快照留在忽略缓存。",
+  "engineeringChecks": {
+    "backendTestsPassed": 108,
+    "frontendTestsPassed": 52,
+    "typescript": "passed",
+    "frontendBuild": "passed",
+    "pagesBuild": "passed",
+    "windowsIdentityChecksPassed": 15,
+    "publication": {
+      "trackedFiles": 872,
+      "errors": 0,
+      "warnings": 0
+    }
+  }
+}

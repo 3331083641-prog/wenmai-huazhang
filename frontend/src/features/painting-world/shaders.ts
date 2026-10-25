@@ -55,12 +55,14 @@ uniform float uHaze;
 uniform float uMist;
 uniform float uRipple;
 uniform vec3 uPaper;
+uniform float uPreservePaper;
 
 varying vec2 vUv;
 varying float vDepth;
 
 void main() {
   vec2 uv = clamp(vUv, 0.0, 1.0);
+  if(uPreservePaper>0.5){gl_FragColor=vec4(texture2D(uArt,uv).rgb,1.0);return;}
 
   float water = texture2D(uMasks, uv).r;
   float mistMask = texture2D(uMasks, uv).g;

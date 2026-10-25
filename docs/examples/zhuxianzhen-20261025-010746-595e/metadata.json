@@ -5,7 +5,7 @@
   "styleId": "zhuxianzhen",
   "styleName": "朱仙镇木版年画",
   "referenceSubject": "金鱼",
-  "artworkTitle": "红鳞游动：金鱼的东方韵律",
+  "artworkTitle": "红鳞游动·云花共舞",
   "theme": "一尾金鱼，完整鱼身与飘逸尾鳍，木版年画的墨线与红黄绿套色，保留主体，纯白背景留白，不增添其他动物",
   "referenceSource": "user_upload",
   "sourceFilename": "reference.png",
@@ -105,9 +105,19 @@
     "analysisImageSha256": "1ef7ec1047be3d436c604a39e7802b416b5235fadbe7dab3c767fb20c254e5b8",
     "interactionPlanVersion": 2,
     "depthSource": "depth-anything-v2-small",
-    "builtAt": "2026-10-25T02:04:12.810769+08:00"
+    "builtAt": "2026-10-25T11:28:30.400710+08:00"
   },
   "referenceOrigin": "AI-generated white-background reference, requested by the user for this verification",
   "referenceProvider": "built-in imagegen tool; not a photograph",
-  "verificationRun": "20261025-white-reference-five-styles"
+  "verificationRun": "20261025-white-reference-five-styles",
+  "qualityReview": {
+    "status": "unverified",
+    "rounds": 2,
+    "selectedRound": null,
+    "baselineScore": 84.45,
+    "finalScore": null,
+    "improved": false,
+    "reviewerModel": "deepseek-flash",
+    "reportFile": "quality-review.json"
+  }
 }

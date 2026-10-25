@@ -1,7 +1,7 @@
 {
   "slug": "jianzhi-20261025-011330-32fe",
   "styleId": "jianzhi",
-  "title": "红焰奔马：剪纸之舞",
+  "title": "红焰奔马·花影生风",
   "image": {
     "width": 1024,
     "height": 1024,
@@ -33,45 +33,45 @@
   "hotspots": [
     {
       "id": "f0242b7e1fc4-spot-1",
-      "title": "马头侧面，鬃毛与花卉纹样交叠",
-      "x": 0.22,
+      "title": "马头侧脸与鬃毛纹样",
+      "x": 0.2,
       "y": 0.25,
       "status": "approximate"
     },
     {
       "id": "f0242b7e1fc4-spot-2",
-      "title": "马颈侧部的花卉镂空纹样",
-      "x": 0.52,
-      "y": 0.38,
+      "title": "马鬃与肩部花卉纹样特写",
+      "x": 0.45,
+      "y": 0.35,
       "status": "approximate"
     },
     {
       "id": "f0242b7e1fc4-spot-3",
-      "title": "马身中部的花卉镂空纹样",
-      "x": 0.68,
-      "y": 0.52,
+      "title": "马颈鬃毛与肩部花卉纹样交界处",
+      "x": 0.85,
+      "y": 0.45,
       "status": "approximate"
     },
     {
       "id": "f0242b7e1fc4-spot-4",
-      "title": "马鬃细节：密集红色线条与镂空花卉纹样交织",
-      "x": 0.85,
-      "y": 0.45,
+      "title": "马腿内侧花卉镂空纹样",
+      "x": 0.25,
+      "y": 0.6,
       "status": "approximate"
     }
   ],
   "chapters": [
     {
       "id": "fold-1",
-      "scale": 1.53
+      "scale": 1.52
     },
     {
       "id": "fold-2",
-      "scale": 1.63
+      "scale": 1.61
     },
     {
       "id": "fold-3",
-      "scale": 1.49
+      "scale": 1.55
     }
   ],
   "world": {
@@ -84,10 +84,11 @@
       "depth-rg.png",
       "masks.png",
       "model-depth-rg.png",
+      "subject-relief.png",
       "surface.webp",
       "world.json"
     ],
-    "bytes": 1132857
+    "bytes": 1214530
   },
   "vlm": {
     "used": true,
@@ -99,5 +100,10 @@
     "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
     "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
   ],
-  "elapsedSec": 44.2
+  "elapsedSec": 48.2,
+  "qualityReview": {
+    "status": "disabled",
+    "rounds": 0,
+    "improved": false
+  }
 }

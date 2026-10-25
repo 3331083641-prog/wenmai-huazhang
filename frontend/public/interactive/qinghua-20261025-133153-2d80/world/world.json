@@ -1,0 +1,168 @@
+{
+  "version": 1,
+  "slug": "qinghua-20261025-133153-2d80",
+  "title": "蓝韵牡丹图",
+  "art": {
+    "file": "art.webp",
+    "width": 1024,
+    "height": 1024,
+    "aspect": 1.0
+  },
+  "surface": {
+    "file": "surface.webp"
+  },
+  "depth": {
+    "file": "depth-rg.png",
+    "width": 768,
+    "height": 768,
+    "gamma": 0.72
+  },
+  "backdrop": {
+    "file": "backdrop.webp"
+  },
+  "masks": {
+    "file": "masks.png",
+    "width": 768,
+    "height": 768,
+    "coverage": {
+      "water": 0.0,
+      "mist": 0.0,
+      "foliage": 0.0
+    }
+  },
+  "cutouts": [
+    {
+      "bbox_norm": [
+        0.123046875,
+        0.046875,
+        0.7734375,
+        0.91015625
+      ],
+      "size": [
+        792,
+        932
+      ],
+      "alpha_coverage": 0.5544676919408679,
+      "method": "white-background-connected-native-coverage-defringe",
+      "completeSubject": true,
+      "negativeSpacePreserved": false,
+      "id": "subject",
+      "label": "牡丹花",
+      "file": "cutout-subject.webp",
+      "depth": 0.6973146200180054,
+      "bytes": 245690,
+      "relief_file": "subject-relief.png",
+      "reliefSource": "local-depth-relative-within-alpha"
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "17bc27c4aa1e-spot-1",
+      "x": 0.5,
+      "y": 0.35,
+      "depth": 0.6973,
+      "depth_measured": 0.9282,
+      "depth_overridden": true,
+      "relief_delta": 0.4016
+    },
+    {
+      "id": "17bc27c4aa1e-spot-2",
+      "x": 0.35,
+      "y": 0.45,
+      "depth": 0.6973,
+      "depth_measured": 0.8893,
+      "depth_overridden": true,
+      "relief_delta": 0.36883
+    },
+    {
+      "id": "17bc27c4aa1e-spot-3",
+      "x": 0.7,
+      "y": 0.65,
+      "depth": 0.6973,
+      "depth_measured": 0.5644,
+      "depth_overridden": true,
+      "relief_delta": 0.01447
+    },
+    {
+      "id": "17bc27c4aa1e-spot-4",
+      "x": 0.5,
+      "y": 0.75,
+      "depth": 0.6973,
+      "depth_measured": 0.4046,
+      "depth_overridden": true,
+      "relief_delta": -0.34498
+    }
+  ],
+  "camera": {
+    "fov": 34.0,
+    "framing_margin": 1.2,
+    "plane_height": 1.0,
+    "plane_width": 1.0,
+    "distance_fill": 1.6354,
+    "depth_amplitude": 0.24,
+    "yaw_limit_deg": 10.0,
+    "pitch_limit_deg": 7.0,
+    "dolly_near": 0.62,
+    "dolly_far": 1.55,
+    "entry": {
+      "from_scale": 1.74,
+      "duration_ms": 2600
+    }
+  },
+  "tuning": {
+    "haze": 0.04,
+    "mist": 0.12,
+    "ripple": 0.5,
+    "sway": 0.4,
+    "subject_relief": 0.035,
+    "cutout_motion": 0.05,
+    "paper_flex": 0.0
+  },
+  "provenance": {
+    "asset_revision": "78831bde208b8b839f2d",
+    "depth_model": "depth-anything-v2-small",
+    "render_mode": "complete-subject-layers",
+    "depth_inference": {
+      "source": "depth-anything-v2-small",
+      "modelUsed": true,
+      "approximate": true,
+      "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+      "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+      "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+      "license": "Apache-2.0",
+      "inputImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938"
+    },
+    "source_image_sha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+    "semantic_motion": {
+      "water": false,
+      "mist": false,
+      "foliage": false
+    },
+    "scene_kind": "flat_artwork",
+    "background_completion": "white-background",
+    "depth_anchors": [
+      {
+        "x": 0.5,
+        "y": 0.35,
+        "depth": 0.9
+      },
+      {
+        "x": 0.35,
+        "y": 0.45,
+        "depth": 0.5
+      },
+      {
+        "x": 0.7,
+        "y": 0.65,
+        "depth": 0.5
+      },
+      {
+        "x": 0.5,
+        "y": 0.75,
+        "depth": 0.5
+      }
+    ],
+    "depth_generated_at": "2026-10-25T13:33:23",
+    "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
+  }
+}

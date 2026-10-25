@@ -1,0 +1,2561 @@
+{
+  "schemaVersion": 1,
+  "status": "needs_review",
+  "rounds": 3,
+  "selectedRound": null,
+  "baselineScore": 86.1,
+  "finalScore": null,
+  "improved": false,
+  "stopReason": "round_limit",
+  "errorType": null,
+  "history": [
+    {
+      "round": 0,
+      "parameters": {
+        "pitch_limit_deg": 7.0,
+        "framing_margin": 1.2,
+        "depth_amplitude": 0.24,
+        "yaw_limit_deg": 10.0,
+        "haze": 0.04,
+        "mist": 0.12,
+        "ripple": 0.5,
+        "sway": 0.4,
+        "subject_relief": 0.035,
+        "cutout_motion": 0.05,
+        "paper_flex": 0.0
+      },
+      "score": 86.1,
+      "review": {
+        "overallScore": 86,
+        "dimensions": {
+          "fidelity": 88,
+          "layering": 82,
+          "occlusion": 85,
+          "motion": 88,
+          "interaction": 90
+        },
+        "passed": false,
+        "issues": [
+          {
+            "severity": "major",
+            "code": "fidelity_outline_softening",
+            "description": "当前正面/近景成图中，花瓣与叶片的细线轮廓较原图偏软、偏糊；原图铅笔式细腻勾勒和细叶脉的锐度在边缘处明显弱化，近景放大后可见线条发虚。"
+          },
+          {
+            "severity": "major",
+            "code": "layering_low_relief",
+            "description": "当前 yaw/pitch 侧视与近景帧中花冠叶片之间的相对起伏很弱，视差主要是整体画面与主体层的前后位移，未见原图遮挡关系所支持的合理浅浮雕层次。"
+          },
+          {
+            "severity": "minor",
+            "code": "hotspot_semantic_mismatch",
+            "description": "第4个热点标题为‘花茎与叶片连接处’，实际圆点位于右侧叶片叶面上，与花茎分叉连接点不完全吻合；虽可点击，但语义定位有偏差。"
+          },
+          {
+            "severity": "minor",
+            "code": "subject_relief_transition",
+            "description": "近景/推进帧中花瓣层与花心区域相对位移偏保守，部分叠压处有轻微的平面感，未形成与深度锚点一致的层间错动。"
+          }
+        ],
+        "suggestedParameters": {
+          "depth_amplitude": 0.3,
+          "yaw_limit_deg": 12,
+          "pitch_limit_deg": 8,
+          "subject_relief": 0.06
+        },
+        "summary": "本件保留了蓝白牡丹的主体、设色与单色线描风格，浏览器检查显示交互、视角和热点可用；但当前成图花瓣/叶片轮廓较原图偏软，侧视与近景的层间浮雕和视差偏弱，第4热点圆点落点与标题语义略有偏差。建议在有限范围内适度提高 depth_amplitude、yaw/pitch 与 subject_relief，以增强合理浅浮雕和层间遮挡，但轮廓锐度与热点定位问题无法仅靠参数完全修复。",
+        "_requestId": "9a724080-c95c-499a-8127-6a403f7f7888",
+        "_usage": {
+          "prompt_tokens": 10797,
+          "completion_tokens": 498,
+          "total_tokens": 11295,
+          "prompt_tokens_details": {
+            "cached_tokens": 768
+          }
+        },
+        "_model": "deepseek-flash"
+      },
+      "checks": {
+        "canvas": true,
+        "slug_matches": true,
+        "not_degraded": true,
+        "no_page_errors": true,
+        "no_render_errors": true,
+        "no_failed_requests": true,
+        "hotspots_visible": true,
+        "hotspot_click": true,
+        "nonblank_frames": true,
+        "camera_changed": true,
+        "parallax": true,
+        "motion": true,
+        "passed": true,
+        "manifest_matches": true
+      },
+      "passed": false,
+      "evidence": {
+        "case_id": "qinghua-20261025-133153-2d80",
+        "url": "http://127.0.0.1:5173/wander/qinghua-20261025-133153-2d80",
+        "expected_slug": "qinghua-20261025-133153-2d80",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "device_scale_factor": 1,
+        "frames": [
+          {
+            "label": "front",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/front.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "30aecccc5c0f16f9eb77f544f3c2fb312a1d77abf5ec498450888aa362df221e"
+          },
+          {
+            "label": "left",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/left.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "b5b872dfcb3396251cdd97a8408245c4099a6c74f0b6b11420e6c7a23b987038"
+          },
+          {
+            "label": "right",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/right.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "53d0409c30694f82f949e3dcf6971c53632733380f08274825104b7a345b1392"
+          },
+          {
+            "label": "near",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/near.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "92292b974d5a20e87f067862175acd9d4c19f3433980c503862a85b4acf00085"
+          },
+          {
+            "label": "hotspot",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/hotspot.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "ce81c27f24de44d251919ff3eb07c3fce0075bacbbebf22c3f19034af7f75e01"
+          },
+          {
+            "label": "motionBefore",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/motionBefore.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "f62969c38007366c3a7d88c15823f007474ad8adb57a4584120c14b14da3d950"
+          },
+          {
+            "label": "motionAfter",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/motionAfter.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "80c2f6bf7bdddb8c942fd5d6460006da7df857b37a36c2157f305fb009c3fe21"
+          },
+          {
+            "label": "experience",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/experience.jpg",
+            "width": 1440,
+            "height": 1296,
+            "nonblank": true,
+            "sha256": "bdbb428e7c8c8fbb7e914b7948e2f95e09f2742d3f7ced25c86f406cf5120e11"
+          },
+          {
+            "label": "story",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/story.jpg",
+            "width": 1440,
+            "height": 2150,
+            "nonblank": true,
+            "sha256": "5216ea364865cd19d48fe951d831a1c4015b65f6859c6994549dd8e6397a074a"
+          }
+        ],
+        "snapshots": {
+          "ready": {
+            "phase": "idle",
+            "progress": 0,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 3.8324,
+            "targetDistance": 3.8324,
+            "fps": 60,
+            "degraded": false,
+            "frozen": false,
+            "frame": 3,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.4328084112069731,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.45335382834725074,
+                "y": 0.47760983760668035,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.5619843958912156,
+                "y": 0.566943147562513,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.611190182102493,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.24,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "front": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2025,
+            "targetDistance": 2.2025,
+            "fps": 157,
+            "degraded": false,
+            "frozen": true,
+            "frame": 535,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.3786237628317327,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4157587522238086,
+                "y": 0.4595642010674281,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6116369864699832,
+                "y": 0.620567945387582,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6997117100708846,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.24,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "left": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": -7.977,
+            "pitchDeg": 0,
+            "distance": 2.2025,
+            "targetDistance": 2.2025,
+            "fps": 163,
+            "degraded": false,
+            "frozen": true,
+            "frame": 636,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5141351649014269,
+                "y": 0.37872840766853266,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.42996295949907093,
+                "y": 0.45917895868393527,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6218019675292386,
+                "y": 0.6188523442755798,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5119462892228883,
+                "y": 0.699566353050135,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.24,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "right": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 7.98,
+            "pitchDeg": 0,
+            "distance": 2.2025,
+            "targetDistance": 2.2025,
+            "fps": 157,
+            "degraded": false,
+            "frozen": true,
+            "frame": 747,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4858601455571422,
+                "y": 0.3787284760245641,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.40359532426309075,
+                "y": 0.4600102929080385,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.5988182359713785,
+                "y": 0.6221378234662329,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.488049746355825,
+                "y": 0.6995662584379422,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.24,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "near": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0.018,
+            "pitchDeg": 0,
+            "distance": 1.9388,
+            "targetDistance": 1.9382,
+            "fps": 161,
+            "degraded": false,
+            "frozen": true,
+            "frame": 854,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4999633712587648,
+                "y": 0.3604096596161941,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4030917023351128,
+                "y": 0.4535014736264229,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6282322963351765,
+                "y": 0.638527212357753,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.4999691066699654,
+                "y": 0.7292420014189019,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.24,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "hotspot": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2016,
+            "targetDistance": 2.2025,
+            "fps": 125,
+            "degraded": false,
+            "frozen": true,
+            "frame": 946,
+            "selectedId": "17bc27c4aa1e-spot-1",
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4999999000555526,
+                "y": 0.3785699968614815,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4157213639677926,
+                "y": 0.4595463023474927,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6116860276858951,
+                "y": 0.6206210091132692,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.4999999155441026,
+                "y": 0.6997990466151824,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.24,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "motionBefore": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2025,
+            "targetDistance": 2.2025,
+            "fps": 163,
+            "degraded": false,
+            "frozen": false,
+            "frame": 1112,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4999999999943337,
+                "y": 0.37862306495042497,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4157582681283189,
+                "y": 0.45956396870429417,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6116376240739981,
+                "y": 0.6205686340055429,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.49999999999521183,
+                "y": 0.699712843703954,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.24,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "motionAfter": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2025,
+            "targetDistance": 2.2025,
+            "fps": 164,
+            "degraded": false,
+            "frozen": false,
+            "frame": 1454,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.37862306793242917,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4157582702020867,
+                "y": 0.45956396969700164,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6116376213541338,
+                "y": 0.6205686310624645,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6997128388600096,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.24,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "final": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2025,
+            "targetDistance": 2.2025,
+            "fps": 164,
+            "degraded": false,
+            "frozen": true,
+            "frame": 1455,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.37862306793242917,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4157582702020867,
+                "y": 0.45956396969700164,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6116376213541338,
+                "y": 0.6205686310624645,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6997128388600096,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.24,
+            "depthModel": "depth-anything-v2-small"
+          }
+        },
+        "errors": [],
+        "failed_requests": [],
+        "blocked_external_resources": [
+          {
+            "type": "stylesheet"
+          },
+          {
+            "type": "stylesheet"
+          },
+          {
+            "type": "stylesheet"
+          }
+        ],
+        "checks": {
+          "canvas": true,
+          "slug_matches": true,
+          "not_degraded": true,
+          "no_page_errors": true,
+          "no_render_errors": true,
+          "no_failed_requests": true,
+          "hotspots_visible": true,
+          "hotspot_click": true,
+          "nonblank_frames": true,
+          "camera_changed": true,
+          "parallax": true,
+          "motion": true,
+          "passed": true,
+          "manifest_matches": true
+        },
+        "measurements": {
+          "parallax": {
+            "mean_absolute_difference": 9.542355,
+            "changed_pixel_ratio": 0.254077,
+            "pixel_threshold": 8
+          },
+          "motion": {
+            "mean_absolute_difference": 0.327979,
+            "changed_pixel_ratio": 0.003985,
+            "pixel_threshold": 8
+          },
+          "motion_camera_stationary": true
+        },
+        "content": {
+          "hotspot_text": "退出画境\n互动画境\n一图一境\n画境漫游\n\n蓝韵牡丹图\n\n青花瓷纹样\n\n拖拽观察\n滚轮前后\n点击元素\n视角复位\n牡丹花心处密集的花蕊结构\n牡丹花瓣内侧的脉络与边缘轮廓\n花叶交叠处的叶片细节\n花茎与叶片连接处的结构细节\n\n画面细读\n\n牡丹花心处密集的花蕊结构\n\n深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。\n\n深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。\n\n深浅蓝的对比强化了花心的立体感，密集笔触营造出繁复的生命力，整体静谧中透着蓬勃生机。\n\nSRC-QH-JINGDEZHEN-001\n\n这个画境是怎么做的",
+          "experience": "纹脉华章\n首页\n风格库\n智能生成\n作品展厅\n纹脉展馆\n文创转化\n应用场景\n关于项目\n开始创作\n作品展厅\n\n青花瓷纹样 · 画中有话\n\n蓝韵牡丹图一花一世界，蓝白间的生命律动\n\n以蓝白为笔，勾勒牡丹之姿，层层叠叠的花瓣如呼吸般舒展，叶脉与茎干的线条暗藏生长的韵律，静谧中蕴藏蓬勃的自然之力。\n\n互动画境\n一图一境\n画境漫游\n同一件作品，三种看法\n\n4 处文化线索 · 每处都附来源\n\n100%\n读这一卷的故事\n走进画境\n1\n2\n3\n4\n\n点击编号看这一处是什么 · 双击放大\n\n1024×1024\n\n4 处文化线索，每一处都附来源\n快捷键：← → 切换 · 1–9 直达 · +/− 缩放 · 0 复位 · H 显示位置框\n\n青花瓷纹样\n\n共 4 处线索\n\n从任意一处开始\n\n点击画面上的编号，或从下面选一处。每一处都先告诉你「画面里有什么」，再说「它为什么这样」。\n\n1\n牡丹花心处密集的花蕊结构\n深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。\n2\n牡丹花瓣内侧的脉络与边缘轮廓\n花瓣内侧呈浅蓝至白色渐变，边缘有细密的蓝色线条勾勒轮廓，叶脉走向清晰，层次分明。\n3\n花叶交叠处的叶片细节\n深浅不一的蓝色叶片，叶脉清晰呈网状，边缘自然卷曲，与上方花瓣形成柔和过渡。\n4\n花茎与叶片连接处的结构细节\n蓝白渐变的花茎分叉，两侧对称延伸出叶片，叶脉以细线勾勒，茎部有自然弯曲与阴影过渡。\n画境贴图、热点与深度均对应这张成图；支持推进与有限转头，不恢复遮挡背面，不是完整三维重建。\n\n未选择线索\n\n纹脉华章\n\n让传统文化从“被观看”走向“被共创”\n\nQwen Image 3.0 · 本地 Qwen3-VL\n|\n浏览器本地记录\n|\n文创效果预览\n\n© 2026 纹脉华章项目团队",
+          "story": "纹脉华章\n首页\n风格库\n智能生成\n作品展厅\n纹脉展馆\n文创转化\n应用场景\n关于项目\n开始创作\n作品展厅\n互动画境\n一图一境\n画境漫游\n\n青花瓷纹样 · 一图一境\n\n蓝韵牡丹图\n\n以蓝白为笔，勾勒牡丹之姿，层层叠叠的花瓣如呼吸般舒展，叶脉与茎干的线条暗藏生长的韵律，静谧中蕴藏蓬勃的自然之力。\n\n进入画中探索\n走进画境漫游\n从第一折读起\n3 折 · 4 处线索\n\n1024×1024 · 本地生成图\n\n花心之密\n1 / 3\n\n蕊之深\n\n花心之密\n\n深蓝花蕊如晶体簇拥，被浅色花瓣温柔包裹，笔触密集却无压迫感，静谧中透出生命最原始的繁复与力量。花心是花的内核，也是视觉焦点的凝结点。\n\n牡丹花心处密集的花蕊结构\n故宫博物院\n↗\n\n瓣之韵\n\n瓣之柔\n\n花瓣内侧渐变如水波轻漾，边缘细线勾勒轮廓，叶脉走向清晰如歌。蓝白对比带来清雅静谧，线条疏密有致，柔美中透出细腻的生命律动。\n\n牡丹花瓣内侧的脉络与边缘轮廓\n故宫博物院\n↗\n\n叶之息\n\n叶之静\n\n叶片深浅蓝调交织，叶脉网状清晰，边缘自然卷曲，与花蕾形成柔和过渡。蓝调渐变与细密叶脉交织，营造静谧而富有生命力的质感，线条轻盈却不失结构的严谨。\n\n花叶交叠处的叶片细节\n故宫博物院\n↗\n把这一卷带走\n\n本轮不设云端账号与共享服务：可以复制当前页面地址，或导出一份自带画面地址与全部解读的 JSON。两种方式都只依赖本机站点，不生成任何跨设备分享链接。\n\n复制本页地址\n导出故事 JSON\n\n数据来源：qwen3_vl_image\n\n热点定位：Qwen3-VL 直接读取本图，估计归一化热点；自动定位不冒充人工复核。\n\n接着\n走进《蓝韵牡丹图》的画境\n镜头会推进画中：近景先掠过，中景与远景按各自深度错开。看完这一卷，在画境底部再换下一卷。\n开始画境漫游\n\n纹脉华章\n\n让传统文化从“被观看”走向“被共创”\n\nQwen Image 3.0 · 本地 Qwen3-VL\n|\n浏览器本地记录\n|\n文创效果预览\n\n© 2026 纹脉华章项目团队"
+        },
+        "world_slug": "qinghua-20261025-133153-2d80",
+        "manifest_sha256": "74363172dd73e0288915fa7830bc6d6d39b328e37542a5e585c38b9597961e01",
+        "asset_revision": "78831bde208b8b839f2d",
+        "manifest": {
+          "version": 1,
+          "slug": "qinghua-20261025-133153-2d80",
+          "title": "蓝韵牡丹图",
+          "art": {
+            "file": "art.webp",
+            "width": 1024,
+            "height": 1024,
+            "aspect": 1
+          },
+          "surface": {
+            "file": "surface.webp"
+          },
+          "depth": {
+            "file": "depth-rg.png",
+            "width": 768,
+            "height": 768,
+            "gamma": 0.72
+          },
+          "backdrop": {
+            "file": "backdrop.webp"
+          },
+          "masks": {
+            "file": "masks.png",
+            "width": 768,
+            "height": 768,
+            "coverage": {
+              "water": 0,
+              "mist": 0,
+              "foliage": 0
+            }
+          },
+          "cutouts": [
+            {
+              "bbox_norm": [
+                0.123046875,
+                0.046875,
+                0.7734375,
+                0.91015625
+              ],
+              "size": [
+                792,
+                932
+              ],
+              "alpha_coverage": 0.5544676919408679,
+              "method": "white-background-connected-native-coverage-defringe",
+              "completeSubject": true,
+              "negativeSpacePreserved": false,
+              "id": "subject",
+              "label": "牡丹花",
+              "file": "cutout-subject.webp",
+              "depth": 0.6973146200180054,
+              "bytes": 245690,
+              "relief_file": "subject-relief.png",
+              "reliefSource": "local-depth-relative-within-alpha"
+            }
+          ],
+          "hotspots": [
+            {
+              "id": "17bc27c4aa1e-spot-1",
+              "x": 0.5,
+              "y": 0.35,
+              "depth": 0.6973,
+              "depth_measured": 0.9282,
+              "depth_overridden": true,
+              "relief_delta": 0.4016
+            },
+            {
+              "id": "17bc27c4aa1e-spot-2",
+              "x": 0.35,
+              "y": 0.45,
+              "depth": 0.6973,
+              "depth_measured": 0.8893,
+              "depth_overridden": true,
+              "relief_delta": 0.36883
+            },
+            {
+              "id": "17bc27c4aa1e-spot-3",
+              "x": 0.7,
+              "y": 0.65,
+              "depth": 0.6973,
+              "depth_measured": 0.5644,
+              "depth_overridden": true,
+              "relief_delta": 0.01447
+            },
+            {
+              "id": "17bc27c4aa1e-spot-4",
+              "x": 0.5,
+              "y": 0.75,
+              "depth": 0.6973,
+              "depth_measured": 0.4046,
+              "depth_overridden": true,
+              "relief_delta": -0.34498
+            }
+          ],
+          "camera": {
+            "fov": 34,
+            "framing_margin": 1.2,
+            "plane_height": 1,
+            "plane_width": 1,
+            "distance_fill": 1.6354,
+            "depth_amplitude": 0.24,
+            "yaw_limit_deg": 10,
+            "pitch_limit_deg": 7,
+            "dolly_near": 0.62,
+            "dolly_far": 1.55,
+            "entry": {
+              "from_scale": 1.74,
+              "duration_ms": 2600
+            }
+          },
+          "tuning": {
+            "haze": 0.04,
+            "mist": 0.12,
+            "ripple": 0.5,
+            "sway": 0.4,
+            "subject_relief": 0.035,
+            "cutout_motion": 0.05,
+            "paper_flex": 0
+          },
+          "provenance": {
+            "asset_revision": "78831bde208b8b839f2d",
+            "depth_model": "depth-anything-v2-small",
+            "render_mode": "complete-subject-layers",
+            "depth_inference": {
+              "source": "depth-anything-v2-small",
+              "modelUsed": true,
+              "approximate": true,
+              "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+              "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+              "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+              "license": "Apache-2.0",
+              "inputImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938"
+            },
+            "source_image_sha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+            "semantic_motion": {
+              "water": false,
+              "mist": false,
+              "foliage": false
+            },
+            "scene_kind": "flat_artwork",
+            "background_completion": "white-background",
+            "depth_anchors": [
+              {
+                "x": 0.5,
+                "y": 0.35,
+                "depth": 0.9
+              },
+              {
+                "x": 0.35,
+                "y": 0.45,
+                "depth": 0.5
+              },
+              {
+                "x": 0.7,
+                "y": 0.65,
+                "depth": 0.5
+              },
+              {
+                "x": 0.5,
+                "y": 0.75,
+                "depth": 0.5
+              }
+            ],
+            "depth_generated_at": "2026-10-25T13:33:23",
+            "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
+          }
+        },
+        "page_errors": [],
+        "elapsed_seconds": 18.453,
+        "ok": true,
+        "report_path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/capture.json",
+        "caseSnapshotDir": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-0/case-snapshot"
+      }
+    },
+    {
+      "round": 1,
+      "parameters": {
+        "pitch_limit_deg": 8,
+        "framing_margin": 1.2,
+        "depth_amplitude": 0.3,
+        "yaw_limit_deg": 12,
+        "haze": 0.04,
+        "mist": 0.12,
+        "ripple": 0.5,
+        "sway": 0.4,
+        "subject_relief": 0.06,
+        "cutout_motion": 0.05,
+        "paper_flex": 0.0
+      },
+      "score": 87.1,
+      "review": {
+        "overallScore": 87,
+        "dimensions": {
+          "fidelity": 89,
+          "layering": 84,
+          "occlusion": 86,
+          "motion": 88,
+          "interaction": 90
+        },
+        "passed": false,
+        "issues": [
+          {
+            "severity": "major",
+            "code": "fidelity_outline_softening",
+            "description": "当前 front/left/right/near 成图中，花瓣与叶片的细线轮廓较本件目标原图偏软偏糊；原图铅笔式细勾和细叶脉的锐度在边缘处被弱化，near 帧放大后花瓣外缘与叶脉线条发虚。"
+          },
+          {
+            "severity": "major",
+            "code": "layering_low_relief",
+            "description": "left/right 侧视帧中花冠、花瓣与叶片之间的相对起伏仍然偏弱，视差主要表现为整体画面与主体层的前后位移，缺少原图遮挡关系支持的层间错动；叶片与花冠凹陷处立面显得偏平。"
+          },
+          {
+            "severity": "minor",
+            "code": "hotspot_leaf_overlap_undercovered",
+            "description": "front 画面第3个热点圆点位于右侧叶片上，贴近标题‘花叶交叠处’，但圆点所覆盖的叶脉区域与点击弹窗文字描述的‘边缘自然卷曲’细节不完全对应，热点语义落点存在轻微偏差。"
+          },
+          {
+            "severity": "minor",
+            "code": "subject_relief_transition",
+            "description": "near 和推进帧中花心密集花蕊与外围花瓣之间存在轻微平面感，层间位移与深度锚点（0.5,0.35 深度0.9）相比偏保守，叠压关系没有完全形成自然的浅浮雕错动。"
+          }
+        ],
+        "suggestedParameters": {
+          "depth_amplitude": 0.36,
+          "yaw_limit_deg": 13,
+          "pitch_limit_deg": 8,
+          "subject_relief": 0.08
+        },
+        "summary": "本件稳妥保留了蓝白牡丹的单色线描风格、主体完整性与白底负空间，浏览器检查显示交互、视角、热点可用。但相较于本件目标原图，花瓣和叶片轮廓锐度偏软，侧视帧层间浅浮雕和相对起伏仍偏弱，第3热点落点与叶片卷曲细节的语义对应略有偏差。建议有限提高 depth_amplitude、yaw_limit_deg 与 subject_relief 以增强合理浅浮雕和层间遮挡；轮廓锐度与热点语义偏差无法仅靠参数完全修复，故本轮保持不通过。",
+        "_requestId": "d4913d43-521a-4d96-bdf1-016cdeb3d03f",
+        "_usage": {
+          "prompt_tokens": 11391,
+          "completion_tokens": 516,
+          "total_tokens": 11907,
+          "prompt_tokens_details": {
+            "cached_tokens": 2048
+          }
+        },
+        "_model": "deepseek-flash"
+      },
+      "checks": {
+        "canvas": true,
+        "slug_matches": true,
+        "not_degraded": true,
+        "no_page_errors": true,
+        "no_render_errors": true,
+        "no_failed_requests": true,
+        "hotspots_visible": true,
+        "hotspot_click": true,
+        "nonblank_frames": true,
+        "camera_changed": true,
+        "parallax": true,
+        "motion": true,
+        "passed": true,
+        "manifest_matches": true
+      },
+      "passed": false,
+      "evidence": {
+        "case_id": "qinghua-20261025-133153-2d80",
+        "url": "http://127.0.0.1:5173/wander/qinghua-20261025-133153-2d80",
+        "expected_slug": "qinghua-20261025-133153-2d80",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "device_scale_factor": 1,
+        "frames": [
+          {
+            "label": "front",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/front.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "61bd5e25e32df461492f87d6be1046b6e9c4529220b345fb17636856a096dacf"
+          },
+          {
+            "label": "left",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/left.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "566837ce67f2ee83fac71a3fdf9965e062b266244be3e3a4d39b221ab13d44b2"
+          },
+          {
+            "label": "right",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/right.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "1cab5ee36abbf7058f637f054324ca44fc393e87d7c6403b256a3776fd8f332a"
+          },
+          {
+            "label": "near",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/near.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "143e80c7464c8e43fc14279d87da999b51eeb21b2037d6ab0f7b669db333e748"
+          },
+          {
+            "label": "hotspot",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/hotspot.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "73d578feccf60c18c77b4d4fda0e55af972edc544dd96e6c6b9440734dd53512"
+          },
+          {
+            "label": "motionBefore",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/motionBefore.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "2c8fbc17deec4d987e478a320bfcb97a43102efd39db69c00b792ba7a4366d2c"
+          },
+          {
+            "label": "motionAfter",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/motionAfter.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "56d0c92c3dea1479a2470d2dcf0a98a3f9c3ccdc6b558196d875fa99da491dd7"
+          },
+          {
+            "label": "experience",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/experience.jpg",
+            "width": 1440,
+            "height": 1296,
+            "nonblank": true,
+            "sha256": "bdbb428e7c8c8fbb7e914b7948e2f95e09f2742d3f7ced25c86f406cf5120e11"
+          },
+          {
+            "label": "story",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/story.jpg",
+            "width": 1440,
+            "height": 2150,
+            "nonblank": true,
+            "sha256": "5216ea364865cd19d48fe951d831a1c4015b65f6859c6994549dd8e6397a074a"
+          }
+        ],
+        "snapshots": {
+          "ready": {
+            "phase": "idle",
+            "progress": 0,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 3.9368,
+            "targetDistance": 3.9368,
+            "fps": 60,
+            "degraded": false,
+            "frozen": false,
+            "frame": 3,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.43376130758756704,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4540253162581923,
+                "y": 0.47793215180393234,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.5609498525755193,
+                "y": 0.5658258407815608,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6090784822961951,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.3,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "front": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2625,
+            "targetDistance": 2.2625,
+            "fps": 159,
+            "degraded": false,
+            "frozen": true,
+            "frame": 523,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.3791095726955178,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.41612957986667287,
+                "y": 0.459742198336003,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6106687957688437,
+                "y": 0.6195222994303512,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6971323825983193,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.3,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "left": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": -7.983,
+            "pitchDeg": 0,
+            "distance": 2.2625,
+            "targetDistance": 2.2625,
+            "fps": 159,
+            "degraded": false,
+            "frozen": true,
+            "frame": 623,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5181129214320284,
+                "y": 0.3792434202272942,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.43430346470466286,
+                "y": 0.4593701029836233,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6239395436118946,
+                "y": 0.6178117483946877,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5143221893483297,
+                "y": 0.6969600104211304,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.3,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "right": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 7.98,
+            "pitchDeg": 0,
+            "distance": 2.2625,
+            "targetDistance": 2.2625,
+            "fps": 161,
+            "degraded": false,
+            "frozen": true,
+            "frame": 734,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4818943185690874,
+                "y": 0.3792433105953452,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.40011968849323476,
+                "y": 0.46019395967389964,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.5946480005985288,
+                "y": 0.6210404328064958,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.4856835381292559,
+                "y": 0.6969601522580737,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.3,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "near": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0.013,
+            "pitchDeg": 0,
+            "distance": 1.9914,
+            "targetDistance": 1.991,
+            "fps": 151,
+            "degraded": false,
+            "frozen": true,
+            "frame": 835,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4999666500124049,
+                "y": 0.36047004263096405,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.40318123385582927,
+                "y": 0.4535428461566649,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6274833312620801,
+                "y": 0.6377140107953709,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.4999737232562507,
+                "y": 0.7267721291243154,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.3,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "hotspot": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2615,
+            "targetDistance": 2.2625,
+            "fps": 145,
+            "degraded": false,
+            "frozen": true,
+            "frame": 922,
+            "selectedId": "17bc27c4aa1e-spot-1",
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4999998924107316,
+                "y": 0.37904875321262615,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.41608732439151264,
+                "y": 0.45972196686590366,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6107237554859096,
+                "y": 0.6195817593671453,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.49999991494811435,
+                "y": 0.6972294160256216,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.3,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "motionBefore": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2625,
+            "targetDistance": 2.2625,
+            "fps": 165,
+            "degraded": false,
+            "frozen": false,
+            "frame": 1088,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4999999999935306,
+                "y": 0.37910887975584756,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.41612909958364047,
+                "y": 0.4597419678032236,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6106694229342243,
+                "y": 0.6195229767751823,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.49999999999488576,
+                "y": 0.6971334881492086,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.3,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "motionAfter": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2625,
+            "targetDistance": 2.2625,
+            "fps": 159,
+            "degraded": false,
+            "frozen": false,
+            "frame": 1429,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.3791088833477835,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4161291020793153,
+                "y": 0.45974196899807135,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6106694196884354,
+                "y": 0.6195229732635102,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6971334824184536,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.3,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "final": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.2625,
+            "targetDistance": 2.2625,
+            "fps": 159,
+            "degraded": false,
+            "frozen": true,
+            "frame": 1430,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.3791088833477835,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4161291020793153,
+                "y": 0.45974196899807135,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6106694196884354,
+                "y": 0.6195229732635102,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6971334824184536,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.3,
+            "depthModel": "depth-anything-v2-small"
+          }
+        },
+        "errors": [],
+        "failed_requests": [],
+        "blocked_external_resources": [
+          {
+            "type": "stylesheet"
+          },
+          {
+            "type": "stylesheet"
+          },
+          {
+            "type": "stylesheet"
+          }
+        ],
+        "checks": {
+          "canvas": true,
+          "slug_matches": true,
+          "not_degraded": true,
+          "no_page_errors": true,
+          "no_render_errors": true,
+          "no_failed_requests": true,
+          "hotspots_visible": true,
+          "hotspot_click": true,
+          "nonblank_frames": true,
+          "camera_changed": true,
+          "parallax": true,
+          "motion": true,
+          "passed": true,
+          "manifest_matches": true
+        },
+        "measurements": {
+          "parallax": {
+            "mean_absolute_difference": 10.251157,
+            "changed_pixel_ratio": 0.264148,
+            "pixel_threshold": 8
+          },
+          "motion": {
+            "mean_absolute_difference": 0.341761,
+            "changed_pixel_ratio": 0.004765,
+            "pixel_threshold": 8
+          },
+          "motion_camera_stationary": true
+        },
+        "content": {
+          "hotspot_text": "退出画境\n互动画境\n一图一境\n画境漫游\n\n蓝韵牡丹图\n\n青花瓷纹样\n\n拖拽观察\n滚轮前后\n点击元素\n视角复位\n牡丹花心处密集的花蕊结构\n牡丹花瓣内侧的脉络与边缘轮廓\n花叶交叠处的叶片细节\n花茎与叶片连接处的结构细节\n\n画面细读\n\n牡丹花心处密集的花蕊结构\n\n深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。\n\n深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。\n\n深浅蓝的对比强化了花心的立体感，密集笔触营造出繁复的生命力，整体静谧中透着蓬勃生机。\n\nSRC-QH-JINGDEZHEN-001\n\n这个画境是怎么做的",
+          "experience": "纹脉华章\n首页\n风格库\n智能生成\n作品展厅\n纹脉展馆\n文创转化\n应用场景\n关于项目\n开始创作\n作品展厅\n\n青花瓷纹样 · 画中有话\n\n蓝韵牡丹图一花一世界，蓝白间的生命律动\n\n以蓝白为笔，勾勒牡丹之姿，层层叠叠的花瓣如呼吸般舒展，叶脉与茎干的线条暗藏生长的韵律，静谧中蕴藏蓬勃的自然之力。\n\n互动画境\n一图一境\n画境漫游\n同一件作品，三种看法\n\n4 处文化线索 · 每处都附来源\n\n100%\n读这一卷的故事\n走进画境\n1\n2\n3\n4\n\n点击编号看这一处是什么 · 双击放大\n\n1024×1024\n\n4 处文化线索，每一处都附来源\n快捷键：← → 切换 · 1–9 直达 · +/− 缩放 · 0 复位 · H 显示位置框\n\n青花瓷纹样\n\n共 4 处线索\n\n从任意一处开始\n\n点击画面上的编号，或从下面选一处。每一处都先告诉你「画面里有什么」，再说「它为什么这样」。\n\n1\n牡丹花心处密集的花蕊结构\n深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。\n2\n牡丹花瓣内侧的脉络与边缘轮廓\n花瓣内侧呈浅蓝至白色渐变，边缘有细密的蓝色线条勾勒轮廓，叶脉走向清晰，层次分明。\n3\n花叶交叠处的叶片细节\n深浅不一的蓝色叶片，叶脉清晰呈网状，边缘自然卷曲，与上方花瓣形成柔和过渡。\n4\n花茎与叶片连接处的结构细节\n蓝白渐变的花茎分叉，两侧对称延伸出叶片，叶脉以细线勾勒，茎部有自然弯曲与阴影过渡。\n画境贴图、热点与深度均对应这张成图；支持推进与有限转头，不恢复遮挡背面，不是完整三维重建。\n\n未选择线索\n\n纹脉华章\n\n让传统文化从“被观看”走向“被共创”\n\nQwen Image 3.0 · 本地 Qwen3-VL\n|\n浏览器本地记录\n|\n文创效果预览\n\n© 2026 纹脉华章项目团队",
+          "story": "纹脉华章\n首页\n风格库\n智能生成\n作品展厅\n纹脉展馆\n文创转化\n应用场景\n关于项目\n开始创作\n作品展厅\n互动画境\n一图一境\n画境漫游\n\n青花瓷纹样 · 一图一境\n\n蓝韵牡丹图\n\n以蓝白为笔，勾勒牡丹之姿，层层叠叠的花瓣如呼吸般舒展，叶脉与茎干的线条暗藏生长的韵律，静谧中蕴藏蓬勃的自然之力。\n\n进入画中探索\n走进画境漫游\n从第一折读起\n3 折 · 4 处线索\n\n1024×1024 · 本地生成图\n\n花心之密\n1 / 3\n\n蕊之深\n\n花心之密\n\n深蓝花蕊如晶体簇拥，被浅色花瓣温柔包裹，笔触密集却无压迫感，静谧中透出生命最原始的繁复与力量。花心是花的内核，也是视觉焦点的凝结点。\n\n牡丹花心处密集的花蕊结构\n故宫博物院\n↗\n\n瓣之韵\n\n瓣之柔\n\n花瓣内侧渐变如水波轻漾，边缘细线勾勒轮廓，叶脉走向清晰如歌。蓝白对比带来清雅静谧，线条疏密有致，柔美中透出细腻的生命律动。\n\n牡丹花瓣内侧的脉络与边缘轮廓\n故宫博物院\n↗\n\n叶之息\n\n叶之静\n\n叶片深浅蓝调交织，叶脉网状清晰，边缘自然卷曲，与花蕾形成柔和过渡。蓝调渐变与细密叶脉交织，营造静谧而富有生命力的质感，线条轻盈却不失结构的严谨。\n\n花叶交叠处的叶片细节\n故宫博物院\n↗\n把这一卷带走\n\n本轮不设云端账号与共享服务：可以复制当前页面地址，或导出一份自带画面地址与全部解读的 JSON。两种方式都只依赖本机站点，不生成任何跨设备分享链接。\n\n复制本页地址\n导出故事 JSON\n\n数据来源：qwen3_vl_image\n\n热点定位：Qwen3-VL 直接读取本图，估计归一化热点；自动定位不冒充人工复核。\n\n接着\n走进《蓝韵牡丹图》的画境\n镜头会推进画中：近景先掠过，中景与远景按各自深度错开。看完这一卷，在画境底部再换下一卷。\n开始画境漫游\n\n纹脉华章\n\n让传统文化从“被观看”走向“被共创”\n\nQwen Image 3.0 · 本地 Qwen3-VL\n|\n浏览器本地记录\n|\n文创效果预览\n\n© 2026 纹脉华章项目团队"
+        },
+        "world_slug": "qinghua-20261025-133153-2d80",
+        "manifest_sha256": "36c0cd5f50d9163ec0aaf4ea1352f1286b40a726acd9a93bf79e8af25cc6ccfb",
+        "asset_revision": "bd30029348d387ec82ef",
+        "manifest": {
+          "version": 1,
+          "slug": "qinghua-20261025-133153-2d80",
+          "title": "蓝韵牡丹图",
+          "art": {
+            "file": "art.webp",
+            "width": 1024,
+            "height": 1024,
+            "aspect": 1
+          },
+          "surface": {
+            "file": "surface.webp"
+          },
+          "depth": {
+            "file": "depth-rg.png",
+            "width": 768,
+            "height": 768,
+            "gamma": 0.72
+          },
+          "backdrop": {
+            "file": "backdrop.webp"
+          },
+          "masks": {
+            "file": "masks.png",
+            "width": 768,
+            "height": 768,
+            "coverage": {
+              "water": 0,
+              "mist": 0,
+              "foliage": 0
+            }
+          },
+          "cutouts": [
+            {
+              "bbox_norm": [
+                0.123046875,
+                0.046875,
+                0.7734375,
+                0.91015625
+              ],
+              "size": [
+                792,
+                932
+              ],
+              "alpha_coverage": 0.5544676919408679,
+              "method": "white-background-connected-native-coverage-defringe",
+              "completeSubject": true,
+              "negativeSpacePreserved": false,
+              "id": "subject",
+              "label": "牡丹花",
+              "file": "cutout-subject.webp",
+              "depth": 0.6973146200180054,
+              "bytes": 245690,
+              "relief_file": "subject-relief.png",
+              "reliefSource": "local-depth-relative-within-alpha"
+            }
+          ],
+          "hotspots": [
+            {
+              "id": "17bc27c4aa1e-spot-1",
+              "x": 0.5,
+              "y": 0.35,
+              "depth": 0.6973,
+              "depth_measured": 0.9282,
+              "depth_overridden": true,
+              "relief_delta": 0.4016
+            },
+            {
+              "id": "17bc27c4aa1e-spot-2",
+              "x": 0.35,
+              "y": 0.45,
+              "depth": 0.6973,
+              "depth_measured": 0.8893,
+              "depth_overridden": true,
+              "relief_delta": 0.36883
+            },
+            {
+              "id": "17bc27c4aa1e-spot-3",
+              "x": 0.7,
+              "y": 0.65,
+              "depth": 0.6973,
+              "depth_measured": 0.5644,
+              "depth_overridden": true,
+              "relief_delta": 0.01447
+            },
+            {
+              "id": "17bc27c4aa1e-spot-4",
+              "x": 0.5,
+              "y": 0.75,
+              "depth": 0.6973,
+              "depth_measured": 0.4046,
+              "depth_overridden": true,
+              "relief_delta": -0.34498
+            }
+          ],
+          "camera": {
+            "fov": 34,
+            "framing_margin": 1.2,
+            "plane_height": 1,
+            "plane_width": 1,
+            "distance_fill": 1.6354,
+            "depth_amplitude": 0.3,
+            "yaw_limit_deg": 12,
+            "pitch_limit_deg": 8,
+            "dolly_near": 0.62,
+            "dolly_far": 1.55,
+            "entry": {
+              "from_scale": 1.74,
+              "duration_ms": 2600
+            }
+          },
+          "tuning": {
+            "haze": 0.04,
+            "mist": 0.12,
+            "ripple": 0.5,
+            "sway": 0.4,
+            "subject_relief": 0.06,
+            "cutout_motion": 0.05,
+            "paper_flex": 0
+          },
+          "provenance": {
+            "depth_model": "depth-anything-v2-small",
+            "render_mode": "complete-subject-layers",
+            "depth_inference": {
+              "source": "depth-anything-v2-small",
+              "modelUsed": true,
+              "approximate": true,
+              "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+              "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+              "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+              "license": "Apache-2.0",
+              "inputImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938"
+            },
+            "source_image_sha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+            "semantic_motion": {
+              "water": false,
+              "mist": false,
+              "foliage": false
+            },
+            "scene_kind": "flat_artwork",
+            "background_completion": "white-background",
+            "depth_anchors": [
+              {
+                "x": 0.5,
+                "y": 0.35,
+                "depth": 0.9
+              },
+              {
+                "x": 0.35,
+                "y": 0.45,
+                "depth": 0.5
+              },
+              {
+                "x": 0.7,
+                "y": 0.65,
+                "depth": 0.5
+              },
+              {
+                "x": 0.5,
+                "y": 0.75,
+                "depth": 0.5
+              }
+            ],
+            "depth_generated_at": "2026-10-25T13:33:23",
+            "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。",
+            "asset_revision": "bd30029348d387ec82ef"
+          }
+        },
+        "page_errors": [],
+        "elapsed_seconds": 16.219,
+        "ok": true,
+        "report_path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/capture.json",
+        "caseSnapshotDir": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-1/case-snapshot"
+      }
+    },
+    {
+      "round": 2,
+      "parameters": {
+        "pitch_limit_deg": 8,
+        "framing_margin": 1.2,
+        "depth_amplitude": 0.36,
+        "yaw_limit_deg": 13,
+        "haze": 0.04,
+        "mist": 0.12,
+        "ripple": 0.5,
+        "sway": 0.4,
+        "subject_relief": 0.08,
+        "cutout_motion": 0.05,
+        "paper_flex": 0.0
+      },
+      "score": 87.1,
+      "review": {
+        "overallScore": 87,
+        "dimensions": {
+          "fidelity": 89,
+          "layering": 84,
+          "occlusion": 86,
+          "motion": 88,
+          "interaction": 90
+        },
+        "passed": false,
+        "issues": [
+          {
+            "severity": "major",
+            "code": "fidelity_outline_softening",
+            "description": "与本件目标原图相比，本件当前画境在 front/left/right/近景帧中，花瓣的外缘和叶脉的细线均显得更软、更糊；原图铅笔式的细勾、锐利的花瓣波状边缘和细密的网状叶脉在画面边缘被削弱，近景放大后花瓣外缘和叶脉的线条发虚。"
+          },
+          {
+            "severity": "major",
+            "code": "layering_low_relief",
+            "description": "本件当前画境的 left/right 侧视帧中，花冠内层花瓣、外层花瓣与叶片之间的相对错动仍然偏弱，视差主要表现为整幅画面与主体层的前后位移；花冠中心凹入处的立面，以及右侧叶面与花茎交叠处的层间错动不足，缺少原图遮挡关系所支持的浅浮雕感。"
+          },
+          {
+            "severity": "minor",
+            "code": "hotspot_semantic_mismatch",
+            "description": "在第4个热点标题为‘花茎与叶片连接处的结构细节’时，热点圆点实际落在右侧叶片叶面上，靠近叶脉，并不是花茎分叉的连接点；热点虽可点击并弹出文字，但圆点落点与标题语义仍存在轻微偏差。"
+          },
+          {
+            "severity": "minor",
+            "code": "subject_relief_transition",
+            "description": "在 near 与 motionAfter 帧中，花心密集花蕊与外围花瓣之间的层间位移与深度锚点（0.5,0.35 深度0.9）相比偏保守；叠压处的浅浮雕错动不足，局部仍保留轻微的平面感。"
+          }
+        ],
+        "suggestedParameters": {
+          "depth_amplitude": 0.38,
+          "yaw_limit_deg": 13,
+          "pitch_limit_deg": 8,
+          "subject_relief": 0.09
+        },
+        "summary": "本件保留了蓝白牡丹的单色线描风格、白底负空间和花、茎、叶主体完整性；浏览器检查显示交互、视角、热点可见与点击均可用。但当前成图中花瓣与叶片细线轮廓较原图偏软，侧视与近景帧的层间浅浮雕相对起伏偏弱，第4热点落点与‘花茎与叶片连接处’标题不完全吻合。适度提高 depth_amplitude、yaw_limit_deg、pitch_limit_deg 和 subject_relief 可增强合理浅浮雕与层间遮挡，但轮廓锐度和热点定位问题无法仅靠参数完全修复，故本轮不通过。",
+        "_requestId": "23bbfffb-e78f-4def-ae1d-77770caff9bb",
+        "_usage": {
+          "prompt_tokens": 12059,
+          "completion_tokens": 628,
+          "total_tokens": 12687,
+          "prompt_tokens_details": {
+            "cached_tokens": 2048
+          }
+        },
+        "_model": "deepseek-flash"
+      },
+      "checks": {
+        "canvas": true,
+        "slug_matches": true,
+        "not_degraded": true,
+        "no_page_errors": true,
+        "no_render_errors": true,
+        "no_failed_requests": true,
+        "hotspots_visible": true,
+        "hotspot_click": true,
+        "nonblank_frames": true,
+        "camera_changed": true,
+        "parallax": true,
+        "motion": true,
+        "passed": true,
+        "manifest_matches": true
+      },
+      "passed": false,
+      "evidence": {
+        "case_id": "qinghua-20261025-133153-2d80",
+        "url": "http://127.0.0.1:5173/wander/qinghua-20261025-133153-2d80",
+        "expected_slug": "qinghua-20261025-133153-2d80",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "device_scale_factor": 1,
+        "frames": [
+          {
+            "label": "front",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/front.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "0dcee52a6cb7df6ec6597046cbd4b45661a0362fdd165aca4b5b53ab156e13bb"
+          },
+          {
+            "label": "left",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/left.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "b60074cdce80b50a59c9496d5861fdeb80cb7e6a2274c7b97562f26eadb375d2"
+          },
+          {
+            "label": "right",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/right.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "18ca3a4151abfa9b140ee8f7fad0e072fe6bb08ee4140743aceb65fe0c486fe5"
+          },
+          {
+            "label": "near",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/near.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "58be50045241fda15a4b9f2325d9f71bf2fecc1c85185e36c8ea39894ca8e538"
+          },
+          {
+            "label": "hotspot",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/hotspot.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "55425725dceab03374eb9e9e7630db10cb1a27dc95d1dca576afd60f7db0f87b"
+          },
+          {
+            "label": "motionBefore",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/motionBefore.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "6ffdc47c2324abcfc5639cb40985bfd8650079efcea5f244cd26d215bceab187"
+          },
+          {
+            "label": "motionAfter",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/motionAfter.jpg",
+            "width": 1440,
+            "height": 1000,
+            "nonblank": true,
+            "sha256": "7749adcaff5813cc86e16590a8c6faa6fb66b5dc2b09c1a33d3c19a35d0446c0"
+          },
+          {
+            "label": "experience",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/experience.jpg",
+            "width": 1440,
+            "height": 1296,
+            "nonblank": true,
+            "sha256": "bdbb428e7c8c8fbb7e914b7948e2f95e09f2742d3f7ced25c86f406cf5120e11"
+          },
+          {
+            "label": "story",
+            "path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/story.jpg",
+            "width": 1440,
+            "height": 2150,
+            "nonblank": true,
+            "sha256": "5216ea364865cd19d48fe951d831a1c4015b65f6859c6994549dd8e6397a074a"
+          }
+        ],
+        "snapshots": {
+          "ready": {
+            "phase": "idle",
+            "progress": 0,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 4.0412,
+            "targetDistance": 4.0412,
+            "fps": 60,
+            "degraded": false,
+            "frozen": false,
+            "frame": 3,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.43472245242863133,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4546999711548182,
+                "y": 0.47825598615431275,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.5599481314664098,
+                "y": 0.5647439819837226,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6070938618540805,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.36,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "front": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.3225,
+            "targetDistance": 2.3225,
+            "fps": 161,
+            "degraded": false,
+            "frozen": true,
+            "frame": 538,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.3797100663249537,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.41657257014203575,
+                "y": 0.4599548336681772,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6097134200710658,
+                "y": 0.6184904936767511,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6947787570668879,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.36,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "left": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": -7.979,
+            "pitchDeg": 0,
+            "distance": 2.3225,
+            "targetDistance": 2.3225,
+            "fps": 161,
+            "degraded": false,
+            "frozen": true,
+            "frame": 641,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5218588351817108,
+                "y": 0.37987084899838197,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.43849206847770944,
+                "y": 0.459596367234807,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6260161601553416,
+                "y": 0.6167874259953455,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5167626049703522,
+                "y": 0.694579334214847,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.36,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "right": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 7.977,
+            "pitchDeg": 0,
+            "distance": 2.3225,
+            "targetDistance": 2.3225,
+            "fps": 163,
+            "degraded": false,
+            "frozen": true,
+            "frame": 754,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4781446270923708,
+                "y": 0.379870795721304,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.3969131753482905,
+                "y": 0.46041084577380736,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.5905601852515283,
+                "y": 0.6199580269565149,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.4832400517806903,
+                "y": 0.6945794009913657,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.36,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "near": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0.022,
+            "pitchDeg": 0,
+            "distance": 2.0446,
+            "targetDistance": 2.0438,
+            "fps": 159,
+            "degraded": false,
+            "frozen": true,
+            "frame": 853,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.49992838314163063,
+                "y": 0.3607301712430967,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4033609544620129,
+                "y": 0.45364726064795335,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6266682440158697,
+                "y": 0.6368694131684918,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.4999453426785896,
+                "y": 0.7245039210083336,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.36,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "hotspot": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.3215,
+            "targetDistance": 2.3225,
+            "fps": 158,
+            "degraded": false,
+            "frozen": true,
+            "frame": 939,
+            "selectedId": "17bc27c4aa1e-spot-1",
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4999997923318113,
+                "y": 0.37964821189602116,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4165295285233271,
+                "y": 0.4599342723221335,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6097688233538618,
+                "y": 0.6185505259833475,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.49999984080034754,
+                "y": 0.6948760632208499,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.36,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "motionBefore": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.3225,
+            "targetDistance": 2.3225,
+            "fps": 162,
+            "degraded": false,
+            "frozen": false,
+            "frame": 1098,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.4999999999869552,
+                "y": 0.37970937998152626,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.4165720947253127,
+                "y": 0.4599546054743457,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6097140366926048,
+                "y": 0.6184911596403729,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.49999999998999967,
+                "y": 0.6947798368021093,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.36,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "motionAfter": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.3225,
+            "targetDistance": 2.3225,
+            "fps": 160,
+            "degraded": false,
+            "frozen": false,
+            "frame": 1434,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.3797093838085625,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.41657209738855744,
+                "y": 0.45995460674650757,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6097140332648451,
+                "y": 0.6184911559260328,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6947798307815298,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.36,
+            "depthModel": "depth-anything-v2-small"
+          },
+          "final": {
+            "phase": "inside",
+            "progress": 1,
+            "yawDeg": 0,
+            "pitchDeg": 0,
+            "distance": 2.3225,
+            "targetDistance": 2.3225,
+            "fps": 160,
+            "degraded": false,
+            "frozen": true,
+            "frame": 1436,
+            "selectedId": null,
+            "hoveredId": null,
+            "hotspots": [
+              {
+                "id": "17bc27c4aa1e-spot-1",
+                "x": 0.5,
+                "y": 0.3797093838085625,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-2",
+                "x": 0.41657209738855744,
+                "y": 0.45995460674650757,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-3",
+                "x": 0.6097140332648451,
+                "y": 0.6184911559260328,
+                "visible": true,
+                "depth": 0.6973
+              },
+              {
+                "id": "17bc27c4aa1e-spot-4",
+                "x": 0.5,
+                "y": 0.6947798307815298,
+                "visible": true,
+                "depth": 0.6973
+              }
+            ],
+            "segments": {
+              "x": 192,
+              "y": 128
+            },
+            "amplitude": 0.36,
+            "depthModel": "depth-anything-v2-small"
+          }
+        },
+        "errors": [],
+        "failed_requests": [],
+        "blocked_external_resources": [
+          {
+            "type": "stylesheet"
+          },
+          {
+            "type": "stylesheet"
+          },
+          {
+            "type": "stylesheet"
+          }
+        ],
+        "checks": {
+          "canvas": true,
+          "slug_matches": true,
+          "not_degraded": true,
+          "no_page_errors": true,
+          "no_render_errors": true,
+          "no_failed_requests": true,
+          "hotspots_visible": true,
+          "hotspot_click": true,
+          "nonblank_frames": true,
+          "camera_changed": true,
+          "parallax": true,
+          "motion": true,
+          "passed": true,
+          "manifest_matches": true
+        },
+        "measurements": {
+          "parallax": {
+            "mean_absolute_difference": 10.622717,
+            "changed_pixel_ratio": 0.262744,
+            "pixel_threshold": 8
+          },
+          "motion": {
+            "mean_absolute_difference": 0.340919,
+            "changed_pixel_ratio": 0.004756,
+            "pixel_threshold": 8
+          },
+          "motion_camera_stationary": true
+        },
+        "content": {
+          "hotspot_text": "退出画境\n互动画境\n一图一境\n画境漫游\n\n蓝韵牡丹图\n\n青花瓷纹样\n\n拖拽观察\n滚轮前后\n点击元素\n视角复位\n牡丹花心处密集的花蕊结构\n牡丹花瓣内侧的脉络与边缘轮廓\n花叶交叠处的叶片细节\n花茎与叶片连接处的结构细节\n\n画面细读\n\n牡丹花心处密集的花蕊结构\n\n深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。\n\n深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。\n\n深浅蓝的对比强化了花心的立体感，密集笔触营造出繁复的生命力，整体静谧中透着蓬勃生机。\n\nSRC-QH-JINGDEZHEN-001\n\n这个画境是怎么做的",
+          "experience": "纹脉华章\n首页\n风格库\n智能生成\n作品展厅\n纹脉展馆\n文创转化\n应用场景\n关于项目\n开始创作\n作品展厅\n\n青花瓷纹样 · 画中有话\n\n蓝韵牡丹图一花一世界，蓝白间的生命律动\n\n以蓝白为笔，勾勒牡丹之姿，层层叠叠的花瓣如呼吸般舒展，叶脉与茎干的线条暗藏生长的韵律，静谧中蕴藏蓬勃的自然之力。\n\n互动画境\n一图一境\n画境漫游\n同一件作品，三种看法\n\n4 处文化线索 · 每处都附来源\n\n100%\n读这一卷的故事\n走进画境\n1\n2\n3\n4\n\n点击编号看这一处是什么 · 双击放大\n\n1024×1024\n\n4 处文化线索，每一处都附来源\n快捷键：← → 切换 · 1–9 直达 · +/− 缩放 · 0 复位 · H 显示位置框\n\n青花瓷纹样\n\n共 4 处线索\n\n从任意一处开始\n\n点击画面上的编号，或从下面选一处。每一处都先告诉你「画面里有什么」，再说「它为什么这样」。\n\n1\n牡丹花心处密集的花蕊结构\n深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。\n2\n牡丹花瓣内侧的脉络与边缘轮廓\n花瓣内侧呈浅蓝至白色渐变，边缘有细密的蓝色线条勾勒轮廓，叶脉走向清晰，层次分明。\n3\n花叶交叠处的叶片细节\n深浅不一的蓝色叶片，叶脉清晰呈网状，边缘自然卷曲，与上方花瓣形成柔和过渡。\n4\n花茎与叶片连接处的结构细节\n蓝白渐变的花茎分叉，两侧对称延伸出叶片，叶脉以细线勾勒，茎部有自然弯曲与阴影过渡。\n画境贴图、热点与深度均对应这张成图；支持推进与有限转头，不恢复遮挡背面，不是完整三维重建。\n\n未选择线索\n\n纹脉华章\n\n让传统文化从“被观看”走向“被共创”\n\nQwen Image 3.0 · 本地 Qwen3-VL\n|\n浏览器本地记录\n|\n文创效果预览\n\n© 2026 纹脉华章项目团队",
+          "story": "纹脉华章\n首页\n风格库\n智能生成\n作品展厅\n纹脉展馆\n文创转化\n应用场景\n关于项目\n开始创作\n作品展厅\n互动画境\n一图一境\n画境漫游\n\n青花瓷纹样 · 一图一境\n\n蓝韵牡丹图\n\n以蓝白为笔，勾勒牡丹之姿，层层叠叠的花瓣如呼吸般舒展，叶脉与茎干的线条暗藏生长的韵律，静谧中蕴藏蓬勃的自然之力。\n\n进入画中探索\n走进画境漫游\n从第一折读起\n3 折 · 4 处线索\n\n1024×1024 · 本地生成图\n\n花心之密\n1 / 3\n\n蕊之深\n\n花心之密\n\n深蓝花蕊如晶体簇拥，被浅色花瓣温柔包裹，笔触密集却无压迫感，静谧中透出生命最原始的繁复与力量。花心是花的内核，也是视觉焦点的凝结点。\n\n牡丹花心处密集的花蕊结构\n故宫博物院\n↗\n\n瓣之韵\n\n瓣之柔\n\n花瓣内侧渐变如水波轻漾，边缘细线勾勒轮廓，叶脉走向清晰如歌。蓝白对比带来清雅静谧，线条疏密有致，柔美中透出细腻的生命律动。\n\n牡丹花瓣内侧的脉络与边缘轮廓\n故宫博物院\n↗\n\n叶之息\n\n叶之静\n\n叶片深浅蓝调交织，叶脉网状清晰，边缘自然卷曲，与花蕾形成柔和过渡。蓝调渐变与细密叶脉交织，营造静谧而富有生命力的质感，线条轻盈却不失结构的严谨。\n\n花叶交叠处的叶片细节\n故宫博物院\n↗\n把这一卷带走\n\n本轮不设云端账号与共享服务：可以复制当前页面地址，或导出一份自带画面地址与全部解读的 JSON。两种方式都只依赖本机站点，不生成任何跨设备分享链接。\n\n复制本页地址\n导出故事 JSON\n\n数据来源：qwen3_vl_image\n\n热点定位：Qwen3-VL 直接读取本图，估计归一化热点；自动定位不冒充人工复核。\n\n接着\n走进《蓝韵牡丹图》的画境\n镜头会推进画中：近景先掠过，中景与远景按各自深度错开。看完这一卷，在画境底部再换下一卷。\n开始画境漫游\n\n纹脉华章\n\n让传统文化从“被观看”走向“被共创”\n\nQwen Image 3.0 · 本地 Qwen3-VL\n|\n浏览器本地记录\n|\n文创效果预览\n\n© 2026 纹脉华章项目团队"
+        },
+        "world_slug": "qinghua-20261025-133153-2d80",
+        "manifest_sha256": "22854a175fe2e78672488a5742ed5d21530ec255719d5b6a95b95f05dbafff4d",
+        "asset_revision": "036ebab0bb7d0836891c",
+        "manifest": {
+          "version": 1,
+          "slug": "qinghua-20261025-133153-2d80",
+          "title": "蓝韵牡丹图",
+          "art": {
+            "file": "art.webp",
+            "width": 1024,
+            "height": 1024,
+            "aspect": 1
+          },
+          "surface": {
+            "file": "surface.webp"
+          },
+          "depth": {
+            "file": "depth-rg.png",
+            "width": 768,
+            "height": 768,
+            "gamma": 0.72
+          },
+          "backdrop": {
+            "file": "backdrop.webp"
+          },
+          "masks": {
+            "file": "masks.png",
+            "width": 768,
+            "height": 768,
+            "coverage": {
+              "water": 0,
+              "mist": 0,
+              "foliage": 0
+            }
+          },
+          "cutouts": [
+            {
+              "bbox_norm": [
+                0.123046875,
+                0.046875,
+                0.7734375,
+                0.91015625
+              ],
+              "size": [
+                792,
+                932
+              ],
+              "alpha_coverage": 0.5544676919408679,
+              "method": "white-background-connected-native-coverage-defringe",
+              "completeSubject": true,
+              "negativeSpacePreserved": false,
+              "id": "subject",
+              "label": "牡丹花",
+              "file": "cutout-subject.webp",
+              "depth": 0.6973146200180054,
+              "bytes": 245690,
+              "relief_file": "subject-relief.png",
+              "reliefSource": "local-depth-relative-within-alpha"
+            }
+          ],
+          "hotspots": [
+            {
+              "id": "17bc27c4aa1e-spot-1",
+              "x": 0.5,
+              "y": 0.35,
+              "depth": 0.6973,
+              "depth_measured": 0.9282,
+              "depth_overridden": true,
+              "relief_delta": 0.4016
+            },
+            {
+              "id": "17bc27c4aa1e-spot-2",
+              "x": 0.35,
+              "y": 0.45,
+              "depth": 0.6973,
+              "depth_measured": 0.8893,
+              "depth_overridden": true,
+              "relief_delta": 0.36883
+            },
+            {
+              "id": "17bc27c4aa1e-spot-3",
+              "x": 0.7,
+              "y": 0.65,
+              "depth": 0.6973,
+              "depth_measured": 0.5644,
+              "depth_overridden": true,
+              "relief_delta": 0.01447
+            },
+            {
+              "id": "17bc27c4aa1e-spot-4",
+              "x": 0.5,
+              "y": 0.75,
+              "depth": 0.6973,
+              "depth_measured": 0.4046,
+              "depth_overridden": true,
+              "relief_delta": -0.34498
+            }
+          ],
+          "camera": {
+            "fov": 34,
+            "framing_margin": 1.2,
+            "plane_height": 1,
+            "plane_width": 1,
+            "distance_fill": 1.6354,
+            "depth_amplitude": 0.36,
+            "yaw_limit_deg": 13,
+            "pitch_limit_deg": 8,
+            "dolly_near": 0.62,
+            "dolly_far": 1.55,
+            "entry": {
+              "from_scale": 1.74,
+              "duration_ms": 2600
+            }
+          },
+          "tuning": {
+            "haze": 0.04,
+            "mist": 0.12,
+            "ripple": 0.5,
+            "sway": 0.4,
+            "subject_relief": 0.08,
+            "cutout_motion": 0.05,
+            "paper_flex": 0
+          },
+          "provenance": {
+            "depth_model": "depth-anything-v2-small",
+            "render_mode": "complete-subject-layers",
+            "depth_inference": {
+              "source": "depth-anything-v2-small",
+              "modelUsed": true,
+              "approximate": true,
+              "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+              "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+              "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+              "license": "Apache-2.0",
+              "inputImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938"
+            },
+            "source_image_sha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+            "semantic_motion": {
+              "water": false,
+              "mist": false,
+              "foliage": false
+            },
+            "scene_kind": "flat_artwork",
+            "background_completion": "white-background",
+            "depth_anchors": [
+              {
+                "x": 0.5,
+                "y": 0.35,
+                "depth": 0.9
+              },
+              {
+                "x": 0.35,
+                "y": 0.45,
+                "depth": 0.5
+              },
+              {
+                "x": 0.7,
+                "y": 0.65,
+                "depth": 0.5
+              },
+              {
+                "x": 0.5,
+                "y": 0.75,
+                "depth": 0.5
+              }
+            ],
+            "depth_generated_at": "2026-10-25T13:33:23",
+            "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。",
+            "asset_revision": "036ebab0bb7d0836891c"
+          }
+        },
+        "page_errors": [],
+        "elapsed_seconds": 16.641,
+        "ok": true,
+        "report_path": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/capture.json",
+        "caseSnapshotDir": ".cache/world-reviews/qinghua-20261025-133153-2d80/20261025-133323-517857/round-2/case-snapshot"
+      }
+    }
+  ],
+  "originalManifestBackup": ".cache\\world-review-backups\\qinghua-20261025-133153-2d80\\20261025-133323-787317\\world.json",
+  "scoringNote": "DeepSeek视觉评分是主观评价；程序检查单独保存，不能视为客观准确率。",
+  "caseId": "qinghua-20261025-133153-2d80",
+  "styleId": "qinghua",
+  "roundLimit": 3,
+  "sourceImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+  "referenceFingerprint": "5f6df3337d394b5e814dc807bcadad7dd3738042018fc92277e97f8c4ce8d528",
+  "reviewerModel": "deepseek-flash",
+  "reviewerProvider": "official",
+  "dependencyFingerprint": "d68052ef690748c67839c2408dd1bb1e426b92a672f7cfa8d4b3f9a9c554a75d",
+  "selectedManifestSha256": "74363172dd73e0288915fa7830bc6d6d39b328e37542a5e585c38b9597961e01",
+  "policySha256": "d73b6f0d8f8eaad6c86c2913960e82eaf49a03c54ad732a12c0cf67ddf70efad",
+  "completedAt": "2026-10-25T05:34:34.956007+00:00",
+  "requestCount": 3,
+  "usage": {
+    "prompt_tokens": 34247,
+    "completion_tokens": 1642,
+    "total_tokens": 35889
+  }
+}

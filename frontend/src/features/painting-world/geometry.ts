@@ -2,10 +2,12 @@
 export function fitArtworkCamera(input: {
   planeHeight:number; planeWidth:number; fov:number; amplitude:number;
   width:number; height:number; entryScale:number;
+  margin?:number;
 }) {
   const viewportAspect=Math.max(input.width,1)/Math.max(input.height,1);
   const fullHeight=Math.max(input.planeHeight,input.planeWidth/viewportAspect);
-  const rest=fullHeight/(2*Math.tan(input.fov*Math.PI/360))*1.08+input.amplitude;
+  const margin=Number.isFinite(input.margin)?Math.max(1.08,Math.min(1.3,input.margin!)):1.08;
+  const rest=fullHeight/(2*Math.tan(input.fov*Math.PI/360))*margin+input.amplitude;
   return {rest,start:rest*Math.max(input.entryScale,1.2),near:Math.max(input.amplitude+.35,rest*.62)};
 }
 

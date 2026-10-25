@@ -1,0 +1,118 @@
+{
+  "caseId": "qinghua-20261025-133153-2d80",
+  "caseOrigin": "runtime",
+  "experienceId": "qinghua-20261025-133153-2d80",
+  "styleId": "qinghua",
+  "styleName": "青花瓷纹样",
+  "referenceSubject": "牡丹花与叶",
+  "artworkTitle": "蓝韵牡丹图",
+  "theme": "一朵完整盛开的牡丹与一片叶，转译为精细青花瓷蓝白纹样。纯白背景，保留完整花瓣与枝叶，不添加文字、边框或其他花朵。",
+  "referenceSource": "user_upload",
+  "sourceFilename": "reference.png",
+  "referenceFilename": "reference.png",
+  "referenceSha256": "17f5129e2c07fbce7f7c97f5283440bcbf412b14e2b9268064de523450cff738",
+  "provider": "dashscope_qwen_image",
+  "model": "qwen-image-3.0",
+  "styleStrength": 0.7,
+  "compositionMode": "portrait",
+  "outputType": "poster",
+  "negativePrompt": "文字、水印、边框、裁切主体、多朵花、灰底、模糊、重复枝叶",
+  "inputImageCount": 1,
+  "generatedAt": "2026-10-25T13:31:53.644786+08:00",
+  "generationAttempt": "runtime_auto_save",
+  "generationSucceeded": true,
+  "referenceImageUsed": true,
+  "modelInputImageCount": 1,
+  "analysisSource": "qwen3_vl",
+  "visionProvider": "ollama_local",
+  "visionModel": "",
+  "cultureCardAnalysisSource": "qwen3_vl",
+  "generationHistory": [
+    {
+      "generation": "runtime_auto_save",
+      "generatedAt": "2026-10-25T13:31:53.644786+08:00",
+      "model": "qwen-image-3.0",
+      "styleStrength": 0.7,
+      "referenceImageUsed": true,
+      "modelInputImageCount": 1,
+      "generatedSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+      "analysisSource": "qwen3_vl"
+    }
+  ],
+  "outputImageCount": 1,
+  "generatedSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+  "generatedBytes": 903492,
+  "artworkSize": {
+    "width": 1024,
+    "height": 1024
+  },
+  "visionAnalysis": {
+    "title": "青花牡丹",
+    "theme_summary": "青花瓷风格牡丹，以蓝白为主，呈现花叶完整、线条细腻的纹样形态。",
+    "composition": "中心对称构图，花冠饱满，枝叶舒展，视觉重心集中于花朵。",
+    "style_interpretation": "青花瓷纹样以蓝白对比，笔触精微，模拟陶瓷釉下彩质感，强调结构与层次，呈现传统工艺美学。",
+    "culture_interpretation": "蓝白花蕊与深蓝叶脉交织，如瓷釉透光，显静穆之韵；花瓣层层叠叠，似含蓄之态，暗合‘出淤泥而不染’之清雅。花叶相依，不言而喻‘静美’与‘坚韧’，余韵如古瓷温润，引人沉思。",
+    "observed_subjects": [
+      "盛开牡丹",
+      "枝叶",
+      "蓝白纹样"
+    ],
+    "dominant_colors": [
+      "蓝",
+      "白",
+      "深蓝"
+    ],
+    "visual_features": [
+      "蓝白渐变",
+      "精细勾线",
+      "花瓣层叠",
+      "叶脉清晰",
+      "枝干挺拔"
+    ],
+    "recommended_scenes": [
+      "杯垫图案",
+      "明信片"
+    ],
+    "theme_alignment": "高",
+    "style_alignment": "明显"
+  },
+  "visionAnalysisRuntime": {},
+  "cultureCard": {
+    "title": "青花牡丹",
+    "cultureSource": "青花瓷器纹样",
+    "visualFeatures": "蓝白渐变、精细勾线、花瓣层叠、叶脉清晰、枝干挺拔",
+    "symbolicMeaning": "蓝白花蕊与深蓝叶脉交织，如瓷釉透光，显静穆之韵；花瓣层层叠叠，似含蓄之态，暗合‘出淤泥而不染’之清雅。花叶相依，不言而喻‘静美’与‘坚韧’，余韵如古瓷温润，引人沉思。",
+    "applicationScenario": "杯垫图案、明信片"
+  },
+  "enhancedPrompt": "最高优先级主体约束：画面唯一主要主体为“牡丹花与叶”。必须保留该主体在参考图中可见的身份、关键外形和姿态；不得替换、删除、混合成其他主体。传统风格只改变主体的绘画技法、纹样、色彩和材质表现，不改变主体身份；风格库中的花鸟、瑞兽等装饰题材不得覆盖此主体约束。核心主题：一朵完整盛开的牡丹与一片叶，转译为精细青花瓷蓝白纹样。纯白背景，保留完整花瓣与枝叶，不添加文字、边框或其他花朵。。所选传统文化视觉风格：青花瓷纹样（青花瓷纹样）。风格来源：青花瓷器纹样。视觉特征：蓝白配色、缠枝莲、云纹、水波纹、白瓷质感、釉下青花韵味。文化寓意：莲花、云纹与水波等可作器物装饰纹样参考；具体寓意需结合器物语境理解。风格提示强度：0.70，提示词较强强调所选视觉风格描述；实际画面效果受生成模型影响。参考图基础信息：用户上传的参考图将作为图像条件参与本次生成；请将其用于理解主体、主要关系与画面构图，并在保持创作主题和所选传统风格的前提下进行再创作。后端另由 Pillow 进行本地基础统计（不识别主体或场景）：尺寸 1254x1254；平均色彩与明暗 主色调约为 红色系（#E7C3C8），整体偏亮；画幅方向 接近方形画幅，尺寸 1254x1254。输出类型：数字海报视觉稿，poster layout, clear visual center, readable composition。构图要求：竖向主体布局提示，vertical visual emphasis, strong foreground subject。用户排除清单：文字、水印、边框、裁切主体、多朵花、灰底、模糊、重复枝叶。清单是需要避开的画面元素，不是创作题材，不能把清单词语绘制到作品中。画面只呈现图像内容，不生成任何可读文字、数字、标题、署名、印章字符、标识、二维码或水印；该限制优先于海报、票券等版式提示。生成要求：主体清晰，层次丰富，传统视觉元素自然融入现代设计，避免无意义文字，画面完整，细节清楚，high quality, detailed texture.",
+  "cultureCardGeneratedSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+  "cultureCardSha256": "c0ac233eb2603f59070cd8af0aac3b38c2cf17020396307f5e092413cd4a6ba7",
+  "cultureCardExport": "pillow_png",
+  "caseFiles": {
+    "generated": "generated.png",
+    "reference": "reference.png",
+    "cultureCard": "culture_card.png"
+  },
+  "interactive": {
+    "status": "ready",
+    "experience": "experience.json",
+    "world": "frontend/public/interactive/qinghua-20261025-133153-2d80/world/world.json",
+    "hotspots": 4,
+    "hotspotMethod": "qwen3-vl-image-plan",
+    "contentSource": "qwen3_vl_image",
+    "analysisImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+    "interactionPlanVersion": 2,
+    "depthSource": "depth-anything-v2-small",
+    "builtAt": "2026-10-25T13:33:23.472870+08:00"
+  },
+  "qualityReview": {
+    "status": "needs_review",
+    "rounds": 3,
+    "selectedRound": null,
+    "baselineScore": 86.1,
+    "finalScore": null,
+    "improved": false,
+    "reviewerModel": "deepseek-flash",
+    "reportFile": "quality-review.json"
+  }
+}

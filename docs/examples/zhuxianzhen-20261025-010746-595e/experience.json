@@ -2,9 +2,9 @@
   "id": "zhuxianzhen-20261025-010746-595e",
   "styleId": "zhuxianzhen",
   "styleName": "朱仙镇木版年画",
-  "title": "红鳞游动：金鱼的东方韵律",
-  "subtitle": "三章叙事：从眼眸到尾鳍的视觉交响",
-  "lead": "一条金鱼在云浪间游弋，红白鳞片如诗行，尾鳍如舞者舒展，云朵与花影共绘水岸之境。",
+  "title": "红鳞游动·云花共舞",
+  "subtitle": "水波轻漾，鱼影翩跹，色彩如诗如画",
+  "lead": "一条金鱼破浪而行，红鳞如火，尾鳍如翼，云朵与花饰在它身旁轻盈摇曳，仿佛天地间最灵动的韵律。",
   "artworkSize": {
     "width": 1024,
     "height": 1024
@@ -22,38 +22,37 @@
     "observedSubjects": [
       "金鱼主体",
       "云纹",
-      "浪花",
-      "花卉"
+      "浪纹",
+      "花饰"
     ],
     "visualFeatures": [
       "线版勾勒轮廓",
-      "多色套印痕迹",
+      "多色套印",
       "饱满造型",
-      "浓烈色彩",
       "留白背景"
     ],
     "sceneKind": "flat_artwork",
     "dominantColors": [
-      "橙红",
-      "白",
+      "红",
+      "橙",
       "绿",
-      "红"
+      "白"
     ]
   },
   "hotspots": [
     {
       "id": "1ef7ec1047be-spot-1",
-      "title": "金鱼头部特写：红白相间的眼与嘴",
+      "title": "金鱼头部特写：红润鱼眼与鳞片过渡",
       "kicker": "画面细读",
       "shape": "circle",
       "geometry": {
-        "cx": 0.15,
+        "cx": 0.2,
         "cy": 0.45,
         "r": 0.05
       },
-      "shortDescription": "鲜红色鱼头，大眼圆睁，眼圈金黄，嘴部微张，脸颊有白色过渡，鳞片纹理在头顶可见。",
-      "visualObservation": "鲜红色鱼头，大眼圆睁，眼圈金黄，嘴部微张，脸颊有白色过渡，鳞片纹理在头顶可见。",
-      "culturalExplanation": "浓烈红与暖黄的对比，眼眸深邃如珠，嘴部线条柔和，整体饱满生动，色彩饱和度高，具视觉冲击力。",
+      "shortDescription": "鲜红鱼头，圆睁黑瞳，眼周有金黄晕染，鳞片由橙红渐变至白黄，边缘勾黑线，鱼嘴微张。",
+      "visualObservation": "鲜红鱼头，圆睁黑瞳，眼周有金黄晕染，鳞片由橙红渐变至白黄，边缘勾黑线，鱼嘴微张。",
+      "culturalExplanation": "浓烈红橙色块与细腻笔触交织，眼眸深邃如珠，鳞片层次分明，视觉张力强，充满鲜活的生命感。",
       "sourceIds": [
         "SRC-ZXZ-NIANHUA-001",
         "SRC-ZXZ-CRAFT-002"
@@ -68,13 +67,13 @@
       "kicker": "画面细读",
       "shape": "circle",
       "geometry": {
-        "cx": 0.85,
+        "cx": 0.8,
         "cy": 0.55,
-        "r": 0.04
+        "r": 0.06
       },
-      "shortDescription": "红色与白色相间的尾鳍，边缘为黑色粗线勾勒，内部有密集的红色笔触从中心向外放射状分布。",
-      "visualObservation": "红色与白色相间的尾鳍，边缘为黑色粗线勾勒，内部有密集的红色笔触从中心向外放射状分布。",
-      "culturalExplanation": "红白对比鲜明，笔触方向感强，边缘粗黑线勾勒出动态轮廓，视觉上充满张力与流动感。",
+      "shortDescription": "红色尾鳍边缘为黑色勾线，内部由密集的红色放射状笔触构成，向白色背景过渡，呈现流动感。",
+      "visualObservation": "红色尾鳍边缘为黑色勾线，内部由密集的红色放射状笔触构成，向白色背景过渡，呈现流动感。",
+      "culturalExplanation": "红白对比强烈，笔触方向统一营造动感，黑线勾边强化轮廓，整体视觉轻盈而富有张力。",
       "sourceIds": [
         "SRC-ZXZ-NIANHUA-001",
         "SRC-ZXZ-CRAFT-002"
@@ -85,17 +84,38 @@
     },
     {
       "id": "1ef7ec1047be-spot-3",
-      "title": "天空中的云纹局部",
+      "title": "金鱼尾鳍与绿色浪花交界处",
       "kicker": "画面细读",
       "shape": "circle",
       "geometry": {
-        "cx": 0.2,
-        "cy": 0.2,
-        "r": 0.04
+        "cx": 0.4,
+        "cy": 0.85,
+        "r": 0.05
       },
-      "shortDescription": "红绿相间的云纹，边缘有白色勾边，云朵呈卷曲形态，色彩饱和，纹理有轻微颗粒感。",
-      "visualObservation": "红绿相间的云纹，边缘有白色勾边，云朵呈卷曲形态，色彩饱和，纹理有轻微颗粒感。",
-      "culturalExplanation": "红绿撞色的云纹以流畅曲线勾勒，色彩对比鲜明，线条粗细变化带来动感，整体充满童趣与装饰性张力。",
+      "shortDescription": "红白相间的鱼尾鳍边缘有黑色勾线，下方是绿色波浪纹，波浪由粗细不一的平行弧线构成，部分弧线内有白色留白。",
+      "visualObservation": "红白相间的鱼尾鳍边缘有黑色勾线，下方是绿色波浪纹，波浪由粗细不一的平行弧线构成，部分弧线内有白色留白。",
+      "culturalExplanation": "红白尾鳍的笔触与绿浪的层叠弧线形成视觉张力，留白强化了水波流动感，色彩对比鲜明，线条富有节奏感。",
+      "sourceIds": [
+        "SRC-ZXZ-NIANHUA-001",
+        "SRC-ZXZ-CRAFT-002"
+      ],
+      "locationStatus": "approximate",
+      "reviewStatus": "pending",
+      "relatedChapterId": "fold-2"
+    },
+    {
+      "id": "1ef7ec1047be-spot-4",
+      "title": "金鱼尾鳍与下方红花的局部",
+      "kicker": "画面细读",
+      "shape": "circle",
+      "geometry": {
+        "cx": 0.9,
+        "cy": 0.8,
+        "r": 0.05
+      },
+      "shortDescription": "金鱼尾鳍呈红白渐变，有密集斜向笔触；下方红花有五瓣，配绿叶，花心黄绿相间。",
+      "visualObservation": "金鱼尾鳍呈红白渐变，有密集斜向笔触；下方红花有五瓣，配绿叶，花心黄绿相间。",
+      "culturalExplanation": "红白尾鳍的笔触感与花的饱满色彩形成动静对比，线条疏密营造出水波与花蕊的轻盈韵律。",
       "sourceIds": [
         "SRC-ZXZ-NIANHUA-001",
         "SRC-ZXZ-CRAFT-002"
@@ -103,42 +123,21 @@
       "locationStatus": "approximate",
       "reviewStatus": "pending",
       "relatedChapterId": "fold-3"
-    },
-    {
-      "id": "1ef7ec1047be-spot-4",
-      "title": "水波纹与红花局部",
-      "kicker": "画面细读",
-      "shape": "circle",
-      "geometry": {
-        "cx": 0.7,
-        "cy": 0.85,
-        "r": 0.05
-      },
-      "shortDescription": "绿色波浪纹中夹杂红色花朵，花瓣为红白相间，边缘有黑线勾勒，背景为纯白。",
-      "visualObservation": "绿色波浪纹中夹杂红色花朵，花瓣为红白相间，边缘有黑线勾勒，背景为纯白。",
-      "culturalExplanation": "绿波起伏的线条与红花的饱满形成对比，色彩明快，笔触粗犷，带来活泼而富有生命力的视觉感受。",
-      "sourceIds": [
-        "SRC-ZXZ-NIANHUA-001",
-        "SRC-ZXZ-CRAFT-002"
-      ],
-      "locationStatus": "approximate",
-      "reviewStatus": "pending",
-      "relatedChapterId": "fold-1"
     }
   ],
   "chapters": [
     {
       "id": "fold-1",
       "index": 1,
-      "eyebrow": "0",
-      "title": "眼眸的凝视",
-      "body": "鲜红鱼头，金黄眼圈，嘴部微张，鳞片纹理在头顶可见。浓烈红与暖黄的对比，眼眸深邃如珠，嘴部线条柔和，整体饱满生动，色彩饱和度高，具视觉冲击力。",
+      "eyebrow": "凝视",
+      "title": "眼眸深邃",
+      "body": "鲜红鱼头，黑瞳圆睁，眼周金黄晕染，鳞片由橙红渐变至白黄，边缘勾黑线，鱼嘴微张，仿佛正欲破浪前行。鱼身如锦缎铺展，每一鳞片都透着生命律动。",
       "focusHotspotIds": [
         "1ef7ec1047be-spot-1"
       ],
       "frame": {
-        "scale": 1.49,
-        "focusX": 0.15,
+        "scale": 1.52,
+        "focusX": 0.2,
         "focusY": 0.45
       },
       "sourceIds": [
@@ -149,16 +148,17 @@
     {
       "id": "fold-2",
       "index": 2,
-      "eyebrow": "1",
-      "title": "尾鳍的张力",
-      "body": "红色与白色相间的尾鳍，边缘为黑色粗线勾勒，内部有密集的红色笔触从中心向外放射状分布。红白对比鲜明，笔触方向感强，边缘粗黑线勾勒出动态轮廓，视觉上充满张力与流动感。",
+      "eyebrow": "流光",
+      "title": "尾鳍飞扬",
+      "body": "尾鳍红白渐变，放射状笔触如风中飘带，黑线勾边强化轮廓，轻盈而有力。与下方绿浪交界处，波纹弧线交错，留白如水花飞溅，动静相生。",
       "focusHotspotIds": [
-        "1ef7ec1047be-spot-2"
+        "1ef7ec1047be-spot-2",
+        "1ef7ec1047be-spot-3"
       ],
       "frame": {
-        "scale": 1.49,
-        "focusX": 0.85,
-        "focusY": 0.55
+        "scale": 1.58,
+        "focusX": 0.6000000000000001,
+        "focusY": 0.7
       },
       "sourceIds": [
         "SRC-ZXZ-NIANHUA-001",
@@ -168,16 +168,16 @@
     {
       "id": "fold-3",
       "index": 3,
-      "eyebrow": "2",
-      "title": "云花共舞",
-      "body": "红绿相间的云纹，边缘有白色勾边，云朵呈卷曲形态，色彩饱和，纹理有轻微颗粒感。红绿撞色的云纹以流畅曲线勾勒，色彩对比鲜明，线条粗细变化带来动感，整体充满童趣与装饰性张力。",
+      "eyebrow": "静谧",
+      "title": "花影相随",
+      "body": "尾鳍斜向笔触与红花五瓣相映，花心黄绿相间，绿叶轻托，水波与花蕊同频呼吸。色彩对比鲜明，线条疏密有致，构成一幅水岸共舞的静谧画卷。",
       "focusHotspotIds": [
-        "1ef7ec1047be-spot-3"
+        "1ef7ec1047be-spot-4"
       ],
       "frame": {
-        "scale": 1.52,
-        "focusX": 0.2,
-        "focusY": 0.2
+        "scale": 1.46,
+        "focusX": 0.9,
+        "focusY": 0.8
       },
       "sourceIds": [
         "SRC-ZXZ-NIANHUA-001",

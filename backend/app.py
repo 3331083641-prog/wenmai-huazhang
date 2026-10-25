@@ -86,7 +86,17 @@ service = GenerationService()
 
 @app.get("/health")
 def health() -> dict[str, object]:
-    return service.health()
+    import os
+    from services.deepseek_review import ReviewClient,ConfigurationError
+    result=service.health()
+    enabled=os.getenv('DEEPSEEK_REVIEW_ENABLED','false').lower() in ('true','1','yes','on')
+    try:
+        reviewer=ReviewClient.from_env()
+        result['deepseekReview']={'enabled':enabled,'configured':True,'provider':reviewer.provider,
+            'model':reviewer.model,'note':'配置检查，不执行收费请求；实际评价见各作品复审记录。'}
+    except ConfigurationError:
+        result['deepseekReview']={'enabled':enabled,'configured':False,'note':'请检查后端DeepSeek配置，不输出密钥。'}
+    return result
 
 
 @app.post("/analyze-image")
@@ -181,6 +191,7 @@ def _interaction_summary(case: dict[str, Any], job: dict[str, Any] | None) -> di
         "hasWorld": has_world,
         "experienceId": str(case.get("experienceId") or ""),
         "job": job,
+        "qualityReview":case.get('qualityReview') or (case.get('metadata') or {}).get('qualityReview') or {},
     }
 
 

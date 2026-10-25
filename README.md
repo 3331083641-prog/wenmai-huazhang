@@ -56,7 +56,11 @@ flowchart LR
 
 **画境漫游**使用本图深度与图层提供有限视角的 2.5D 体验，支持推进、转头和热点点击。山水采用平滑深度网格；确认白底的平面主体保留完整轮廓进行分层视差，减少细长轮廓的拉扯。它不恢复物体背面，也不是有骨骼的角色动画。
 
-[![新生成青花丹顶鹤的真实画境](docs/verification/20261025/white-reference/qinghua-world-side.jpg)](docs/verification/20261025/white-reference/qinghua-world-side.jpg)
+可选实验功能 **DeepSeek 官方视觉复审**：按原五件精选参照检查实际浏览器多视角、热点和章节，最多三轮调整有限参数。语义有误时由本地 Qwen3-VL 重新读图修订。展厅独立显示复审通过、待完善或未完成；评分属于模型主观评价。[固定工作流与配置](docs/interactive/DEEPSEEK_REVIEW_WORKFLOW.md)。本轮完整流程已跑通，视觉质量仍有未达标项，不能宣称稳定提升或完美。
+
+[![新生成青花牡丹的真实画境](docs/verification/20261025-deepseek/fresh-world-front.jpg)](docs/verification/20261025-deepseek/README.md)
+
+图为最新一次真实生图后的自动画境。三种互动可用，视觉复审为“待完善”；[查看实际结果、接缝修复对照与限制](docs/verification/20261025-deepseek/README.md)。
 
 ### 在经典纹脉展馆里布展
 
@@ -101,6 +105,11 @@ flowchart TD
   JOB --> VL[本地 Ollama Qwen3-VL<br/>整图与逐局部读取 / 热点 / 章节]
   VL --> DEPTH[本地 Depth Anything V2 Small<br/>相对深度估计]
   DEPTH --> WORLD[同图的 2.5D 资产]
+  WORLD --> CAP[本机 Playwright / 实际浏览器证据]
+  CAP --> REVIEW[可选 DeepSeek 官方视觉复审]
+  REVIEW --> TUNE[白名单调参 / 同版本回滚]
+  TUNE --> WORLD
+  REVIEW -. 语义问题交回本地读图 .-> VL
   SAVE --> CASES[Case Service / 最新状态]
   VL --> CASES
   CASES --> UI
@@ -144,6 +153,8 @@ ollama pull qwen3-vl:4b-instruct-q4_K_M
 ```
 
 从 `backend/.env.example` 配置本机 `backend/.env`：填写个人 `DASHSCOPE_API_KEY` 与百炼业务空间专属 `DASHSCOPE_BASE_URL`；保留本地 `QWEN_VL_ENABLED=true`、实际模型名称和 `WENMAI_DEPTH_MODE=model`。密钥只留在后端，不提交 GitHub。
+
+视觉复审是可选功能，另安装 `backend/requirements-review.txt`，按 [官方配置说明](docs/configuration/DEEPSEEK_OFFICIAL.md) 填写独立 `DEEPSEEK_API_KEY` 并明确启用；需要本机浏览器和正在运行的前端，可能产生 API 费用。未配置时继续使用原有本地互动构建。
 
 Ollama 已运行时不用重复启动，模型已安装时不用重下。启动器打印实际前后端端口，默认打开展厅；停止脚本核对进程身份并保留 Ollama。已保存作品、经典展馆和文创预览无需调用付费生图服务。[完整运行说明与故障处理](docs/running.md)。
 

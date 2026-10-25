@@ -36,6 +36,8 @@ export interface WorldCutout {
   size: number[];
   alpha_coverage: number;
   depth?: number;
+  relief_file?: string;
+  negativeSpacePreserved?:boolean;
 }
 
 export interface WorldHotspot {
@@ -48,10 +50,12 @@ export interface WorldHotspot {
   /** 深度模型的原始读数，便于核对是否被人工校正过。 */
   depth_measured: number;
   depth_overridden: boolean;
+  relief_delta?: number;
 }
 
 export interface WorldCamera {
   fov: number;
+  framing_margin?:number;
   plane_height: number;
   plane_width: number;
   /** 相机退到多远时画面刚好铺满视口。 */
@@ -76,7 +80,29 @@ export interface PaintingWorldManifest {
   cutouts: WorldCutout[];
   hotspots: WorldHotspot[];
   camera: WorldCamera;
+  tuning?: Partial<WorldTuning>;
   provenance: { depth_model: string; depth_generated_at: string; note: string; asset_revision?: string };
+}
+
+export interface WorldTuning {
+  haze: number; mist: number; ripple: number; sway: number;
+  subject_relief: number; cutout_motion: number;
+  paper_flex:number;
+}
+
+export function worldTuning(manifest: PaintingWorldManifest): WorldTuning {
+  const defaults:WorldTuning={haze:.1,mist:.26,ripple:1,sway:1,subject_relief:0,cutout_motion:1,paper_flex:0};
+  const limits:Record<keyof WorldTuning,number>={haze:.12,mist:.35,ripple:1,sway:1,subject_relief:.1,cutout_motion:1,paper_flex:.006};
+  const result={...defaults};
+  for (const key of Object.keys(defaults) as Array<keyof WorldTuning>) {
+    const value=manifest.tuning?.[key];
+    if (typeof value==='number' && Number.isFinite(value)) result[key]=Math.max(0,Math.min(limits[key],value));
+  }
+  return result;
+}
+
+export function hotspotWorldZ(spot:WorldHotspot,manifest:PaintingWorldManifest):number {
+  return spot.depth*manifest.camera.depth_amplitude+(spot.relief_delta??0)*worldTuning(manifest).subject_relief;
 }
 
 /** 把清单里的相对文件名拼成可加载的 URL。

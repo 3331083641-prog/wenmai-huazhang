@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "bianxiu-20261025-010853-f7cd",
-  "title": "粉霞绽放：一朵牡丹的静谧叙事",
+  "title": "绣线牡丹的静谧绽放",
   "art": {
     "file": "art.webp",
     "width": 1024,
@@ -33,23 +33,26 @@
   "cutouts": [
     {
       "bbox_norm": [
-        0.1240234375,
-        0.0458984375,
-        0.783203125,
-        0.939453125
+        0.119140625,
+        0.041015625,
+        0.79296875,
+        0.94921875
       ],
       "size": [
-        802,
-        962
+        812,
+        972
       ],
-      "alpha_coverage": 0.5748829589228591,
-      "method": "white-background-connected-subject",
+      "alpha_coverage": 0.555540351517363,
+      "method": "white-background-connected-native-coverage-defringe",
       "completeSubject": true,
+      "negativeSpacePreserved": false,
       "id": "subject",
-      "label": "牡丹花冠",
+      "label": "粉红色牡丹花",
       "file": "cutout-subject.webp",
-      "depth": 0.7140189409255981,
-      "bytes": 209842
+      "depth": 0.6972221732139587,
+      "bytes": 253232,
+      "relief_file": "subject-relief.png",
+      "reliefSource": "local-depth-relative-within-alpha"
     }
   ],
   "hotspots": [
@@ -57,42 +60,47 @@
       "id": "14bee1d62164-spot-1",
       "x": 0.5,
       "y": 0.35,
-      "depth": 0.714,
+      "depth": 0.6972,
       "depth_measured": 0.8739,
-      "depth_overridden": true
+      "depth_overridden": true,
+      "relief_delta": 0.28578
     },
     {
       "id": "14bee1d62164-spot-2",
       "x": 0.3,
-      "y": 0.6,
-      "depth": 0.714,
-      "depth_measured": 0.555,
-      "depth_overridden": true
+      "y": 0.65,
+      "depth": 0.6972,
+      "depth_measured": 0.557,
+      "depth_overridden": true,
+      "relief_delta": 0.02839
     },
     {
       "id": "14bee1d62164-spot-3",
       "x": 0.5,
       "y": 0.75,
-      "depth": 0.714,
+      "depth": 0.6972,
       "depth_measured": 0.2854,
-      "depth_overridden": true
+      "depth_overridden": true,
+      "relief_delta": -0.01991
     },
     {
       "id": "14bee1d62164-spot-4",
       "x": 0.75,
-      "y": 0.3,
-      "depth": 0.714,
-      "depth_measured": 0.7516,
-      "depth_overridden": true
+      "y": 0.45,
+      "depth": 0.6972,
+      "depth_measured": 0.8118,
+      "depth_overridden": true,
+      "relief_delta": 0.32732
     }
   ],
   "camera": {
     "fov": 34.0,
+    "framing_margin": 1.2,
     "plane_height": 1.0,
     "plane_width": 1.0,
     "distance_fill": 1.6354,
-    "depth_amplitude": 0.24,
-    "yaw_limit_deg": 10.0,
+    "depth_amplitude": 0.2,
+    "yaw_limit_deg": 8,
     "pitch_limit_deg": 7.0,
     "dolly_near": 0.62,
     "dolly_far": 1.55,
@@ -101,8 +109,17 @@
       "duration_ms": 2600
     }
   },
+  "tuning": {
+    "haze": 0.04,
+    "mist": 0.12,
+    "ripple": 0.5,
+    "sway": 0.4,
+    "subject_relief": 0.02,
+    "cutout_motion": 0.02,
+    "paper_flex": 0
+  },
   "provenance": {
-    "asset_revision": "3bdd31ef8c9a6786c01d",
+    "asset_revision": "3d24026fd8a28eba974e",
     "depth_model": "depth-anything-v2-small",
     "render_mode": "complete-subject-layers",
     "depth_inference": {
@@ -122,15 +139,16 @@
       "foliage": false
     },
     "scene_kind": "flat_artwork",
+    "background_completion": "white-background",
     "depth_anchors": [
       {
         "x": 0.5,
         "y": 0.35,
-        "depth": 0.5
+        "depth": 0.9
       },
       {
         "x": 0.3,
-        "y": 0.6,
+        "y": 0.65,
         "depth": 0.5
       },
       {
@@ -140,11 +158,11 @@
       },
       {
         "x": 0.75,
-        "y": 0.3,
-        "depth": 0.5
+        "y": 0.45,
+        "depth": 0.6
       }
     ],
-    "depth_generated_at": "2026-10-25T02:05:46",
+    "depth_generated_at": "2026-10-25T11:51:17",
     "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
   }
 }

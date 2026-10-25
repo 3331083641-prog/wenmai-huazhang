@@ -1,7 +1,7 @@
 {
   "slug": "songhua-20261025-011015-679b",
   "styleId": "songhua",
-  "title": "山径幽亭：松影与石语",
+  "title": "山径幽亭",
   "image": {
     "width": 1024,
     "height": 1024,
@@ -33,22 +33,22 @@
   "hotspots": [
     {
       "id": "50b9cac5c56f-spot-1",
+      "title": "亭子屋顶与檐角细节",
+      "x": 0.65,
+      "y": 0.45,
+      "status": "approximate"
+    },
+    {
+      "id": "50b9cac5c56f-spot-2",
       "title": "松树主干与枝叶结构",
       "x": 0.35,
       "y": 0.55,
       "status": "approximate"
     },
     {
-      "id": "50b9cac5c56f-spot-2",
-      "title": "亭子屋檐与顶部装饰",
-      "x": 0.65,
-      "y": 0.45,
-      "status": "approximate"
-    },
-    {
       "id": "50b9cac5c56f-spot-3",
-      "title": "石阶旁的青苔与岩壁",
-      "x": 0.55,
+      "title": "石阶旁的青苔与杂草",
+      "x": 0.6,
       "y": 0.65,
       "status": "approximate"
     },
@@ -79,13 +79,15 @@
     "files": [
       "art.webp",
       "backdrop.webp",
+      "cutout-subject-relief.png",
       "cutout-subject.webp",
       "depth-preview.png",
       "depth-rg.png",
       "masks.png",
+      "surface.webp",
       "world.json"
     ],
-    "bytes": 922414
+    "bytes": 1132884
   },
   "vlm": {
     "used": true,
@@ -97,5 +99,10 @@
     "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
     "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
   ],
-  "elapsedSec": 102.7
+  "elapsedSec": 6.0,
+  "qualityReview": {
+    "status": "disabled",
+    "rounds": 0,
+    "improved": false
+  }
 }

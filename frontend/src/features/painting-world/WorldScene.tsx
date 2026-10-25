@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
 import * as THREE from 'three';
 import { paintingFragmentShader, paintingVertexShader } from './shaders';
-import { resolveWorldAsset, uvToPlane, type PaintingWorldManifest } from './world';
+import { resolveWorldAsset, uvToPlane, worldTuning, hotspotWorldZ, type PaintingWorldManifest } from './world';
 import { fitArtworkCamera, pickHotspotFromUv } from './geometry';
 
 /** 画境运行期状态，DOM 层与探针都读这一个对象，避免两套真相。 */
@@ -147,7 +147,7 @@ function DepthMesh({
 /* -------------------------------------------------------------------------- */
 /* 近景抠像：入画时从视野一侧掠过                                              */
 /* -------------------------------------------------------------------------- */
-function NearCutout({
+function LegacyNearCutout({
   manifest,
   baseUrl,
   control,
@@ -190,10 +190,12 @@ function NearCutout({
     const mesh = meshRef.current;
     if (!mesh || !cut) return;
     mesh.visible = control.runtime.tuning.showCutout > 0.5;
+    if (control.runtime.frozen) return;
     // 极轻的呼吸式位移：让它读作「前景枝叶」而不是贴纸
     const t = state.clock.elapsedTime;
-    mesh.position.z = dims.z + Math.sin(t * 1.1) * 0.004;
-    mesh.position.x = dims.cx + Math.cos(t * 0.7) * 0.0022;
+    const strength=worldTuning(manifest).cutout_motion;
+    mesh.position.z = dims.z + Math.sin(t * 1.1) * 0.004 * strength;
+    mesh.position.x = dims.cx + Math.cos(t * 0.7) * 0.0022 * strength;
   });
 
   if (!cut) return null;
@@ -212,6 +214,64 @@ function NearCutout({
       <meshBasicMaterial map={tex} transparent depthWrite={false} toneMapped={false} />
     </mesh>
   );
+}
+
+/** Complete alpha silhouette with local depth relief; unchanged curated assets use the legacy material. */
+function ReliefCutout({manifest,baseUrl,control}: {
+  manifest:PaintingWorldManifest;baseUrl:string;control:WorldControl;
+}) {
+  const cut=manifest.cutouts[0];
+  const [art,relief]=useLoader(THREE.TextureLoader,[resolveWorldAsset(baseUrl,cut.file),
+    resolveWorldAsset(baseUrl,cut.relief_file!)]);
+  const [bx,by,bw,bh]=cut.bbox_norm;
+  const height=bh*manifest.camera.plane_height;
+  const width=bw*manifest.camera.plane_width;
+  const x=(bx+bw/2-.5)*manifest.camera.plane_width;
+  const y=(.5-by-bh/2)*manifest.camera.plane_height;
+  const z=(cut.depth??.5)*manifest.camera.depth_amplitude;
+  const mesh=useRef<THREE.Mesh>(null);
+  const tuning=worldTuning(manifest);
+  const uniforms=useMemo(()=>({uArt:{value:art},uRelief:{value:relief},
+    uReliefAmount:{value:tuning.subject_relief},uFlex:{value:tuning.paper_flex},uTime:{value:0}}),[art,relief,tuning.subject_relief,tuning.paper_flex]);
+  useEffect(()=>{
+    art.colorSpace=THREE.NoColorSpace;relief.colorSpace=THREE.NoColorSpace;
+    art.anisotropy=8;relief.generateMipmaps=false;
+    relief.minFilter=THREE.LinearFilter;relief.magFilter=THREE.LinearFilter;
+  },[art,relief]);
+  useFrame(state=>{
+    if (!mesh.current || control.runtime.frozen) return;
+    const time=state.clock.elapsedTime;
+    uniforms.uTime.value=time;
+    mesh.current.position.z=z+Math.sin(time*1.1)*.004*tuning.cutout_motion;
+    mesh.current.position.x=x+Math.cos(time*.7)*.0022*tuning.cutout_motion;
+  });
+  const vertex=`uniform sampler2D uRelief; uniform float uReliefAmount;uniform float uFlex;uniform float uTime;varying vec2 vUv;
+    void main(){vUv=uv;vec3 p=position;p.z+=(texture2D(uRelief,uv).r-.5)*uReliefAmount;
+    p.z+=sin(uTime*1.2+uv.x*6.0)*uFlex*uv.y*uv.y;
+    gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0);}`;
+  return <group>
+    {cut.negativeSpacePreserved && <mesh position={[x+.004,y-.005,z-.012]} renderOrder={1}>
+      <planeGeometry args={[width,height,96,128]}/>
+      <shaderMaterial uniforms={uniforms} transparent depthWrite={false} vertexShader={vertex}
+        fragmentShader={`uniform sampler2D uArt;varying vec2 vUv;void main(){float a=texture2D(uArt,vUv).a;
+          if(a<.02)discard;gl_FragColor=vec4(.2,.12,.08,a*.12);}`}/>
+    </mesh>}
+    <mesh ref={mesh} position={[x,y,z]} renderOrder={2} onClick={event=>{
+    if (!event.uv) return;
+    event.stopPropagation();
+    const id=pickHotspotFromUv(manifest.hotspots,bx+event.uv.x*bw,1-(by+(1-event.uv.y)*bh));
+    if (id) control.select(id);
+  }}>
+    <planeGeometry args={[width,height,96,128]} />
+    <shaderMaterial uniforms={uniforms} transparent depthWrite={false}
+      vertexShader={vertex}
+      fragmentShader={`uniform sampler2D uArt;varying vec2 vUv;
+        void main(){vec4 c=texture2D(uArt,vUv);if(c.a<.02)discard;gl_FragColor=c;}`} />
+  </mesh></group>;
+}
+
+function NearCutout(props:{manifest:PaintingWorldManifest;baseUrl:string;control:WorldControl}) {
+  return props.manifest.cutouts[0]?.relief_file ? <ReliefCutout {...props}/> : <LegacyNearCutout {...props}/>;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -274,11 +334,11 @@ function HotspotDots({
     <group>
       {manifest.hotspots.map((spot) => {
         const p = uvToPlane(spot.x, spot.y, aspect, H);
-        const z = spot.depth * amp + 0.012;
+        const z = hotspotWorldZ(spot,manifest) + 0.012;
         const active = selectedId === spot.id;
         return (
           <group key={spot.id} position={[p.x, p.y, z]}>
-            <mesh
+            <mesh renderOrder={6}
               onClick={(event) => {
                 event.stopPropagation();
                 control.select(spot.id);
@@ -299,17 +359,19 @@ function HotspotDots({
                 transparent
                 opacity={active ? 0.95 : 0.62}
                 depthWrite={false}
+                depthTest={false}
                 toneMapped={false}
               />
             </mesh>
             {/* 外圈：给一点「可点」的暗示，不做呼吸动画以免抢戏 */}
-            <mesh>
+            <mesh renderOrder={5}>
               <ringGeometry args={[active ? 0.03 : 0.023, active ? 0.036 : 0.028, 32]} />
               <meshBasicMaterial
                 color={active ? '#B99A5B' : '#F4F1E6'}
                 transparent
                 opacity={active ? 0.9 : 0.5}
                 depthWrite={false}
+                depthTest={false}
                 toneMapped={false}
               />
             </mesh>
@@ -334,7 +396,7 @@ function CameraRig({
   const cam = manifest.camera;
   const framing = fitArtworkCamera({planeHeight:cam.plane_height,planeWidth:cam.plane_width,
     fov:cam.fov,amplitude:cam.depth_amplitude,width:size.width,height:size.height,
-    entryScale:cam.entry.from_scale});
+    entryScale:cam.entry.from_scale,margin:cam.framing_margin});
   const startDistance = framing.start;
   const insideDistance = framing.rest;
   const nearDistance = framing.near;
@@ -492,6 +554,7 @@ export function WorldScene({
     masksUrl,
     backdropUrl,
   ]);
+  const tuning=useMemo(()=>worldTuning(manifest),[manifest]);
 
   useEffect(() => {
     // 关键：自定义 ShaderMaterial 不会自动追加线性→sRGB 输出编码。
@@ -523,13 +586,14 @@ export function WorldScene({
       uAmplitude: { value: manifest.camera.depth_amplitude },
       // 空气透视只做「一点点」：实测 0.16 会把蓝通道抬高近 20，
       // 青绿设色被洗淡，这里收到 0.10，保留空间感又不改原作色。
-      uHaze: { value: 0.10 },
-      uMist: { value: 0.26 },
-      uRipple: { value: 1.0 },
-      uSway: { value: 1.0 },
+      uHaze: { value: tuning.haze },
+      uMist: { value: tuning.mist },
+      uRipple: { value: tuning.ripple },
+      uSway: { value: tuning.sway },
       uPaper: { value: new THREE.Color('#F4F1E6') },
+      uPreservePaper:{value:manifest.cutouts.some(c=>Boolean((c as unknown as {completeSubject?:boolean}).completeSubject))?1:0},
     }),
-    [art, depth, masks, manifest.camera.depth_amplitude]
+    [art, depth, masks, manifest.camera.depth_amplitude,tuning]
   );
 
   const frames = useRef({ count: 0, elapsed: 0 });
@@ -538,11 +602,11 @@ export function WorldScene({
   useEffect(() => {
     const t = control.runtime.tuning;
     t.amplitude = manifest.camera.depth_amplitude;
-    t.haze = 0.10;
-    t.mist = 0.26;
-    t.ripple = 1;
-    t.sway = 1;
-  }, [control, manifest.camera.depth_amplitude]);
+    t.haze = tuning.haze;
+    t.mist = tuning.mist;
+    t.ripple = tuning.ripple;
+    t.sway = tuning.sway;
+  }, [control, manifest.camera.depth_amplitude,tuning]);
 
   useFrame((state, delta) => {
     const rt = control.runtime;
@@ -561,7 +625,7 @@ export function WorldScene({
     const W = H * manifest.art.aspect;
     const v = new THREE.Vector3();
     rt.hotspots = manifest.hotspots.map((spot) => {
-      v.set((spot.x - 0.5) * W, (0.5 - spot.y) * H, spot.depth * manifest.camera.depth_amplitude);
+      v.set((spot.x - 0.5) * W, (0.5 - spot.y) * H, hotspotWorldZ(spot,manifest));
       v.project(cam);
       return {
         id: spot.id,

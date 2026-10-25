@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "songhua-20261025-011015-679b",
-  "title": "山径幽亭：松影与石语",
+  "title": "山径幽亭",
   "art": {
     "file": "art.webp",
     "width": 1024,
@@ -28,43 +28,10 @@
       "foliage": 0.0
     }
   },
-  "cutouts": [
-    {
-      "bbox_px": [
-        237,
-        545,
-        447,
-        446
-      ],
-      "bbox_norm": [
-        0.2314,
-        0.5322,
-        0.4365,
-        0.4355
-      ],
-      "alpha_coverage": 0.7837,
-      "region_share": 0.1361,
-      "size": [
-        447,
-        446
-      ],
-      "id": "subject",
-      "label": "山石坡面与松树根部交界处",
-      "file": "cutout-subject.webp",
-      "bytes": 77482
-    }
-  ],
+  "cutouts": [],
   "hotspots": [
     {
       "id": "50b9cac5c56f-spot-1",
-      "x": 0.35,
-      "y": 0.55,
-      "depth": 0.6453,
-      "depth_measured": 0.6453,
-      "depth_overridden": false
-    },
-    {
-      "id": "50b9cac5c56f-spot-2",
       "x": 0.65,
       "y": 0.45,
       "depth": 0.5214,
@@ -72,11 +39,19 @@
       "depth_overridden": false
     },
     {
+      "id": "50b9cac5c56f-spot-2",
+      "x": 0.35,
+      "y": 0.55,
+      "depth": 0.6453,
+      "depth_measured": 0.6453,
+      "depth_overridden": false
+    },
+    {
       "id": "50b9cac5c56f-spot-3",
-      "x": 0.55,
+      "x": 0.6,
       "y": 0.65,
-      "depth": 0.6065,
-      "depth_measured": 0.6065,
+      "depth": 0.6172,
+      "depth_measured": 0.6172,
       "depth_overridden": false
     },
     {
@@ -90,6 +65,7 @@
   ],
   "camera": {
     "fov": 34.0,
+    "framing_margin": 1.2,
     "plane_height": 1.0,
     "plane_width": 1.0,
     "distance_fill": 1.6354,
@@ -103,8 +79,17 @@
       "duration_ms": 2600
     }
   },
+  "tuning": {
+    "haze": 0.04,
+    "mist": 0.12,
+    "ripple": 0.5,
+    "sway": 0.4,
+    "subject_relief": 0.0,
+    "cutout_motion": 0.05,
+    "paper_flex": 0.0
+  },
   "provenance": {
-    "asset_revision": "528579a8a7a8720c84ff",
+    "asset_revision": "d1c16d475daadd9b1038",
     "depth_model": "depth-anything-v2-small",
     "render_mode": "continuous-depth-mesh",
     "depth_inference": {
@@ -124,29 +109,30 @@
       "foliage": false
     },
     "scene_kind": "spatial_scene",
+    "background_completion": "none",
     "depth_anchors": [
-      {
-        "x": 0.35,
-        "y": 0.55,
-        "depth": 0.5
-      },
       {
         "x": 0.65,
         "y": 0.45,
+        "depth": 0.7
+      },
+      {
+        "x": 0.35,
+        "y": 0.55,
         "depth": 0.6
       },
       {
-        "x": 0.55,
+        "x": 0.6,
         "y": 0.65,
-        "depth": 0.4
+        "depth": 0.5
       },
       {
         "x": 0.45,
         "y": 0.75,
-        "depth": 0.1
+        "depth": 0.3
       }
     ],
-    "depth_generated_at": "2026-10-25T02:07:31",
+    "depth_generated_at": "2026-10-25T13:29:26",
     "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
   }
 }

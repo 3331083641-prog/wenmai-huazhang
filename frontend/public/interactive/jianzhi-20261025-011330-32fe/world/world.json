@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "jianzhi-20261025-011330-32fe",
-  "title": "红焰奔马：剪纸之舞",
+  "title": "红焰奔马·花影生风",
   "art": {
     "file": "art.webp",
     "width": 1024,
@@ -33,61 +33,69 @@
   "cutouts": [
     {
       "bbox_norm": [
-        0.0849609375,
-        0.1064453125,
-        0.888671875,
-        0.759765625
+        0.080078125,
+        0.1015625,
+        0.8984375,
+        0.76953125
       ],
       "size": [
-        910,
-        778
+        920,
+        788
       ],
-      "alpha_coverage": 0.38990931947230145,
-      "method": "white-background-connected-subject",
+      "alpha_coverage": 0.2588363495917016,
+      "method": "white-background-connected-native-coverage-defringe",
       "completeSubject": true,
+      "negativeSpacePreserved": true,
       "id": "subject",
-      "label": "一匹红色剪纸马",
+      "label": "骏马剪影",
       "file": "cutout-subject.webp",
-      "depth": 0.7662956714630127,
-      "bytes": 200564
+      "depth": 0.746119499206543,
+      "bytes": 412848,
+      "relief_file": "subject-relief.png",
+      "reliefSource": "local-depth-relative-within-alpha"
     }
   ],
   "hotspots": [
     {
       "id": "f0242b7e1fc4-spot-1",
-      "x": 0.22,
+      "x": 0.2,
       "y": 0.25,
-      "depth": 0.7663,
-      "depth_measured": 0.8942,
-      "depth_overridden": true
+      "depth": 0.7461,
+      "depth_measured": 0.9076,
+      "depth_overridden": true,
+      "relief_delta": 0.48095
     },
     {
       "id": "f0242b7e1fc4-spot-2",
-      "x": 0.52,
-      "y": 0.38,
-      "depth": 0.7663,
-      "depth_measured": 0.7434,
-      "depth_overridden": true
+      "x": 0.45,
+      "y": 0.35,
+      "depth": 0.7461,
+      "depth_measured": 0.7247,
+      "depth_overridden": true,
+      "relief_delta": 0.225
     },
     {
       "id": "f0242b7e1fc4-spot-3",
-      "x": 0.68,
-      "y": 0.52,
-      "depth": 0.7663,
-      "depth_measured": 0.8577,
-      "depth_overridden": true
+      "x": 0.85,
+      "y": 0.45,
+      "depth": 0.7461,
+      "depth_measured": 0.6272,
+      "depth_overridden": true,
+      "relief_delta": 0.029
     },
     {
       "id": "f0242b7e1fc4-spot-4",
-      "x": 0.85,
-      "y": 0.45,
-      "depth": 0.7663,
-      "depth_measured": 0.6272,
-      "depth_overridden": true
+      "x": 0.25,
+      "y": 0.6,
+      "depth": 0.7461,
+      "depth_measured": 0.2661,
+      "depth_overridden": true,
+      "relief_delta": 0.0
     }
   ],
   "camera": {
     "fov": 34.0,
+    "framing_margin": 1.2,
     "plane_height": 1.0,
     "plane_width": 1.0,
     "distance_fill": 1.6354,
@@ -101,8 +109,17 @@
       "duration_ms": 2600
     }
   },
+  "tuning": {
+    "haze": 0.04,
+    "mist": 0.12,
+    "ripple": 0.5,
+    "sway": 0.4,
+    "subject_relief": 0.035,
+    "cutout_motion": 0.05,
+    "paper_flex": 0.0012
+  },
   "provenance": {
-    "asset_revision": "a23d002537144062da1d",
+    "asset_revision": "4402bc9546b838bffdce",
     "depth_model": "depth-anything-v2-small",
     "render_mode": "complete-subject-layers",
     "depth_inference": {
@@ -122,29 +139,30 @@
       "foliage": false
     },
     "scene_kind": "flat_artwork",
+    "background_completion": "white-background",
     "depth_anchors": [
       {
-        "x": 0.22,
+        "x": 0.2,
         "y": 0.25,
         "depth": 0.5
       },
       {
-        "x": 0.52,
-        "y": 0.38,
-        "depth": 0.5
-      },
-      {
-        "x": 0.68,
-        "y": 0.52,
+        "x": 0.45,
+        "y": 0.35,
         "depth": 0.5
       },
       {
         "x": 0.85,
         "y": 0.45,
         "depth": 0.5
+      },
+      {
+        "x": 0.25,
+        "y": 0.6,
+        "depth": 0.5
       }
     ],
-    "depth_generated_at": "2026-10-25T02:09:18",
+    "depth_generated_at": "2026-10-25T11:51:04",
     "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
   }
 }

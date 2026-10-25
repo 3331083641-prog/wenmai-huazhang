@@ -20,3 +20,8 @@ test('画境热点点击：Three.js 底部原点 UV 转为图片顶部原点', (
   assert.equal(pickHotspotFromUv(spots,.25,.2),'bottom');
   assert.equal(pickHotspotFromUv(spots,.8,.5),null);
 });
+
+test('新作额外保留界面安全边距，旧作默认取景不变',()=>{
+  const input={planeHeight:1,planeWidth:1,fov:34,amplitude:.24,width:1440,height:1000,entryScale:1.74};
+  assert.ok(fitArtworkCamera({...input,margin:1.2}).rest>fitArtworkCamera(input).rest);
+});

@@ -176,6 +176,7 @@ def _read_artifacts(case_id: str) -> dict[str, Any]:
         "metadataStatus": str((metadata.get("interactive") or {}).get("status") or ""),
         "experienceId": str(metadata.get("experienceId") or ""),
         "artworkTitle": str(metadata.get("artworkTitle") or case_id),
+        "qualityReview":metadata.get('qualityReview') if isinstance(metadata.get('qualityReview'),dict) else {},
     }
 
 
@@ -267,7 +268,7 @@ def _run(case_id: str, timeout: int) -> None:
         )
 
 
-def start_interactive_build(case_id: str, timeout: int = 900, *, force: bool = False) -> dict[str, Any]:
+def start_interactive_build(case_id: str, timeout: int = 1800, *, force: bool = False) -> dict[str, Any]:
     """Queue (or reuse) the interactive build for one case.
 
     ``force=True`` is the explicit retry path: finished jobs are rebuilt, but

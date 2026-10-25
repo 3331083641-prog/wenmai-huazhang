@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "status": "unverified",
+  "rounds": 0,
+  "selectedRound": null,
+  "baselineScore": null,
+  "finalScore": null,
+  "improved": false,
+  "stopReason": "review_unavailable",
+  "errorType": "ReviewError",
+  "history": [],
+  "originalManifestBackup": ".cache\\world-review-backups\\songhua-20261025-011015-679b\\20261025-133105-936513\\world.json",
+  "scoringNote": "DeepSeek视觉评分是主观评价；程序检查单独保存，不能视为客观准确率。",
+  "caseId": "songhua-20261025-011015-679b",
+  "styleId": "songhua",
+  "roundLimit": 1,
+  "sourceImageSha256": "50b9cac5c56f5e45ce072c194f83e749411cc908edf268813e7db660ea208b3d",
+  "referenceFingerprint": "5f6df3337d394b5e814dc807bcadad7dd3738042018fc92277e97f8c4ce8d528",
+  "reviewerModel": "deepseek-flash",
+  "reviewerProvider": "official",
+  "dependencyFingerprint": "df837c5d6feffaa0fbc571a0a6843a372e533caaf6fd837248b65c20e3828f00",
+  "selectedManifestSha256": "f2da651ed79ad49c11e6bf40b411649627236904d4fd54bc19cb4294f10dfb89",
+  "policySha256": "d73b6f0d8f8eaad6c86c2913960e82eaf49a03c54ad732a12c0cf67ddf70efad",
+  "completedAt": "2026-10-25T05:31:34.961645+00:00",
+  "requestCount": 1,
+  "usage": {
+    "prompt_tokens": 10791,
+    "completion_tokens": 582,
+    "total_tokens": 11373
+  }
+}

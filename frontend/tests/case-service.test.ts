@@ -35,6 +35,14 @@ test('normalizeCase：空的 experienceId 视为没有互动解读', () => {
   assert.equal(linked?.experienceId, 'zhuxianzhen-ruimao');
 });
 
+test('normalizeCase：画境质量未通过与互动资产就绪分别显示',()=>{
+  const item=normalizeCase({...base,qualityReview:{status:'needs_review',rounds:3,improved:false,
+    baselineScore:70,finalScore:70}});
+  assert.equal(item?.qualityReview?.status,'needs_review');
+  assert.equal(item?.qualityReview?.rounds,3);
+  assert.equal(normalizeCase({...base,qualityReview:{status:'perfect'}})?.qualityReview,undefined);
+});
+
 test('normalizeCase：缺字段时给出可用兜底，不抛错', () => {
   // 没有 caseId / styleId 的条目无法去重与定位，直接丢弃
   assert.equal(normalizeCase({ imageUrl: 'http://x/g.png' }), null);

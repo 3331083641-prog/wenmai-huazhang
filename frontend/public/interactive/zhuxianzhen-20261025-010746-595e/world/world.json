@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "zhuxianzhen-20261025-010746-595e",
-  "title": "红鳞游动：金鱼的东方韵律",
+  "title": "红鳞游动·云花共舞",
   "art": {
     "file": "art.webp",
     "width": 1024,
@@ -33,66 +33,74 @@
   "cutouts": [
     {
       "bbox_norm": [
-        0.0224609375,
-        0.0947265625,
-        0.951171875,
-        0.787109375
+        0.017578125,
+        0.08984375,
+        0.9609375,
+        0.796875
       ],
       "size": [
-        974,
-        806
+        984,
+        816
       ],
-      "alpha_coverage": 0.5491462898894839,
-      "method": "white-background-connected-subject",
+      "alpha_coverage": 0.5320034772038897,
+      "method": "white-background-connected-native-coverage-defringe",
       "completeSubject": true,
+      "negativeSpacePreserved": false,
       "id": "subject",
       "label": "金鱼主体",
       "file": "cutout-subject.webp",
-      "depth": 0.7857416272163391,
-      "bytes": 271442
+      "depth": 0.7848890423774719,
+      "bytes": 298908,
+      "relief_file": "subject-relief.png",
+      "reliefSource": "local-depth-relative-within-alpha"
     }
   ],
   "hotspots": [
     {
       "id": "1ef7ec1047be-spot-1",
-      "x": 0.15,
+      "x": 0.2,
       "y": 0.45,
-      "depth": 0.7857,
+      "depth": 0.7849,
       "depth_measured": 1.0,
-      "depth_overridden": true
+      "depth_overridden": true,
+      "relief_delta": 0.5
     },
     {
       "id": "1ef7ec1047be-spot-2",
-      "x": 0.85,
+      "x": 0.8,
       "y": 0.55,
-      "depth": 0.0,
-      "depth_measured": 0.5583,
-      "depth_overridden": true
+      "depth": 0.7849,
+      "depth_measured": 0.7954,
+      "depth_overridden": true,
+      "relief_delta": 0.11985
     },
     {
       "id": "1ef7ec1047be-spot-3",
-      "x": 0.2,
-      "y": 0.2,
+      "x": 0.4,
+      "y": 0.85,
       "depth": 0.0,
-      "depth_measured": 0.0391,
-      "depth_overridden": true
+      "depth_measured": 0.174,
+      "depth_overridden": true,
+      "relief_delta": 0.0
     },
     {
       "id": "1ef7ec1047be-spot-4",
-      "x": 0.7,
-      "y": 0.85,
-      "depth": 0.0,
-      "depth_measured": 0.2002,
-      "depth_overridden": true
+      "x": 0.9,
+      "y": 0.8,
+      "depth": 0.7849,
+      "depth_measured": 0.5719,
+      "depth_overridden": true,
+      "relief_delta": 0.0
     }
   ],
   "camera": {
     "fov": 34.0,
+    "framing_margin": 1.2,
     "plane_height": 1.0,
     "plane_width": 1.0,
     "distance_fill": 1.6354,
-    "depth_amplitude": 0.24,
-    "yaw_limit_deg": 10.0,
+    "depth_amplitude": 0.18,
+    "yaw_limit_deg": 8,
     "pitch_limit_deg": 7.0,
     "dolly_near": 0.62,
     "dolly_far": 1.55,
@@ -101,8 +109,17 @@
       "duration_ms": 2600
     }
   },
+  "tuning": {
+    "haze": 0.04,
+    "mist": 0.12,
+    "ripple": 0.35,
+    "sway": 0.4,
+    "subject_relief": 0.025,
+    "cutout_motion": 0.05,
+    "paper_flex": 0
+  },
   "provenance": {
-    "asset_revision": "ae6e91ee1e23905cfa06",
+    "asset_revision": "67796a84a6f3d408f251",
     "depth_model": "depth-anything-v2-small",
     "render_mode": "complete-subject-layers",
     "depth_inference": {
@@ -122,29 +139,30 @@
       "foliage": false
     },
     "scene_kind": "flat_artwork",
+    "background_completion": "white-background",
     "depth_anchors": [
       {
-        "x": 0.15,
+        "x": 0.2,
         "y": 0.45,
         "depth": 0.5
       },
       {
-        "x": 0.85,
+        "x": 0.8,
         "y": 0.55,
         "depth": 0.5
       },
       {
-        "x": 0.2,
-        "y": 0.2,
+        "x": 0.4,
+        "y": 0.85,
         "depth": 0.5
       },
       {
-        "x": 0.7,
-        "y": 0.85,
+        "x": 0.9,
+        "y": 0.8,
         "depth": 0.5
       }
     ],
-    "depth_generated_at": "2026-10-25T02:04:12",
+    "depth_generated_at": "2026-10-25T11:51:11",
     "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
   }
 }

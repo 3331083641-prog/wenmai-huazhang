@@ -1,7 +1,7 @@
 {
   "version": 1,
   "slug": "qinghua-20261025-011202-dbc8",
-  "title": "青瓷鹤影：纹饰与羽翼的静谧交响",
+  "title": "青瓷鹤影：纹饰与羽翼的静谧对话",
   "art": {
     "file": "art.webp",
     "width": 1024,
@@ -33,23 +33,26 @@
   "cutouts": [
     {
       "bbox_norm": [
-        0.1552734375,
-        0.0341796875,
-        0.6884765625,
-        0.94140625
+        0.150390625,
+        0.029296875,
+        0.697265625,
+        0.951171875
       ],
       "size": [
-        705,
-        964
+        714,
+        974
       ],
-      "alpha_coverage": 0.25879167770224537,
-      "method": "white-background-connected-subject",
+      "alpha_coverage": 0.24378231785527352,
+      "method": "white-background-connected-native-coverage-defringe",
       "completeSubject": true,
+      "negativeSpacePreserved": false,
       "id": "subject",
       "label": "鹤首红顶",
       "file": "cutout-subject.webp",
-      "depth": 0.8776968717575073,
-      "bytes": 106476
+      "depth": 0.8515983819961548,
+      "bytes": 145164,
+      "relief_file": "subject-relief.png",
+      "reliefSource": "local-depth-relative-within-alpha"
     }
   ],
   "hotspots": [
@@ -57,37 +60,42 @@
       "id": "39ce0e556f42-spot-1",
       "x": 0.32,
       "y": 0.08,
-      "depth": 0.8777,
+      "depth": 0.8516,
       "depth_measured": 0.7421,
-      "depth_overridden": true
+      "depth_overridden": true,
+      "relief_delta": 0.19865
     },
     {
       "id": "39ce0e556f42-spot-2",
-      "x": 0.35,
-      "y": 0.18,
-      "depth": 0.8777,
-      "depth_measured": 0.3074,
-      "depth_overridden": true
+      "x": 0.48,
+      "y": 0.35,
+      "depth": 0.8516,
+      "depth_measured": 0.8981,
+      "depth_overridden": true,
+      "relief_delta": 0.37731
     },
     {
       "id": "39ce0e556f42-spot-3",
-      "x": 0.48,
-      "y": 0.35,
-      "depth": 0.8777,
-      "depth_measured": 0.8958,
-      "depth_overridden": true
+      "x": 0.35,
+      "y": 0.22,
+      "depth": 0.0,
+      "depth_measured": 0.0121,
+      "depth_overridden": true,
+      "relief_delta": 0.0
     },
     {
       "id": "39ce0e556f42-spot-4",
-      "x": 0.7,
+      "x": 0.72,
       "y": 0.45,
-      "depth": 0.8777,
-      "depth_measured": 0.9401,
-      "depth_overridden": true
+      "depth": 0.8516,
+      "depth_measured": 0.913,
+      "depth_overridden": true,
+      "relief_delta": 0.3881
     }
   ],
   "camera": {
     "fov": 34.0,
+    "framing_margin": 1.2,
     "plane_height": 1.0,
     "plane_width": 1.0,
     "distance_fill": 1.6354,
@@ -101,8 +109,17 @@
       "duration_ms": 2600
     }
   },
+  "tuning": {
+    "haze": 0.04,
+    "mist": 0.12,
+    "ripple": 0.5,
+    "sway": 0.4,
+    "subject_relief": 0.035,
+    "cutout_motion": 0.05,
+    "paper_flex": 0
+  },
   "provenance": {
-    "asset_revision": "5cd9119125fe44c1fe2b",
+    "asset_revision": "fae805a19bfd89dc81ed",
     "depth_model": "depth-anything-v2-small",
     "render_mode": "complete-subject-layers",
     "depth_inference": {
@@ -122,15 +139,11 @@
       "foliage": false
     },
     "scene_kind": "flat_artwork",
+    "background_completion": "white-background",
     "depth_anchors": [
       {
         "x": 0.32,
         "y": 0.08,
-        "depth": 0.5
-      },
-      {
-        "x": 0.35,
-        "y": 0.18,
         "depth": 0.5
       },
       {
@@ -139,12 +152,17 @@
         "depth": 0.5
       },
       {
-        "x": 0.7,
+        "x": 0.35,
+        "y": 0.22,
+        "depth": 0.5
+      },
+      {
+        "x": 0.72,
         "y": 0.45,
         "depth": 0.5
       }
     ],
-    "depth_generated_at": "2026-10-25T02:08:31",
+    "depth_generated_at": "2026-10-25T11:50:56",
     "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，不能绕视到物体背后。"
   }
 }

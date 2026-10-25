@@ -18,6 +18,8 @@ Windows 在项目根目录运行或双击：
 
 ## 私有配置
 
+DeepSeek 画境复审优先使用 [官方 API 配置指南](configuration/DEEPSEEK_OFFICIAL.md)，用户本机已选择官方服务。另保留 [百炼配置说明](configuration/BAILIAN_DEEPSEEK.md)。配置正确与实际复审通过分别验证，密钥不进入前端。
+
 以 `backend/.env.example` 创建本机 `backend/.env`，设置个人 `DASHSCOPE_API_KEY` 和百炼控制台提供的华北 2（北京）业务空间专属 `DASHSCOPE_BASE_URL`（HTTPS 域名，以 `.cn-beijing.maas.aliyuncs.com` 结尾）。具体域名和模型以个人服务开通情况为准。密钥仅进入后端，不写入前端、截图或 Git。
 
 本地视觉理解设置 `QWEN_VL_ENABLED=true`、`QWEN_VL_BASE_URL=http://127.0.0.1:11434`，`QWEN_VL_MODEL` 与本机安装名一致。默认模型为 `qwen3-vl:4b-instruct-q4_K_M`。尚未安装时由使用者执行 `ollama pull qwen3-vl:4b-instruct-q4_K_M`；已有模型无需重下。`ollama serve` 仅在服务未运行时启动。

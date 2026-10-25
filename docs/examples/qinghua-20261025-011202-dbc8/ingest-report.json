@@ -1,7 +1,7 @@
 {
   "slug": "qinghua-20261025-011202-dbc8",
   "styleId": "qinghua",
-  "title": "青瓷鹤影：纹饰与羽翼的静谧交响",
+  "title": "青瓷鹤影：纹饰与羽翼的静谧对话",
   "image": {
     "width": 1024,
     "height": 1024,
@@ -40,22 +40,22 @@
     },
     {
       "id": "39ce0e556f42-spot-2",
-      "title": "丹顶鹤头部与颈部特写",
-      "x": 0.35,
-      "y": 0.18,
-      "status": "approximate"
-    },
-    {
-      "id": "39ce0e556f42-spot-3",
       "title": "鹤身青花纹样局部",
       "x": 0.48,
       "y": 0.35,
       "status": "approximate"
     },
     {
+      "id": "39ce0e556f42-spot-3",
+      "title": "鹤颈与肩部青花纹样",
+      "x": 0.35,
+      "y": 0.22,
+      "status": "approximate"
+    },
+    {
       "id": "39ce0e556f42-spot-4",
-      "title": "鹤身尾羽交界处的青花纹样与深蓝羽翼",
-      "x": 0.7,
+      "title": "鹤身尾羽交界处的蓝白纹样与深蓝羽片",
+      "x": 0.72,
       "y": 0.45,
       "status": "approximate"
     }
@@ -67,11 +67,11 @@
     },
     {
       "id": "fold-2",
-      "scale": 1.61
+      "scale": 1.53
     },
     {
       "id": "fold-3",
-      "scale": 1.58
+      "scale": 1.57
     }
   ],
   "world": {
@@ -84,10 +84,11 @@
       "depth-rg.png",
       "masks.png",
       "model-depth-rg.png",
+      "subject-relief.png",
       "surface.webp",
       "world.json"
     ],
-    "bytes": 908517
+    "bytes": 963009
   },
   "vlm": {
     "used": true,
@@ -99,5 +100,10 @@
     "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
     "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
   ],
-  "elapsedSec": 57.5
+  "elapsedSec": 42.2,
+  "qualityReview": {
+    "status": "disabled",
+    "rounds": 0,
+    "improved": false
+  }
 }

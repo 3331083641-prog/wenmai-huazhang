@@ -6,6 +6,8 @@ Qwen Image通过阿里云百炼调用，Ollama视觉模型按其上游模型许�
 
 自动画境使用本地 **Depth Anything V2 Small**（`depth-anything/Depth-Anything-V2-Small-hf`），用于相对深度估计；Small 权重的上游许可为 Apache-2.0，全文见 `licenses/Apache-2.0.txt`。[模型卡](https://huggingface.co/depth-anything/Depth-Anything-V2-Small-hf)、[原项目](https://github.com/DepthAnything/Depth-Anything-V2)、[固定版本及权重校验](models/interactive-models.json)。未捆绑 Base/Large/Giant。PyTorch、Transformers 和 Safetensors 按各自许可使用。深度估计不代表自研或自训练模型。
 
+可选复审新增 Playwright Python 与 OpenCV Headless 依赖，已安装发行包标注 Apache-2.0；保留上游 [Playwright 许可](https://github.com/microsoft/playwright-python/blob/main/LICENSE) 和 [OpenCV Python 许可](https://github.com/opencv/opencv-python/blob/5.x/LICENSE.txt)。浏览器本身遵循其发行许可，不捆绑于项目。DeepSeek 通过用户官方 API 配置调用，遵守供应商服务条款，不包含模型权重。
+
 2026-10-25 新增的五件运行期验证作品，采用用户要求准备的 AI 白底参考图；参考图由内置 imagegen 工具生成，不是实物照片，相关来源标记保存在各案例元数据中。产品界面截图另由真实浏览器采集，二者不混用。
 
 素材说明见 `assets/README.md`。仓库中的已生成案例用于说明实际输出，不表示对第三方文化素材另行授权。保留的图片和文化内容应按具体来源及使用场景核对。

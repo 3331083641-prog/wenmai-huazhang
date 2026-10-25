@@ -42,6 +42,7 @@ from PIL import Image, ImageFilter
 from image_geometry import DEPTH_SOURCE, image_depth
 from depth_estimation import estimate_image_depth
 from white_subject import extract_white_subject
+from layered_pixels import subject_relief,occlusion_background,border_backdrop
 
 CONFIG_DIR = os.path.join("scripts", "interactive", "artworks")
 PROBE_DIR = os.path.join("scripts", "interactive", "_probe")
@@ -468,6 +469,15 @@ def make_cutout(img: np.ndarray, depth: np.ndarray, spec: dict) -> tuple[Image.I
         print(f"cutout {spec['id']}: 连通域 {cov:.3%} 太小，跳过")
         return None
 
+    # A window is a search boundary, never an object boundary. A continuous
+    # mountain clipped along it makes a straight floating wall in side views.
+    wy,wx=np.where(window)
+    edges=(seed[wy.min(),wx.min():wx.max()+1],seed[wy.max(),wx.min():wx.max()+1],
+           seed[wy.min():wy.max()+1,wx.min()],seed[wy.min():wy.max()+1,wx.max()])
+    if any(np.count_nonzero(edge)>max(3,len(edge)*.06) for edge in edges):
+        print(f"cutout {spec['id']}: 连通主体触及搜索边界，保留连续深度网格，不硬裁")
+        return None
+
     # 软边：模糊后拉增益，保证内部到 255、边缘平滑归零
     soft = Image.fromarray((seed * 255).astype(np.uint8)).filter(
         ImageFilter.GaussianBlur(radius=9)
@@ -668,7 +678,7 @@ def build_artwork(cfg: dict, args) -> dict:
     # 「墙」，斜看时被拉成细长条纹（试看时被读成「画被撕裂」）。模糊 3px 后
     # 落差摊开，位移更连贯；代价是最锐的边稍微变软，这与设色画的观感是一致的。
     depth = smooth_depth(depth, max(smooth, 7.0))
-    subject = extract_white_subject(img,cfg['subject_seed']) if (
+    subject = extract_white_subject(img,cfg['subject_seed'],preserve_holes='剪纸' in cfg['style_name']) if (
         cfg.get('scene_kind') == 'flat_artwork' and cfg.get('subject_seed')) else None
     display_depth = np.zeros_like(depth) if subject else depth
     subject_depth = float(np.median(depth[subject['mask']])) if subject else None
@@ -693,7 +703,7 @@ def build_artwork(cfg: dict, args) -> dict:
     print(f"depth-rg.png: {os.path.getsize(depth_out) / 1024:.0f} KB")
 
     # 3) 兜底背景
-    backdrop = edge_extend(subject['surface'] if subject else img)
+    backdrop = border_backdrop(subject['surface'] if subject else img)
     bd_out = os.path.join(out_dir, "backdrop.webp")
     Image.fromarray(backdrop).resize(
         (max(512, W // 2), max(342, H // 2)), Image.LANCZOS
@@ -719,11 +729,21 @@ def build_artwork(cfg: dict, args) -> dict:
     # 5) 近景抠像（失败会换参数重试，最终仍失败就允许没有 cutout）
     cut_meta = []
     cut_report = []
+    relief_data=None
+    relief_layers=[]
+    inferred_surface=None
     if subject:
         cut_path=os.path.join(out_dir,'cutout-subject.webp')
         subject['image'].save(cut_path,quality=94,method=6)
         info={**subject['info'],'id':'subject','label':cfg['subject_label'],'file':'cutout-subject.webp',
             'depth':subject_depth,'bytes':os.path.getsize(cut_path)}
+        sx=round(info['bbox_norm'][0]*W);sy=round(info['bbox_norm'][1]*H)
+        sw,sh=subject['image'].size
+        rgba=np.asarray(subject['image'])
+        relief_data=subject_relief(rgba,depth[sy:sy+sh,sx:sx+sw],rgba[:,:,3])
+        Image.fromarray(np.round(relief_data*255).astype(np.uint8)).save(os.path.join(out_dir,'subject-relief.png'))
+        info.update({'relief_file':'subject-relief.png','reliefSource':'local-depth-relative-within-alpha'})
+        relief_layers.append({'x':sx,'y':sy,'alpha':rgba[:,:,3],'relief':relief_data,'depth':subject_depth})
         cut_meta.append(info);cut_report.append({**info,'ok':True,'retried':False})
     for spec in ([] if subject else cfg["cutouts"]):
         got = build_cutout_with_retry(img, depth, spec)
@@ -735,6 +755,16 @@ def build_artwork(cfg: dict, args) -> dict:
         im, info = got["image"], got["info"]
         p = os.path.join(out_dir, f"cutout-{spec['id']}.webp")
         im.save(p, quality=90, method=6)
+        x,y,cw,ch=info['bbox_px']
+        rgba=np.asarray(im)
+        local_depth=depth[y:y+ch,x:x+cw]
+        relative=subject_relief(rgba,local_depth,rgba[:,:,3])
+        relief_file=f"cutout-{spec['id']}-relief.png"
+        Image.fromarray(np.round(relative*255).astype(np.uint8)).save(os.path.join(out_dir,relief_file))
+        foreground_depth=float(np.median(local_depth[rgba[:,:,3]>128]))
+        info.update({'depth':foreground_depth,'relief_file':relief_file,
+                     'reliefSource':'local-depth-relative-within-alpha'})
+        relief_layers.append({'x':x,'y':y,'alpha':rgba[:,:,3],'relief':relative,'depth':foreground_depth})
         info.update({"id": spec["id"], "label": spec["label"], "file": f"cutout-{spec['id']}.webp",
                      "bytes": os.path.getsize(p)})
         cut_meta.append(info)
@@ -745,9 +775,29 @@ def build_artwork(cfg: dict, args) -> dict:
                            "region_share": info["region_share"],
                            "bbox_norm": info["bbox_norm"], "size": info["size"],
                            "bytes": info["bytes"]})
+        # Remove the duplicated foreground beneath the cutout, filling only a bounded
+        # hidden region. This is inferred pixel continuation, never recovered scenery.
+        x,y,cw,ch=info['bbox_px']
+        occlusion=np.zeros((H,W),dtype=np.uint8)
+        occlusion[y:y+ch,x:x+cw]=(np.asarray(im)[:,:,3]>10).astype(np.uint8)*255
+        filling=occlusion_background(inferred_surface if inferred_surface is not None else img,occlusion)
+        if filling['applied']:
+            inferred_surface=filling['image']
+            cut_report[-1]['backgroundCompletion']=filling['method']
+            packed=np.repeat(np.round(display_depth[:,:,None]*255).astype(np.uint8),3,axis=2)
+            filled_depth=occlusion_background(packed,occlusion)
+            display_depth=filled_depth['image'][:,:,0].astype(np.float32)/255
+            # The inferred surface is behind its foreground, including the largest
+            # allowed local relief. Otherwise its depth buffer cuts a false hole.
+            under=occlusion>0
+            display_depth[under]=np.minimum(display_depth[under],max(0.0,foreground_depth-.52))
         print(f"cutout {spec['id']}: {info['size']} bbox_norm={info['bbox_norm']} "
               f"alpha={info['alpha_coverage']} {info['bytes'] / 1024:.0f} KB"
               + ("  (重试过)" if got["retried"] else ""))
+
+    if inferred_surface is not None:
+        Image.fromarray(inferred_surface).save(os.path.join(out_dir,'surface.webp'),quality=94,method=6)
+        pack_depth_rg(display_depth,depth_out,DEPTH_TEX_W)
 
     # 6) 伪彩预览（人工/模型复核用）
     prev = turbo(depth)
@@ -762,6 +812,15 @@ def build_artwork(cfg: dict, args) -> dict:
             x=min(W-1,max(0,round(spot['x']*(W-1))));y=min(H-1,max(0,round(spot['y']*(H-1))))
             spot['depth']=round(subject_depth if subject['mask'][y,x] else 0.0,4)
             spot['depth_overridden']=True
+            spot['relief_delta']=round(float(relief_data[y-sy,x-sx])-.5,5) if subject['mask'][y,x] else 0.0
+    else:
+        for spot in spots:
+            px=round(spot['x']*(W-1));py=round(spot['y']*(H-1))
+            for layer in relief_layers:
+                lx=px-layer['x'];ly=py-layer['y']
+                if 0<=ly<layer['alpha'].shape[0] and 0<=lx<layer['alpha'].shape[1] and layer['alpha'][ly,lx]>128:
+                    spot.update({'depth':round(layer['depth'],4),'depth_overridden':True,
+                                 'relief_delta':round(float(layer['relief'][ly,lx])-.5,5)})
 
     # 8) 相机参数：按画面长宽比推一个「看得完」的入场终点
     aspect = W / H
@@ -772,7 +831,7 @@ def build_artwork(cfg: dict, args) -> dict:
         "slug": slug,
         "title": cfg["title"],
         "art": {"file": "art.webp", "width": W, "height": H, "aspect": round(aspect, 4)},
-        "surface": {"file":"surface.webp"} if subject else None,
+        "surface": {"file":"surface.webp"} if subject or inferred_surface is not None else None,
         "depth": {"file": "depth-rg.png", "width": DEPTH_TEX_W,
                   "height": round(H * DEPTH_TEX_W / W), "gamma": gamma},
         "backdrop": {"file": "backdrop.webp"},
@@ -782,6 +841,7 @@ def build_artwork(cfg: dict, args) -> dict:
         "hotspots": spots,
         "camera": {
             "fov": vert_fov,
+            "framing_margin":1.2,
             "plane_height": 1.0,
             "plane_width": round(aspect, 4),
             "distance_fill": round(dist_to_fill, 4),
@@ -792,6 +852,9 @@ def build_artwork(cfg: dict, args) -> dict:
             "dolly_far": 1.55,
             "entry": {"from_scale": 1.74, "duration_ms": 2600},
         },
+        "tuning":{"haze":.04,"mist":.12,"ripple":.5,"sway":.4,
+                  "subject_relief":.035 if cut_meta else 0.0,"cutout_motion":.05,
+                  "paper_flex":.0012 if subject and subject['info'].get('negativeSpacePreserved') else 0.0},
         "provenance": {
             "asset_revision": hashlib.sha256(json.dumps({'image':cfg.get('source_sha256'),
                 'depth':hashlib.sha256(depth.tobytes()).hexdigest(),'hotspots':spots,'cutouts':cut_meta},
@@ -802,6 +865,7 @@ def build_artwork(cfg: dict, args) -> dict:
             "source_image_sha256": cfg.get("source_sha256", ""),
             "semantic_motion": cfg.get("semantic_motion"),
             "scene_kind": cfg.get("scene_kind"),
+            "background_completion":'image-inpainting-telea-inferred' if inferred_surface is not None else 'white-background' if subject else 'none',
             "depth_anchors": cfg.get("depth_anchors"),
             "depth_generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
             "note": "单图深度估计，2.5D 深度网格；有限视角，不是三维重建，"

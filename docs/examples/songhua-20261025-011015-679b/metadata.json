@@ -5,7 +5,7 @@
   "styleId": "songhua",
   "styleName": "宋画青绿山水",
   "referenceSubject": "山峰亭阁松树",
-  "artworkTitle": "山径幽亭：松影与石语",
+  "artworkTitle": "山径幽亭",
   "theme": "山峰、亭阁、松树与石阶，转为宋画青绿山水，保留前景松石中景亭阁远景峰峦的遮挡，背景纯白留白，无人物",
   "referenceSource": "user_upload",
   "sourceFilename": "reference.png",
@@ -108,6 +108,16 @@
     "analysisImageSha256": "50b9cac5c56f5e45ce072c194f83e749411cc908edf268813e7db660ea208b3d",
     "interactionPlanVersion": 2,
     "depthSource": "depth-anything-v2-small",
-    "builtAt": "2026-10-25T02:07:31.645328+08:00"
+    "builtAt": "2026-10-25T13:29:26.848627+08:00"
+  },
+  "qualityReview": {
+    "status": "unverified",
+    "rounds": 0,
+    "selectedRound": null,
+    "baselineScore": null,
+    "finalScore": null,
+    "improved": false,
+    "reviewerModel": "deepseek-flash",
+    "reportFile": "quality-review.json"
   }
 }

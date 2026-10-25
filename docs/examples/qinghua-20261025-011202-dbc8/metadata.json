@@ -5,7 +5,7 @@
   "styleId": "qinghua",
   "styleName": "青花瓷纹样",
   "referenceSubject": "丹顶鹤",
-  "artworkTitle": "青瓷鹤影：纹饰与羽翼的静谧交响",
+  "artworkTitle": "青瓷鹤影：纹饰与羽翼的静谧对话",
   "theme": "一只完整丹顶鹤，保留鹤颈、长喙与双足，以青花瓷蓝白纹样转译，纯白背景，不增加其他动物",
   "referenceSource": "user_upload",
   "sourceFilename": "reference.png",
@@ -109,6 +109,16 @@
     "analysisImageSha256": "39ce0e556f42092cff46283199db5f9e4d732bfe14d28af3e46369c4ce75d7bb",
     "interactionPlanVersion": 2,
     "depthSource": "depth-anything-v2-small",
-    "builtAt": "2026-10-25T02:08:31.985398+08:00"
+    "builtAt": "2026-10-25T11:27:41.949465+08:00"
+  },
+  "qualityReview": {
+    "status": "needs_review",
+    "rounds": 3,
+    "selectedRound": null,
+    "baselineScore": 86.95,
+    "finalScore": null,
+    "improved": false,
+    "reviewerModel": "deepseek-flash",
+    "reportFile": "quality-review.json"
   }
 }

@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 2,
+  "contentSource": "qwen3_vl_image",
+  "inputImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+  "contextSha256": "accc510781f78fc8f6f7d20cbf4af1031a158cd1514b25016ec0b98dd316c09f",
+  "promptSha256": "557029bb361a61c6cf599dd0d91b88730a78383ce6f9e7f046d429b8191866eb",
+  "model": "qwen3-vl:4b-instruct-q4_K_M",
+  "inputImageCount": 1,
+  "inputImageBytes": 903492,
+  "analysis": {
+    "title": "蓝韵牡丹图",
+    "subtitle": "一花一世界，蓝白间的生命律动",
+    "lead": "以蓝白为笔，勾勒牡丹之姿，层层叠叠的花瓣如呼吸般舒展，叶脉与茎干的线条暗藏生长的韵律，静谧中蕴藏蓬勃的自然之力。",
+    "observed_subjects": [
+      "牡丹花",
+      "花茎",
+      "叶片"
+    ],
+    "dominant_colors": [
+      "深蓝",
+      "浅蓝",
+      "白色"
+    ],
+    "visual_features": [
+      "花瓣边缘呈波浪状",
+      "叶脉清晰可见",
+      "整体为单色线描风格"
+    ],
+    "scene_kind": "flat_artwork",
+    "motion_regions": {
+      "water": false,
+      "mist": false,
+      "foliage": false
+    },
+    "hotspots": [
+      {
+        "title": "牡丹花心处密集的花蕊结构",
+        "x": 0.5,
+        "y": 0.35,
+        "r": 0.04,
+        "depth": 0.9,
+        "observation": "深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。",
+        "interpretation": "深浅蓝的对比强化了花心的立体感，密集笔触营造出繁复的生命力，整体静谧中透着蓬勃生机。"
+      },
+      {
+        "title": "牡丹花瓣内侧的脉络与边缘轮廓",
+        "x": 0.35,
+        "y": 0.45,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "花瓣内侧呈浅蓝至白色渐变，边缘有细密的蓝色线条勾勒轮廓，叶脉走向清晰，层次分明。",
+        "interpretation": "蓝白对比带来清雅静谧感，线条疏密有致，如水波轻漾，柔美中透出细腻的生命律动。"
+      },
+      {
+        "title": "花叶交叠处的叶片细节",
+        "x": 0.7,
+        "y": 0.65,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "深浅不一的蓝色叶片，叶脉清晰呈网状，边缘自然卷曲，与上方花瓣形成柔和过渡。",
+        "interpretation": "蓝调渐变与细密叶脉交织，营造出静谧而富有生命力的质感，线条轻盈却不失结构的严谨。"
+      },
+      {
+        "title": "花茎与叶片连接处的结构细节",
+        "x": 0.5,
+        "y": 0.75,
+        "r": 0.04,
+        "depth": 0.5,
+        "observation": "蓝白渐变的花茎分叉，两侧对称延伸出叶片，叶脉以细线勾勒，茎部有自然弯曲与阴影过渡。",
+        "interpretation": "线条疏密与明暗对比营造出植物的柔韧质感，蓝白配色带来清冷雅致的视觉感受，结构清晰却不失自然生长的韵律。"
+      }
+    ],
+    "chapters": [
+      {
+        "title": "花心之密",
+        "eyebrow": "蕊之深",
+        "body": "深蓝花蕊如晶体簇拥，被浅色花瓣温柔包裹，笔触密集却无压迫感，静谧中透出生命最原始的繁复与力量。花心是花的内核，也是视觉焦点的凝结点。",
+        "focus_indices": [
+          0
+        ]
+      },
+      {
+        "title": "瓣之柔",
+        "eyebrow": "瓣之韵",
+        "body": "花瓣内侧渐变如水波轻漾，边缘细线勾勒轮廓，叶脉走向清晰如歌。蓝白对比带来清雅静谧，线条疏密有致，柔美中透出细腻的生命律动。",
+        "focus_indices": [
+          1
+        ]
+      },
+      {
+        "title": "叶之静",
+        "eyebrow": "叶之息",
+        "body": "叶片深浅蓝调交织，叶脉网状清晰，边缘自然卷曲，与花蕾形成柔和过渡。蓝调渐变与细密叶脉交织，营造静谧而富有生命力的质感，线条轻盈却不失结构的严谨。",
+        "focus_indices": [
+          2
+        ]
+      }
+    ]
+  },
+  "totalDurationNs": 17465016700,
+  "localReview": {
+    "kind": "qwen3_vl_actual_crop_grounding",
+    "hotspots": [
+      {
+        "index": 0,
+        "inputCropSha256": "cf21520255bf0dec67bcbafdec31f77b448ca5f4ab0700718149f4c838fd9ee3",
+        "cropBox": [
+          374,
+          220,
+          650,
+          497
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "牡丹花心处密集的花蕊结构",
+          "observation": "深蓝色花蕊密集簇生，呈尖锐晶体状，被浅色花瓣层层包裹，花瓣边缘有细腻笔触勾勒。",
+          "interpretation": "深浅蓝的对比强化了花心的立体感，密集笔触营造出繁复的生命力，整体静谧中透着蓬勃生机。"
+        }
+      },
+      {
+        "index": 1,
+        "inputCropSha256": "1b8df5e203241dd6fe6cf4b11b35384fdc47b44d2e9364137db6ccfe355e2443",
+        "cropBox": [
+          220,
+          323,
+          497,
+          599
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "牡丹花瓣内侧的脉络与边缘轮廓",
+          "observation": "花瓣内侧呈浅蓝至白色渐变，边缘有细密的蓝色线条勾勒轮廓，叶脉走向清晰，层次分明。",
+          "interpretation": "蓝白对比带来清雅静谧感，线条疏密有致，如水波轻漾，柔美中透出细腻的生命律动。"
+        }
+      },
+      {
+        "index": 2,
+        "inputCropSha256": "6aac3f850653ac0c62d710c9f45c7d47b22870eca72ce862bcbaf13c556e8a69",
+        "cropBox": [
+          579,
+          527,
+          855,
+          804
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "花叶交叠处的叶片细节",
+          "observation": "深浅不一的蓝色叶片，叶脉清晰呈网状，边缘自然卷曲，与上方花瓣形成柔和过渡。",
+          "interpretation": "蓝调渐变与细密叶脉交织，营造出静谧而富有生命力的质感，线条轻盈却不失结构的严谨。"
+        }
+      },
+      {
+        "index": 3,
+        "inputCropSha256": "19890164895738c40b5bf431b5a4b73027d9807738493a7e6cb40d914c156783",
+        "cropBox": [
+          374,
+          630,
+          650,
+          906
+        ],
+        "model": "qwen3-vl:4b-instruct-q4_K_M",
+        "analysis": {
+          "useful": true,
+          "title": "花茎与叶片连接处的结构细节",
+          "observation": "蓝白渐变的花茎分叉，两侧对称延伸出叶片，叶脉以细线勾勒，茎部有自然弯曲与阴影过渡。",
+          "interpretation": "线条疏密与明暗对比营造出植物的柔韧质感，蓝白配色带来清冷雅致的视觉感受，结构清晰却不失自然生长的韵律。"
+        }
+      }
+    ],
+    "storySource": "same-image whole view plus local-Qwen crop observations"
+  },
+  "reviewModel": "qwen3-vl:4b-instruct-q4_K_M",
+  "reviewInput": "same-image whole view and deterministic hotspot crops"
+}

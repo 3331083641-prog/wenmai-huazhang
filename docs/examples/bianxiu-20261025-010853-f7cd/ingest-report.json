@@ -1,7 +1,7 @@
 {
   "slug": "bianxiu-20261025-010853-f7cd",
   "styleId": "bianxiu",
-  "title": "粉霞绽放：一朵牡丹的静谧叙事",
+  "title": "绣线牡丹的静谧绽放",
   "image": {
     "width": 1024,
     "height": 1024,
@@ -40,14 +40,14 @@
     },
     {
       "id": "14bee1d62164-spot-2",
-      "title": "左下叶片的脉络与纹理",
+      "title": "左侧叶片的脉络与纹理细节",
       "x": 0.3,
-      "y": 0.6,
+      "y": 0.65,
       "status": "approximate"
     },
     {
       "id": "14bee1d62164-spot-3",
-      "title": "花茎与叶片连接处的纹理细节",
+      "title": "花茎分叉处的叶腋与节间纹理",
       "x": 0.5,
       "y": 0.75,
       "status": "approximate"
@@ -56,7 +56,7 @@
       "id": "14bee1d62164-spot-4",
       "title": "牡丹花瓣边缘的褶皱与纹理",
       "x": 0.75,
-      "y": 0.3,
+      "y": 0.45,
       "status": "approximate"
     }
   ],
@@ -67,7 +67,7 @@
     },
     {
       "id": "fold-2",
-      "scale": 1.55
+      "scale": 1.58
     },
     {
       "id": "fold-3",
@@ -84,10 +84,11 @@
       "depth-rg.png",
       "masks.png",
       "model-depth-rg.png",
+      "subject-relief.png",
       "surface.webp",
       "world.json"
     ],
-    "bytes": 1166264
+    "bytes": 1265280
   },
   "vlm": {
     "used": true,
@@ -99,5 +100,10 @@
     "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
     "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
   ],
-  "elapsedSec": 91.5
+  "elapsedSec": 41.7,
+  "qualityReview": {
+    "status": "disabled",
+    "rounds": 0,
+    "improved": false
+  }
 }

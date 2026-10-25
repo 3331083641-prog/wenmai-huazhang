@@ -5,7 +5,7 @@
   "styleId": "bianxiu",
   "styleName": "汴绣",
   "referenceSubject": "牡丹",
-  "artworkTitle": "粉霞绽放：一朵牡丹的静谧叙事",
+  "artworkTitle": "绣线牡丹的静谧绽放",
   "theme": "一朵粉红牡丹与绿叶，完整花枝，汴绣纹样的丝线方向与色阶表现，纯白背景，花瓣清晰，不增添动物",
   "referenceSource": "user_upload",
   "sourceFilename": "reference.png",
@@ -104,9 +104,19 @@
     "analysisImageSha256": "14bee1d621647e50765eac568df9fd5936bb15746dd31b90387641180c490c48",
     "interactionPlanVersion": 2,
     "depthSource": "depth-anything-v2-small",
-    "builtAt": "2026-10-25T02:05:46.859093+08:00"
+    "builtAt": "2026-10-25T11:29:12.750328+08:00"
   },
   "referenceOrigin": "AI-generated white-background reference, requested by the user for this verification",
   "referenceProvider": "built-in imagegen tool; not a photograph",
-  "verificationRun": "20261025-white-reference-five-styles"
+  "verificationRun": "20261025-white-reference-five-styles",
+  "qualityReview": {
+    "status": "needs_review",
+    "rounds": 3,
+    "selectedRound": null,
+    "baselineScore": 84.2,
+    "finalScore": null,
+    "improved": false,
+    "reviewerModel": "deepseek-flash",
+    "reportFile": "quality-review.json"
+  }
 }

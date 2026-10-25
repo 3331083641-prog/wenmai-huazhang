@@ -45,6 +45,21 @@ export interface GalleryCase {
   hasExperience?: boolean;
   hasWorld?: boolean;
   interaction?: CaseInteraction;
+  qualityReview?: WorldQualityReview;
+}
+
+export interface WorldQualityReview {
+  status:'approved'|'needs_review'|'unverified'|'disabled';
+  rounds:number;baselineScore?:number;finalScore?:number;improved:boolean;
+}
+
+function normalizeQualityReview(raw:unknown):WorldQualityReview|undefined {
+  if (!raw || typeof raw!=='object') return undefined;
+  const source=raw as Record<string,unknown>;
+  if (!['approved','needs_review','unverified','disabled'].includes(String(source.status))) return undefined;
+  return {status:source.status as WorldQualityReview['status'],rounds:Math.min(3,Math.max(0,Number(source.rounds)||0)),
+    baselineScore:typeof source.baselineScore==='number'?source.baselineScore:undefined,
+    finalScore:typeof source.finalScore==='number'?source.finalScore:undefined,improved:source.improved===true};
 }
 
 export type InteractionStatus = 'none' | 'queued' | 'processing' | 'ready' | 'partial' | 'failed';
@@ -154,6 +169,7 @@ export function normalizeCase(raw: Record<string, unknown>): GalleryCase | null 
     hasExperience: Boolean(raw.hasExperience),
     hasWorld: Boolean(raw.hasWorld),
     interaction: normalizeInteraction(raw.interaction),
+    qualityReview:normalizeQualityReview(raw.qualityReview),
   };
 }
 

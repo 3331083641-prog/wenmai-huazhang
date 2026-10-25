@@ -321,6 +321,23 @@ def ingest(args) -> int:
     }
     (folder / "ingest-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # Metadata and local assets must exist before the disposable browser reads this case.
+    # A cloud reviewer failure cannot delete a successful generated work or local interactions.
+    if world_ok:
+        from world_quality import review_world,write_json
+        try:
+            quality=review_world(slug,style_id)
+        except Exception as exc:
+            quality={'status':'unverified','rounds':0,'improved':False,'errorType':type(exc).__name__,
+                'note':'画境保留；云端视觉复审未完成，不计作质量通过。'}
+            write_json(folder/'quality-review.json',quality)
+            current_meta=json.loads((folder/'metadata.json').read_text(encoding='utf-8-sig'))
+            current_meta['qualityReview']=quality
+            write_json(folder/'metadata.json',current_meta)
+        report['qualityReview']={key:value for key,value in quality.items() if key not in ('history',)}
+        write_json(folder/'ingest-report.json',report)
+        log('    DeepSeek视觉复审：'+str(quality['status'])+'；轮数 '+str(quality.get('rounds',0)))
+
     log(f"6/6 完成  {slug}  用时 {report['elapsedSec']}s")
     log(f"    三入口：/experience/{slug} · /story/{slug} · /wander/{slug}")
     for warn in report["warnings"]:

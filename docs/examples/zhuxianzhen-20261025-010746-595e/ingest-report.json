@@ -1,7 +1,7 @@
 {
   "slug": "zhuxianzhen-20261025-010746-595e",
   "styleId": "zhuxianzhen",
-  "title": "红鳞游动：金鱼的东方韵律",
+  "title": "红鳞游动：传统年画金鱼的视觉诗篇",
   "image": {
     "width": 1024,
     "height": 1024,
@@ -33,45 +33,45 @@
   "hotspots": [
     {
       "id": "1ef7ec1047be-spot-1",
-      "title": "金鱼头部特写：红白相间的眼与嘴",
-      "x": 0.15,
-      "y": 0.45,
+      "title": "金鱼头部特写：红润鱼眼与橙白渐变鳞片",
+      "x": 0.138,
+      "y": 0.472,
       "status": "approximate"
     },
     {
       "id": "1ef7ec1047be-spot-2",
       "title": "金鱼尾鳍的红色渐变纹理",
-      "x": 0.85,
-      "y": 0.55,
+      "x": 0.783,
+      "y": 0.556,
       "status": "approximate"
     },
     {
       "id": "1ef7ec1047be-spot-3",
-      "title": "天空中的云纹局部",
-      "x": 0.2,
-      "y": 0.2,
+      "title": "水波纹与红花局部",
+      "x": 0.738,
+      "y": 0.897,
       "status": "approximate"
     },
     {
       "id": "1ef7ec1047be-spot-4",
-      "title": "水波纹与红花局部",
-      "x": 0.7,
-      "y": 0.85,
+      "title": "右下角红花与绿叶",
+      "x": 0.878,
+      "y": 0.894,
       "status": "approximate"
     }
   ],
   "chapters": [
     {
       "id": "fold-1",
-      "scale": 1.49
+      "scale": 1.48
     },
     {
       "id": "fold-2",
-      "scale": 1.49
+      "scale": 1.53
     },
     {
       "id": "fold-3",
-      "scale": 1.52
+      "scale": 1.46
     }
   ],
   "world": {
@@ -84,10 +84,11 @@
       "depth-rg.png",
       "masks.png",
       "model-depth-rg.png",
+      "subject-relief.png",
       "surface.webp",
       "world.json"
     ],
-    "bytes": 1409240
+    "bytes": 1518293
   },
   "vlm": {
     "used": true,
@@ -99,5 +100,10 @@
     "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
     "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
   ],
-  "elapsedSec": 54.8
+  "elapsedSec": 9.7,
+  "qualityReview": {
+    "status": "disabled",
+    "rounds": 0,
+    "improved": false
+  }
 }

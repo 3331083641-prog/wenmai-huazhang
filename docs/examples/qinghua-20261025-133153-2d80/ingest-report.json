@@ -1,0 +1,134 @@
+{
+  "slug": "qinghua-20261025-133153-2d80",
+  "styleId": "qinghua",
+  "title": "蓝韵牡丹图",
+  "image": {
+    "width": 1024,
+    "height": 1024,
+    "bytes": 903492
+  },
+  "depth": {
+    "source": "depth-anything-v2-small",
+    "provenance": {
+      "source": "depth-anything-v2-small",
+      "modelUsed": true,
+      "approximate": true,
+      "repository": "depth-anything/Depth-Anything-V2-Small-hf",
+      "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+      "weightsSha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+      "license": "Apache-2.0",
+      "inputImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938"
+    },
+    "nearShare": 0.1445,
+    "farShare": 0.5324,
+    "percentiles": [
+      0.0078,
+      0.0824,
+      0.3294,
+      0.8824,
+      0.9922
+    ],
+    "gamma": 0.72
+  },
+  "hotspots": [
+    {
+      "id": "17bc27c4aa1e-spot-1",
+      "title": "牡丹花心处密集的花蕊结构",
+      "x": 0.5,
+      "y": 0.35,
+      "status": "approximate"
+    },
+    {
+      "id": "17bc27c4aa1e-spot-2",
+      "title": "牡丹花瓣内侧的脉络与边缘轮廓",
+      "x": 0.35,
+      "y": 0.45,
+      "status": "approximate"
+    },
+    {
+      "id": "17bc27c4aa1e-spot-3",
+      "title": "花叶交叠处的叶片细节",
+      "x": 0.7,
+      "y": 0.65,
+      "status": "approximate"
+    },
+    {
+      "id": "17bc27c4aa1e-spot-4",
+      "title": "花茎与叶片连接处的结构细节",
+      "x": 0.5,
+      "y": 0.75,
+      "status": "approximate"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "fold-1",
+      "scale": 1.61
+    },
+    {
+      "id": "fold-2",
+      "scale": 1.61
+    },
+    {
+      "id": "fold-3",
+      "scale": 1.58
+    }
+  ],
+  "world": {
+    "built": true,
+    "files": [
+      "art.webp",
+      "backdrop.webp",
+      "cutout-subject.webp",
+      "depth-preview.png",
+      "depth-rg.png",
+      "masks.png",
+      "model-depth-rg.png",
+      "subject-relief.png",
+      "surface.webp",
+      "world.json"
+    ],
+    "bytes": 1288688
+  },
+  "vlm": {
+    "used": true,
+    "model": "qwen3-vl:4b-instruct-q4_K_M",
+    "inputImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+    "contentSource": "qwen3_vl_image"
+  },
+  "warnings": [
+    "热点为模型自动定位，可直接体验，不冒充人工逐点复核。",
+    "热点与章节来自本图 Qwen3-VL 解析；自动观察和审美解读仍可能有偏差。"
+  ],
+  "elapsedSec": 86.5,
+  "qualityReview": {
+    "schemaVersion": 1,
+    "status": "needs_review",
+    "rounds": 3,
+    "selectedRound": null,
+    "baselineScore": 86.1,
+    "finalScore": null,
+    "improved": false,
+    "stopReason": "round_limit",
+    "errorType": null,
+    "originalManifestBackup": ".cache\\world-review-backups\\qinghua-20261025-133153-2d80\\20261025-133323-787317\\world.json",
+    "scoringNote": "DeepSeek视觉评分是主观评价；程序检查单独保存，不能视为客观准确率。",
+    "caseId": "qinghua-20261025-133153-2d80",
+    "styleId": "qinghua",
+    "roundLimit": 3,
+    "sourceImageSha256": "17bc27c4aa1ebb43017f77c9a1a9542c54b546b628fc459e924c6c0f683ae938",
+    "referenceFingerprint": "5f6df3337d394b5e814dc807bcadad7dd3738042018fc92277e97f8c4ce8d528",
+    "reviewerModel": "deepseek-flash",
+    "reviewerProvider": "official",
+    "dependencyFingerprint": "d68052ef690748c67839c2408dd1bb1e426b92a672f7cfa8d4b3f9a9c554a75d",
+    "selectedManifestSha256": "74363172dd73e0288915fa7830bc6d6d39b328e37542a5e585c38b9597961e01",
+    "policySha256": "d73b6f0d8f8eaad6c86c2913960e82eaf49a03c54ad732a12c0cf67ddf70efad",
+    "completedAt": "2026-10-25T05:34:34.956007+00:00",
+    "requestCount": 3,
+    "usage": {
+      "prompt_tokens": 34247,
+      "completion_tokens": 1642,
+      "total_tokens": 35889
+    }
+  }
+}

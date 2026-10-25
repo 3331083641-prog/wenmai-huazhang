@@ -377,6 +377,13 @@ export default function Gallery() {
                 </div>
 
                 <div className="flex flex-1 flex-col p-5">
+                  {item.qualityReview && item.qualityReview.status!=='disabled' && (
+                    <p className="mb-2 text-xs text-[color:var(--color-ink)]/65" role="status">
+                      {item.qualityReview.status==='approved'?'画境视觉复审通过':
+                        item.qualityReview.status==='needs_review'?'画境仍有待完善项':'画境视觉复审未完成'}
+                      {item.qualityReview.rounds>0?` · ${item.qualityReview.rounds} 轮`:''}
+                    </p>
+                  )}
                   <div className="flex items-start justify-between gap-2.5">
                     <div className="min-w-0">
                       <h2 className="truncate font-serif text-xl sm:text-2xl font-bold text-[color:var(--color-ink)] group-hover:text-[color:var(--color-primary)] transition-colors">
