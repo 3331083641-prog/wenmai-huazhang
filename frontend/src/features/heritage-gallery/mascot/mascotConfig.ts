@@ -1,7 +1,7 @@
 /**
  * 展馆吉祥物「纹纹」的运行参数。
  *
- * 角色本体由 Blender 产出（`public/models/wenmai_mascot_ww.glb`），
+ * 角色本体由 Blender 产出（`public/models/WenWen_v003_gallery.glb`），
  * 这里只放「它在展馆里怎么走、走多快、撞到哪、在哪儿能上楼」这类场景数据，
  * 与角色美术解耦，换模型不用改这里。
  *

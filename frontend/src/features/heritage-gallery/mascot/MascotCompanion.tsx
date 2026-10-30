@@ -107,12 +107,31 @@ function MascotModel({
   onReady: (mixer: THREE.AnimationMixer, actions: Record<string, THREE.AnimationAction>) => void;
 }) {
   const { scene, animations } = useGLTF(MASCOT_MODEL.url);
+  const { gl } = useThree();
   const fit = useMemo(() => computeMascotFit(scene), [scene]);
   const mixer = useMemo(() => new THREE.AnimationMixer(scene), [scene]);
 
   useEffect(() => {
     if (import.meta.env.DEV) describeMascotModel(scene, animations);
   }, [scene, animations]);
+
+  useEffect(() => {
+    const anisotropy = Math.min(8, gl.capabilities.getMaxAnisotropy());
+    scene.traverse((object) => {
+      if (!(object instanceof THREE.Mesh)) return;
+      object.castShadow = true;
+      object.receiveShadow = true;
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      for (const material of materials) {
+        for (const value of Object.values(material)) {
+          if (value instanceof THREE.Texture && value.anisotropy !== anisotropy) {
+            value.anisotropy = anisotropy;
+            value.needsUpdate = true;
+          }
+        }
+      }
+    });
+  }, [scene, gl]);
 
   useEffect(() => {
     const actions: Record<string, THREE.AnimationAction> = {};

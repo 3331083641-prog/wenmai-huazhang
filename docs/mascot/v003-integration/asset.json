@@ -1,0 +1,121 @@
+{
+  "model": "D:\\wenmai-huazhang\\frontend\\public\\models\\WenWen_v003_gallery.glb",
+  "blend": "D:\\wenmai-huazhang\\assets\\mascot\\blender\\WenWen_v003_gallery.blend",
+  "bytes": 27024020,
+  "sha256": "aef7f29cc0f720cae0a2220555559e612b4a5b77a52bec1c492003dd4a2f6d34",
+  "animations": [
+    "Curious",
+    "Happy",
+    "Idle",
+    "Interact",
+    "Run",
+    "Spawn",
+    "Turn",
+    "Walk"
+  ],
+  "skins": 1,
+  "bones": 8,
+  "texture_limit": 1024,
+  "resized_images": [
+    {
+      "name": "cape_basecolor.png",
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "cape_metallic.png",
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "cape_normal.png",
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "cape_roughness.png",
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "fur_basecolor.png",
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "fur_normal.png",
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "fur_roughness.png",
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "porcelain_basecolor.png.001",
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "porcelain_roughness.png",
+      "before": [
+        2048,
+        2048
+      ],
+      "after": [
+        1024,
+        1024
+      ]
+    }
+  ],
+  "note": "In-place basic gallery rig and eight clips; world movement belongs to the existing UI controller."
+}

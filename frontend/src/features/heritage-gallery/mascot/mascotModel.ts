@@ -14,8 +14,8 @@
  *     是「展馆」的属性，不随角色模型变；
  *   - 本文件：角色资产本身的属性（文件、动画、比例、朝向），是「角色」的属性。
  *
- * 当前模型：public/models/wenmai_mascot_ww.glb
- *   实测包围盒 0.474 × 1.000 × 0.472 m（脚底正好在 y=0），动画共 8 条：
+ * 当前模型：public/models/WenWen_v003_gallery.glb
+ *   v003 四足模型，GLB 原始正面 +Z；带展馆基础绑定，动画共 8 条：
  *   Curious / Happy / Idle / Interact / Run / Spawn / Turn / Walk。
  */
 
@@ -48,9 +48,9 @@ export interface MascotModelConfig {
 }
 
 export const MASCOT_MODEL: MascotModelConfig = {
-  url: `${import.meta.env.BASE_URL}models/wenmai_mascot_ww.glb`,
+  url: `${import.meta.env.BASE_URL}models/WenWen_v003_gallery.glb`,
   targetHeight: 1.0,
-  yawOffset: 0,
+  yawOffset: Math.PI,
   groundOffset: 0,
   fitToGround: true,
   clips: {
@@ -112,7 +112,10 @@ export function computeMascotFit(object: THREE.Object3D): MascotFit {
  */
 export async function isMascotModelAvailable(): Promise<boolean> {
   try {
-    const res = await fetch(MASCOT_MODEL.url, { cache: 'no-store' });
+    const res = await fetch(MASCOT_MODEL.url, {
+      cache: 'no-store',
+      headers: { Range: 'bytes=0-3' },
+    });
     if (!res.ok) return false;
     const buf = await res.arrayBuffer();
     if (buf.byteLength < 4) return false;
@@ -141,4 +144,19 @@ export function describeMascotModel(scene: THREE.Object3D, animations: THREE.Ani
     '[mascot] clips',
     animations.map((clip) => clip.name),
   );
+  if (import.meta.env.DEV) {
+    (window as unknown as { __wenwenModel?: unknown }).__wenwenModel = {
+      url: MASCOT_MODEL.url,
+      clips: animations.map((clip) => clip.name),
+      scale: fit.scale,
+      offsetY: fit.offsetY,
+      samplePose: () => {
+        const bones: Record<string, number[]> = {};
+        scene.traverse((object) => {
+          if (object instanceof THREE.Bone) bones[object.name] = object.quaternion.toArray();
+        });
+        return bones;
+      },
+    };
+  }
 }

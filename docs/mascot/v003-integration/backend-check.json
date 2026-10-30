@@ -1,0 +1,10 @@
+{
+  "health": {
+    "http": 200,
+    "status": "ok"
+  },
+  "generate": {
+    "http": 422,
+    "validationOnly": true
+  }
+}

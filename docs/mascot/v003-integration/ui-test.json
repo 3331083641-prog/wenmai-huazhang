@@ -1,0 +1,261 @@
+{
+  "checks": {
+    "spawn": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        -1.2,
+        0.25,
+        1.2
+      ],
+      "yaw": 3.14,
+      "action": "idle",
+      "speed": 0,
+      "floor": 1,
+      "nearestFrame": null,
+      "hasModel": true,
+      "camera": [
+        -0.89,
+        2.6,
+        -1.03
+      ]
+    },
+    "idleAnimated": true,
+    "walk": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        -1.2,
+        0.25,
+        1.4
+      ],
+      "yaw": 3.14,
+      "action": "walk",
+      "speed": 1.15,
+      "floor": 1,
+      "nearestFrame": null,
+      "hasModel": true,
+      "camera": [
+        -1.2,
+        2.6,
+        -0.6
+      ]
+    },
+    "run": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        -1.2,
+        0.25,
+        1.48
+      ],
+      "yaw": 3.14,
+      "action": "run",
+      "speed": 2.07,
+      "floor": 1,
+      "nearestFrame": null,
+      "hasModel": true,
+      "camera": [
+        -1.2,
+        2.6,
+        -0.54
+      ]
+    },
+    "turn": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        -1.2,
+        0.25,
+        1.8
+      ],
+      "yaw": 3.21,
+      "action": "turn",
+      "speed": 0,
+      "floor": 1,
+      "nearestFrame": null,
+      "hasModel": true,
+      "camera": [
+        -1.23,
+        2.6,
+        -0.11
+      ]
+    },
+    "firstPerson": {
+      "active": true,
+      "phase": "ready",
+      "view": "first",
+      "position": [
+        -1.2,
+        0.25,
+        1.8
+      ],
+      "yaw": 3.37,
+      "action": "idle",
+      "speed": 0,
+      "floor": 1,
+      "nearestFrame": null,
+      "hasModel": true,
+      "camera": [
+        -0.31,
+        1.67,
+        2.65
+      ]
+    },
+    "happy": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        -1.2,
+        0.25,
+        1.8
+      ],
+      "yaw": 3.37,
+      "action": "happy",
+      "speed": 0,
+      "floor": 1,
+      "nearestFrame": null,
+      "hasModel": true,
+      "camera": [
+        -1.62,
+        2.59,
+        -0.02
+      ]
+    },
+    "stairA": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        3.03,
+        1.98,
+        3.4
+      ],
+      "yaw": -1.57,
+      "action": "walk",
+      "speed": 0.21,
+      "floor": 2,
+      "nearestFrame": null,
+      "hasModel": true,
+      "camera": [
+        2.28,
+        3.31,
+        3.4
+      ]
+    },
+    "stairB": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        0.38,
+        3.6,
+        2.31
+      ],
+      "yaw": 1.57,
+      "action": "walk",
+      "speed": 0.27,
+      "floor": 2,
+      "nearestFrame": null,
+      "hasModel": true,
+      "camera": [
+        2.36,
+        5.93,
+        2.31
+      ]
+    },
+    "stairDown": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        2.99,
+        1.98,
+        2.31
+      ],
+      "yaw": -1.57,
+      "action": "walk",
+      "speed": 0.24,
+      "floor": 2,
+      "nearestFrame": null,
+      "hasModel": true,
+      "camera": [
+        1.02,
+        4.35,
+        2.31
+      ]
+    },
+    "stairDownA": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        0.19,
+        0.25,
+        3.4
+      ],
+      "yaw": 1.57,
+      "action": "curious",
+      "speed": 0.25,
+      "floor": 1,
+      "nearestFrame": "FRAME_F1_001",
+      "hasModel": true,
+      "camera": [
+        2.16,
+        2.62,
+        3.4
+      ]
+    },
+    "exhibit": {
+      "active": true,
+      "phase": "ready",
+      "view": "third",
+      "position": [
+        -1.2,
+        0.25,
+        3.02
+      ],
+      "yaw": 3.14,
+      "action": "interact",
+      "speed": 0,
+      "floor": 1,
+      "nearestFrame": "FRAME_F1_002",
+      "hasModel": true,
+      "camera": [
+        -1.14,
+        2.6,
+        1.16
+      ]
+    },
+    "exit": true,
+    "respawn": true
+  },
+  "errors": [],
+  "warnings": [],
+  "failedRequests": [],
+  "model": {
+    "url": "/models/WenWen_v003_gallery.glb",
+    "clips": [
+      "Curious",
+      "Happy",
+      "Idle",
+      "Interact",
+      "Run",
+      "Spawn",
+      "Turn",
+      "Walk"
+    ],
+    "scale": 0.7468421541362282,
+    "offsetY": 1.0779097618674979e-15
+  },
+  "webgl": {
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "maxTexture": 16384
+  },
+  "status": "pass"
+}
