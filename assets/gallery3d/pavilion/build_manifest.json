@@ -1,0 +1,2530 @@
+{
+  "building": "文脉·新中式殿堂级水院展馆复合体",
+  "version": "v15",
+  "coordinate_system": {
+    "unit": "meter",
+    "blender_up": "Z",
+    "gltf_up": "Y",
+    "origin": "主殿入口大门正中 / 地面水平线 (0,0,0)",
+    "axis": "+X 东, +Y 殿内(北), -Y 桥引道(南), +Z 上"
+  },
+  "bbox": {
+    "min": [
+      -41.051,
+      -48.446,
+      -3.15
+    ],
+    "max": [
+      41.051,
+      48.446,
+      17.98
+    ],
+    "size": [
+      82.102,
+      96.892,
+      21.13
+    ],
+    "note": "导出网格在 Blender 世界坐标中的包围盒"
+  },
+  "bbox_architecture": [
+    -41.051,
+    -48.446,
+    -3.15,
+    41.051,
+    48.446,
+    17.98
+  ],
+  "mesh_count": 62,
+  "draw_calls": 62,
+  "total_tris": 2589029,
+  "materials": {
+    "roof_dai": {
+      "cn": "宋韵青灰琉璃瓦",
+      "basecolor": "#87949B",
+      "roughness": 0.74,
+      "metallic": 0.02,
+      "texture_size": 2048,
+      "mesh": "MESH_roof_dai",
+      "tris": 557992,
+      "textures": {
+        "basecolor": "textures/roof_dai_basecolor.jpg",
+        "orm": "textures/roof_dai_orm.jpg",
+        "normal": "textures/roof_dai_normal.jpg",
+        "ao": "textures/ao_roof_dai.png"
+      }
+    },
+    "wood_dark": {
+      "cn": "温润金丝楠木",
+      "basecolor": "#8A6A4C",
+      "roughness": 0.58,
+      "metallic": 0.0,
+      "texture_size": 2048,
+      "mesh": "MESH_wood_dark",
+      "tris": 888488,
+      "textures": {
+        "basecolor": "textures/wood_dark_basecolor.jpg",
+        "orm": "textures/wood_dark_orm.jpg",
+        "normal": "textures/wood_dark_normal.jpg",
+        "ao": "textures/ao_wood_dark.png"
+      }
+    },
+    "wood_lite": {
+      "cn": "银杏黄暖木构件",
+      "basecolor": "#C6A87F",
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "texture_size": 2048,
+      "mesh": "MESH_wood_lite",
+      "tris": 77518,
+      "textures": {
+        "basecolor": "textures/wood_lite_basecolor.jpg",
+        "orm": "textures/wood_lite_orm.jpg",
+        "normal": "textures/wood_lite_normal.jpg",
+        "ao": "textures/ao_wood_lite.png"
+      }
+    },
+    "wall_white": {
+      "cn": "羊脂温玉暖白微水泥",
+      "basecolor": "#FBF7EF",
+      "roughness": 0.8,
+      "metallic": 0.0,
+      "texture_size": 2048,
+      "mesh": "MESH_wall_white",
+      "tris": 131000,
+      "textures": {
+        "basecolor": "textures/wall_white_basecolor.jpg",
+        "orm": "textures/wall_white_orm.jpg",
+        "normal": "textures/wall_white_normal.jpg",
+        "ao": "textures/ao_wall_white.png"
+      }
+    },
+    "stone_dark": {
+      "cn": "青灰玄武岩铺装",
+      "basecolor": "#9AA4A8",
+      "roughness": 0.52,
+      "metallic": 0.0,
+      "texture_size": 2048,
+      "mesh": "MESH_stone_dark",
+      "tris": 31246,
+      "textures": {
+        "basecolor": "textures/stone_dark_basecolor.jpg",
+        "orm": "textures/stone_dark_orm.jpg",
+        "normal": "textures/stone_dark_normal.jpg",
+        "ao": "textures/ao_stone_dark.png"
+      }
+    },
+    "stone_lite": {
+      "cn": "汉白玉暖石",
+      "basecolor": "#F2EFE6",
+      "roughness": 0.45,
+      "metallic": 0.0,
+      "texture_size": 1024,
+      "mesh": "MESH_stone_lite",
+      "tris": 137459,
+      "textures": {
+        "basecolor": "textures/stone_lite_basecolor.jpg",
+        "orm": "textures/stone_lite_orm.jpg",
+        "normal": "textures/stone_lite_normal.jpg",
+        "ao": "textures/ao_stone_lite.png"
+      }
+    },
+    "water": {
+      "cn": "澄澈影青水体",
+      "basecolor": "#5FA0B4",
+      "roughness": 0.04,
+      "metallic": 0.05,
+      "texture_size": 1024,
+      "mesh": "MESH_water",
+      "tris": 52,
+      "textures": {
+        "basecolor": "textures/water_basecolor.jpg",
+        "orm": "textures/water_orm.jpg",
+        "normal": "textures/water_normal.jpg",
+        "ao": "textures/ao_water.png"
+      }
+    },
+    "glass": {
+      "cn": "影青透光玉石屏扇",
+      "basecolor": "#B7D2CC",
+      "roughness": 0.12,
+      "metallic": 0.0,
+      "texture_size": 1024,
+      "mesh": "MESH_glass",
+      "tris": 1236,
+      "textures": {
+        "basecolor": "textures/glass_basecolor.jpg",
+        "orm": "textures/glass_orm.jpg",
+        "normal": "textures/glass_normal.jpg",
+        "ao": "textures/ao_glass.png"
+      }
+    },
+    "bronze": {
+      "cn": "宋韵鎏金沉香细部",
+      "basecolor": "#DDB25C",
+      "roughness": 0.35,
+      "metallic": 0.88,
+      "texture_size": 1024,
+      "mesh": "MESH_bronze",
+      "tris": 129194,
+      "textures": {
+        "basecolor": "textures/bronze_basecolor.jpg",
+        "orm": "textures/bronze_orm.jpg",
+        "normal": "textures/bronze_normal.jpg",
+        "ao": "textures/ao_bronze.png"
+      }
+    },
+    "crimson": {
+      "cn": "故宫典雅朱砂大漆",
+      "basecolor": "#C0453A",
+      "roughness": 0.42,
+      "metallic": 0.05,
+      "texture_size": 1024,
+      "mesh": "MESH_crimson",
+      "tris": 85468,
+      "textures": {
+        "basecolor": "textures/crimson_basecolor.jpg",
+        "orm": "textures/crimson_orm.jpg",
+        "normal": "textures/crimson_normal.jpg",
+        "ao": "textures/ao_crimson.png"
+      }
+    },
+    "celadon": {
+      "cn": "宋画青绿彩画·远山",
+      "basecolor": "#5C9A97",
+      "roughness": 0.62,
+      "metallic": 0.0,
+      "texture_size": 1024,
+      "mesh": "MESH_celadon",
+      "tris": 33352,
+      "textures": {
+        "basecolor": "textures/celadon_basecolor.jpg",
+        "orm": "textures/celadon_orm.jpg",
+        "normal": "textures/celadon_normal.jpg",
+        "ao": "textures/ao_celadon.png"
+      }
+    },
+    "mount_far": {
+      "cn": "远景青绿山峦·远层",
+      "basecolor": "#86ADAB",
+      "roughness": 0.95,
+      "metallic": 0.0,
+      "texture_size": 1024,
+      "mesh": "MESH_mount_far",
+      "tris": 768,
+      "textures": {
+        "basecolor": null,
+        "orm": null,
+        "normal": "textures/mount_far_normal.jpg",
+        "ao": "textures/ao_mount_far.png"
+      }
+    },
+    "mount_gold": {
+      "cn": "远山泥金脊线",
+      "basecolor": "#C9A227",
+      "roughness": 0.42,
+      "metallic": 0.55,
+      "texture_size": 512,
+      "mesh": "MESH_mount_gold",
+      "tris": 1520,
+      "textures": {
+        "basecolor": "textures/mount_gold_basecolor.jpg",
+        "orm": "textures/mount_gold_orm.jpg",
+        "normal": "textures/mount_gold_normal.jpg",
+        "ao": "textures/ao_mount_gold.png"
+      }
+    },
+    "lacquer": {
+      "cn": "黑漆匾底",
+      "basecolor": "#0E0B09",
+      "roughness": 0.22,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_lacquer",
+      "tris": 44902,
+      "textures": {
+        "basecolor": "textures/lacquer_basecolor.jpg",
+        "orm": "textures/lacquer_orm.jpg",
+        "normal": "textures/lacquer_normal.jpg",
+        "ao": "textures/ao_lacquer.png"
+      }
+    },
+    "foliage": {
+      "cn": "苍翠罗汉松针叶",
+      "basecolor": "#264B38",
+      "roughness": 0.75,
+      "metallic": 0.0,
+      "texture_size": 1024,
+      "mesh": "MESH_foliage",
+      "tris": 336722,
+      "textures": {
+        "basecolor": "textures/foliage_basecolor.jpg",
+        "orm": "textures/foliage_orm.jpg",
+        "normal": "textures/foliage_normal.jpg",
+        "ao": "textures/ao_foliage.png"
+      }
+    },
+    "pond": {
+      "cn": "暖青灰池底微晶石",
+      "basecolor": "#8A9A96",
+      "roughness": 0.55,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_pond",
+      "tris": 24,
+      "textures": {
+        "basecolor": "textures/pond_basecolor.jpg",
+        "orm": "textures/pond_orm.jpg",
+        "normal": "textures/pond_normal.jpg",
+        "ao": "textures/ao_pond.png"
+      }
+    },
+    "silk": {
+      "cn": "朱红月白丝光织锦",
+      "basecolor": "#C0402F",
+      "roughness": 0.55,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_silk",
+      "tris": 640,
+      "textures": {
+        "basecolor": "textures/silk_basecolor.jpg",
+        "orm": "textures/silk_orm.jpg",
+        "normal": "textures/silk_normal.jpg",
+        "ao": "textures/ao_silk.png"
+      }
+    },
+    "xuan": {
+      "cn": "宣纸绢本画心",
+      "basecolor": "#E7DBC0",
+      "roughness": 0.88,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_xuan",
+      "tris": 360,
+      "textures": {
+        "basecolor": "textures/xuan_basecolor.jpg",
+        "orm": "textures/xuan_orm.jpg",
+        "normal": "textures/xuan_normal.jpg",
+        "ao": "textures/ao_xuan.png"
+      }
+    },
+    "brick": {
+      "cn": "室内暖灰方砖",
+      "basecolor": "#B4A996",
+      "roughness": 0.72,
+      "metallic": 0.0,
+      "texture_size": 1024,
+      "mesh": "MESH_brick",
+      "tris": 60,
+      "textures": {
+        "basecolor": "textures/brick_basecolor.jpg",
+        "orm": "textures/brick_orm.jpg",
+        "normal": "textures/brick_normal.jpg",
+        "ao": "textures/ao_brick.png"
+      }
+    },
+    "lightstrip": {
+      "cn": "洗墙光带（自发光）",
+      "basecolor": "#FFE9C8",
+      "roughness": 0.5,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_lightstrip",
+      "tris": 12,
+      "textures": {
+        "basecolor": "textures/lightstrip_basecolor.jpg",
+        "orm": "textures/lightstrip_orm.jpg",
+        "normal": "textures/lightstrip_normal.jpg",
+        "ao": null
+      }
+    },
+    "silk_raw": {
+      "cn": "素绢生绢",
+      "basecolor": "#EDE6D6",
+      "roughness": 0.72,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_silk_raw",
+      "tris": 10140,
+      "textures": {
+        "basecolor": "textures/silk_raw_basecolor.jpg",
+        "orm": "textures/silk_raw_orm.jpg",
+        "normal": "textures/silk_raw_normal.jpg",
+        "ao": "textures/ao_silk_raw.png"
+      }
+    },
+    "paper_xuan": {
+      "cn": "宣纸连史纸",
+      "basecolor": "#F2EDE0",
+      "roughness": 0.9,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_paper_xuan",
+      "tris": 4988,
+      "textures": {
+        "basecolor": "textures/paper_xuan_basecolor.jpg",
+        "orm": "textures/paper_xuan_orm.jpg",
+        "normal": "textures/paper_xuan_normal.jpg",
+        "ao": "textures/ao_paper_xuan.png"
+      }
+    },
+    "steel": {
+      "cn": "精钢",
+      "basecolor": "#C9CFD4",
+      "roughness": 0.22,
+      "metallic": 1.0,
+      "texture_size": 512,
+      "mesh": "MESH_steel",
+      "tris": 1924,
+      "textures": {
+        "basecolor": "textures/steel_basecolor.jpg",
+        "orm": "textures/steel_orm.jpg",
+        "normal": "textures/steel_normal.jpg",
+        "ao": "textures/ao_steel.png"
+      }
+    },
+    "brass": {
+      "cn": "黄铜",
+      "basecolor": "#B4894A",
+      "roughness": 0.34,
+      "metallic": 1.0,
+      "texture_size": 512,
+      "mesh": "MESH_brass",
+      "tris": 2586,
+      "textures": {
+        "basecolor": "textures/brass_basecolor.jpg",
+        "orm": "textures/brass_orm.jpg",
+        "normal": "textures/brass_normal.jpg",
+        "ao": "textures/ao_brass.png"
+      }
+    },
+    "amber": {
+      "cn": "蜂蜡",
+      "basecolor": "#C6862F",
+      "roughness": 0.42,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_amber",
+      "tris": 3198,
+      "textures": {
+        "basecolor": "textures/amber_basecolor.jpg",
+        "orm": "textures/amber_orm.jpg",
+        "normal": "textures/amber_normal.jpg",
+        "ao": "textures/ao_amber.png"
+      }
+    },
+    "bamboo": {
+      "cn": "竹黄",
+      "basecolor": "#C9B27A",
+      "roughness": 0.62,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_bamboo",
+      "tris": 540,
+      "textures": {
+        "basecolor": "textures/bamboo_basecolor.jpg",
+        "orm": "textures/bamboo_orm.jpg",
+        "normal": "textures/bamboo_normal.jpg",
+        "ao": "textures/ao_bamboo.png"
+      }
+    },
+    "jade": {
+      "cn": "白玉",
+      "basecolor": "#E6EBE2",
+      "roughness": 0.3,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_jade",
+      "tris": 900,
+      "textures": {
+        "basecolor": "textures/jade_basecolor.jpg",
+        "orm": "textures/jade_orm.jpg",
+        "normal": "textures/jade_normal.jpg",
+        "ao": "textures/ao_jade.png"
+      }
+    },
+    "clay_wet": {
+      "cn": "湿泥坯",
+      "basecolor": "#8A6B53",
+      "roughness": 0.3,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_clay_wet",
+      "tris": 13344,
+      "textures": {
+        "basecolor": "textures/clay_wet_basecolor.jpg",
+        "orm": "textures/clay_wet_orm.jpg",
+        "normal": "textures/clay_wet_normal.jpg",
+        "ao": "textures/ao_clay_wet.png"
+      }
+    },
+    "bisque": {
+      "cn": "素坯白胎",
+      "basecolor": "#EDE8DD",
+      "roughness": 0.82,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_bisque",
+      "tris": 25724,
+      "textures": {
+        "basecolor": "textures/bisque_basecolor.jpg",
+        "orm": "textures/bisque_orm.jpg",
+        "normal": "textures/bisque_normal.jpg",
+        "ao": "textures/ao_bisque.png"
+      }
+    },
+    "malachite": {
+      "cn": "孔雀石石绿",
+      "basecolor": "#2E7D5B",
+      "roughness": 0.35,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_malachite",
+      "tris": 2140,
+      "textures": {
+        "basecolor": "textures/malachite_basecolor.jpg",
+        "orm": "textures/malachite_orm.jpg",
+        "normal": "textures/malachite_normal.jpg",
+        "ao": "textures/ao_malachite.png"
+      }
+    },
+    "azurite": {
+      "cn": "蓝铜矿石青",
+      "basecolor": "#1F3F8C",
+      "roughness": 0.35,
+      "metallic": 0.0,
+      "texture_size": 512,
+      "mesh": "MESH_azurite",
+      "tris": 524,
+      "textures": {
+        "basecolor": "textures/azurite_basecolor.jpg",
+        "orm": "textures/azurite_orm.jpg",
+        "normal": "textures/azurite_normal.jpg",
+        "ao": "textures/ao_azurite.png"
+      }
+    },
+    "mineral_ochre": {
+      "cn": "赭石颜料",
+      "basecolor": "#A4613D",
+      "roughness": 0.74,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_mineral_ochre",
+      "tris": 360,
+      "textures": {
+        "basecolor": "textures/mineral_ochre_basecolor.jpg",
+        "orm": "textures/mineral_ochre_orm.jpg",
+        "normal": "textures/mineral_ochre_normal.jpg",
+        "ao": "textures/ao_mineral_ochre.png"
+      }
+    },
+    "thread_deep": {
+      "cn": "深色丝线",
+      "basecolor": "#8E2B33",
+      "roughness": 0.55,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_deep",
+      "tris": 4404,
+      "textures": {
+        "basecolor": "textures/thread_deep_basecolor.jpg",
+        "orm": "textures/thread_deep_orm.jpg",
+        "normal": "textures/thread_deep_normal.jpg",
+        "ao": "textures/ao_thread_deep.png"
+      }
+    },
+    "thread_00": {
+      "cn": "丝线色阶01",
+      "basecolor": "#F0D4B6",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_00",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_00_basecolor.jpg",
+        "orm": "textures/thread_00_orm.jpg",
+        "normal": "textures/thread_00_normal.jpg",
+        "ao": "textures/ao_thread_00.png"
+      }
+    },
+    "thread_01": {
+      "cn": "丝线色阶02",
+      "basecolor": "#EDC9AE",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_01",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_01_basecolor.jpg",
+        "orm": "textures/thread_01_orm.jpg",
+        "normal": "textures/thread_01_normal.jpg",
+        "ao": "textures/ao_thread_01.png"
+      }
+    },
+    "thread_02": {
+      "cn": "丝线色阶03",
+      "basecolor": "#E9BFA6",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_02",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_02_basecolor.jpg",
+        "orm": "textures/thread_02_orm.jpg",
+        "normal": "textures/thread_02_normal.jpg",
+        "ao": "textures/ao_thread_02.png"
+      }
+    },
+    "thread_03": {
+      "cn": "丝线色阶04",
+      "basecolor": "#E6B49E",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_03",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_03_basecolor.jpg",
+        "orm": "textures/thread_03_orm.jpg",
+        "normal": "textures/thread_03_normal.jpg",
+        "ao": "textures/ao_thread_03.png"
+      }
+    },
+    "thread_04": {
+      "cn": "丝线色阶05",
+      "basecolor": "#E2AA96",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_04",
+      "tris": 18484,
+      "textures": {
+        "basecolor": "textures/thread_04_basecolor.jpg",
+        "orm": "textures/thread_04_orm.jpg",
+        "normal": "textures/thread_04_normal.jpg",
+        "ao": "textures/ao_thread_04.png"
+      }
+    },
+    "thread_05": {
+      "cn": "丝线色阶06",
+      "basecolor": "#DF9F8E",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_05",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_05_basecolor.jpg",
+        "orm": "textures/thread_05_orm.jpg",
+        "normal": "textures/thread_05_normal.jpg",
+        "ao": "textures/ao_thread_05.png"
+      }
+    },
+    "thread_06": {
+      "cn": "丝线色阶07",
+      "basecolor": "#DB9486",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_06",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_06_basecolor.jpg",
+        "orm": "textures/thread_06_orm.jpg",
+        "normal": "textures/thread_06_normal.jpg",
+        "ao": "textures/ao_thread_06.png"
+      }
+    },
+    "thread_07": {
+      "cn": "丝线色阶08",
+      "basecolor": "#D88A7E",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_07",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_07_basecolor.jpg",
+        "orm": "textures/thread_07_orm.jpg",
+        "normal": "textures/thread_07_normal.jpg",
+        "ao": "textures/ao_thread_07.png"
+      }
+    },
+    "thread_08": {
+      "cn": "丝线色阶09",
+      "basecolor": "#D47F76",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_08",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_08_basecolor.jpg",
+        "orm": "textures/thread_08_orm.jpg",
+        "normal": "textures/thread_08_normal.jpg",
+        "ao": "textures/ao_thread_08.png"
+      }
+    },
+    "thread_09": {
+      "cn": "丝线色阶10",
+      "basecolor": "#D1756E",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_09",
+      "tris": 16508,
+      "textures": {
+        "basecolor": "textures/thread_09_basecolor.jpg",
+        "orm": "textures/thread_09_orm.jpg",
+        "normal": "textures/thread_09_normal.jpg",
+        "ao": "textures/ao_thread_09.png"
+      }
+    },
+    "thread_10": {
+      "cn": "丝线色阶11",
+      "basecolor": "#CD6A66",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_10",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_10_basecolor.jpg",
+        "orm": "textures/thread_10_orm.jpg",
+        "normal": "textures/thread_10_normal.jpg",
+        "ao": "textures/ao_thread_10.png"
+      }
+    },
+    "thread_11": {
+      "cn": "丝线色阶12",
+      "basecolor": "#CA5F5E",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_11",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_11_basecolor.jpg",
+        "orm": "textures/thread_11_orm.jpg",
+        "normal": "textures/thread_11_normal.jpg",
+        "ao": "textures/ao_thread_11.png"
+      }
+    },
+    "thread_12": {
+      "cn": "丝线色阶13",
+      "basecolor": "#C3585A",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_12",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_12_basecolor.jpg",
+        "orm": "textures/thread_12_orm.jpg",
+        "normal": "textures/thread_12_normal.jpg",
+        "ao": "textures/ao_thread_12.png"
+      }
+    },
+    "thread_13": {
+      "cn": "丝线色阶14",
+      "basecolor": "#B95459",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_13",
+      "tris": 12556,
+      "textures": {
+        "basecolor": "textures/thread_13_basecolor.jpg",
+        "orm": "textures/thread_13_orm.jpg",
+        "normal": "textures/thread_13_normal.jpg",
+        "ao": "textures/ao_thread_13.png"
+      }
+    },
+    "thread_14": {
+      "cn": "丝线色阶15",
+      "basecolor": "#AF5058",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_14",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_14_basecolor.jpg",
+        "orm": "textures/thread_14_orm.jpg",
+        "normal": "textures/thread_14_normal.jpg",
+        "ao": "textures/ao_thread_14.png"
+      }
+    },
+    "thread_15": {
+      "cn": "丝线色阶16",
+      "basecolor": "#A64C57",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_15",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_15_basecolor.jpg",
+        "orm": "textures/thread_15_orm.jpg",
+        "normal": "textures/thread_15_normal.jpg",
+        "ao": "textures/ao_thread_15.png"
+      }
+    },
+    "thread_16": {
+      "cn": "丝线色阶17",
+      "basecolor": "#9C4856",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_16",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_16_basecolor.jpg",
+        "orm": "textures/thread_16_orm.jpg",
+        "normal": "textures/thread_16_normal.jpg",
+        "ao": "textures/ao_thread_16.png"
+      }
+    },
+    "thread_17": {
+      "cn": "丝线色阶18",
+      "basecolor": "#924455",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_17",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_17_basecolor.jpg",
+        "orm": "textures/thread_17_orm.jpg",
+        "normal": "textures/thread_17_normal.jpg",
+        "ao": "textures/ao_thread_17.png"
+      }
+    },
+    "thread_18": {
+      "cn": "丝线色阶19",
+      "basecolor": "#884054",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_18",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_18_basecolor.jpg",
+        "orm": "textures/thread_18_orm.jpg",
+        "normal": "textures/thread_18_normal.jpg",
+        "ao": "textures/ao_thread_18.png"
+      }
+    },
+    "thread_19": {
+      "cn": "丝线色阶20",
+      "basecolor": "#7E3C53",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_19",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_19_basecolor.jpg",
+        "orm": "textures/thread_19_orm.jpg",
+        "normal": "textures/thread_19_normal.jpg",
+        "ao": "textures/ao_thread_19.png"
+      }
+    },
+    "thread_20": {
+      "cn": "丝线色阶21",
+      "basecolor": "#743853",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_20",
+      "tris": 8604,
+      "textures": {
+        "basecolor": "textures/thread_20_basecolor.jpg",
+        "orm": "textures/thread_20_orm.jpg",
+        "normal": "textures/thread_20_normal.jpg",
+        "ao": "textures/ao_thread_20.png"
+      }
+    },
+    "thread_21": {
+      "cn": "丝线色阶22",
+      "basecolor": "#6B3452",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_21",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_21_basecolor.jpg",
+        "orm": "textures/thread_21_orm.jpg",
+        "normal": "textures/thread_21_normal.jpg",
+        "ao": "textures/ao_thread_21.png"
+      }
+    },
+    "thread_22": {
+      "cn": "丝线色阶23",
+      "basecolor": "#613051",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_22",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_22_basecolor.jpg",
+        "orm": "textures/thread_22_orm.jpg",
+        "normal": "textures/thread_22_normal.jpg",
+        "ao": "textures/ao_thread_22.png"
+      }
+    },
+    "thread_23": {
+      "cn": "丝线色阶24",
+      "basecolor": "#572C50",
+      "roughness": 0.48,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_thread_23",
+      "tris": 92,
+      "textures": {
+        "basecolor": "textures/thread_23_basecolor.jpg",
+        "orm": "textures/thread_23_orm.jpg",
+        "normal": "textures/thread_23_normal.jpg",
+        "ao": "textures/ao_thread_23.png"
+      }
+    },
+    "cobalt_0": {
+      "cn": "青料浓度1",
+      "basecolor": "#AFBED3",
+      "roughness": 0.58,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_cobalt_0",
+      "tris": 188,
+      "textures": {
+        "basecolor": "textures/cobalt_0_basecolor.jpg",
+        "orm": "textures/cobalt_0_orm.jpg",
+        "normal": "textures/cobalt_0_normal.jpg",
+        "ao": "textures/ao_cobalt_0.png"
+      }
+    },
+    "cobalt_1": {
+      "cn": "青料浓度2",
+      "basecolor": "#8DA1C2",
+      "roughness": 0.58,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_cobalt_1",
+      "tris": 356,
+      "textures": {
+        "basecolor": "textures/cobalt_1_basecolor.jpg",
+        "orm": "textures/cobalt_1_orm.jpg",
+        "normal": "textures/cobalt_1_normal.jpg",
+        "ao": "textures/ao_cobalt_1.png"
+      }
+    },
+    "cobalt_2": {
+      "cn": "青料浓度3",
+      "basecolor": "#6B84B0",
+      "roughness": 0.58,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_cobalt_2",
+      "tris": 1037,
+      "textures": {
+        "basecolor": "textures/cobalt_2_basecolor.jpg",
+        "orm": "textures/cobalt_2_orm.jpg",
+        "normal": "textures/cobalt_2_normal.jpg",
+        "ao": "textures/ao_cobalt_2.png"
+      }
+    },
+    "cobalt_3": {
+      "cn": "青料浓度4",
+      "basecolor": "#49689F",
+      "roughness": 0.58,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_cobalt_3",
+      "tris": 483,
+      "textures": {
+        "basecolor": "textures/cobalt_3_basecolor.jpg",
+        "orm": "textures/cobalt_3_orm.jpg",
+        "normal": "textures/cobalt_3_normal.jpg",
+        "ao": "textures/ao_cobalt_3.png"
+      }
+    },
+    "cobalt_4": {
+      "cn": "青料浓度5",
+      "basecolor": "#274B8E",
+      "roughness": 0.58,
+      "metallic": 0.0,
+      "texture_size": 256,
+      "mesh": "MESH_cobalt_4",
+      "tris": 188,
+      "textures": {
+        "basecolor": "textures/cobalt_4_basecolor.jpg",
+        "orm": "textures/cobalt_4_orm.jpg",
+        "normal": "textures/cobalt_4_normal.jpg",
+        "ao": "textures/ao_cobalt_4.png"
+      }
+    }
+  },
+  "cameras": {
+    "CAM_Courtyard_Aerial": {
+      "cn": "水院群览",
+      "location": [
+        -62,
+        -94,
+        31
+      ],
+      "look_at": [
+        0,
+        -4,
+        7
+      ],
+      "lens_mm": 34
+    },
+    "CAM_Gate_Front": {
+      "cn": "牌楼金水",
+      "location": [
+        0,
+        -66,
+        2.2
+      ],
+      "look_at": [
+        0,
+        -40,
+        6.4
+      ],
+      "lens_mm": 28
+    },
+    "CAM_Atrium_Grand": {
+      "cn": "主殿藻井",
+      "location": [
+        0,
+        6.6,
+        1.95
+      ],
+      "look_at": [
+        0,
+        9.6,
+        11.2
+      ],
+      "lens_mm": 17
+    },
+    "CAM_Water_Court": {
+      "cn": "水院回望",
+      "location": [
+        0,
+        -12.0,
+        1.75
+      ],
+      "look_at": [
+        0,
+        -40.0,
+        3.0
+      ],
+      "lens_mm": 24
+    },
+    "CAM_Rear_Garden": {
+      "cn": "后苑松石",
+      "location": [
+        0,
+        20.0,
+        1.95
+      ],
+      "look_at": [
+        0,
+        42.0,
+        3.0
+      ],
+      "lens_mm": 24
+    }
+  },
+  "lod": {
+    "note": "单档 PBR，材质级合批；draw call 数 = 材质数"
+  },
+  "web3d": {
+    "up_axis": "+Y (glTF 直出，根节点无旋转)",
+    "origin": "主殿入口大门正中地面水平线 = (0,0,0)，单位为米",
+    "uv_channel_0": "UVMap —— albedo / normal / metallic-roughness 平铺贴图",
+    "uv_channel_1": "UVMap2 —— lightmap_pack 非重叠布局，供 AO 使用",
+    "orm_packing": "单图 R=AO, G=Roughness, B=Metallic；occlusionTexture 指向同一 image、texCoord=1",
+    "camera_nodes": "5 个 Empty 随 GLB 导出，extras 含 look_at(Blender 坐标)/lens_mm/cn；Three.js: scene.getObjectByName('CAM_...')",
+    "css_safe_area": {
+      "sky_top": 0.15,
+      "side_margin": 0.1,
+      "subject_band": [
+        0.3,
+        0.75
+      ],
+      "note": "五个机位构图已按此安全区留白；背景建议透明或 #0b111e→#161e2e 渐变叠加"
+    },
+    "target_fps": 60
+  },
+  "source_blend": "wenmai_master_pavilion.blend",
+  "glb": "wenmai_master_pavilion.glb",
+  "build_seconds": 909.9,
+  "mesh_cleanup": {
+    "removed_degenerate": 3130,
+    "removed_duplicate": 6796
+  },
+  "build_scope": [
+    "site",
+    "gate",
+    "hall",
+    "halls",
+    "crafts",
+    "exhibits"
+  ],
+  "saved_blend": true,
+  "exported_glb": true,
+  "baked_ao": [
+    "amber",
+    "azurite",
+    "bamboo",
+    "bisque",
+    "brass",
+    "brick",
+    "bronze",
+    "celadon",
+    "clay_wet",
+    "cobalt_0",
+    "cobalt_1",
+    "cobalt_2",
+    "cobalt_3",
+    "cobalt_4",
+    "crimson",
+    "foliage",
+    "glass",
+    "jade",
+    "lacquer",
+    "malachite",
+    "mineral_ochre",
+    "mount_far",
+    "mount_gold",
+    "paper_xuan",
+    "pond",
+    "roof_dai",
+    "silk",
+    "silk_raw",
+    "steel",
+    "stone_dark",
+    "stone_lite",
+    "thread_00",
+    "thread_01",
+    "thread_02",
+    "thread_03",
+    "thread_04",
+    "thread_05",
+    "thread_06",
+    "thread_07",
+    "thread_08",
+    "thread_09",
+    "thread_10",
+    "thread_11",
+    "thread_12",
+    "thread_13",
+    "thread_14",
+    "thread_15",
+    "thread_16",
+    "thread_17",
+    "thread_18",
+    "thread_19",
+    "thread_20",
+    "thread_21",
+    "thread_22",
+    "thread_23",
+    "thread_deep",
+    "wall_white",
+    "water",
+    "wood_dark",
+    "wood_lite",
+    "xuan"
+  ],
+  "coordinates": "Blender metres Z-up; glTF converts to Y-up",
+  "nominal_base": {
+    "x": [
+      -40,
+      40
+    ],
+    "y": [
+      -48,
+      48
+    ],
+    "z": [
+      -1.2,
+      0
+    ]
+  },
+  "tolerance_spec_m": {
+    "LIFT": 0.0015,
+    "FLIFT": 0.0025,
+    "SEAM": 0.0035
+  },
+  "contact_audit": {
+    "schema": "v15-contact-review-1",
+    "cross_candidates": 0,
+    "coplanar_candidates": 0,
+    "review_required": 1125,
+    "accepted_contacts": 0,
+    "verified_zero_intersections": false,
+    "report": "v15_overlap.json"
+  },
+  "notes": [
+    "Nominal plinth footprint differs from full geometry bounds including eaves and dragon spouts.",
+    "Contact classes are review hints, not proof that intersections are harmless.",
+    "Craft motifs are original procedural interpretations, not authenticated historical reproductions.",
+    "Craft assemblies are integrated by parts13/crafts.py; independent props exports are not asserted by this manifest.",
+    "Requested dimensional and clearance tolerances require separate measurement evidence."
+  ],
+  "groups": {
+    "GRP_Pavilion_Architecture": {
+      "meshes": [
+        "MESH_stone_dark",
+        "MESH_stone_lite",
+        "MESH_pond",
+        "MESH_water",
+        "MESH_celadon",
+        "MESH_crimson",
+        "MESH_roof_dai",
+        "MESH_bronze",
+        "MESH_wood_dark",
+        "MESH_wood_lite",
+        "MESH_lacquer",
+        "MESH_wall_white",
+        "MESH_glass",
+        "MESH_lightstrip",
+        "MESH_brick",
+        "MESH_foliage",
+        "MESH_paper_xuan",
+        "MESH_mount_gold",
+        "MESH_bamboo",
+        "MESH_silk_raw",
+        "MESH_brass",
+        "MESH_clay_wet",
+        "MESH_bisque",
+        "MESH_steel",
+        "MESH_silk",
+        "MESH_azurite",
+        "MESH_malachite",
+        "MESH_mount_far",
+        "MESH_mineral_ochre",
+        "MESH_jade",
+        "MESH_thread_04",
+        "MESH_thread_09",
+        "MESH_thread_13",
+        "MESH_thread_20",
+        "MESH_thread_deep",
+        "MESH_thread_00",
+        "MESH_thread_01",
+        "MESH_thread_02",
+        "MESH_thread_03",
+        "MESH_thread_05",
+        "MESH_thread_06",
+        "MESH_thread_07",
+        "MESH_thread_08",
+        "MESH_thread_10",
+        "MESH_thread_11",
+        "MESH_thread_12",
+        "MESH_thread_14",
+        "MESH_thread_15",
+        "MESH_thread_16",
+        "MESH_thread_17",
+        "MESH_thread_18",
+        "MESH_thread_19",
+        "MESH_thread_21",
+        "MESH_thread_22",
+        "MESH_thread_23",
+        "MESH_cobalt_2",
+        "MESH_cobalt_1",
+        "MESH_cobalt_0",
+        "MESH_cobalt_3",
+        "MESH_cobalt_4",
+        "MESH_amber",
+        "MESH_xuan"
+      ],
+      "cameras": [
+        "CAM_Courtyard_Aerial",
+        "CAM_Gate_Front",
+        "CAM_Atrium_Grand",
+        "CAM_Water_Court",
+        "CAM_Rear_Garden"
+      ],
+      "anchors": [
+        "FRAME_bianxiu_01",
+        "FRAME_bianxiu_02",
+        "FRAME_bianxiu_03",
+        "FRAME_bianxiu_04",
+        "FRAME_bianxiu_05",
+        "FRAME_bianxiu_05.001",
+        "FRAME_jianzhi_01",
+        "FRAME_jianzhi_02",
+        "FRAME_jianzhi_03",
+        "FRAME_jianzhi_04",
+        "FRAME_jianzhi_05",
+        "FRAME_jianzhi_05.001",
+        "FRAME_qinghua_01",
+        "FRAME_qinghua_02",
+        "FRAME_qinghua_03",
+        "FRAME_qinghua_04",
+        "FRAME_qinghua_05",
+        "FRAME_qinghua_05.001",
+        "FRAME_songhua_01",
+        "FRAME_songhua_02",
+        "FRAME_songhua_03",
+        "FRAME_songhua_04",
+        "FRAME_songhua_05",
+        "FRAME_songhua_05.001",
+        "FRAME_zhuxianzhen_01",
+        "FRAME_zhuxianzhen_02",
+        "FRAME_zhuxianzhen_03",
+        "FRAME_zhuxianzhen_04",
+        "FRAME_zhuxianzhen_05",
+        "FRAME_zhuxianzhen_05.001"
+      ],
+      "snaps": [
+        "SNAP_bianxiu_desk_01",
+        "SNAP_bianxiu_floor_01",
+        "SNAP_bianxiu_floor_02",
+        "SNAP_bianxiu_floor_03",
+        "SNAP_garden_floor_01",
+        "SNAP_garden_floor_02",
+        "SNAP_garden_floor_03",
+        "SNAP_garden_floor_04",
+        "SNAP_jianzhi_desk_01",
+        "SNAP_jianzhi_floor_01",
+        "SNAP_jianzhi_floor_02",
+        "SNAP_jianzhi_floor_03",
+        "SNAP_qinghua_desk_01",
+        "SNAP_qinghua_floor_01",
+        "SNAP_qinghua_floor_02",
+        "SNAP_qinghua_floor_03",
+        "SNAP_songhua_desk_01",
+        "SNAP_songhua_floor_01",
+        "SNAP_songhua_floor_02",
+        "SNAP_songhua_floor_03",
+        "SNAP_zhuxianzhen_desk_01",
+        "SNAP_zhuxianzhen_floor_01",
+        "SNAP_zhuxianzhen_floor_02",
+        "SNAP_zhuxianzhen_floor_03"
+      ]
+    }
+  },
+  "anchors": [
+    {
+      "name": "FRAME_bianxiu_01",
+      "location": [
+        37.705,
+        -31.6,
+        1.9
+      ],
+      "cn": "针经阁·A 类画框 01",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "bianxiu",
+      "slot": "01",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_bianxiu_02",
+      "location": [
+        37.705,
+        -28.4,
+        1.9
+      ],
+      "cn": "针经阁·A 类画框 02",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "bianxiu",
+      "slot": "02",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_bianxiu_03",
+      "location": [
+        32.0,
+        -35.705,
+        1.75
+      ],
+      "cn": "针经阁·B 类画框 03",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "bianxiu",
+      "slot": "03",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_bianxiu_04",
+      "location": [
+        32.0,
+        -24.295,
+        1.75
+      ],
+      "cn": "针经阁·B 类画框 04",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "bianxiu",
+      "slot": "04",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_bianxiu_05",
+      "location": [
+        37.705,
+        -30.0,
+        1.75
+      ],
+      "cn": "针经阁·C 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.08,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "bianxiu",
+      "slot": "05",
+      "cls": "C",
+      "aspect": 1.0,
+      "size": [
+        0.9,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_bianxiu_05.001",
+      "location": [
+        26.295,
+        -27.1,
+        1.75
+      ],
+      "cn": "针经阁·B 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "bianxiu",
+      "slot": "05",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_jianzhi_01",
+      "location": [
+        -21.6,
+        -38.755,
+        1.85
+      ],
+      "cn": "镂金坊·A 类画框 01",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "jianzhi",
+      "slot": "01",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_jianzhi_02",
+      "location": [
+        -18.4,
+        -38.755,
+        1.85
+      ],
+      "cn": "镂金坊·A 类画框 02",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "jianzhi",
+      "slot": "02",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_jianzhi_03",
+      "location": [
+        -25.745,
+        -42.0,
+        1.7
+      ],
+      "cn": "镂金坊·B 类画框 03",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "jianzhi",
+      "slot": "03",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_jianzhi_04",
+      "location": [
+        -14.255,
+        -42.0,
+        1.7
+      ],
+      "cn": "镂金坊·B 类画框 04",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "jianzhi",
+      "slot": "04",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_jianzhi_05",
+      "location": [
+        -20.0,
+        -38.755,
+        1.7
+      ],
+      "cn": "镂金坊·C 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.08,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "jianzhi",
+      "slot": "05",
+      "cls": "C",
+      "aspect": 1.0,
+      "size": [
+        0.9,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_jianzhi_05.001",
+      "location": [
+        -17.3,
+        -45.245,
+        1.7
+      ],
+      "cn": "镂金坊·B 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "jianzhi",
+      "slot": "05",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_qinghua_01",
+      "location": [
+        37.705,
+        -13.6,
+        1.9
+      ],
+      "cn": "素肌堂·A 类画框 01",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "qinghua",
+      "slot": "01",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_qinghua_02",
+      "location": [
+        37.705,
+        -10.4,
+        1.9
+      ],
+      "cn": "素肌堂·A 类画框 02",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "qinghua",
+      "slot": "02",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_qinghua_03",
+      "location": [
+        32.0,
+        -17.705,
+        1.75
+      ],
+      "cn": "素肌堂·B 类画框 03",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "qinghua",
+      "slot": "03",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_qinghua_04",
+      "location": [
+        32.0,
+        -6.295,
+        1.75
+      ],
+      "cn": "素肌堂·B 类画框 04",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "qinghua",
+      "slot": "04",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_qinghua_05",
+      "location": [
+        37.705,
+        -12.0,
+        1.75
+      ],
+      "cn": "素肌堂·C 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.08,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "qinghua",
+      "slot": "05",
+      "cls": "C",
+      "aspect": 1.0,
+      "size": [
+        0.9,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_qinghua_05.001",
+      "location": [
+        26.295,
+        -9.1,
+        1.75
+      ],
+      "cn": "素肌堂·B 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "qinghua",
+      "slot": "05",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_songhua_01",
+      "location": [
+        -37.705,
+        -13.6,
+        1.9
+      ],
+      "cn": "澄怀轩·A 类画框 01",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "songhua",
+      "slot": "01",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_songhua_02",
+      "location": [
+        -37.705,
+        -10.4,
+        1.9
+      ],
+      "cn": "澄怀轩·A 类画框 02",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "songhua",
+      "slot": "02",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_songhua_03",
+      "location": [
+        -32.0,
+        -17.705,
+        1.75
+      ],
+      "cn": "澄怀轩·B 类画框 03",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "songhua",
+      "slot": "03",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_songhua_04",
+      "location": [
+        -32.0,
+        -6.295,
+        1.75
+      ],
+      "cn": "澄怀轩·B 类画框 04",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "songhua",
+      "slot": "04",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_songhua_05",
+      "location": [
+        -37.705,
+        -12.0,
+        1.75
+      ],
+      "cn": "澄怀轩·C 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.08,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "songhua",
+      "slot": "05",
+      "cls": "C",
+      "aspect": 1.0,
+      "size": [
+        0.9,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_songhua_05.001",
+      "location": [
+        -26.295,
+        -9.1,
+        1.75
+      ],
+      "cn": "澄怀轩·B 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "songhua",
+      "slot": "05",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_zhuxianzhen_01",
+      "location": [
+        -37.705,
+        -31.6,
+        1.9
+      ],
+      "cn": "刊木堂·A 类画框 01",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "zhuxianzhen",
+      "slot": "01",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_zhuxianzhen_02",
+      "location": [
+        -37.705,
+        -28.4,
+        1.9
+      ],
+      "cn": "刊木堂·A 类画框 02",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.38,
+        1.78
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "zhuxianzhen",
+      "slot": "02",
+      "cls": "A",
+      "aspect": 1.3333,
+      "size": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "name": "FRAME_zhuxianzhen_03",
+      "location": [
+        -32.0,
+        -35.705,
+        1.75
+      ],
+      "cn": "刊木堂·B 类画框 03",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "zhuxianzhen",
+      "slot": "03",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_zhuxianzhen_04",
+      "location": [
+        -32.0,
+        -24.295,
+        1.75
+      ],
+      "cn": "刊木堂·B 类画框 04",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "zhuxianzhen",
+      "slot": "04",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_zhuxianzhen_05",
+      "location": [
+        -37.705,
+        -30.0,
+        1.75
+      ],
+      "cn": "刊木堂·C 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.08,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "zhuxianzhen",
+      "slot": "05",
+      "cls": "C",
+      "aspect": 1.0,
+      "size": [
+        0.9,
+        0.9
+      ]
+    },
+    {
+      "name": "FRAME_zhuxianzhen_05.001",
+      "location": [
+        -26.295,
+        -27.1,
+        1.75
+      ],
+      "cn": "刊木堂·B 类画框 05",
+      "mount": "wall",
+      "facing": "-Y",
+      "frame_size": [
+        1.68,
+        1.08
+      ],
+      "note": "画框朝 -Y、法线朝 +Z",
+      "style": "zhuxianzhen",
+      "slot": "05",
+      "cls": "B",
+      "aspect": 0.6,
+      "size": [
+        1.5,
+        0.9
+      ]
+    }
+  ],
+  "snap_anchors": [
+    {
+      "name": "SNAP_bianxiu_desk_01",
+      "location": [
+        32.0,
+        -30.0,
+        1.252
+      ],
+      "cn": "针经阁·针经阁·主案",
+      "hall": "bianxiu",
+      "kind": "desk",
+      "limit": "bianxiu",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_bianxiu_floor_01",
+      "location": [
+        29.426,
+        -32.288,
+        0.202
+      ],
+      "cn": "针经阁·室内地面 01",
+      "hall": "bianxiu",
+      "kind": "floor",
+      "limit": "bianxiu",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_bianxiu_floor_02",
+      "location": [
+        34.574,
+        -32.288,
+        0.202
+      ],
+      "cn": "针经阁·室内地面 02",
+      "hall": "bianxiu",
+      "kind": "floor",
+      "limit": "bianxiu",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_bianxiu_floor_03",
+      "location": [
+        32.0,
+        -27.426,
+        0.202
+      ],
+      "cn": "针经阁·室内地面 03",
+      "hall": "bianxiu",
+      "kind": "floor",
+      "limit": "bianxiu",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_garden_floor_01",
+      "location": [
+        16.0,
+        -8.0,
+        0.002
+      ],
+      "cn": "庭院·台面 01",
+      "hall": "garden",
+      "kind": "floor",
+      "limit": "garden",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_garden_floor_02",
+      "location": [
+        -16.0,
+        -8.0,
+        0.002
+      ],
+      "cn": "庭院·台面 02",
+      "hall": "garden",
+      "kind": "floor",
+      "limit": "garden",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_garden_floor_03",
+      "location": [
+        16.0,
+        24.0,
+        0.002
+      ],
+      "cn": "庭院·台面 03",
+      "hall": "garden",
+      "kind": "floor",
+      "limit": "garden",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_garden_floor_04",
+      "location": [
+        -16.0,
+        24.0,
+        0.002
+      ],
+      "cn": "庭院·台面 04",
+      "hall": "garden",
+      "kind": "floor",
+      "limit": "garden",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_jianzhi_desk_01",
+      "location": [
+        -20.0,
+        -42.0,
+        0.932
+      ],
+      "cn": "镂金坊·镂金坊·主案",
+      "hall": "jianzhi",
+      "kind": "desk",
+      "limit": "jianzhi",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_jianzhi_floor_01",
+      "location": [
+        -22.592,
+        -43.304,
+        0.152
+      ],
+      "cn": "镂金坊·室内地面 01",
+      "hall": "jianzhi",
+      "kind": "floor",
+      "limit": "jianzhi",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_jianzhi_floor_02",
+      "location": [
+        -17.408,
+        -43.304,
+        0.152
+      ],
+      "cn": "镂金坊·室内地面 02",
+      "hall": "jianzhi",
+      "kind": "floor",
+      "limit": "jianzhi",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_jianzhi_floor_03",
+      "location": [
+        -20.0,
+        -40.533,
+        0.152
+      ],
+      "cn": "镂金坊·室内地面 03",
+      "hall": "jianzhi",
+      "kind": "floor",
+      "limit": "jianzhi",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_qinghua_desk_01",
+      "location": [
+        32.0,
+        -12.0,
+        1.062
+      ],
+      "cn": "素肌堂·素肌堂·主案",
+      "hall": "qinghua",
+      "kind": "desk",
+      "limit": "qinghua",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_qinghua_floor_01",
+      "location": [
+        29.426,
+        -14.288,
+        0.202
+      ],
+      "cn": "素肌堂·室内地面 01",
+      "hall": "qinghua",
+      "kind": "floor",
+      "limit": "qinghua",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_qinghua_floor_02",
+      "location": [
+        34.574,
+        -14.288,
+        0.202
+      ],
+      "cn": "素肌堂·室内地面 02",
+      "hall": "qinghua",
+      "kind": "floor",
+      "limit": "qinghua",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_qinghua_floor_03",
+      "location": [
+        32.0,
+        -9.426,
+        0.202
+      ],
+      "cn": "素肌堂·室内地面 03",
+      "hall": "qinghua",
+      "kind": "floor",
+      "limit": "qinghua",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_songhua_desk_01",
+      "location": [
+        -32.0,
+        -12.0,
+        1.082
+      ],
+      "cn": "澄怀轩·澄怀轩·主案",
+      "hall": "songhua",
+      "kind": "desk",
+      "limit": "songhua",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_songhua_floor_01",
+      "location": [
+        -34.574,
+        -14.288,
+        0.202
+      ],
+      "cn": "澄怀轩·室内地面 01",
+      "hall": "songhua",
+      "kind": "floor",
+      "limit": "songhua",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_songhua_floor_02",
+      "location": [
+        -29.426,
+        -14.288,
+        0.202
+      ],
+      "cn": "澄怀轩·室内地面 02",
+      "hall": "songhua",
+      "kind": "floor",
+      "limit": "songhua",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_songhua_floor_03",
+      "location": [
+        -32.0,
+        -9.426,
+        0.202
+      ],
+      "cn": "澄怀轩·室内地面 03",
+      "hall": "songhua",
+      "kind": "floor",
+      "limit": "songhua",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_zhuxianzhen_desk_01",
+      "location": [
+        -32.0,
+        -30.0,
+        1.062
+      ],
+      "cn": "刊木堂·刊木堂·主案",
+      "hall": "zhuxianzhen",
+      "kind": "desk",
+      "limit": "zhuxianzhen",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_zhuxianzhen_floor_01",
+      "location": [
+        -34.574,
+        -32.288,
+        0.202
+      ],
+      "cn": "刊木堂·室内地面 01",
+      "hall": "zhuxianzhen",
+      "kind": "floor",
+      "limit": "zhuxianzhen",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_zhuxianzhen_floor_02",
+      "location": [
+        -29.426,
+        -32.288,
+        0.202
+      ],
+      "cn": "刊木堂·室内地面 02",
+      "hall": "zhuxianzhen",
+      "kind": "floor",
+      "limit": "zhuxianzhen",
+      "note": "正向朝 +Z"
+    },
+    {
+      "name": "SNAP_zhuxianzhen_floor_03",
+      "location": [
+        -32.0,
+        -27.426,
+        0.202
+      ],
+      "cn": "刊木堂·室内地面 03",
+      "hall": "zhuxianzhen",
+      "kind": "floor",
+      "limit": "zhuxianzhen",
+      "note": "正向朝 +Z"
+    }
+  ],
+  "halls": [
+    {
+      "id": "main",
+      "cn": "天章殿 · 主殿",
+      "style": "",
+      "center": [
+        0.0,
+        9.0
+      ],
+      "half": [
+        13.0,
+        9.0
+      ]
+    },
+    {
+      "id": "zhuxianzhen",
+      "cn": "刊木堂 · 年画",
+      "style": "zhuxianzhen",
+      "center": [
+        -32.0,
+        -30.0
+      ],
+      "half": [
+        6.0,
+        6.0
+      ]
+    },
+    {
+      "id": "songhua",
+      "cn": "澄怀轩 · 宋画",
+      "style": "songhua",
+      "center": [
+        -32.0,
+        -12.0
+      ],
+      "half": [
+        6.0,
+        6.0
+      ]
+    },
+    {
+      "id": "bianxiu",
+      "cn": "针经阁 · 汴绣",
+      "style": "bianxiu",
+      "center": [
+        32.0,
+        -30.0
+      ],
+      "half": [
+        6.0,
+        6.0
+      ]
+    },
+    {
+      "id": "qinghua",
+      "cn": "素肌堂 · 青花",
+      "style": "qinghua",
+      "center": [
+        32.0,
+        -12.0
+      ],
+      "half": [
+        6.0,
+        6.0
+      ]
+    },
+    {
+      "id": "jianzhi",
+      "cn": "镂金坊 · 剪纸",
+      "style": "jianzhi",
+      "center": [
+        -20.0,
+        -42.0
+      ],
+      "half": [
+        6.0,
+        3.5
+      ]
+    }
+  ],
+  "teleports": [
+    {
+      "id": "gate",
+      "cn": "牌楼 · 金水桥",
+      "loc": [
+        0.0,
+        -62.0,
+        1.65
+      ],
+      "look": [
+        0.0,
+        -44.0,
+        4.5
+      ]
+    },
+    {
+      "id": "courtyard",
+      "cn": "水院 · 丹陛",
+      "loc": [
+        0.0,
+        -8.0,
+        1.65
+      ],
+      "look": [
+        0.0,
+        4.0,
+        5.0
+      ]
+    },
+    {
+      "id": "bianxiu",
+      "cn": "针经阁 · 汴绣",
+      "loc": [
+        25.0,
+        -30.0,
+        1.65
+      ],
+      "look": [
+        33.0,
+        -30.0,
+        1.2
+      ]
+    },
+    {
+      "id": "songhua",
+      "cn": "澄怀轩 · 宋画",
+      "loc": [
+        -25.0,
+        -12.0,
+        1.65
+      ],
+      "look": [
+        -33.0,
+        -12.0,
+        1.2
+      ]
+    },
+    {
+      "id": "qinghua",
+      "cn": "素肌堂 · 青花",
+      "loc": [
+        25.0,
+        -12.0,
+        1.65
+      ],
+      "look": [
+        33.0,
+        -12.0,
+        1.2
+      ]
+    },
+    {
+      "id": "zhuxianzhen",
+      "cn": "刊木堂 · 年画",
+      "loc": [
+        -25.0,
+        -30.0,
+        1.65
+      ],
+      "look": [
+        -33.0,
+        -30.0,
+        1.2
+      ]
+    },
+    {
+      "id": "jianzhi",
+      "cn": "镂金坊 · 剪纸",
+      "loc": [
+        -20.0,
+        -37.2,
+        1.8
+      ],
+      "look": [
+        -20.0,
+        -43.0,
+        1.2
+      ]
+    }
+  ]
+}

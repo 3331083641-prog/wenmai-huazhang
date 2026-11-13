@@ -1,0 +1,118 @@
+{
+  "version": "v15",
+  "meshes": 62,
+  "materials": 62,
+  "triangles": 2589029,
+  "blend_bbox_z_up": [
+    [
+      -41.050682067871094,
+      -48.44550323486328,
+      -3.1500000953674316
+    ],
+    [
+      41.050682067871094,
+      48.44550323486328,
+      17.979896545410156
+    ]
+  ],
+  "glb_bbox_y_up": [
+    [
+      -41.050682067871094,
+      -3.1500000953674316,
+      -48.44550323486328
+    ],
+    [
+      41.050682067871094,
+      17.979896545410156,
+      48.44550323486328
+    ]
+  ],
+  "embedded_images": 184,
+  "image_formats": {
+    "image/jpeg": 184
+  },
+  "texture_files": 184,
+  "baked_ao": 61,
+  "frames": 30,
+  "snaps": 24,
+  "cameras": 5,
+  "teleports": 7,
+  "ground": 0,
+  "triangles_by_material": {
+    "amber": 3198,
+    "azurite": 524,
+    "bamboo": 540,
+    "bisque": 25724,
+    "brass": 2586,
+    "brick": 60,
+    "bronze": 129194,
+    "celadon": 33352,
+    "clay_wet": 13344,
+    "cobalt_0": 188,
+    "cobalt_1": 356,
+    "cobalt_2": 1037,
+    "cobalt_3": 483,
+    "cobalt_4": 188,
+    "crimson": 85468,
+    "foliage": 336722,
+    "glass": 1236,
+    "jade": 900,
+    "lacquer": 44902,
+    "lightstrip": 12,
+    "malachite": 2140,
+    "mineral_ochre": 360,
+    "mount_far": 768,
+    "mount_gold": 1520,
+    "paper_xuan": 4988,
+    "pond": 24,
+    "roof_dai": 557992,
+    "silk": 640,
+    "silk_raw": 10140,
+    "steel": 1924,
+    "stone_dark": 31246,
+    "stone_lite": 137459,
+    "thread_00": 92,
+    "thread_01": 92,
+    "thread_02": 92,
+    "thread_03": 92,
+    "thread_04": 18484,
+    "thread_05": 92,
+    "thread_06": 92,
+    "thread_07": 92,
+    "thread_08": 92,
+    "thread_09": 16508,
+    "thread_10": 92,
+    "thread_11": 92,
+    "thread_12": 92,
+    "thread_13": 12556,
+    "thread_14": 92,
+    "thread_15": 92,
+    "thread_16": 92,
+    "thread_17": 92,
+    "thread_18": 92,
+    "thread_19": 92,
+    "thread_20": 8604,
+    "thread_21": 92,
+    "thread_22": 92,
+    "thread_23": 92,
+    "thread_deep": 4404,
+    "wall_white": 131000,
+    "water": 52,
+    "wood_dark": 888488,
+    "wood_lite": 77518,
+    "xuan": 360
+  },
+  "mesh_cleanup": {
+    "removed_degenerate": 3130,
+    "removed_duplicate": 6796
+  },
+  "file_bytes": {
+    "blend": 107863011,
+    "glb": 360051900
+  },
+  "sha256": {
+    "wenmai_master_pavilion.blend": "82f78bdd3e2d69dcebeb9d305c53718f05c7191e09d73636d129adb48e0a718c",
+    "wenmai_master_pavilion.glb": "084cfdb1fceb831addd880c0940248ae9626e0be357b51f0b452583a7fc183f3",
+    "build_manifest.json": "37b506c1d96af57340a0c7d8e7b434267d8470c5e048fbe7138f0f1bebb97cee"
+  }
+}
