@@ -80,14 +80,16 @@ flowchart LR
 
 支持明信片、海报、帆布袋、书签、杯垫、手机分享图、展陈屏与纪念票八类载体，提供版式预览和 **1600×1200 PNG** 输出；文化说明卡可导出 **1080×1440 PNG**。预览用于设计探索，不等于实物生产或印前交付文件。
 
-[![文创载体与实际导出界面](docs/screenshots/current/creative-products.jpg)](docs/screenshots/current/creative-products.jpg)
+| 文创载体与打样界面 | 纯净版文化说明卡导出 (1080×1440) |
+|:---:|:---:|
+| [![文创载体与实际导出界面](docs/screenshots/current/creative-products.jpg)](docs/screenshots/current/creative-products.jpg) | [![纯净版文化说明卡导出](docs/screenshots/current/culture-card.jpg)](docs/screenshots/current/culture-card.jpg) |
 
 <details>
 <summary>六组应用场景与六大动态能力矩阵</summary>
 
-| 应用场景 | 关于项目 |
+| 应用场景（环幕沉浸空间与动效优化） | 关于项目（Qwen3-VL 视觉理解与纯净文化卡） |
 |:---:|:---:|
-| [![六组场景中的展陈板块](docs/screenshots/current/scenarios.jpg)](docs/screenshots/current/scenarios.jpg) | [![可展开的六大能力矩阵](docs/screenshots/current/about-gallery-capability.jpg)](docs/screenshots/current/about-gallery-capability.jpg) |
+| [![六组场景中的展陈板块](docs/screenshots/current/scenarios.jpg)](docs/screenshots/current/scenarios.jpg) | [![关于项目与工程链路](docs/screenshots/current/about.jpg)](docs/screenshots/current/about.jpg) |
 
 应用场景包括数字展馆、美育研学、文创器物、创作工坊、互动导览和线上传播。场景页部分配图是 AI 概念素材，表示应用构想，不是已部署的实体场馆或商品照片。界面排版与动态交互继续沿用 Antigravity 成果。
 

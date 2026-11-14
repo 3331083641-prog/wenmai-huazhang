@@ -10,21 +10,6 @@ import {
   Smartphone,
   Sparkles,
   ArrowRight,
-  Compass,
-  Frame,
-  Palette,
-  Layers,
-  FileText,
-  Package,
-  Coffee,
-  Scissors,
-  SlidersHorizontal,
-  ShieldCheck,
-  Search,
-  Scroll,
-  Move3d,
-  Share2,
-  Flame,
   CheckCircle2,
   type LucideIcon,
 } from 'lucide-react';
@@ -32,10 +17,13 @@ import {
 import { uiPreviews } from '../data/uiPreviews';
 import { TiltCard } from '../components/scenarios/TiltCard';
 import { LiveCreatorSandbox } from '../components/scenarios/LiveCreatorSandbox';
-import { InteractiveHotspotStage } from '../components/scenarios/InteractiveHotspotStage';
 import { CultureCardDeck } from '../components/scenarios/CultureCardDeck';
 
-const { products: productShot } = uiPreviews;
+const {
+  experience: experienceShot,
+  story: storyShot,
+  paintingWorld: wanderShot,
+} = uiPreviews;
 
 type FeatureBadge = {
   label: string;
@@ -64,7 +52,7 @@ type Scenario = {
   shot?: string;
   alt?: string;
   tabs?: ScenarioTab[];
-  customRenderer?: 'creator' | 'hotspots' | 'culture-card';
+  customRenderer?: 'creator' | 'culture-card';
 };
 
 const SCENARIOS: Scenario[] = [
@@ -86,18 +74,18 @@ const SCENARIOS: Scenario[] = [
     cta: '漫游三维展馆',
     tabs: [
       {
-        id: '3d-dusk',
-        label: '3D 展馆暮色水院',
-        shot: import.meta.env.BASE_URL + 'scenarios/heritage-dusk.jpg',
-        alt: '纹脉展馆暮色光影：五馆水院倒影与中式暖阳夜景',
-        badge: 'Three.js 暮色光影实景',
-      },
-      {
         id: 'screen-concept',
         label: '数字环幕沉浸空间',
         shot: import.meta.env.BASE_URL + 'scenarios/museum-screen-concept.jpg',
         alt: '现代顶级美术馆沉浸式数字艺术展厅全景（宋画青绿山水）',
         badge: '曲面大屏空间展陈构想',
+      },
+      {
+        id: '3d-dusk',
+        label: '3D 展馆暮色水院',
+        shot: import.meta.env.BASE_URL + 'scenarios/heritage-dusk.jpg',
+        alt: '纹脉展馆暮色光影：五馆水院倒影与中式暖阳夜景',
+        badge: 'Three.js 暮色光影实景',
       },
       {
         id: '3d-gallery',
@@ -134,10 +122,10 @@ const SCENARIOS: Scenario[] = [
     title: '文博衍生与实体器物打样',
     subtitle: 'CREATIVE DERIVATIVES · 物理比例与工艺还原',
     summary:
-      '打通从数字画作到生活实物美学的完整链路。内置 8 类文创载体真实物理比例与材质贴图，智能排版材质光影，从节日礼盒到茶席器物，一键导出 1600×1200 生产级打样图。',
+      '打通从数字画作到生活实物美学的完整链路。内置各类文创载体真实物理比例与材质贴图，智能排版材质光影，从节日礼盒到茶席器物，一键导出 1600×1200 生产级打样图。',
     badges: [
-      { label: '8 类文创载体比例', detail: '伴手礼盒、茶具、扇面、瓷器等' },
-      { label: '真实材质质感渲染', detail: '特种纸烫金、真丝双面绣透光与釉面光泽' },
+      { label: '实物文创载体比例', detail: '伴手礼盒、茶道器物、真丝扇面等' },
+      { label: '真实材质质感渲染', detail: '特种纸烫金、真丝双面绣透光与陶瓷光泽' },
       { label: '生产级高清打样导出', detail: '1600×1200 高清预览便于打样生产' },
     ],
     to: '/products',
@@ -163,13 +151,6 @@ const SCENARIOS: Scenario[] = [
         shot: import.meta.env.BASE_URL + 'scenarios/product-embroidery-lifestyle.jpg',
         alt: '宋代汴绣双面绣丝绸真丝团扇与长巾',
         badge: '丝织非遗打样概念',
-      },
-      {
-        id: 'studio-live',
-        label: '工坊多载体排版',
-        shot: productShot,
-        alt: '文创转化工坊：多载体排版与效果预览',
-        badge: '8 类载体实时排版',
       },
     ],
   },
@@ -207,7 +188,29 @@ const SCENARIOS: Scenario[] = [
     ],
     to: '/experience/zhuxianzhen-ruimao',
     cta: '体验深度赏析',
-    customRenderer: 'hotspots',
+    tabs: [
+      {
+        id: 'hotspot-view',
+        label: '画中有话 · 热点',
+        shot: experienceShot,
+        alt: '画中有话：朱仙镇年画热点解读界面',
+        badge: '微观热点视觉解读',
+      },
+      {
+        id: 'story-view',
+        label: '一图一境 · 长卷',
+        shot: storyShot,
+        alt: '一图一境：三折图文长卷阅读界面',
+        badge: '三折图文阅读长卷',
+      },
+      {
+        id: 'wander-view',
+        label: '画境漫游 · 2.5D',
+        shot: wanderShot,
+        alt: '画境漫游：2.5D 分层深度视差漫游界面',
+        badge: '2.5D 深度视差漫游',
+      },
+    ],
   },
   {
     id: 'social-dissemination',
@@ -240,8 +243,9 @@ const SCENARIOS: Scenario[] = [
 export default function Scenarios() {
   const shouldReduceMotion = useReducedMotion();
   const [activeTabs, setActiveTabs] = useState<Record<string, string>>({
-    'museum-exhibition': '3d-dusk',
+    'museum-exhibition': 'screen-concept',
     'creative-products': 'box-concept',
+    'interactive-guide': 'hotspot-view',
     'social-dissemination': 'mobile-sky',
   });
 
@@ -348,13 +352,10 @@ export default function Scenarios() {
                 {/* 针对智能创作工坊：使用实时多模态沙盒 */}
                 {item.customRenderer === 'creator' && <LiveCreatorSandbox />}
 
-                {/* 针对多维深度赏析：使用微观热点+长卷+2.5D综合交互台 */}
-                {item.customRenderer === 'hotspots' && <InteractiveHotspotStage />}
-
                 {/* 针对美育研学：使用无损高清知识卡展开台 */}
                 {item.customRenderer === 'culture-card' && <CultureCardDeck />}
 
-                {/* 常规场景：使用 TiltCard 3D 悬浮视差画框 */}
+                {/* 常规场景（含 01 空间展陈、03 生活美学、05 深度导览真实截图、06 移动日签）：使用 TiltCard 3D 悬浮视差画框 */}
                 {!item.customRenderer && (
                   <TiltCard className="aspect-[16/10] group">
                     {/* 顶部多角度切换标签 */}

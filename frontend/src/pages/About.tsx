@@ -108,8 +108,13 @@ const CAPABILITIES: CapabilityItem[] = [
       '精美排版 CultureCard 说明卡，支持一键高清保存与设计评估',
     ],
     badges: ['Ollama 本地部署', 'Qwen3-VL 4B', '自动化特征提取', 'CultureCard 导出'],
-    image: cultureCardShot,
-    alt: 'CultureCard 文化说明卡',
+    image: '/culture_card_pure.png',
+    alt: 'CultureCard 文化说明卡纯图',
+    subShots: [
+      { label: '朱仙镇年画卡', img: '/culture_card_zhuxianzhen.png' },
+      { label: '宋画青绿卡', img: '/culture_card_songhua.png' },
+      { label: '开封汴绣卡', img: '/culture_card_bianxiu.png' },
+    ],
     to: '/creator',
     cta: '探索文化解读',
     accentColor: '#C5A059',
@@ -679,16 +684,24 @@ export default function About() {
               <div className="grid md:grid-cols-12 gap-6 items-center my-auto">
                 {/* 左侧：代表性大图视觉 */}
                 <div className="md:col-span-6 space-y-3">
-                  <div className="aspect-[16/10] rounded-2xl overflow-hidden border border-black/10 shadow-md relative bg-black/5 chinese-border">
+                  <div
+                    className={`rounded-2xl overflow-hidden border border-black/10 shadow-md relative bg-[#FAF6EE] chinese-border ${
+                      activeCap.id === 2
+                        ? 'aspect-[3/4] max-h-[360px] mx-auto flex items-center justify-center p-1.5'
+                        : 'aspect-[16/10]'
+                    }`}
+                  >
                     <motion.img
                       layoutId={`card-img-${activeCap.id}`}
                       src={selectedSubShot || activeCap.image}
                       alt={activeCap.alt}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
+                      className={`w-full h-full ${
+                        activeCap.id === 2 ? 'object-contain' : 'object-cover object-top'
+                      } transition-transform duration-500 hover:scale-[1.03]`}
                     />
                     <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs text-[10.5px] text-white/90 font-serif flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      运行实景截屏
+                      {activeCap.id === 2 ? '文化说明卡纯图' : '运行实景截屏'}
                     </div>
                   </div>
 
