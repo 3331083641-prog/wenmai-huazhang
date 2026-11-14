@@ -1,3 +1,4 @@
+import { projectBrand } from '../data/projectBrand';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Download, LoaderCircle, ShoppingBag, Frame, Smartphone, MonitorPlay, Ticket } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -73,7 +74,7 @@ const renderProductExport = async (productId: string, imageUrl: string, productN
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = '#9e241b';
   ctx.font = '600 26px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
-  ctx.fillText('纹脉华章', 72, 76);
+  ctx.fillText(projectBrand.name, 72, 76);
   ctx.textAlign = 'right';
   ctx.fillStyle = '#796c5c';
   ctx.font = '400 18px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
@@ -387,7 +388,7 @@ export default function ProductStudio() {
       const objectUrl = URL.createObjectURL(png);
       const anchor = document.createElement('a');
       anchor.href = objectUrl;
-      anchor.download = `wenmai_${id}_${fileTimestamp()}.png`;
+      anchor.download = `${projectBrand.filePrefix}_${id}_${fileTimestamp()}.png`;
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();

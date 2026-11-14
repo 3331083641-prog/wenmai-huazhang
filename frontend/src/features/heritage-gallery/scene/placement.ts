@@ -41,7 +41,7 @@ const HANG_MIN_Y = 2.35;
 const HANG_MAX_Y = 7.6;
 
 /** 落点允许范围：建筑外轮廓 + 一圈檐口 */
-const HANG_BOUNDS = { x: 4.7, z: 4.5 };
+const HANG_BOUNDS = { x: 39, z: 47 };
 
 /**
  * 可以挂东西的构件名称。
@@ -52,6 +52,7 @@ const HANG_BOUNDS = { x: 4.7, z: 4.5 };
  */
 function isHangCarrier(name: string): boolean {
   if (!name) return false;
+  if (/^MESH_wood_(lite|dark)$/.test(name)) return true;
   if (/BEAM|JOIST|PURLIN|RAFTER/i.test(name)) return true;
   return /^ROOF_/i.test(name);
 }

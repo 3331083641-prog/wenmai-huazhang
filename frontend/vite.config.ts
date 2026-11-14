@@ -2,11 +2,19 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
+import {projectBrand} from './src/data/projectBrand';
 
 export default defineConfig(() => {
   return {
     base: process.env.VITE_PUBLIC_BASE || '/',
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      {
+        name: 'project-brand',
+        transformIndexHtml: (html) => html.replaceAll('%PROJECT_FULL_NAME%', projectBrand.fullName),
+      },
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

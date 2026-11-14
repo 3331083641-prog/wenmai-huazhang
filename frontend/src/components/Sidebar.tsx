@@ -1,3 +1,4 @@
+import { projectBrand } from '../data/projectBrand';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { Leaf, Home, Palette, Wand2, Archive, FolderHeart, Info } from 'lucide-react';
@@ -18,7 +19,7 @@ export default function Sidebar() {
       <div className="h-20 flex items-center px-6 border-b border-primary/20">
         <Link to="/" className="flex items-center gap-2 text-gold">
           <Leaf className="w-7 h-7" />
-          <span className="font-serif font-bold text-xl tracking-widest">纹脉华章</span>
+          <span className="font-serif font-bold text-xl tracking-widest">{projectBrand.name}</span>
         </Link>
       </div>
 

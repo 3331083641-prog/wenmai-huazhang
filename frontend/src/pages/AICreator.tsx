@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
 import { ImagePlus, Download, ArrowRight, Wand2, RefreshCw, RotateCw, Crop, ZoomIn, ZoomOut, Check } from 'lucide-react';
 import { STYLES } from '../data/styleLibrary';
+import { projectBrand } from '../data/projectBrand';
 import { BackendHealth, buildLocalCultureCard, checkBackendHealth, generateImage, GeneratePayload, GenerateResponse } from '../services/generationService';
 import CultureCard from '../components/creator/CultureCard';
 
@@ -367,7 +368,7 @@ export default function AICreator() {
       const anchor = document.createElement('a');
       anchor.href = objectUrl;
       const styleSlug = (resultPayload?.style || 'traditional').replace(/[^a-z0-9_-]/gi, '_');
-      anchor.download = `wenmai_generated_${styleSlug}_${filenameTimestamp()}.png`;
+      anchor.download = `${projectBrand.filePrefix}_generated_${styleSlug}_${filenameTimestamp()}.png`;
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();

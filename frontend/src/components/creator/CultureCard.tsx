@@ -1,3 +1,4 @@
+import { projectBrand } from '../../data/projectBrand';
 import { useMemo, useState } from 'react';
 import { Download, LoaderCircle } from 'lucide-react';
 import { STYLES, cultureCardThemes } from '../../data/styleLibrary';
@@ -114,7 +115,7 @@ const drawCard = async (props: CultureCardProps) => {
 
     ctx.fillStyle = palette.primary;
     ctx.font = '700 27px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
-    ctx.fillText('纹脉华章', 72, 100);
+    ctx.fillText(projectBrand.name, 72, 100);
     ctx.fillStyle = palette.ink;
     ctx.font = '500 18px "Microsoft YaHei", "Noto Sans CJK SC", sans-serif';
     ctx.fillText('文化解读 · 作品卡', 72, 134);
@@ -247,7 +248,7 @@ export default function CultureCard(props: CultureCardProps) {
       const objectUrl = URL.createObjectURL(png);
       const anchor = document.createElement('a');
       anchor.href = objectUrl;
-      anchor.download = `wenmai_culture_card_${props.styleId}_${getFilenameTimestamp(new Date())}.png`;
+      anchor.download = `${projectBrand.filePrefix}_culture_card_${props.styleId}_${getFilenameTimestamp(new Date())}.png`;
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
@@ -273,7 +274,7 @@ export default function CultureCard(props: CultureCardProps) {
     >
       <div className="flex items-center justify-between gap-3 px-5 py-4 sm:px-6" style={{ background: `linear-gradient(115deg, ${palette.paper}, #fff 76%)` }}>
         <div>
-          <div className="text-[10px] font-semibold tracking-[0.2em]" style={{ color: palette.primary }}>纹脉华章 · 作品解读</div>
+          <div className="text-[10px] font-semibold tracking-[0.2em]" style={{ color: palette.primary }}>{projectBrand.name} · 作品解读</div>
           <h3 className="mt-1 font-serif text-lg font-bold text-ink sm:text-xl">{props.analysis?.title || '文化说明卡'}</h3>
         </div>
         <div className="rounded-full border px-3 py-1.5 text-xs font-medium" style={{ color: palette.primary, borderColor: `${palette.primary}35`, backgroundColor: `${palette.primary}0b` }}>

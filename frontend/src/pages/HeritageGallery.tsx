@@ -1,3 +1,4 @@
+import { projectBrand } from '../data/projectBrand';
 /**
  * 纹脉展馆 · 页面
  *
@@ -7,8 +8,8 @@
  *  - 昼夜收进右上角「环境」；
  *  - 重置布展只出现在「布展模式」的二级菜单里；
  *  - 操作说明合并进「帮助」，不再常驻屏幕；
- *  - 第一/第三人称只保留一套：视角菜单驱动同一个 viewMode，灵宠探索直接复用它
- *    （旧版页面一套、灵宠 HUD 又一套，是重复入口）。
+ *  - 视角菜单保留第三人称、电影和第一人称漫游
+ *    漫游、碰撞、开关门与水池交互与新版展馆一致。
  *
  * 布局：3D 场景占满视口，UI 只占四个角，弹出菜单都是短时浮层、点空白即收。
  * 不使用站内常规导航条覆盖场景：进入后由本页自己提供返回入口。
@@ -29,7 +30,6 @@ import {
   Layers,
   Moon,
   PackageOpen,
-  PawPrint,
   RotateCcw,
   Sun,
   Sunset,
@@ -50,7 +50,6 @@ import { cameraPresets, frameSlots } from '../data/heritageGalleryConfig';
 import { refreshGalleryPool, useGalleryPool } from '../data/galleryPool';
 import { TIME_PRESETS, type TimeOfDay } from '../features/heritage-gallery/scene/DayNightRig';
 import type { GalleryMode } from '../features/heritage-gallery/types';
-import type { MascotView } from '../features/heritage-gallery/mascot/MascotCompanion';
 
 /** 菜单标识：主入口三类 + 右上角两个工具 */
 type MenuId = 'explore' | 'curation' | 'view' | 'environment' | 'help';
@@ -63,7 +62,7 @@ const SCENE_MODES: {
   icon: typeof Compass;
 }[] = [
   { id: 'exterior', label: '外观', hint: '屋顶完整，绕建筑旋转', icon: Building2 },
-  { id: 'interior', label: '内部', hint: '收起屋顶，进入两层展厅', icon: Layers },
+  { id: 'interior', label: '内部', hint: '进入配殿看展，沿楼梯登上二层', icon: Layers },
 ];
 
 /** 机位分两组：建筑外部与室内（顺序与 Blender 相机集合一致） */
@@ -165,7 +164,6 @@ export default function HeritageGallery() {
   const [immersive, setImmersive] = useState(false);
   const [time, setTime] = useState<TimeOfDay>('day');
   const [viewMode, setViewMode] = useState<ViewMode>('third');
-  const [mascotActive, setMascotActive] = useState(false);
   /** 一次只开一个面板；默认 null = 全部收起，先看到场景 */
   const [menu, setMenu] = useState<MenuId | null>(null);
   // 作品池 = 内置精选 + 运行期新生成（Case Service 拉取，失败回退缓存）
@@ -228,6 +226,7 @@ export default function HeritageGallery() {
 
   /** 探索模式：外观 / 内部 */
   const handleSceneMode = useCallback((next: 'exterior' | 'interior') => {
+    setViewMode('third');
     setMode(next);
     setPresetId((current) => {
       const allowed = next === 'exterior' ? EXTERIOR_PRESETS : INTERIOR_PRESETS;
@@ -238,7 +237,7 @@ export default function HeritageGallery() {
 
   /** 布展模式：一次点进厅内，面板是二级菜单里再开 */
   const enterCuration = useCallback(() => {
-    setMascotActive(false);
+    setViewMode('third');
     setMode('curation');
     setPresetId((current) => (current === 'floor2' ? current : 'floor1'));
     setMenu('curation');
@@ -247,6 +246,7 @@ export default function HeritageGallery() {
   /** 机位：不在布展里时按机位自动切外观 / 内部 */
   const handlePreset = useCallback(
     (next: string) => {
+      setViewMode('third');
       setPresetId(next);
       if (mode !== 'curation') {
         setMode(INTERIOR_PRESETS.has(next) ? 'interior' : 'exterior');
@@ -256,46 +256,7 @@ export default function HeritageGallery() {
     [mode],
   );
 
-  /**
-   * 视角：唯一一套第一/第三人称切换。
-   * 灵宠探索时「第一人称」就是角色第一视角，不再是另一套开关；
-   * 选「电影」会先退出探索（电影机位要接管相机，两者不能同时）。
-   */
-  const handleViewMode = useCallback(
-    (next: ViewMode) => {
-      if (mascotActive && next === 'cinema') setMascotActive(false);
-      setViewMode(next);
-      setMenu(null);
-    },
-    [mascotActive],
-  );
-
-  /** 灵宠按 V 键切视角：同样落到这套 viewMode 上 */
-  const handleMascotView = useCallback((next: MascotView) => {
-    setViewMode(next === 'first' ? 'first' : 'third');
-  }, []);
-
-  const wakeMascot = useCallback(() => {
-    setMascotActive(true);
-    setViewMode('third');
-    setPanelOpen(false);
-    selectFrame(null);
-    setMenu(null);
-  }, [selectFrame, setPanelOpen]);
-
-  const exitMascot = useCallback(() => {
-    setMascotActive(false);
-    setMenu(null);
-  }, []);
-
-  /** 角色靠近展品：用现有 CultureCard（ArtworkDetail）展示，不新编文化知识 */
-  const handleMascotExhibit = useCallback(
-    (frameId: string) => {
-      const artworkId = resolveArtworkId(assignments, frameId);
-      if (artworkId) openDetail(artworkId);
-    },
-    [assignments, openDetail],
-  );
+  const handleViewMode = useCallback((next: ViewMode) => {setViewMode(next);setMenu(null);}, []);
 
   // 落位提示（吸附失败 / 降级到地面）自动消失，不长期占屏
   const placeHint = useDiyStore((state) => state.placeHint);
@@ -322,7 +283,6 @@ export default function HeritageGallery() {
 
   const currentArtworkId = selectedFrameId ? resolveArtworkId(assignments, selectedFrameId) : '';
   const placed = frameSlots.filter((slot) => Boolean(resolveArtworkId(assignments, slot.id))).length;
-  const mascotView: MascotView = viewMode === 'first' ? 'first' : 'third';
   const timeLabel = TIME_PRESETS[time].label;
   const viewLabel = VIEW_MODES.find((entry) => entry.id === viewMode)?.label ?? '第三人称';
   const currentPresetLabel = cameraPresets.find((preset) => preset.id === presetId)?.label ?? '外观';
@@ -356,13 +316,6 @@ export default function HeritageGallery() {
           diy={mode === 'curation'}
           level={presetId === 'floor2' ? 2 : 1}
           onFrameSelect={handleFrameSelect}
-          mascot={{
-            active: mascotActive,
-            view: mascotView,
-            onExit: exitMascot,
-            onViewChange: handleMascotView,
-            onExhibit: handleMascotExhibit,
-          }}
         />
       </div>
 
@@ -518,11 +471,11 @@ export default function HeritageGallery() {
                 className="inline-flex items-center gap-1.5 text-[10.5px] tracking-[0.2em] text-[color:var(--color-primary)] transition hover:gap-2.5"
               >
                 <ArrowLeft size={11} />
-                纹脉华章
+                {projectBrand.name}
               </Link>
               <h1 className="mt-1 font-serif text-[17px] leading-tight text-[color:var(--color-ink)]">纹脉展馆</h1>
               <p className="mt-0.5 text-[10.5px] leading-relaxed text-[color:var(--color-ink)]/55">
-                两层微缩展馆 · {frameSlots.length} 个画框 · {galleryPool.length} 件作品可布展
+                五馆水院展馆 · {frameSlots.length} 个画框 · {galleryPool.length} 件作品可布展
               </p>
               <p className="mt-1 text-[10px] tabular-nums tracking-wide text-[color:var(--color-ink)]/45">
                 已布展 {placed}/{frameSlots.length}
@@ -587,12 +540,11 @@ export default function HeritageGallery() {
                     <li>· 拖拽旋转，滚轮缩放，右键拖拽平移</li>
                     <li>· 点画框打开图库换画；点门扇开关门</li>
                     <li>· 布展模式：从器物库拖入场景，点选落位，右键删除</li>
-                    <li>· 视角里的「第一人称」：点击画面锁定鼠标，Esc 解锁</li>
-                    <li>· 灵宠探索：W/S 前后、A/D 转向、Shift 小跑、E 看展品、V 切视角、Esc 退出</li>
+                    <li>· 视角里的「第一人称」：按住拖动环顾；WASD 行走；空格跳跃；近门点击开关；水中空格上浮、C 下潜</li>
                     <li>· 后侧折返楼梯可上二层；沉浸模式用 Esc 或右上角按钮退出</li>
                   </ul>
                   <p className="mt-2 border-t border-[color:var(--color-gold)]/25 px-1 pt-1.5 text-[10px] leading-snug text-[color:var(--color-ink)]/45">
-                    灵宠「纹纹」在探索模式菜单里唤出；靠近画框会自动打开文化卡。
+                    主殿及五馆大门默认关闭，靠近后点击开关；北侧两馆可沿折返楼梯登上二层。
                   </p>
                 </div>
               </div>
@@ -619,24 +571,6 @@ export default function HeritageGallery() {
                     );
                   })}
                   <div className="my-1 border-t border-[color:var(--color-gold)]/25" />
-                  <MenuLabel>灵宠</MenuLabel>
-                  {mascotActive ? (
-                    <MenuRow
-                      icon={<PawPrint size={12} />}
-                      label="退出灵宠探索"
-                      hint="回到普通看展视角"
-                      active
-                      onClick={exitMascot}
-                    />
-                  ) : (
-                    <MenuRow
-                      icon={<PawPrint size={12} />}
-                      label="唤出灵宠纹纹"
-                      hint="进入第一/第三人称探索，靠近画框自动看展"
-                      testId="mascot-wake"
-                      onClick={wakeMascot}
-                    />
-                  )}
                 </div>
               )}
 
@@ -749,42 +683,6 @@ export default function HeritageGallery() {
               </div>
             </div>
           </div>
-
-          {/* 灵宠探索 HUD：视角统一走「视角」菜单，这里不再单开一套第一/第三人称 */}
-          {mascotActive && (
-            <div
-              data-testid="mascot-hud"
-              className="absolute bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-xl border border-[color:var(--color-gold)]/40 bg-[#FBF6EB]/92 px-3 py-2 text-center shadow-lg backdrop-blur-md"
-            >
-              <div className="flex items-center justify-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => toggleMenu('view')}
-                  data-testid="mascot-view-toggle"
-                  aria-label={`切换视角（当前${viewLabel}）`}
-                  className="inline-flex items-center gap-1.5 rounded border border-[color:var(--color-gold)]/50 px-2.5 py-1 text-[11.5px] text-[color:var(--color-ink)]/75 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
-                >
-                  <Eye size={11} />
-                  视角 · {viewLabel}
-                </button>
-                <button
-                  type="button"
-                  onClick={exitMascot}
-                  data-testid="mascot-exit"
-                  className="inline-flex items-center gap-1.5 rounded border border-[color:var(--color-gold)]/50 px-2.5 py-1 text-[11.5px] text-[color:var(--color-ink)]/75 transition hover:border-[color:var(--color-primary)] hover:text-[color:var(--color-primary)]"
-                >
-                  <ArrowLeft size={11} />
-                  退出探索
-                </button>
-              </div>
-              <p className="mt-1 text-[10.5px] leading-relaxed text-[color:var(--color-ink)]/55">
-                W / ↑ 前进 · S / ↓ 后退 · A / ← 左转 · D / → 右转 · Shift 小跑 · E 看展品 · V 切视角 · Esc 退出
-              </p>
-              <p className="text-[10px] text-[color:var(--color-ink)]/40">
-                后侧折返楼梯可上二层；靠近画框会自动打开对应的文化卡
-              </p>
-            </div>
-          )}
 
           {/* 右侧图库 */}
           <GalleryPanel

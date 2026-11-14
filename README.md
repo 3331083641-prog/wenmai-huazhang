@@ -12,7 +12,7 @@
 
 ![纹脉华章最新首页](docs/screenshots/current/home-overview.jpg)
 
-> 在线入口为静态演示，可浏览已保存作品、互动、经典展馆与文创模板。实时生图、自动保存和新作品互动构建需要在本机运行后端与模型；在线页面不提供作者的 API 密钥。
+> 在线入口为静态演示，可浏览已保存作品、互动、五馆水院展馆与文创模板。实时生图、自动保存和新作品互动构建需要在本机运行后端与模型；在线页面不提供作者的 API 密钥。
 
 ## 从文化风格到自己的展览
 
@@ -24,7 +24,7 @@ flowchart LR
   B --> C[作品展厅 / 自动保存]
   C --> D[互动赏析]
   D --> H[画中有话 / 一图一境 / 画境漫游]
-  C --> E[经典纹脉展馆 / DIY]
+  C --> E[五馆水院展馆 / DIY]
   C --> F[文创转化 / PNG 预览]
 ```
 
@@ -62,13 +62,19 @@ flowchart LR
 
 图为最新一次真实生图后的自动画境。三种互动可用，视觉复审为“待完善”；[查看实际结果、接缝修复对照与限制](docs/verification/20261025-deepseek/README.md)。
 
-### 在经典纹脉展馆里布展
+### 在五馆水院里漫游与布展
 
-保留原有两层经典展馆与 Antigravity 界面。Three.js 展示预制 Blender / GLB 建筑，支持室内外机位、第一/第三人称、昼夜、15 个画框换画、14 类器物 DIY、灵宠纹纹与本机布展保存。正式版本使用一座经典展馆。
+![首页中的最新展馆入口](docs/screenshots/current/home-gallery.jpg)
 
-| 经典展馆 | 换画与布展 |
+展馆已更新为 D:\Design 的 v15 五馆水院：保留项目原有天空背景、昼夜切换、右侧 DIY 器物库和左下角视角入口，移除灵宠，并为主殿、五馆和二层回廊补充暖色灯光。支持 30 处换画、六处近距离开关门、墙体碰撞、空格跳跃、两馆二层楼梯及前后水池游泳与下潜。
+
+模型采用无损压缩分包（约 101.6 MiB），浏览器逐包校验后还原原始 GLB，全部几何与贴图保留。首次打开需下载模型；建议桌面浏览器使用。操作：WASD 行走、Shift 疾行、空格跳跃；水中空格上浮、C/Ctrl 下潜；靠近门点击提示或按 E 开关。
+
+[查看集成与验收记录](docs/pavilion-v15-integration.md)。
+
+| 五馆水院展馆 | 换画与布展 |
 |:---:|:---:|
-| [![经典展馆外观](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![新生成作品进入画框作品池](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
+| [![五馆水院展馆外观](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![新生成作品进入画框作品池](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
 
 ### 从作品到文创预览
 
@@ -114,7 +120,7 @@ flowchart TD
   VL --> CASES
   CASES --> UI
   WORLD --> UI
-  UI --> HALL[Three.js / Blender GLB / 经典展馆]
+  UI --> HALL[Three.js / Blender GLB / 五馆水院展馆]
   UI --> PNG[Canvas 文创预览与导出]
 ```
 
@@ -156,13 +162,13 @@ ollama pull qwen3-vl:4b-instruct-q4_K_M
 
 视觉复审是可选功能，另安装 `backend/requirements-review.txt`，按 [官方配置说明](docs/configuration/DEEPSEEK_OFFICIAL.md) 填写独立 `DEEPSEEK_API_KEY` 并明确启用；需要本机浏览器和正在运行的前端，可能产生 API 费用。未配置时继续使用原有本地互动构建。
 
-Ollama 已运行时不用重复启动，模型已安装时不用重下。启动器打印实际前后端端口，默认打开展厅；停止脚本核对进程身份并保留 Ollama。已保存作品、经典展馆和文创预览无需调用付费生图服务。[完整运行说明与故障处理](docs/running.md)。
+Ollama 已运行时不用重复启动，模型已安装时不用重下。启动器打印实际前后端端口，默认打开展厅；停止脚本核对进程身份并保留 Ollama。已保存作品、五馆水院展馆和文创预览无需调用付费生图服务。[完整运行说明与故障处理](docs/running.md)。
 
 ## 项目结构
 
 ```text
-frontend/src/           页面、案例读取、互动体验、2.5D 与经典展馆
-frontend/public/       风格图、经典 GLB、已构建画境及场景素材
+frontend/src/           页面、案例读取、互动体验、2.5D 与五馆水院展馆
+frontend/public/       风格图、v15 模型分包、已构建画境及场景素材
 backend/               FastAPI、模型调用、文化卡、案例与后台任务
 scripts/interactive/   本图解析接入、深度估计与画境构建
 models/                模型来源、固定版本、许可与校验说明

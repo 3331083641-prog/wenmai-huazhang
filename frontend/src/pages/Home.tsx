@@ -1,3 +1,4 @@
+import { projectBrand } from '../data/projectBrand';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -15,7 +16,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { experienceById } from '../data/experiences';
-import galleryExterior from '../../../docs/screenshots/current/heritage-gallery.jpg';
+import { uiPreviews } from '../data/uiPreviews';
 
 /**
  * 首页「进入画里，再看一遍」的三件互动作品
@@ -79,7 +80,7 @@ const CORE_CAPABILITIES = [
   {
     icon: Boxes,
     title: '三维纹脉展馆与布展 DIY',
-    desc: '双层中式虚拟艺术展馆，支持自由漫游、15 处自定义画框换画、14 件历史器物陈设布置、昼夜光影切换与灵宠纹纹伴游引导。',
+    desc: '五馆水院虚拟艺术展馆，支持自由漫游、30 处自定义画框换画、传统器物陈设布置、昼夜光影切换与开关门、楼梯通行与水中游动。',
     tag: '虚拟空间',
   },
   {
@@ -105,10 +106,10 @@ export default function Home() {
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
             传统文化视觉创作 · 智能理解 · 沉浸展陈 · 文创应用
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-[1.2] mb-6 text-ink">
-            纹脉华章 <br />
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-[1.2] mb-6 text-ink" aria-label={projectBrand.fullName}>
+            {projectBrand.name} <br />
             <span className="text-2xl sm:text-3xl lg:text-4xl text-primary font-medium border-b-2 border-gold pb-1.5 inline-block mt-3">
-              传统文化视觉智能创作与文创应用平台
+              {projectBrand.subtitle}
             </span>
           </h1>
           <p className="text-base sm:text-lg lg:text-xl text-ink/75 mb-10 leading-relaxed font-sans">
@@ -267,7 +268,7 @@ export default function Home() {
         <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="mb-1.5 text-xs font-medium tracking-[0.3em] text-primary/75">
-              纹脉华章 · 多维文化赏析
+              {projectBrand.name} · 多维文化赏析
             </p>
             <h2 className="font-serif text-2xl md:text-3xl font-bold text-ink">
               进入画里，再看一遍
@@ -347,7 +348,7 @@ export default function Home() {
               className="group relative aspect-[16/10] overflow-hidden rounded-2xl border-2 border-white shadow-2xl bg-black/10"
             >
               <img
-                src={galleryExterior}
+                src={uiPreviews.heritageExterior}
                 alt="纹脉展馆建筑外观"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 loading="lazy"
@@ -373,29 +374,29 @@ export default function Home() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-ink mb-4 leading-snug">
               纹脉展馆 <br />
               <span className="text-lg md:text-xl font-normal text-primary">
-                虚拟漫游 · 自由布展 · 灵宠伴游
+                虚拟漫游 · 自由布展 · 交互漫游
               </span>
             </h2>
             <p className="text-sm md:text-base text-ink/75 leading-relaxed mb-6 font-sans">
-              纹脉展馆是纹脉华章的沉浸式三维文化展示空间。用户可以探索数字展馆、欣赏传统文化主题作品，并通过画框换画、器物布置等交互方式打造具有个人特色的虚拟艺术展厅。
+              纹脉展馆是{projectBrand.name}的沉浸式三维文化展示空间。用户可以探索数字展馆、欣赏传统文化主题作品，并通过画框换画、器物布置等交互方式打造具有个人特色的虚拟艺术展厅。
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8 text-xs text-ink/80 font-medium">
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/70 border border-primary/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold"></span>
-                两层中式建筑格局
+                五馆水院建筑格局
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/70 border border-primary/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold"></span>
-                15 处自定义展陈画框
+                30 处自定义展陈画框
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/70 border border-primary/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold"></span>
-                14 件传统器物道具
+                传统器物库道具
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/70 border border-primary/10">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold"></span>
-                昼夜光影与灵宠伴游
+                昼夜光影与交互漫游
               </div>
             </div>
 

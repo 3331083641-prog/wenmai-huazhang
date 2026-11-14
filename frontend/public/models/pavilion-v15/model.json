@@ -1,0 +1,37 @@
+{
+  "version": "v15-gallery-access",
+  "bytes": 360051900,
+  "sha256": "084cfdb1fceb831addd880c0940248ae9626e0be357b51f0b452583a7fc183f3",
+  "parts": [
+    {
+      "url": "pavilion-v15.part1.bin",
+      "bytes": 83886080,
+      "compressedBytes": 30332982,
+      "sha256": "f0aa83879ebde6c01ce28fa7f736df954c0615c5caf15b712b24b7f307f6d068"
+    },
+    {
+      "url": "pavilion-v15.part2.bin",
+      "bytes": 83886080,
+      "compressedBytes": 21681345,
+      "sha256": "fb83f9fdc373f9dda18181ec1d261d47ab97c74ee0a69a99ba154c90c0842ceb"
+    },
+    {
+      "url": "pavilion-v15.part3.bin",
+      "bytes": 83886080,
+      "compressedBytes": 21915105,
+      "sha256": "d80d29a2a89ef0f9bc3864af852bed184360470340eac3b8b8873cb7d429dbad"
+    },
+    {
+      "url": "pavilion-v15.part4.bin",
+      "bytes": 83886080,
+      "compressedBytes": 21942984,
+      "sha256": "c30df57fcf3e59957fb3b8c15cd6a27a86b6c1fc634bff8577a92be238a7d3c6"
+    },
+    {
+      "url": "pavilion-v15.part5.bin",
+      "bytes": 24507580,
+      "compressedBytes": 10697222,
+      "sha256": "b1d1d5a72c02f89b6ee13ed94a965182d9a2b16cbbc58038d5a38ac5272de31a"
+    }
+  ]
+}

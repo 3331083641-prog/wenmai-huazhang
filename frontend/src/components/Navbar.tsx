@@ -1,3 +1,4 @@
+import { projectBrand } from '../data/projectBrand';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -33,9 +34,9 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 h-16 border-b border-primary/10 bg-paper/90 backdrop-blur-md">
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link to="/" className="group flex shrink-0 items-center gap-2 text-primary" aria-label="纹脉华章 首页">
+        <Link to="/" className="group flex shrink-0 items-center gap-2 text-primary" aria-label={`${projectBrand.fullName} 首页`}>
           <Leaf className="h-6 w-6 transition-transform group-hover:-rotate-6" />
-          <span className="font-serif text-lg font-bold tracking-[0.12em] sm:text-xl">纹脉华章</span>
+          <span className="font-serif text-lg font-bold tracking-[0.12em] sm:text-xl">{projectBrand.name}</span>
         </Link>
 
         {/* 桌面：单行七项，统一 64px 行高，当前项只用朱红字色 + 金色短底线标示 */}

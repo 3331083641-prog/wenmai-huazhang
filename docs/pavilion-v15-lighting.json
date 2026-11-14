@@ -1,0 +1,145 @@
+{
+  "lights": [
+    {
+      "name": "pavilion-warm-main--6--5",
+      "color": "ffe1b5",
+      "intensity": 163.37,
+      "position": [
+        -6,
+        6.6,
+        -5
+      ]
+    },
+    {
+      "name": "pavilion-warm-main--6--13",
+      "color": "ffe1b5",
+      "intensity": 163.37,
+      "position": [
+        -6,
+        6.6,
+        -13
+      ]
+    },
+    {
+      "name": "pavilion-warm-main-6--5",
+      "color": "ffe1b5",
+      "intensity": 163.37,
+      "position": [
+        6,
+        6.6,
+        -5
+      ]
+    },
+    {
+      "name": "pavilion-warm-main-6--13",
+      "color": "ffe1b5",
+      "intensity": 163.37,
+      "position": [
+        6,
+        6.6,
+        -13
+      ]
+    },
+    {
+      "name": "pavilion-warm-hall--32-30-lower",
+      "color": "ffdfae",
+      "intensity": 86.428,
+      "position": [
+        -32,
+        3.15,
+        30
+      ]
+    },
+    {
+      "name": "pavilion-warm-hall--32-30-upper",
+      "color": "ffe4be",
+      "intensity": 50.592,
+      "position": [
+        -32,
+        4.7,
+        30
+      ]
+    },
+    {
+      "name": "pavilion-warm-hall--32-12-lower",
+      "color": "ffdfae",
+      "intensity": 86.428,
+      "position": [
+        -32,
+        3.15,
+        12
+      ]
+    },
+    {
+      "name": "pavilion-warm-hall--32-12-upper",
+      "color": "ffe4be",
+      "intensity": 90.644,
+      "position": [
+        -32,
+        6.55,
+        12
+      ]
+    },
+    {
+      "name": "pavilion-warm-hall-32-30-lower",
+      "color": "ffdfae",
+      "intensity": 86.428,
+      "position": [
+        32,
+        3.15,
+        30
+      ]
+    },
+    {
+      "name": "pavilion-warm-hall-32-30-upper",
+      "color": "ffe4be",
+      "intensity": 50.592,
+      "position": [
+        32,
+        4.7,
+        30
+      ]
+    },
+    {
+      "name": "pavilion-warm-hall-32-12-lower",
+      "color": "ffdfae",
+      "intensity": 86.428,
+      "position": [
+        32,
+        3.15,
+        12
+      ]
+    },
+    {
+      "name": "pavilion-warm-hall-32-12-upper",
+      "color": "ffe4be",
+      "intensity": 90.644,
+      "position": [
+        32,
+        6.55,
+        12
+      ]
+    },
+    {
+      "name": "pavilion-warm-paper-cut-west",
+      "color": "ffdfae",
+      "intensity": 63.24,
+      "position": [
+        -22.6,
+        3.1,
+        42
+      ]
+    },
+    {
+      "name": "pavilion-warm-paper-cut-east",
+      "color": "ffdfae",
+      "intensity": 63.24,
+      "position": [
+        -17.4,
+        3.1,
+        42
+      ]
+    }
+  ],
+  "console_errors": []
+}

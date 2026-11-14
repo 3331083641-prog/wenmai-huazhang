@@ -1,3 +1,4 @@
+import { projectBrand } from '../data/projectBrand';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, LayoutGroup } from 'motion/react';
@@ -27,16 +28,19 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { STYLES } from '../data/styleLibrary';
+import { uiPreviews } from '../data/uiPreviews';
 
-import creatorShot from '../../../docs/screenshots/current/creation-workspace.jpg';
-import galleryShot from '../../../docs/screenshots/current/gallery.jpg';
-import experienceShot from '../../../docs/screenshots/current/interactive-artwork.jpg';
-import storyShot from '../../../docs/screenshots/current/story-reading.jpg';
-import wanderShot from '../../../docs/screenshots/current/painting-world.jpg';
-import heritageExterior from '../../../docs/screenshots/current/heritage-gallery.jpg';
-import heritageInterior from '../../../docs/screenshots/current/heritage-interior.jpg';
-import productShot from '../../../docs/screenshots/current/creative-products.jpg';
-import cultureCardShot from '../../../docs/screenshots/current/culture-card.jpg';
+const {
+  creator: creatorShot,
+  gallery: galleryShot,
+  experience: experienceShot,
+  story: storyShot,
+  paintingWorld: wanderShot,
+  heritageExterior,
+  heritageInterior,
+  products: productShot,
+  cultureCard: cultureCardShot,
+} = uiPreviews;
 
 /**
  * 六大核心能力定义
@@ -175,15 +179,15 @@ const CAPABILITIES: CapabilityItem[] = [
     tag: '空间展陈',
     title: '纹脉展馆与 DIY 沉浸式布展',
     shortTitle: '三维展馆与布展',
-    subtitle: 'Three.js 双层中式虚拟展厅 · 自由换画布展 · 灵宠伴游',
+    subtitle: 'Three.js 五馆水院虚拟展厅 · 自由换画布展 · 交互漫游',
     summary:
-      '基于 Three.js 渲染预制的双层中式虚拟展馆。创作者可自由漫游、将作品挂入 15 处画框、自由陈列 14 件传统道具，并支持昼夜光影切换与灵宠领路。',
+      '基于 Three.js 渲染预制的五馆水院虚拟展馆。创作者可自由漫游、将作品挂入 30 处画框、自由陈列传统道具，并支持昼夜光影切换与开关门、跳跃与游泳。',
     highlights: [
-      'WebGL / Three.js 独立渲染经典中式木构双层建筑，支持第一/第三人称视角',
-      '自由策展模式：15 处画框一键陈列生成作品，14 件传统器物随心摆放',
-      '昼夜真实光影切换与灵宠“纹纹”智能寻路伴游导览系统',
+      'WebGL / Three.js 独立渲染五馆水院中式木构建筑，支持第一/第三人称视角',
+      '自由策展模式：30 处画框一键陈列生成作品，传统器物库随心摆放',
+      '昼夜真实光影切换与门扇开合、跳跃与水中游动',
     ],
-    badges: ['Three.js / WebGL', '15 处画框策展', '14 件传统器物', '昼夜光影系统'],
+    badges: ['Three.js / WebGL', '30 处画框策展', '传统器物库', '昼夜光影系统'],
     image: heritageInterior,
     alt: '纹脉展馆内景与布展模式',
     to: '/heritage-gallery',
@@ -340,7 +344,7 @@ const ARCH_LAYERS: ArchItem[] = [
     desc: '所有内置作品、文化说明卡、三维展馆模型（GLB）、互动绘卷分层图（WebP）均经过编译期打包与本地校验。即使在无公网网络或无 API 密钥的环境下，用户仍可完整浏览五大风格、作品展厅、三维展馆与全部互动赏析功能。',
     dataFlow: '静态资源指纹打包 -> 本地 SHA-256 完整性校验 -> 离线零依赖交付',
     technologies: [
-      { name: 'GLB 3D Assets', role: 'Blender 烘焙并优化的中式两层展馆及 14 件器物道具', badge: '本地资产' },
+      { name: 'GLB 3D Assets', role: 'Blender 烘焙并优化的中式两层展馆及 传统器物道具', badge: '本地资产' },
       { name: 'WebP Multi-layer Maps', role: '互动赏析的分层剪影、前景切片与深度预览纹理', badge: '本地资产' },
       { name: 'Vite Glob & Assets', role: '静态资源指纹打包与统一相对路径分发', badge: '构建规范' },
       { name: 'SHA-256 Evidence Tracking', role: '作品与参考图哈希校验与真实生成证据追溯', badge: '防伪审计' },
@@ -411,7 +415,7 @@ const CAPABILITY_MATRIX: CapabilityRow[] = [
     feature: '两层三维虚拟展馆漫游与器物 DIY 布展',
     status: 'ready_offline',
     statusLabel: '已就绪 · 离线可用',
-    implementationDetail: 'Three.js 实体渲染，支持 15 个画框自由换画、14 件器物拖拽摆放、昼夜光影切换与灵宠伴游。',
+    implementationDetail: 'Three.js 实体渲染，支持 30 个画框自由换画、传统器物拖拽摆放、昼夜光影切换与交互漫游。',
   },
   {
     module: '文创转化',
@@ -488,7 +492,7 @@ export default function About() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs md:text-sm font-medium mb-6 backdrop-blur-xs"
         >
           <Sparkles className="w-4 h-4 text-gold" />
-          <span className="font-serif tracking-wider">纹脉华章 · 文化科技创新实验空间</span>
+          <span className="font-serif tracking-wider">{projectBrand.name} · 文化科技创新实验空间</span>
         </motion.div>
 
         {/* 主标题 */}
@@ -511,13 +515,13 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-sm sm:text-base md:text-lg text-ink/75 leading-relaxed font-sans max-w-3xl mx-auto mb-8"
         >
-          纹脉华章融合
+          {projectBrand.name}融合
           <strong className="text-primary font-serif font-semibold"> Qwen Image 3.0 </strong>
           云端可控多模态生成、
           <strong className="text-primary font-serif font-semibold">本地 Qwen3-VL </strong>
           视觉理解、
           <strong className="text-primary font-serif font-semibold">Three.js </strong>
-          双层中式虚拟展馆与
+          五馆水院虚拟展馆与
           <strong className="text-primary font-serif font-semibold"> 8 类文创转化打样</strong>
           ，构筑从灵感触发、多维赏析到虚拟布展的完整闭环。
         </motion.p>
@@ -1213,7 +1217,7 @@ export default function About() {
 
         <div className="relative z-10 max-w-3xl mx-auto space-y-6">
           <span className="text-xs font-serif tracking-[0.35em] text-gold uppercase block">
-            WENMAI HUAZHANG · CREATIVE PORTAL
+            {projectBrand.englishName} · CREATIVE PORTAL
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white leading-tight">
             文脉流芳 · 华章共创

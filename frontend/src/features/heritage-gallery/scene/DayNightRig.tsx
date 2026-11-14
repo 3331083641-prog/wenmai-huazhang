@@ -5,7 +5,7 @@
  *  - 天穹不是 HDRI，也不是 drei 的 Sky（ACESFilmic 下会过曝），
  *    而是一个内翻的大球 + 只有 4px 宽的竖向渐变贴图：三个色标（天顶/地平线/地面）
  *    就能拉开三种气候，切时段只改贴图与灯光参数，不重建 Canvas。
- *  - 每种时段 7 个光源（半球 + 环境 + 主光 + 补光 + 3 盏室内暖光），
+ *  - 室外环境光与 14 盏暖色室内灯，
  *    只有主光投影：多光源投影在这套三渲二材质上只会把画面弄脏。
  *  - 曝光不在这里改 renderer —— `useTimeExposure(time)` 只给数值，
  *    由 Canvas 的 onCreated / effect 应用，组件保持幂等。
@@ -13,12 +13,10 @@
  * 所有预设集中放在 TIME_PRESETS，消费方只依赖 id 与其字段，不关心内部实现。
  */
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import type { JSX } from 'react';
-import { useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
-import { EXHIBIT_WASHERS } from './lookdev';
 
 /* ------------------------------------------------------------------ 契约类型 */
 
@@ -164,7 +162,7 @@ export function useTimeExposure(time: TimeOfDay): number {
 /* ------------------------------------------------------------------ 天空 */
 
 /** 天穹半径：远小于 Canvas 的 far(320)，又远大于 orbit 的 maxDistance(52) */
-const SKY_SCALE = 180;
+const SKY_SCALE = 450;
 
 const skyTextureCache = new Map<TimeOfDay, THREE.CanvasTexture>();
 
@@ -298,73 +296,33 @@ const SHADOW_MAP_SIZE: [number, number] = [1536, 1536];
  * 同时把贴图从 2048 降到 1536（显存与填充率都省 44%），
  * 净效果是「每米纹素更多」——阴影边缘反而更实，不会更糊。
  */
-const SHADOW_CAMERA: [number, number, number, number, number, number] = [-11.5, 11.5, 11.5, -11.5, 6, 55];
+const SHADOW_CAMERA: [number, number, number, number, number, number] = [-65, 65, 65, -65, 1, 240];
 
-/**
- * 三盏室内暖光。位置沿用旧场景的手调值（一层、二层、顶棚洗光），
- * 强度用 base × preset.interior 缩放：白天几乎只补暗部，夜里让窗格透出灯光。
- *
- * 旧值（17 / 14 / 24）在 0.4~0.9 m 的近距上会把顶棚直接顶到 1.0 以上的雪白，
- * 这是「室内一片死白」的主因；现在整体下调，把亮度交给环境光与洗墙灯去铺。
+/** 按五馆的真实位置分布暖光；两层馆分别照亮展台、楼梯与回廊。
+ * 灯具有限照程，保留室外天空；不启用额外阴影贴图以控制大模型开销。
  */
 const INTERIOR_LIGHTS: {
+  name: string;
   position: [number, number, number];
   base: number;
   distance: number;
   color: string;
 }[] = [
-  { position: [0, 2.6, 0.4], base: 8.5, distance: 11, color: '#ffd4a4' },
-  { position: [0, 5.05, -0.6], base: 6.5, distance: 10, color: '#ffdcb8' },
-  { position: [0, 4.85, -0.2], base: 9, distance: 5.4, color: '#ffeecd' },
+  ...[-6, 6].flatMap(x => [-5, -13].map(z => ({
+    name: `main-${x}-${z}`, position: [x, 6.6, z] as [number, number, number],
+    base: 155, distance: 16, color: '#ffe1b5',
+  }))),
+  ...[-32, 32].flatMap(x => [30, 12].flatMap(z => [
+    {name: `hall-${x}-${z}-lower`, position: [x, 3.15, z] as [number, number, number],
+      base: 82, distance: 10.5, color: '#ffdfae'},
+    {name: `hall-${x}-${z}-upper`, position: [x, z === 12 ? 6.55 : 4.7, z] as [number, number, number],
+      base: z === 12 ? 86 : 48, distance: 10, color: '#ffe4be'},
+  ])),
+  {name: 'paper-cut-west', position: [-22.6, 3.1, 42], base: 60, distance: 8, color: '#ffdfae'},
+  {name: 'paper-cut-east', position: [-17.4, 3.1, 42], base: 60, distance: 8, color: '#ffdfae'},
 ];
 
 /* ------------------------------------------------------------------ 组件 */
-
-/**
- * 洗墙灯：给主展墙（作品最密的三面）一盏无阴影的软边 spot。
- * spotLight 的 target 必须是场景里的对象，所以在挂载时手动塞进 scene、
- * 卸载时取出来——不这么做，灯会朝着默认的 (0,0,0) 打，墙面照不到。
- */
-function WallWasher({
-  position,
-  target,
-  color,
-  intensity,
-  distance,
-  angle,
-}: {
-  position: [number, number, number];
-  target: [number, number, number];
-  color: string;
-  intensity: number;
-  distance: number;
-  angle: number;
-}): JSX.Element {
-  const light = useRef<THREE.SpotLight>(null);
-  const { scene } = useThree();
-  useEffect(() => {
-    const spot = light.current;
-    if (!spot) return undefined;
-    spot.target.position.set(...target);
-    scene.add(spot.target);
-    return () => {
-      scene.remove(spot.target);
-    };
-  }, [scene, target]);
-  return (
-    <spotLight
-      ref={light}
-      position={position}
-      color={color}
-      intensity={intensity}
-      distance={distance}
-      angle={angle}
-      penumbra={0.9}
-      decay={2}
-      castShadow={false}
-    />
-  );
-}
 
 /**
  * 时段灯光总成：天空球 + 雾 + 光源。
@@ -375,12 +333,12 @@ function WallWasher({
 export function DayNightRig({ time }: { time: TimeOfDay }): JSX.Element {
   const preset = TIME_PRESETS[time];
   const skyTexture = useMemo(() => skyTextureFor(time), [time]);
-  const exposureIndex = time === 'day' ? 0 : time === 'dusk' ? 1 : 2;
+
 
   return (
     <>
       {/* 雾挂在 scene 上：远处衰减成天色，天穹材质关掉 fog，避免球被自身雾色糊掉 */}
-      <fog attach="fog" args={[preset.fogColor, preset.fogNear, preset.fogFar]} />
+      <fog attach="fog" args={[preset.fogColor, preset.fogNear * 3.5, preset.fogFar * 3.5]} />
 
       <mesh name="time-sky-dome" scale={SKY_SCALE} renderOrder={-2}>
         <sphereGeometry args={[1, 32, 16]} />
@@ -407,7 +365,7 @@ export function DayNightRig({ time }: { time: TimeOfDay }): JSX.Element {
 
       {/* 主光：唯一投影的光源。方向与参考图阴影一致（白天西北向），夜晚是冷月 */}
       <directionalLight
-        position={preset.sunPosition}
+        position={preset.sunPosition.map(v => v * 5) as [number, number, number]}
         color={preset.sunColor}
         intensity={preset.sunIntensity}
         castShadow
@@ -428,27 +386,16 @@ export function DayNightRig({ time }: { time: TimeOfDay }): JSX.Element {
       {/* 室内暖光：大范围低强度，靠衰减铺开，不打硬斑点 */}
       {INTERIOR_LIGHTS.map((light) => (
         <pointLight
-          key={light.position.join(',')}
+          key={light.name}
+          name={'pavilion-warm-' + light.name}
           position={light.position}
           color={light.color}
-          intensity={light.base * preset.interior}
+          intensity={light.base * (0.95 + 0.2 * preset.interior)}
           distance={light.distance}
           decay={2}
         />
       ))}
 
-      {/* 展品重点照明：作品最密的三面主墙，强度按时段给 */}
-      {EXHIBIT_WASHERS.map((washer) => (
-        <WallWasher
-          key={washer.key}
-          position={washer.position}
-          target={washer.target}
-          color={washer.color}
-          intensity={washer.intensity[exposureIndex]}
-          distance={washer.distance}
-          angle={washer.angle}
-        />
-      ))}
     </>
   );
 }

@@ -30,8 +30,8 @@ export function CinemaRig({ active }: { active: boolean }) {
     t.current += delta;
     const time = t.current;
     const angle = 0.55 + time * 0.075;
-    const radius = 25.5 + Math.sin(time * 0.13) * 2.2;
-    const height = 8.6 + Math.sin(time * 0.09 + 0.7) * 2.4;
+    const radius = 135 + Math.sin(time * 0.13) * 8;
+    const height = 65 + Math.sin(time * 0.09 + 0.7) * 8;
     camera.position.set(Math.sin(angle) * radius, height, Math.cos(angle) * radius);
     camera.lookAt(0, 4.35, 0.15);
   });

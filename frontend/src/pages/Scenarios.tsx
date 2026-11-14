@@ -28,13 +28,17 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
-import creatorShot from '../../../docs/screenshots/current/creation-workspace.jpg';
-import experienceShot from '../../../docs/screenshots/current/interactive-artwork.jpg';
-import cultureCardShot from '../../../docs/screenshots/current/culture-card.jpg';
-import interiorShot from '../../../docs/screenshots/current/heritage-interior.jpg';
-import productShot from '../../../docs/screenshots/current/creative-products.jpg';
-import wanderShot from '../../../docs/screenshots/current/painting-world.jpg';
-import storyShot from '../../../docs/screenshots/current/story-reading.jpg';
+import { uiPreviews } from '../data/uiPreviews';
+
+const {
+  creator: creatorShot,
+  experience: experienceShot,
+  cultureCard: cultureCardShot,
+  heritageInterior: interiorShot,
+  products: productShot,
+  paintingWorld: wanderShot,
+  story: storyShot,
+} = uiPreviews;
 
 type FeatureItem = {
   icon: LucideIcon;
@@ -77,7 +81,7 @@ const SCENARIOS: Scenario[] = [
     tag: '空间展陈',
     title: '三维数字展馆与空间展陈',
     summary:
-      '为传统文化艺术构筑可漫游、可布展的中式三维虚拟美术馆。可在预制的两层虚拟展馆中换画布展；环幕配图展示空间策展构想，不代表已经接入实体投影设备。',
+      '为传统文化艺术构筑可漫游、可布展的中式三维虚拟美术馆。可在五馆水院虚拟展馆中换画布展；环幕配图展示空间策展构想，不代表已经接入实体投影设备。',
     features: [
       {
         icon: Compass,
@@ -87,7 +91,7 @@ const SCENARIOS: Scenario[] = [
       {
         icon: Frame,
         title: '自由换画布展',
-        desc: '15 处自定义画框一键陈列，14 件传统器物随心布置。',
+        desc: '30 处自定义画框一键陈列，传统器物库随心布置。',
       },
       {
         icon: MonitorPlay,
