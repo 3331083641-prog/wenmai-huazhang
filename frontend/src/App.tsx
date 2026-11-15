@@ -4,6 +4,7 @@
  */
 
 import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom';
+import './version';
 import Gallery from './pages/Gallery';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
