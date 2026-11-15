@@ -1,143 +1,183 @@
 import { useState } from 'react';
-import { ArrowRight, Info, Filter, Palette, Image as ImageIcon } from 'lucide-react';
+import { ArrowRight, Info, Filter, Palette, Sparkles, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
 import { STYLES } from '../data/styleLibrary';
 
-const CATEGORIES = ['全部', '年画', '山水', '刺绣', '陶瓷', '剪纸'];
+const CATEGORIES = [
+  { id: '全部', label: '全部风格', count: STYLES.length },
+  { id: '年画', label: '木版年画', count: STYLES.filter(s => s.tag === '年画').length },
+  { id: '山水', label: '青绿山水', count: STYLES.filter(s => s.tag === '山水').length },
+  { id: '刺绣', label: '传统刺绣', count: STYLES.filter(s => s.tag === '刺绣').length },
+  { id: '陶瓷', label: '青花瓷饰', count: STYLES.filter(s => s.tag === '陶瓷').length },
+  { id: '剪纸', label: '民间剪纸', count: STYLES.filter(s => s.tag === '剪纸').length },
+];
+
+/**
+ * 风格专属色标梯次（彰显五大风格独特的设色哲学）
+ */
+const STYLE_PALETTES: Record<string, string[]> = {
+  zhuxianzhen: ['#9E241B', '#D2A14A', '#2D4E35', '#24211E'],
+  bianxiu: ['#A64C54', '#D89E78', '#6A7F6E', '#F6E5CC'],
+  songhua: ['#2F5C54', '#557F70', '#C3A575', '#8C6F4B'],
+  qinghua: ['#234B74', '#4D7DA8', '#99B9D4', '#F4F7FA'],
+  jianzhi: ['#B82823', '#D6453D', '#FAF0EB', '#1F1B1A'],
+};
 
 export default function StyleLibrary() {
   const [activeCategory, setActiveCategory] = useState('全部');
-  const [hoveredStyle, setHoveredStyle] = useState<string | null>(null);
 
-  const filteredStyles = activeCategory === '全部' 
-    ? STYLES 
+  const filteredStyles = activeCategory === '全部'
+    ? STYLES
     : STYLES.filter(s => s.tag === activeCategory);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-serif text-primary mb-6 flex items-center justify-center gap-3">
-           <Palette className="w-8 h-8 text-gold" /> 传统文化视觉风格库
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-16">
+      {/* 头部：典雅题匾与书卷叙事 */}
+      <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/40 bg-white/70 shadow-xs mb-4">
+          <Palette className="w-3.5 h-3.5 text-gold" />
+          <span className="text-xs font-serif font-medium text-ink/80 tracking-widest">
+            传统文化视觉风格基因库
+          </span>
+        </div>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-ink mb-4 flex items-center justify-center gap-3">
+          五大传统文化视觉风格库
         </h1>
-        <p className="text-lg text-ink/70 max-w-2xl mx-auto leading-relaxed">
-          平台围绕民间工艺、传统绘画与器物装饰等视觉门类，整理色彩、构图和纹样参考，为主题创作与生成提示词提供风格选择。
+        <p className="text-sm sm:text-base text-ink/75 leading-relaxed font-sans">
+          平台深入民间工艺、传统绘画与器物装饰等五大核心视觉门类，系统提炼设色谱系、构图法则与纹样肌理，为 AI 创作工作台提供精确的文化语义先验约束。
         </p>
       </div>
 
-      {/* Filter Row */}
-      <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
-        <Filter className="w-5 h-5 text-ink/40 mr-2" />
-        {CATEGORIES.map(category => (
+      {/* 签条式分类筛选栏 */}
+      <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-14">
+        <div className="hidden sm:flex items-center gap-1.5 text-xs font-serif text-ink/50 mr-2">
+          <Filter className="w-3.5 h-3.5 text-gold" />
+          <span>门类甄选：</span>
+        </div>
+        {CATEGORIES.map((cat) => (
           <button
-            key={category}
-            onClick={() => setActiveCategory(category)}
+            key={cat.id}
+            onClick={() => setActiveCategory(cat.id)}
             className={cn(
-              "px-5 py-2 rounded-full text-sm font-medium transition-all duration-300",
-              activeCategory === category 
-                ? "bg-primary text-white shadow-md" 
-                : "bg-white border border-primary/20 text-ink/70 hover:border-primary hover:text-primary"
+              "px-4 py-2 rounded-xl text-xs sm:text-sm font-serif transition-all duration-300 flex items-center gap-1.5 shadow-xs cursor-pointer",
+              activeCategory === cat.id
+                ? "bg-primary text-white shadow-[0_6px_18px_rgba(158,36,27,0.25)] border border-gold/50"
+                : "bg-white/80 border border-gold/25 text-ink/75 hover:border-primary/40 hover:bg-white hover:text-primary"
             )}
           >
-            {category}
+            <span>{cat.label}</span>
+            <span className={cn(
+              "text-[10px] px-1.5 py-0.2 rounded-full font-mono",
+              activeCategory === cat.id ? "bg-white/20 text-white" : "bg-black/5 text-ink/50"
+            )}>
+              {cat.count}
+            </span>
           </button>
         ))}
       </div>
 
+      {/* Refero 灵感画廊美学卡片瀑布流 */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mb-20">
         <AnimatePresence mode="popLayout">
-          {filteredStyles.map((style, i) => (
-            <motion.div 
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4 }}
-              key={style.id} 
-              className={cn(
-                "group bg-rice-paper rounded-2xl overflow-hidden shadow-sm border transition-all duration-300 cursor-pointer",
-                hoveredStyle === style.id ? "shadow-[0_10px_30px_rgba(158,36,27,0.15)] border-primary/50 -translate-y-2" : "border-border-red/10 hover:border-primary/30"
-              )}
-              onMouseEnter={() => setHoveredStyle(style.id)}
-              onMouseLeave={() => setHoveredStyle(null)}
-            >
-              <div className="aspect-[4/3] relative overflow-hidden bg-black">
-                <img 
-                  src={style.img || '/zhuxianzhen.png'} 
-                  alt={style.name} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
-                />
-                <div className="absolute inset-0 border-[6px] border-white/10 pointer-events-none z-10 m-2 rounded-lg"></div>
-                <div className="absolute top-4 left-4 flex gap-2 z-20">
-                  {style.tags.map(tag => (
-                    <span key={tag} className="px-2.5 py-1 text-xs font-medium bg-black/40 backdrop-blur-md text-white rounded shadow-sm border border-white/20">
-                      {tag}
-                    </span>
-                  ))}
+          {filteredStyles.map((style, i) => {
+            const palette = STYLE_PALETTES[style.id] || ['#9E241B', '#D2A14A', '#2D4E35'];
+            return (
+              <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.45, delay: i * 0.05 }}
+                key={style.id}
+                className="oriental-gallery-card rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(63,43,31,0.06)] hover:shadow-[0_20px_45px_rgba(158,36,27,0.14)] hover:-translate-y-1.5 transition-all duration-400 flex flex-col group"
+              >
+                {/* 典藏画幅区域 */}
+                <div className="aspect-[4/3] relative overflow-hidden bg-black/5">
+                  <img
+                    src={style.img || '/zhuxianzhen.png'}
+                    alt={style.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+                  {/* 顶部标签 */}
+                  <div className="absolute top-3.5 left-3.5 flex flex-wrap gap-1.5 z-20">
+                    {style.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 text-[11px] font-serif bg-black/50 backdrop-blur-md text-white rounded-md border border-white/20 shadow-xs"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* 设色特征谱 */}
+                  <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/45 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 z-20">
+                    <span className="text-[10px] text-white/80 font-serif mr-1">特征色：</span>
+                    {palette.map((color, idx) => (
+                      <span
+                        key={idx}
+                        className="w-3 h-3 rounded-full border border-white/40 shadow-xs"
+                        style={{ backgroundColor: color }}
+                        title={color}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-              
-              <div className="p-6 relative">
-                {/* Decorative corner */}
-                <div className="absolute top-0 right-0 w-12 h-12 bg-primary/5 rounded-bl-[40px] -z-10"></div>
-                
-                <h3 className="text-xl font-serif font-bold text-ink mb-3 group-hover:text-primary transition-colors flex items-center justify-between">
-                  {style.name}
-                  <Link to={`/creator?style=${style.id}`} className="text-sm font-sans font-medium text-primary bg-primary/10 px-3 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                    开始创作 <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </h3>
-                <div className="mb-2">
-                  <span className="inline-flex px-2 py-1 text-xs text-primary bg-primary/5 border border-primary/10 rounded">{style.categoryLabel}</span>
+
+                {/* 文字解读与信息层 */}
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-serif font-medium text-primary bg-primary/8 px-2.5 py-0.5 rounded border border-primary/15">
+                        {style.categoryLabel}
+                      </span>
+                      <span className="text-[10px] font-mono text-gold font-bold">STYLE 0{i + 1}</span>
+                    </div>
+
+                    <h3 className="text-xl font-serif font-bold text-ink mb-2.5 group-hover:text-primary transition-colors">
+                      {style.name}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-ink/70 leading-relaxed line-clamp-3 mb-4 font-sans">
+                      {style.desc}
+                    </p>
+                  </div>
+
+                  {/* 特征说明与直观行动按钮（不再隐藏在悬停里） */}
+                  <div>
+                    <div className="p-3 rounded-xl bg-white/70 border border-gold/20 flex items-start gap-2 mb-4">
+                      <Info className="w-4 h-4 text-gold shrink-0 mt-0.5" />
+                      <p className="text-[11px] text-ink/65 leading-relaxed font-sans line-clamp-2">
+                        {style.shortDescription || style.visualFeatures.join(' · ')}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-gold/20 flex items-center justify-between gap-3">
+                      <Link
+                        to={`/creator?style=${style.id}`}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl btn-chinese text-xs font-serif shadow-xs hover:shadow-md transition-all"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-gold" />
+                        <span>选用此风格共创</span>
+                      </Link>
+
+                      <Link
+                        to="/gallery"
+                        className="inline-flex items-center justify-center py-2.5 px-3 rounded-xl border border-gold/40 bg-white/80 hover:bg-white text-xs font-serif text-ink/75 hover:text-primary transition-all"
+                      >
+                        <span>赏析成图</span>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm text-ink/70 leading-relaxed mb-4 min-h-[60px]">
-                  {style.desc}
-                </p>
-                
-                <div className="pt-4 border-t border-primary/10 flex items-start gap-2">
-                   <Info className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                   <p className="text-xs text-ink/60 leading-relaxed">
-                     <span className="font-medium text-ink/80">应用参考：</span>
-                     {style.scene}
-                   </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
-      </div>
-
-      <div className="bg-white rounded-2xl shadow-sm border border-primary/10 p-8 md:p-12 mb-16 relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
-        <h2 className="text-2xl font-serif text-primary mb-8 flex items-center gap-3">
-          <ImageIcon className="w-6 h-6 text-gold" />
-          创作方向指引
-        </h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="p-5 bg-rice-paper rounded-xl border border-primary/5 hover:shadow-md transition-shadow">
-             <div className="text-gold font-serif text-lg font-bold mb-2">01. 按视觉特征选风格</div>
-             <p className="text-sm text-ink/70 leading-relaxed">年画与剪纸可提供更鲜明的红色对比参考；汴绣与青花可用于细密纹样和蓝白装饰方向。生成效果仍受模型输出影响。</p>
-          </div>
-          <div className="p-5 bg-rice-paper rounded-xl border border-primary/5 hover:shadow-md transition-shadow">
-             <div className="text-gold font-serif text-lg font-bold mb-2">02. 调整风格提示强度</div>
-             <p className="text-sm text-ink/70 leading-relaxed">工作台会将滑杆值转换为轻、中、强三档风格描述并加入提示词；它不控制姿态、结构网络，也不保证精确复现参考风格。</p>
-          </div>
-          <div className="p-5 bg-rice-paper rounded-xl border border-primary/5 hover:shadow-md transition-shadow">
-             <div className="text-gold font-serif text-lg font-bold mb-2">03. 补充具体创作描述</div>
-             <p className="text-sm text-ink/70 leading-relaxed">在主题中写明色彩、纹样、主体和画面方向，有助于形成更明确的生成提示。当前说明卡来自本地预设条目，不包含外部知识检索或 AI 考证。</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="text-center">
-        <Link
-          to="/creator"
-          className="inline-flex items-center gap-2 px-8 py-4 btn-chinese text-lg font-medium shadow-lg hover:-translate-y-1"
-        >
-          前往工作台开始创作
-          <ArrowRight className="w-5 h-5" />
-        </Link>
       </div>
     </div>
   );
