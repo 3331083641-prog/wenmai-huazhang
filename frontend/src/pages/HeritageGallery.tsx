@@ -72,13 +72,13 @@ const INTERIOR_PRESETS = new Set(['floor1', 'floor2', 'ceiling', 'eave']);
 const TIME_ICONS: Record<TimeOfDay, typeof Sun> = { day: Sun, dusk: Sunset, night: Moon };
 
 const panelClass =
-  'pointer-events-auto w-[min(86vw,286px)] rounded-xl border border-[color:var(--color-gold)]/45 bg-[#FBF6EB]/97 p-2.5 shadow-[0_18px_50px_rgba(63,43,31,0.24)] backdrop-blur';
+  'pointer-events-auto w-[min(86vw,292px)] rounded-2xl border border-[color:var(--color-gold)]/50 bg-[#FDF9F0]/96 p-3.5 shadow-[0_22px_55px_rgba(63,43,31,0.22)] backdrop-blur-md';
 
 const dockButtonClass = (active: boolean) =>
-  `inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[11.5px] transition ${
+  `inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-serif transition-all ${
     active
-      ? 'bg-[color:var(--color-primary)] text-white'
-      : 'text-[color:var(--color-ink)]/70 hover:bg-black/5 hover:text-[color:var(--color-ink)]'
+      ? 'bg-[color:var(--color-primary)] text-white shadow-xs'
+      : 'text-[color:var(--color-ink)]/75 hover:bg-black/5 hover:text-[color:var(--color-primary)]'
   }`;
 
 /* ------------------------------------------------------------------ 微分件 */
@@ -465,26 +465,29 @@ export default function HeritageGallery() {
         <>
           {/* 左上：标题 */}
           <header className="pointer-events-none absolute left-0 top-0 z-20 p-4 sm:p-6">
-            <div className="pointer-events-auto max-w-[300px] rounded-lg border border-[color:var(--color-gold)]/35 bg-[#FBF6EB]/85 px-3.5 py-2.5 backdrop-blur-md">
+            <div className="pointer-events-auto max-w-[320px] rounded-2xl border border-[color:var(--color-gold)]/45 bg-[#FCF8EE]/92 px-4 py-3 shadow-[0_12px_36px_rgba(63,43,31,0.14)] backdrop-blur-md">
               <Link
                 to="/"
-                className="inline-flex items-center gap-1.5 text-[10.5px] tracking-[0.2em] text-[color:var(--color-primary)] transition hover:gap-2.5"
+                className="inline-flex items-center gap-1.5 text-xs font-serif font-bold text-[color:var(--color-primary)] transition-all hover:gap-2.5"
               >
-                <ArrowLeft size={11} />
-                {projectBrand.name}
+                <ArrowLeft size={12} />
+                返回{projectBrand.name}首页
               </Link>
-              <h1 className="mt-1 font-serif text-[17px] leading-tight text-[color:var(--color-ink)]">纹脉展馆</h1>
-              <p className="mt-0.5 text-[10.5px] leading-relaxed text-[color:var(--color-ink)]/55">
-                五馆水院展馆 · {frameSlots.length} 个画框 · {galleryPool.length} 件作品可布展
+              <div className="mt-1 flex items-center gap-2">
+                <h1 className="font-serif text-lg font-bold text-[color:var(--color-ink)]">纹脉展馆</h1>
+                <span className="chinese-seal text-[9px]">3D</span>
+              </div>
+              <p className="mt-0.5 text-xs font-serif text-[color:var(--color-ink)]/65">
+                五馆水院展馆 · {frameSlots.length} 处画框 · {galleryPool.length} 件作品可布展
               </p>
-              <p className="mt-1 text-[10px] tabular-nums tracking-wide text-[color:var(--color-ink)]/45">
+              <p className="mt-1 text-[10px] tabular-nums font-mono text-[color:var(--color-ink)]/50">
                 已布展 {placed}/{frameSlots.length}
               </p>
             </div>
           </header>
 
           {/* 右上：环境 / 帮助 / 沉浸（图标级工具，不占主入口） */}
-          <div className="absolute right-3 top-3 z-30 flex items-center gap-1 rounded-xl border border-[color:var(--color-gold)]/35 bg-[#FBF6EB]/85 p-1 backdrop-blur-md sm:right-5 sm:top-5">
+          <div className="absolute right-3 top-3 z-30 flex items-center gap-1.5 rounded-2xl border border-[color:var(--color-gold)]/45 bg-[#FCF8EE]/92 p-1.5 shadow-[0_10px_30px_rgba(63,43,31,0.12)] backdrop-blur-md sm:right-5 sm:top-5">
             <button
               type="button"
               onClick={() => toggleMenu('environment')}

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
-import { ImagePlus, Download, ArrowRight, Wand2, RefreshCw, RotateCw, Crop, ZoomIn, ZoomOut, Check } from 'lucide-react';
+import { ImagePlus, Download, ArrowRight, Wand2, RefreshCw, RotateCw, Crop, ZoomIn, ZoomOut, Check, Sparkles } from 'lucide-react';
 import { STYLES } from '../data/styleLibrary';
 import { projectBrand } from '../data/projectBrand';
 import { BackendHealth, buildLocalCultureCard, checkBackendHealth, generateImage, GeneratePayload, GenerateResponse } from '../services/generationService';
@@ -393,68 +393,96 @@ export default function AICreator() {
     : typeof resultData?.debug?.request_id === 'string' ? resultData.debug.request_id : null;
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-[calc(100vh-64px)] w-full">
+    <div className="flex flex-col lg:flex-row min-h-[calc(100vh-64px)] w-full bg-paper">
       {/* Container to enforce exact max-w-7xl constraint overall but stretching inside */}
-      <div className="flex-1 flex flex-col lg:flex-row w-full max-w-7xl mx-auto border-x border-primary/5 shadow-2xl bg-paper">
+      <div className="flex-1 flex flex-col lg:flex-row w-full max-w-7xl mx-auto border-x border-gold/20 shadow-[0_20px_50px_rgba(63,43,31,0.06)] bg-[#FCF7EE]">
          
-         {/* Left Workspace */}
-         <div className="lg:w-[50%] flex flex-col border-r border-primary/10 bg-white">
-            <div className="h-20 bg-rice-paper relative overflow-hidden flex items-center px-6 border-b border-primary/10">
-               <div className="absolute inset-0 bg-cover bg-center opacity-10 filter sepia" style={{backgroundImage: `url(${import.meta.env.BASE_URL}songhua.png)`}}></div>
-               <h2 className="text-xl font-serif text-primary relative z-10 flex items-center gap-2">
-                 <Wand2 className="w-5 h-5 text-gold" /> 
-                 国风智能创作工作台
-               </h2>
-               <div className="ml-auto text-xs text-ink/70 font-mono text-right relative z-10">
+         {/* Left Workspace (文房画案) */}
+         <div className="lg:w-[50%] flex flex-col border-r border-gold/25 bg-white/70 backdrop-blur-sm">
+            <div className="h-20 bg-gradient-to-r from-[#FAF3E6] via-[#FCF8F0] to-[#FAF3E6] relative overflow-hidden flex items-center px-6 border-b border-gold/30">
+               <div className="absolute inset-0 bg-cover bg-center opacity-8 filter sepia pointer-events-none" style={{backgroundImage: `url(${import.meta.env.BASE_URL}songhua.png)`}}></div>
+               <div className="relative z-10 flex items-center gap-2.5">
+                 <div className="w-8 h-8 rounded-lg bg-primary/10 border border-gold/40 flex items-center justify-center text-primary shadow-xs">
+                   <Wand2 className="w-4 h-4 text-gold" />
+                 </div>
+                 <div>
+                   <h2 className="text-lg font-serif font-bold text-ink flex items-center gap-2">
+                     国风智能创作工作台
+                     <span className="chinese-seal text-[9px]">文房</span>
+                   </h2>
+                   <p className="text-[10px] text-ink/50 font-serif">Qwen Image 3.0 多模态创作引擎</p>
+                 </div>
+               </div>
+               <div className="ml-auto text-xs font-mono text-right relative z-10">
                  {backendStatus === 'connected' ? (
-                   <div className="text-green-700">
-                     后端已连接
-                     <div className="text-[10px] text-ink/50">AI模型：{backendHealth?.model || 'Qwen Image 3.0'} · {backendHealth?.providers?.dashscope_qwen_image?.available ? '可用' : '状态待确认'}</div>
+                   <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px]">
+                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                     <span>已连接 · {backendHealth?.model || 'Qwen Image 3.0'}</span>
                    </div>
                  ) : backendStatus === 'checking' ? (
-                   <div className="text-ink/50">正在检查后端...</div>
+                   <div className="text-ink/50 text-[11px]">检查模型连接中...</div>
                  ) : (
-                   <div className="text-primary">
-                     后端未连接
-                     <div className="text-[10px] text-ink/60">双击 start_windows.cmd 启动</div>
+                   <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/5 border border-primary/20 text-primary text-[11px]">
+                     <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                     <span>未启动本地后端服务</span>
                    </div>
                  )}
                </div>
             </div>
 
             <div className="flex-1 overflow-y-auto p-6 scrollbar-thin">
-              {savedExample && <p role="status" className="mb-4 rounded-lg bg-secondary/10 p-3 text-sm text-secondary">已保存的作品 · 当前未执行实时推理。参考图预览为原始输入；重新生成需再次选择上传文件。</p>}
-              <section className="mb-5 rounded-xl border border-primary/10 bg-paper p-4 text-sm" aria-label="模型服务状态">
-                <p>图像生成 · Qwen Image 3.0：{backendStatus === 'disconnected' ? '当前不可用' : backendStatus === 'checking' ? '检查中' : backendHealth?.providers?.dashscope_qwen_image?.hasApiKey === false ? '未配置' : backendHealth?.providers?.dashscope_qwen_image?.available ? '已连接（配置就绪）' : '当前不可用'}</p>
-                <p className="mt-2">文化理解 · Qwen3-VL：{backendHealth?.localVisionAnalysis?.available ? '本地可用' : '本地未启动或模型未安装'}</p>
-                <p className="mt-3 text-xs text-ink/60">实时图像生成需要配置阿里云百炼服务及个人 API Key，可能产生调用费用。没有模型也可<Link className="text-primary underline" to="/gallery">查看已保存的作品</Link>；模板说明不代表看图分析成功。</p>
+              {savedExample && (
+                <p role="status" className="mb-4 rounded-xl border border-gold/40 bg-white/80 p-3.5 text-xs text-primary font-serif shadow-xs">
+                  已保存的作品 · 当前未执行实时推理。参考图预览为原始输入；重新生成需再次选择上传文件。
+                </p>
+              )}
+              <section className="mb-6 rounded-xl border border-gold/30 bg-white/70 p-4 text-xs font-serif text-ink/75 shadow-xs" aria-label="模型服务状态">
+                <div className="flex items-center justify-between mb-2 pb-2 border-b border-gold/20">
+                  <span className="font-bold text-ink">双模态模型服务状态</span>
+                  <span className="text-[10px] text-ink/50">本地与云端协同</span>
+                </div>
+                <p>图像生成 · Qwen Image 3.0：<span className="font-sans font-medium text-primary">{backendStatus === 'disconnected' ? '当前不可用' : backendStatus === 'checking' ? '检查中' : backendHealth?.providers?.dashscope_qwen_image?.hasApiKey === false ? '未配置' : backendHealth?.providers?.dashscope_qwen_image?.available ? '已连接（配置就绪）' : '当前不可用'}</span></p>
+                <p className="mt-1.5">文化理解 · Qwen3-VL：<span className="font-sans font-medium text-primary">{backendHealth?.localVisionAnalysis?.available ? '本地可用' : '本地未启动或模型未安装'}</span></p>
+                <p className="mt-2.5 text-[11px] text-ink/55 font-sans leading-relaxed">实时图像生成需配置阿里云百炼服务及个人 API Key。无模型也可<Link className="text-primary underline ml-1" to="/gallery">查看已保存的精选作品</Link>。</p>
               </section>
-              {/* Prompt Area */}
-              <div className="mb-6">
-                <div className="flex justify-between items-end mb-2">
-                   <h3 className="chinese-plaque text-sm">输入创作主题</h3>
-                   <div className="text-[10px] text-ink/40">支持中英文</div>
+
+              {/* Prompt Area (题墨案) */}
+              <div className="mb-6 rounded-xl border border-gold/30 bg-white/80 p-4 shadow-xs">
+                <div className="flex justify-between items-center mb-2.5">
+                   <h3 className="chinese-plaque text-xs py-1">输入创作主题</h3>
+                   <div className="text-[10px] text-ink/45 font-mono">支持中英文提示</div>
                 </div>
                 <textarea
-                  className="w-full h-24 p-3 bg-paper/50 border border-primary/20 rounded focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-sm shadow-inner text-ink/90 resize-none hover:border-primary/40"
+                  className="w-full h-24 p-3 bg-paper/40 border border-gold/30 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-xs sm:text-sm text-ink/90 resize-none hover:border-primary/40 leading-relaxed font-sans"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="描述你想生成的场景、人物或故事..."
+                  placeholder="描述你想生成的场景、人物、故事或纹样意象..."
                 />
-                <p className="mt-2 text-[11px] text-ink/45">主题文本将与所选文化风格共同进入本次生成提示。</p>
+                <p className="mt-2 text-[10.5px] text-ink/50 font-serif">主题文本将与所选传统文化视觉风格共同编译为结构化提示词。</p>
 
-                <div className="mt-4">
-                  <label htmlFor="subject-lock" className="mb-2 flex items-center gap-2 text-xs font-serif text-ink/80">画面主体约束 <span className="rounded border border-primary/20 px-1 text-[10px] font-sans text-primary/60">可选</span></label>
-                  <input id="subject-lock" value={subjectLock} onChange={(e) => setSubjectLock(e.target.value)} maxLength={120} className="w-full rounded border border-primary/20 bg-paper/50 p-2.5 text-sm text-ink/90 shadow-inner transition-all hover:border-primary/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" placeholder="例如：一只狸花猫，保持猫的身份与主要外形" />
-                  <p className="mt-1 text-[10px] text-ink/45">填写后，主体身份优先于风格装饰建议；未填写时不增加额外主体限制。</p>
+                <div className="mt-4 pt-3 border-t border-gold/20">
+                  <label htmlFor="subject-lock" className="mb-1.5 flex items-center gap-2 text-xs font-serif font-bold text-ink/80">
+                    画面主体约束 <span className="rounded border border-primary/25 px-1.5 py-0.2 text-[9px] font-sans text-primary/70">可选参数</span>
+                  </label>
+                  <input
+                    id="subject-lock"
+                    value={subjectLock}
+                    onChange={(e) => setSubjectLock(e.target.value)}
+                    maxLength={120}
+                    className="w-full rounded-lg border border-gold/30 bg-paper/40 p-2 text-xs sm:text-sm text-ink/90 transition-all hover:border-primary/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                    placeholder="例如：一只狸花猫，保持猫的身份与主要外形"
+                  />
+                  <p className="mt-1 text-[10px] text-ink/45 font-serif">填写后主体身份优先于装饰风格约束；未填时不增加额外限制。</p>
                 </div>
                 
-                <div className="mt-4">
-                   <div className="flex justify-between items-end mb-2">
-                      <h3 className="text-xs font-serif text-ink/80 flex items-center gap-2">负向提示词 (排除元素) <span className="text-[10px] text-primary/60 font-sans border border-primary/20 px-1 rounded">可选参数</span></h3>
+                <div className="mt-4 pt-3 border-t border-gold/20">
+                   <div className="flex justify-between items-center mb-1.5">
+                      <h3 className="text-xs font-serif font-bold text-ink/80 flex items-center gap-2">
+                        负向提示词 (排除元素) <span className="text-[9px] text-primary/70 font-sans border border-primary/25 px-1.5 py-0.2 rounded">可选参数</span>
+                      </h3>
                    </div>
                    <input
-                     className="w-full p-2.5 bg-paper/50 border border-primary/20 rounded focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-sm shadow-inner text-ink/90 hover:border-primary/40"
+                     className="w-full p-2 bg-paper/40 border border-gold/30 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all text-xs sm:text-sm text-ink/90 hover:border-primary/40"
                      value={negativePrompt}
                      onChange={(e) => setNegativePrompt(e.target.value)}
                      placeholder="例如：现代建筑、现代服饰、文字、水印..."
@@ -462,15 +490,18 @@ export default function AICreator() {
                 </div>
               </div>
 
-              {/* Upload Image Area */}
-              <div className="mb-6">
-                <div className="flex justify-between items-end mb-2">
-                   <h3 className="chinese-plaque text-sm flex items-center gap-2">上传参考图 <span className="text-[10px] text-primary/60 font-sans border border-primary/20 px-1 rounded">可选参数</span></h3>
+              {/* Upload Image Area (参考画样) */}
+              <div className="mb-6 rounded-xl border border-gold/30 bg-white/80 p-4 shadow-xs">
+                <div className="flex justify-between items-center mb-2.5">
+                   <h3 className="chinese-plaque text-xs py-1 flex items-center gap-2">
+                     上传参考图 <span className="text-[9px] text-primary/70 font-sans border border-primary/25 px-1.5 py-0.2 rounded">可选参数</span>
+                   </h3>
+                   <span className="text-[10px] text-ink/45 font-serif">构图姿态约束</span>
                 </div>
                 <div 
                   className={cn(
-                    "border border-dashed rounded-lg p-5 flex flex-col items-center justify-center text-center cursor-pointer transition-all relative overflow-hidden group",
-                    isDragActive ? "border-primary bg-primary/5" : "border-primary/30 bg-paper/30 hover:bg-white hover:border-primary"
+                    "border-2 border-dashed rounded-xl p-5 flex flex-col items-center justify-center text-center cursor-pointer transition-all relative overflow-hidden group",
+                    isDragActive ? "border-primary bg-primary/8" : "border-gold/40 bg-paper/30 hover:bg-white hover:border-primary/60"
                   )}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
@@ -480,38 +511,47 @@ export default function AICreator() {
                   <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/png, image/jpeg, image/jpg" />
                   
                   {isUploading ? (
-                     <div className="flex items-center gap-2 text-primary">
-                        <RefreshCw className="w-5 h-5 animate-spin" />
-                        <span className="text-sm">读取图片中...</span>
+                     <div className="flex items-center gap-2 text-primary py-2 font-serif">
+                        <RefreshCw className="w-5 h-5 animate-spin text-gold" />
+                        <span className="text-xs">正在解析参考图样...</span>
                      </div>
                   ) : previewUrl ? (
                     <div className="relative w-full flex items-center justify-center gap-4">
-                      <div className="w-20 h-20 rounded shadow-inner overflow-hidden border border-primary/20 relative group-hover:shadow-md transition-shadow">
+                      <div className="w-20 h-20 rounded-lg shadow-sm overflow-hidden border-2 border-white relative group-hover:shadow-md transition-shadow shrink-0 bg-black/5">
                         <img src={previewUrl} alt="ref" className="w-full h-full object-cover" />
                       </div>
                       <div className="text-left flex-1">
-                         <div className="text-sm font-medium text-ink">✓ 参考图已加入本次生成</div>
-                         <div className="text-xs text-ink/50 mt-1 mb-2">参考图将发送至 Qwen Image 3.0，为主体、构图或视觉内容提供参考。</div>
-                         <div className="text-xs text-primary underline underline-offset-2">点击更换</div>
+                         <div className="text-xs font-serif font-bold text-ink flex items-center gap-1.5">
+                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+                           参考图已加入本次生成
+                         </div>
+                         <div className="text-[11px] text-ink/60 mt-1 mb-2 font-sans leading-relaxed">
+                           参考图将连同构图姿态特征发送至 Qwen Image 3.0 多模态模型。
+                         </div>
+                         <div className="text-xs text-primary underline underline-offset-2 font-serif hover:text-primary-dark">
+                           点击重新选择画样
+                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center">
-                      <ImagePlus className="w-6 h-6 text-primary/40 mb-2 group-hover:text-primary transition-colors" />
-                      <p className="text-sm font-medium text-ink/70">拖拽或点击上传</p>
-                      <p className="text-[10px] text-ink/40 mt-1">支持 PNG/JPG，≤10 MB；参考图将参与本次 Qwen Image 3.0 生成</p>
+                    <div className="flex flex-col items-center py-2">
+                      <div className="w-10 h-10 rounded-full bg-gold/15 flex items-center justify-center mb-2 text-gold group-hover:scale-110 transition-transform">
+                        <ImagePlus className="w-5 h-5 text-primary" />
+                      </div>
+                      <p className="text-xs font-serif font-bold text-ink/80">拖拽或点击上传参考画样</p>
+                      <p className="text-[10px] text-ink/45 mt-1 font-sans">支持 PNG / JPG，≤10 MB；参与本次 Qwen Image 3.0 多模态推理</p>
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Style Selection */}
-              <div className="mb-6">
-                <div className="flex justify-between items-end mb-2">
-                   <h3 className="chinese-plaque text-sm">选择核心风格基调</h3>
-                   {currentStyleData && <div className="text-[10px] text-gold font-medium bg-gold/10 px-1.5 rounded">正在使用: {currentStyleData.name}</div>}
+              {/* Style Selection (五色设色) */}
+              <div className="mb-6 rounded-xl border border-gold/30 bg-white/80 p-4 shadow-xs">
+                <div className="flex justify-between items-center mb-2.5">
+                   <h3 className="chinese-plaque text-xs py-1">选择核心风格基调</h3>
+                   {currentStyleData && <div className="text-[10px] text-primary font-serif font-bold bg-primary/10 border border-primary/20 px-2 py-0.5 rounded-full">当前：{currentStyleData.name}</div>}
                 </div>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-5">
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 xl:grid-cols-5">
                   {STYLES.map(style => (
                     <button
                       type="button"
@@ -520,66 +560,98 @@ export default function AICreator() {
                       aria-pressed={selectedStyle === style.id}
                       aria-label={`选择${style.name}`}
                       className={cn(
-                        "relative cursor-pointer rounded-xl border-2 flex flex-col items-center justify-center py-3 px-2 gap-2 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                        "relative cursor-pointer rounded-xl border-2 flex flex-col items-center justify-center py-3 px-2 gap-2 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
                         selectedStyle === style.id 
-                          ? "border-primary bg-white shadow-[0_5px_18px_rgba(158,36,27,0.14)] ring-1 ring-primary/20" 
-                          : "border-black/5 bg-paper/50 hover:bg-white hover:border-primary/40"
+                          ? "border-primary bg-primary/5 shadow-[0_6px_20px_rgba(158,36,27,0.18)] ring-1 ring-primary/30" 
+                          : "border-gold/20 bg-paper/30 hover:bg-white hover:border-gold/50"
                       )}
                     >
-                      {selectedStyle === style.id && <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white"><Check className="h-3 w-3" /></span>}
-                      <img src={style.img || '/zhuxianzhen.png'} alt="" className="h-12 w-12 rounded-full object-cover shadow-sm ring-2 ring-white" />
-                      <span className={cn("text-xs font-semibold leading-snug", selectedStyle === style.id ? "text-primary" : "text-ink/65")}>
+                      {selectedStyle === style.id && (
+                        <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-white text-[9px] shadow-xs">
+                          <Check className="h-2.5 w-2.5" />
+                        </span>
+                      )}
+                      <img src={style.img || '/zhuxianzhen.png'} alt="" className="h-12 w-12 rounded-full object-cover shadow-sm ring-2 ring-white border border-gold/30" />
+                      <span className={cn("text-xs font-serif font-bold leading-snug", selectedStyle === style.id ? "text-primary" : "text-ink/75")}>
                         {style.name}
                       </span>
                     </button>
                   ))}
                 </div>
                 {currentStyleData && (
-                  <div aria-live="polite" className="mt-3 rounded-xl border border-gold/30 bg-gradient-to-r from-[#fff9ef] to-white px-4 py-3 shadow-sm">
+                  <div aria-live="polite" className="mt-3.5 rounded-xl border border-gold/35 bg-gradient-to-r from-[#FFFBF5] via-[#FFF9EE] to-white p-3.5 shadow-xs">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="font-serif text-sm font-semibold text-primary">{currentStyleData.name}</span>
-                      <span className="rounded-full bg-gold/10 px-2.5 py-1 text-[10px] font-medium text-[#8b6a30]">风格特征已写入生成提示</span>
+                      <span className="font-serif text-xs font-bold text-primary flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+                        {currentStyleData.name}
+                      </span>
+                      <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[10px] font-serif font-bold text-[#8b6a30]">
+                        风格先验已写入 Prompt
+                      </span>
                     </div>
-                    <p className="mt-1.5 text-xs leading-relaxed text-ink/65">{currentStyleData.shortDescription}</p>
+                    <p className="mt-1.5 text-[11px] leading-relaxed text-ink/70 font-sans">{currentStyleData.shortDescription}</p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
-                      {currentStyleData.visualFeatures.slice(0, 3).map((feature) => <span key={feature} className="rounded-full border border-primary/10 bg-white/80 px-2 py-1 text-[10px] text-ink/65">{feature}</span>)}
+                      {currentStyleData.visualFeatures.slice(0, 3).map((feature) => (
+                        <span key={feature} className="rounded-md border border-gold/30 bg-white/90 px-2 py-0.5 text-[10px] font-serif text-ink/70 shadow-xs">
+                          {feature}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Generation Settings */}
-              <div className="mb-6">
-                <h3 className="chinese-plaque text-sm mb-2">系统参数</h3>
-                <div className="bg-rice-paper border border-primary/10 rounded-lg p-4 space-y-4 shadow-inner">
+              {/* Generation Settings (笔墨干湿与载体) */}
+              <div className="mb-6 rounded-xl border border-gold/30 bg-white/80 p-4 shadow-xs">
+                <h3 className="chinese-plaque text-xs py-1 mb-3">系统参数调优</h3>
+                <div className="bg-paper/40 border border-gold/25 rounded-xl p-4 space-y-4 shadow-inner">
                    <div>
-                     <div className="flex justify-between text-xs mb-1.5 font-medium"><span className="text-ink/80" title="调整传统文化视觉特征在生成提示中的约束程度。">风格影响强度</span><span className="text-primary">{styleStrength}%</span></div>
-                     <input type="range" min="0" max="100" value={styleStrength} onChange={(e) => setStyleStrength(parseInt(e.target.value))} className="w-full accent-primary h-1.5 bg-black/5 rounded-full appearance-none outline-none" />
-                     <div className="flex justify-between text-[10px] text-ink/40 mt-1"><span>轻度融入</span><span>强化风格</span></div>
-                     <p className="mt-1 text-[10px] text-ink/45">调整传统文化视觉特征在生成提示中的约束程度。</p>
+                     <div className="flex justify-between text-xs mb-1.5 font-serif font-bold">
+                       <span className="text-ink/80" title="调整传统文化视觉特征在生成提示中的约束程度。">风格先验约束强度</span>
+                       <span className="text-primary font-mono">{styleStrength}%</span>
+                     </div>
+                     <input
+                       type="range"
+                       min="0"
+                       max="100"
+                       value={styleStrength}
+                       onChange={(e) => setStyleStrength(parseInt(e.target.value))}
+                       className="w-full accent-primary h-2 bg-black/8 rounded-full appearance-none outline-none cursor-pointer"
+                     />
+                     <div className="flex justify-between text-[10px] text-ink/45 mt-1 font-serif">
+                       <span>轻度融入 · 现代意象</span>
+                       <span>高纯度融入 · 典籍厚重</span>
+                     </div>
                    </div>
                    
-                   <div className="flex gap-4">
-                      <div className="flex-1">
-                         <label className="block text-[10px] text-ink/60 mb-1">构图提示模式</label>
-                         <select value={composition} onChange={(e) => setComposition(e.target.value)} className="w-full p-2 bg-white border border-primary/20 rounded shadow-sm text-xs focus:outline-none focus:border-primary">
-                            <option value="portrait">竖向主体布局</option>
-                            <option value="landscape">横向层次布局</option>
-                            <option value="object">主体居中留白</option>
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-gold/20">
+                      <div>
+                         <label className="block text-[11px] font-serif font-bold text-ink/70 mb-1.5">构图意境模式</label>
+                         <select
+                           value={composition}
+                           onChange={(e) => setComposition(e.target.value)}
+                           className="w-full p-2 bg-white border border-gold/35 rounded-lg shadow-xs text-xs font-serif text-ink focus:outline-none focus:border-primary"
+                         >
+                            <option value="portrait">竖向立轴 · 主体突显</option>
+                            <option value="landscape">横向长卷 · 层次延展</option>
+                            <option value="object">器物特写 · 留白写意</option>
                          </select>
-                         <p className="text-[10px] text-ink/45 mt-1">构图描述写入提示词；输出尺寸由后端服务配置决定。</p>
                       </div>
-                      <div className="flex-1">
-                         <label className="block text-[10px] text-ink/60 mb-1">应用场景提示</label>
-                         <select value={outputType} onChange={(e) => setOutputType(e.target.value)} className="w-full p-2 bg-white border border-primary/20 rounded shadow-sm text-xs focus:outline-none focus:border-primary">
+                      <div>
+                         <label className="block text-[11px] font-serif font-bold text-ink/70 mb-1.5">文创应用载体预设</label>
+                         <select
+                           value={outputType}
+                           onChange={(e) => setOutputType(e.target.value)}
+                           className="w-full p-2 bg-white border border-gold/35 rounded-lg shadow-xs text-xs font-serif text-ink focus:outline-none focus:border-primary"
+                         >
                             <option value="poster">数字艺术海报</option>
-                            <option value="postcard">文旅明信片</option>
-                            <option value="bag">文创帆布袋</option>
-                            <option value="bookmark">文创书签</option>
-                            <option value="coaster">陶瓷杯垫</option>
-                            <option value="social">手机分享图</option>
-                            <option value="screen">数字展陈屏</option>
-                            <option value="ticket">景区纪念票</option>
+                            <option value="postcard">文旅典藏明信片</option>
+                            <option value="bag">国潮帆布袋</option>
+                            <option value="bookmark">金石文创书签</option>
+                            <option value="coaster">青花陶瓷杯垫</option>
+                            <option value="social">手机壁纸与日签</option>
+                            <option value="screen">环幕数字展陈屏</option>
+                            <option value="ticket">景区纪念门票</option>
                          </select>
                       </div>
                    </div>
@@ -588,63 +660,80 @@ export default function AICreator() {
             </div>
 
             {/* Gen Action */}
-            <div className="p-4 border-t border-primary/10 bg-white">
-              <details className="mb-3 rounded border border-primary/10 bg-rice-paper/60 p-3 text-xs text-ink/70">
-                <summary className="cursor-pointer font-medium text-primary">本次请求参数预览</summary>
-                <div className="mt-2 grid grid-cols-2 gap-2">
-                  <div className="col-span-2 truncate" title={prompt}>当前主题：{prompt || '未填写'}</div>
+            <div className="p-4 border-t border-gold/30 bg-[#FAF4E8]">
+              <details className="mb-3 rounded-xl border border-gold/30 bg-white/80 p-3 text-xs text-ink/75 font-serif shadow-xs">
+                <summary className="cursor-pointer font-bold text-primary flex items-center justify-between">
+                  <span>本次请求参数明细</span>
+                  <span className="text-[10px] text-ink/40 font-mono">展开核验</span>
+                </summary>
+                <div className="mt-2.5 grid grid-cols-2 gap-2 text-[11px] pt-2 border-t border-gold/20 font-sans">
+                  <div className="col-span-2 truncate" title={prompt}>主题：{prompt || '未填写'}</div>
                   {subjectLock.trim() && <div className="col-span-2 truncate" title={subjectLock}>主体约束：{subjectLock}</div>}
-                  <div>当前风格：{currentStyleData?.name || selectedStyle}</div>
-                   <div>风格影响强度：{styleStrength}%（通过提示词约束表达）</div>
-                   <div>生成路径：{uploadedImageBase64 ? 'Qwen Image 3.0 参考图创作' : 'Qwen Image 3.0 文本创作'}</div>
-                  <div>输出类型：{outputType}</div>
-                  <div>构图提示：{composition}</div>
-                  <div className="col-span-2 truncate" title={negativePrompt || '未设置'}>负面提示词：{negativePrompt || '未设置'}</div>
+                  <div>风格：{currentStyleData?.name || selectedStyle}</div>
+                  <div>约束强度：{styleStrength}%</div>
+                  <div>推理路径：{uploadedImageBase64 ? '参考图图生图' : '文生图'}</div>
+                  <div>输出载体：{outputType}</div>
+                  <div className="col-span-2 truncate" title={negativePrompt || '未设置'}>负向约束：{negativePrompt || '无'}</div>
                 </div>
               </details>
+
               <button
                 onClick={handleGenerate}
                 disabled={isGenerating}
-                className="w-full py-3.5 btn-chinese disabled:opacity-80 disabled:cursor-not-allowed group relative overflow-hidden"
+                className="w-full py-4 btn-chinese disabled:opacity-80 disabled:cursor-not-allowed group relative overflow-hidden rounded-xl shadow-[0_8px_24px_rgba(158,36,27,0.25)] hover:shadow-[0_12px_32px_rgba(158,36,27,0.35)] transition-all"
               >
                 {isGenerating && (
-                  <motion.div className="absolute inset-y-0 left-0 bg-gold/40" initial={{ width: "0%" }} animate={{ width: `${(generationStep / (GENERATION_STEPS.length - 1)) * 100}%` }} transition={{ ease: "linear" }} />
+                  <motion.div
+                    className="absolute inset-y-0 left-0 bg-gold/35"
+                    initial={{ width: "0%" }}
+                    animate={{ width: `${(generationStep / (GENERATION_STEPS.length - 1)) * 100}%` }}
+                    transition={{ ease: "linear" }}
+                  />
                 )}
-                <div className="relative flex items-center justify-center gap-2 text-white font-medium text-base z-10">
+                <div className="relative flex items-center justify-center gap-2 text-white font-serif font-bold text-base z-10 tracking-wider">
                   {isGenerating ? (
-                    <><RefreshCw className="w-4 h-4 animate-spin text-gold" /><span>{GENERATION_STEPS[generationStep]}</span></>
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin text-gold" />
+                      <span>{GENERATION_STEPS[generationStep]}</span>
+                    </>
                   ) : (
-                    <><Wand2 className="w-4 h-4 text-gold group-hover:scale-110 transition-transform" /><span>AI 生成视觉作品</span></>
+                    <>
+                      <Sparkles className="w-5 h-5 text-gold group-hover:rotate-12 transition-transform" />
+                      <span>笔墨生辉 · 开始智能创作</span>
+                    </>
                   )}
                 </div>
               </button>
             </div>
          </div>
 
-         {/* Right Result Area */}
-         <div className="lg:w-[50%] bg-rice-paper flex flex-col relative z-0">
+         {/* Right Result Area (展陈画境) */}
+         <div className="lg:w-[50%] bg-[#FAF4E8] flex flex-col relative z-0">
            {!hasResult ? (
-             <div className="flex-1 flex flex-col items-center justify-center p-10 relative">
-                <div className="w-full max-w-sm aspect-[3/4] border-2 border-dashed border-primary/20 rounded-xl bg-white/40 flex flex-col items-center justify-center p-8 text-center relative overflow-hidden group">
-                   <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none"></div>
-                   <div className="w-16 h-16 rounded-full bg-white shadow-sm border border-black/5 flex items-center justify-center mb-4 text-primary/30 group-hover:scale-105 group-hover:text-primary/50 transition-all">
-                      <ImagePlus className="w-8 h-8" />
+             <div className="flex-1 flex flex-col items-center justify-center p-8 sm:p-12 relative">
+                <div className="w-full max-w-sm aspect-[3/4] border-2 border-dashed border-gold/45 rounded-2xl bg-white/60 flex flex-col items-center justify-center p-8 text-center relative overflow-hidden group shadow-sm">
+                   <div className="absolute inset-0 bg-gradient-to-t from-gold/10 via-transparent to-transparent pointer-events-none"></div>
+                   <div className="w-16 h-16 rounded-2xl bg-white shadow-xs border border-gold/40 flex items-center justify-center mb-4 text-gold group-hover:scale-105 group-hover:text-primary transition-all">
+                      <ImagePlus className="w-8 h-8 text-primary/60" />
                    </div>
-                   <h3 className="font-serif text-lg text-ink/70 mb-2">{connectionNotice ? '生成未完成' : isGenerating ? '正在生成视觉作品' : '作品暂未生成'}</h3>
-                   <p className={cn("text-xs leading-relaxed max-w-[220px]", connectionNotice ? "text-primary" : "text-ink/50")}>
-                     {connectionNotice || (isGenerating ? GENERATION_STEPS[generationStep] : '填写主题并设置创作参数后，提交至当前图像生成服务。')}
+                   <h3 className="font-serif text-lg font-bold text-ink mb-2">
+                     {connectionNotice ? '创作服务提示' : isGenerating ? '正在笔墨生辉生成中' : '画案待题 · 视觉呈现'}
+                   </h3>
+                   <p className={cn("text-xs leading-relaxed max-w-[240px] font-sans", connectionNotice ? "text-primary" : "text-ink/60")}>
+                     {connectionNotice || (isGenerating ? GENERATION_STEPS[generationStep] : '在左侧输入创作主题并选择文化风格约束后，点击开始创作。')}
                    </p>
                 </div>
                 
                 {historyImages.length > 0 && (
                   <div className="absolute bottom-6 left-6 right-6">
-                     <div className="text-xs text-ink/40 mb-2 flex items-center gap-2">
-                        <div className="h-px bg-black/10 flex-1"></div>
-                        <span className="uppercase tracking-wider">最近生成预览 · 当前浏览器</span>
+                     <div className="text-xs text-ink/50 mb-2 flex items-center gap-2 font-serif">
+                        <div className="h-px bg-gold/30 flex-1"></div>
+                        <span className="tracking-wider">最近生成记录 · 浏览器本地沙箱</span>
+                        <div className="h-px bg-gold/30 flex-1"></div>
                      </div>
-                     <div className="flex gap-3">
+                     <div className="flex gap-3 justify-center">
                         {historyImages.map((img, i) => (
-                           <div key={i} className="w-12 h-16 rounded shadow-sm border border-white p-0.5 bg-paper overflow-hidden opacity-60 hover:opacity-100 cursor-pointer transition-opacity">
+                           <div key={i} className="w-12 h-16 rounded-lg shadow-xs border-2 border-white p-0.5 bg-paper overflow-hidden opacity-70 hover:opacity-100 cursor-pointer transition-all hover:scale-105">
                               <img src={img} className="w-full h-full object-cover" alt="" />
                            </div>
                         ))}
@@ -654,46 +743,116 @@ export default function AICreator() {
              </div>
            ) : (
              <div className="flex-1 overflow-y-auto scrollbar-thin flex flex-col">
-                 <div className="flex items-center gap-2 border-b border-black/5 bg-white/60 px-6 py-3 text-xs text-ink/55 backdrop-blur">
-                   <span className="h-1.5 w-1.5 rounded-full bg-green-600" />{getModeLabel(mode)}完成 · Qwen Image 3.0
+                 <div className="flex items-center justify-between border-b border-gold/30 bg-white/75 px-6 py-3 text-xs text-ink/70 backdrop-blur-sm">
+                   <div className="flex items-center gap-2 font-serif">
+                     <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+                     <span className="font-bold text-ink">{getModeLabel(mode)}完成</span>
+                     <span className="text-ink/40">|</span>
+                     <span>Qwen Image 3.0</span>
+                   </div>
+                   <span className="chinese-seal text-[9px]">落款成图</span>
                  </div>
 
-                                <div className="flex-1 overflow-y-auto scrollbar-thin p-5 sm:p-7 lg:p-8">
+                 <div className="flex-1 overflow-y-auto scrollbar-thin p-5 sm:p-7 lg:p-8">
                   <div className="mx-auto flex w-full max-w-4xl flex-col items-center">
-                    <div className="mb-5 flex w-full flex-wrap items-center justify-between gap-3 rounded-xl border border-primary/10 bg-white/80 px-4 py-3 text-xs text-ink/65">
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                        <span className="inline-flex items-center gap-2 font-medium text-ink"><span className="h-2 w-2 rounded-full bg-green-600" />AI生成作品</span>
-                        <span>{getModeLabel(mode)}</span><span>生成引擎：Qwen Image 3.0</span>
+                    <div className="mb-5 flex w-full flex-wrap items-center justify-between gap-3 rounded-xl border border-gold/35 bg-white/90 px-4 py-3 text-xs text-ink/75 shadow-xs">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-serif">
+                        <span className="inline-flex items-center gap-1.5 font-bold text-ink">
+                          <Sparkles className="w-3.5 h-3.5 text-gold" />
+                          AI 生成新作品
+                        </span>
+                        <span>{getModeLabel(mode)}</span>
+                        <span>引擎：Qwen Image 3.0</span>
                       </div>
-                      {resultData?.referenceImageUsed === true && <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1.5 font-medium text-green-800">✓ 用户参考图已参与模型推理</span>}
-                      {resultPayload?.uploadedImage && resultData?.referenceImageUsed !== true && <span className="rounded-full bg-amber-50 px-3 py-1.5 text-amber-800">参考图已提交，服务未确认参与</span>}
+                      {resultData?.referenceImageUsed === true && (
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 font-serif font-bold text-emerald-800 text-[11px]">
+                          ✓ 参考图已参与推理
+                        </span>
+                      )}
+                      {resultPayload?.uploadedImage && resultData?.referenceImageUsed !== true && (
+                        <span className="rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-amber-800 text-[11px]">
+                          参考图已提交，服务未确认
+                        </span>
+                      )}
                     </div>
-                    {connectionNotice && <div className="mb-4 w-full rounded-lg border border-primary/15 bg-primary/5 px-4 py-2 text-sm text-primary">{connectionNotice}</div>}
-                    {resultData?.error && <div className="mb-4 w-full rounded-lg border border-primary/15 bg-primary/5 px-4 py-2 text-sm text-primary">{resultData.error}</div>}
+                    {connectionNotice && <div className="mb-4 w-full rounded-xl border border-primary/20 bg-primary/5 px-4 py-2.5 text-xs text-primary">{connectionNotice}</div>}
+                    {resultData?.error && <div className="mb-4 w-full rounded-xl border border-primary/20 bg-primary/5 px-4 py-2.5 text-xs text-primary">{resultData.error}</div>}
 
+                    {/* 装裱展陈画框 */}
                     <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-[520px]">
-                      <div className="group relative mx-auto aspect-[3/4] w-full overflow-hidden rounded-xl border-[6px] border-white bg-[#eee7dc] shadow-[0_16px_44px_rgba(70,42,30,0.15)]">
-                        <img src={resultImage} alt="Qwen Image 3.0生成作品" className="h-full w-full object-contain" style={{ transform: `rotate(${rotation}deg) scale(${scale})` }} onLoad={() => { if (resultImage) { setImageLoadState('loaded'); setImageLoadError(null); } }} onError={() => { setImageLoadState('error'); setImageLoadError('生成图片暂时无法加载，请确认后端图片服务仍在运行。'); }} />
-                        {imageLoadState === 'loading' && <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/75 text-sm text-ink/65"><RefreshCw className="mr-2 h-4 w-4 animate-spin" />作品加载中…</div>}
-                        {imageLoadState === 'error' && <div className="absolute inset-x-3 bottom-3 z-20 rounded-lg border border-primary/20 bg-white/95 p-3 text-xs text-primary">{imageLoadError || '图片加载失败'}</div>}
-                        <div className="pointer-events-none absolute inset-2 rounded-lg border border-gold/40" />
+                      <div className="group relative mx-auto aspect-[3/4] w-full overflow-hidden rounded-2xl border-[6px] border-white bg-[#eee7dc] shadow-[0_20px_50px_rgba(70,42,30,0.18)]">
+                        <img
+                          src={resultImage}
+                          alt="Qwen Image 3.0生成作品"
+                          className="h-full w-full object-contain"
+                          style={{ transform: `rotate(${rotation}deg) scale(${scale})` }}
+                          onLoad={() => { if (resultImage) { setImageLoadState('loaded'); setImageLoadError(null); } }}
+                          onError={() => { setImageLoadState('error'); setImageLoadError('生成图片暂时无法加载，请确认后端图片服务仍在运行。'); }}
+                        />
+                        {imageLoadState === 'loading' && (
+                          <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/80 font-serif text-sm text-primary">
+                            <RefreshCw className="mr-2 h-4 w-4 animate-spin text-gold" />作品装裱中…
+                          </div>
+                        )}
+                        {imageLoadState === 'error' && (
+                          <div className="absolute inset-x-3 bottom-3 z-20 rounded-xl border border-primary/25 bg-white/95 p-3 text-xs text-primary shadow-lg">
+                            {imageLoadError || '图片加载失败'}
+                          </div>
+                        )}
+                        <div className="pointer-events-none absolute inset-2 rounded-xl border border-gold/40" />
                         <div className="absolute right-3 top-3 z-20 flex flex-col gap-1.5 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
                           {[
                             { icon: RotateCw, title: '旋转', act: handleRotate },
                             { icon: Crop, title: '裁剪预览', act: () => setIsCropping(true) },
                             { icon: ZoomIn, title: '放大', act: handleZoomIn },
                             { icon: ZoomOut, title: '缩小', act: handleZoomOut },
-                          ].map((tool) => <button key={tool.title} type="button" onClick={tool.act} title={tool.title} className="flex h-8 w-8 items-center justify-center rounded-lg border border-black/5 bg-white/95 text-primary shadow-sm transition hover:bg-primary hover:text-white"><tool.icon className="h-4 w-4" /></button>)}
+                          ].map((tool) => (
+                            <button
+                              key={tool.title}
+                              type="button"
+                              onClick={tool.act}
+                              title={tool.title}
+                              className="flex h-8 w-8 items-center justify-center rounded-lg border border-gold/40 bg-white/95 text-primary shadow-xs transition hover:bg-primary hover:text-white"
+                            >
+                              <tool.icon className="h-4 w-4" />
+                            </button>
+                          ))}
                         </div>
-                        {isCropping && <div className="absolute inset-0 z-30 flex flex-col bg-black/60"><div className="relative flex-1 p-6"><div className="relative h-full w-full border border-dashed border-white shadow-[0_0_0_99rem_rgba(0,0,0,0.4)]" /></div><div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2"><button type="button" onClick={() => setIsCropping(false)} className="rounded bg-white px-3 py-2 text-xs shadow">取消</button><button type="button" onClick={() => setIsCropping(false)} className="rounded bg-primary px-3 py-2 text-xs text-white shadow">完成</button></div></div>}
+                        {isCropping && (
+                          <div className="absolute inset-0 z-30 flex flex-col bg-black/60">
+                            <div className="relative flex-1 p-6">
+                              <div className="relative h-full w-full border border-dashed border-white shadow-[0_0_0_99rem_rgba(0,0,0,0.4)]" />
+                            </div>
+                            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+                              <button type="button" onClick={() => setIsCropping(false)} className="rounded-lg bg-white px-3 py-1.5 text-xs font-serif shadow">取消</button>
+                              <button type="button" onClick={() => setIsCropping(false)} className="rounded-lg bg-primary px-3 py-1.5 text-xs font-serif text-white shadow">完成</button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </motion.div>
 
-                    <div className="mt-4 grid w-full max-w-[520px] grid-cols-1 gap-3 sm:grid-cols-2">
-                      <button type="button" onClick={() => void handleDownloadResult()} disabled={isDownloadingResult} className="inline-flex items-center justify-center gap-2 rounded-lg border border-primary/20 bg-white px-4 py-3 text-sm font-semibold text-primary shadow-sm transition hover:bg-primary hover:text-white disabled:cursor-wait disabled:opacity-70">{isDownloadingResult ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}{isDownloadingResult ? '下载中…' : '下载生成原图'}</button>
-                      <button type="button" onClick={() => navigate('/products')} className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-primary/90"><ArrowRight className="h-4 w-4" />前往文创预览</button>
+                    {/* 行动按钮群 */}
+                    <div className="mt-5 grid w-full max-w-[520px] grid-cols-1 gap-3 sm:grid-cols-2">
+                      <button
+                        type="button"
+                        onClick={() => void handleDownloadResult()}
+                        disabled={isDownloadingResult}
+                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-gold/40 bg-white px-4 py-3 text-xs sm:text-sm font-serif font-bold text-primary shadow-xs transition hover:bg-primary hover:text-white disabled:cursor-wait disabled:opacity-70"
+                      >
+                        {isDownloadingResult ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                        {isDownloadingResult ? '下载中…' : '下载高清原图'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => navigate('/products')}
+                        className="inline-flex items-center justify-center gap-2 rounded-xl btn-chinese px-4 py-3 text-xs sm:text-sm font-serif font-bold shadow-xs hover:shadow-md transition-all"
+                      >
+                        <span>前往文创工坊预览</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
                     </div>
-                    {downloadStatus && <p role="status" aria-live="polite" className="mt-2 w-full max-w-[520px] text-center text-xs text-ink/60">{downloadStatus}</p>}
+                    {downloadStatus && <p role="status" aria-live="polite" className="mt-2 w-full max-w-[520px] text-center text-xs font-serif text-ink/70">{downloadStatus}</p>}
 
                     {savedCase && (
                       <div

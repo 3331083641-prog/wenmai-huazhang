@@ -405,79 +405,98 @@ export default function ProductStudio() {
   const displayImage = sourceImageError ? DEFAULT_SOURCE_IMAGE : (sourceData?.imageUrl || DEFAULT_SOURCE_IMAGE);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl font-serif text-primary font-bold mb-4">文创衍生效果中心</h1>
-        <p className="text-lg text-ink/80 max-w-2xl mx-auto">
-          将最近一次生成作品映射到预设文创载体模板，预览其在数字海报、纪念品和传播画面中的视觉效果。此页面提供应用示意，不包含实体生产、订单或印刷服务。
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-16">
+      {/* 头部：高端文创奢侈工坊展陈美学 */}
+      <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/40 bg-white/70 shadow-xs mb-4">
+          <ShoppingBag className="w-3.5 h-3.5 text-gold" />
+          <span className="text-xs font-serif font-medium text-ink/80 tracking-widest">
+            东方生活美学 · 文博实体打样中心
+          </span>
+        </div>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-ink mb-4">
+          文创衍生效果工坊
+        </h1>
+        <p className="text-sm sm:text-base text-ink/75 leading-relaxed font-sans">
+          将 AI 创作作品实时映射至 8 大预设文创载体模板，高精度预览在典藏礼盒、生活茶席、真丝团扇与曲面展陈中的实体艺术观感。
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-12 mb-20">
-        {/* Left: Origin Artwork */}
+      <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 mb-20">
+        {/* Left: Origin Artwork (装裱画轴) */}
         <div className="lg:w-1/3">
           <div className="sticky top-24">
-            <h3 className="chinese-plaque text-lg mb-4">源作品</h3>
-            <div className="bg-white p-4 rounded bg-rice-paper shadow-sm border border-primary/20 chinese-border mt-2">
-              <div className="rounded overflow-hidden aspect-[3/4] mb-4 border-[6px] border-white shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="chinese-plaque text-xs py-1">当前打样源作品</h3>
+              <span className="chinese-seal text-[9px]">画芯</span>
+            </div>
+            <div className="oriental-gallery-card p-5 rounded-2xl shadow-sm border border-gold/35 mt-1">
+              <div className="rounded-xl overflow-hidden aspect-[3/4] mb-4 border-[4px] border-white shadow-md bg-black/5">
                 <img 
                   src={displayImage} 
                   alt="当前生成作品" 
                   onError={(e) => { setSourceImageError(true); e.currentTarget.src = DEFAULT_SOURCE_IMAGE; }}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />
               </div>
-              <h4 className="font-serif font-bold text-lg text-primary text-center">{sourceData?.title || '开封宋韵印象'}</h4>
-              <p className="text-xs text-ink/80 font-medium text-center mt-1">{sourceData?.theme || '示例源素材'}</p>
-              <p className="text-xs text-ink/60 text-center mt-1 pb-2 border-b border-black/5">
+              <h4 className="font-serif font-bold text-lg text-ink text-center">{sourceData?.title || '开封宋韵印象'}</h4>
+              <p className="text-xs text-ink/75 font-serif text-center mt-1">{sourceData?.theme || '示例源素材'}</p>
+              <p className="text-[11px] text-ink/55 text-center mt-1 pb-3 border-b border-gold/20 font-serif">
                 {sourceData?.styleName || '示例源素材'}
-                {typeof sourceData?.styleStrength === 'number' ? ` · 强度 ${sourceData.styleStrength.toFixed(2)}` : ''}
+                {typeof sourceData?.styleStrength === 'number' ? ` · 约束强度 ${sourceData.styleStrength.toFixed(2)}` : ''}
               </p>
               {!sourceData ? (
-                 <p className="text-xs text-ink/50 text-center mt-2 flex flex-col items-center gap-1">
-                    当前为示例作品
-                    <button onClick={()=>navigate('/creator')} className="text-primary hover:underline">前往智能生成页生成新作品</button>
-                 </p>
+                 <div className="text-xs text-ink/50 text-center mt-3 flex flex-col items-center gap-1.5 font-serif">
+                    <span>当前为内置精选示例作品</span>
+                    <button onClick={()=>navigate('/creator')} className="inline-flex items-center gap-1 text-primary hover:underline font-bold">前往创作台生成新作品 →</button>
+                 </div>
               ) : (
-                 <>
-                   <p className="text-xs text-green-600 text-center mt-2 font-medium">{getSourceLabel(sourceData.provider, sourceData.mode)}</p>
-                   <p className="text-[10px] text-ink/50 text-center mt-1 font-mono">mode: {sourceData.mode} · provider: {sourceData.provider}</p>
+                 <div className="mt-2.5">
+                   <p className="text-xs text-emerald-800 text-center font-serif font-bold">{getSourceLabel(sourceData.provider, sourceData.mode)}</p>
+                   <p className="text-[10px] text-ink/45 text-center mt-0.5 font-mono">mode: {sourceData.mode} · provider: {sourceData.provider}</p>
                    {sourceImageError && <p className="text-xs text-primary text-center mt-1 break-all">原图地址无法加载，已使用示例图兜底：{sourceData.imageUrl}</p>}
-                 </>
+                 </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* Right: Mockups Grid */}
+        {/* Right: Mockups Grid (载体橱窗) */}
         <div className="lg:w-2/3">
-          <div className="bg-primary/5 border border-primary/10 rounded-lg p-4 mb-8 flex items-start gap-3">
-             <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
-                <ShoppingBag className="w-4 h-4 text-primary" />
+          <div className="rounded-2xl border border-gold/30 bg-white/70 p-4 mb-8 flex items-start gap-3.5 shadow-xs backdrop-blur-sm">
+             <div className="w-9 h-9 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center shrink-0 text-primary">
+                <ShoppingBag className="w-4 h-4 text-gold" />
              </div>
              <div>
-                <h4 className="font-bold text-ink mb-1">文创效果一键预览</h4>
-                <p className="text-sm text-ink/70">作品会显示在预设的文创载体模板中，用于比较不同版式与媒介的视觉呈现；模板不是独立生成的产品图片。</p>
+                <h4 className="font-serif font-bold text-sm text-ink mb-0.5">8 类文创载体真实比例映射</h4>
+                <p className="text-xs text-ink/65 leading-relaxed font-sans">
+                  通过物理比例换算与材质光影，直观比较作品在纸品、布艺、陶瓷与数字大屏上的视觉表现，并可一键导出 1600 × 1200 高清打样图。
+                </p>
              </div>
           </div>
-          <h3 className="chinese-plaque text-lg mb-4">文创载体效果预览</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="chinese-plaque text-xs py-1">文创载体效果预览</h3>
+            <span className="text-xs font-serif text-ink/50">共 8 款生活美学预设</span>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
             {PRODUCTS.map((product, i) => {
               const Icon = product.icon;
               return (
                 <motion.div
                   key={product.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  className="bg-white rounded-xl shadow-sm border border-border-red/10 overflow-hidden flex flex-col group hover:shadow-md transition-shadow"
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className="oriental-gallery-card rounded-2xl shadow-xs overflow-hidden flex flex-col group hover:shadow-[0_16px_40px_rgba(158,36,27,0.12)] hover:-translate-y-1 transition-all duration-300"
                 >
-                  <div className="bg-paper p-4 flex-1 flex items-center justify-center relative overflow-hidden aspect-square">
-                    <div className="absolute inset-0 bg-white/40 z-0 pointer-events-none"></div>
+                  <div className="bg-[#F8EEDC]/60 p-4 flex-1 flex items-center justify-center relative overflow-hidden aspect-square border-b border-gold/20">
+                    <div className="absolute inset-0 bg-white/30 z-0 pointer-events-none" />
                     {renderMockup(product.id, displayImage)}
                   </div>
-                  <div className="p-3 text-center border-t border-border-red/5">
-                    <p className="text-sm font-medium text-ink flex items-center justify-center gap-1.5 mb-2">
+                  <div className="p-3 text-center bg-white/80">
+                    <p className="text-xs sm:text-sm font-serif font-bold text-ink flex items-center justify-center gap-1.5 mb-2.5">
                        <Icon className="w-3.5 h-3.5 text-primary/70" />
                        {product.name}
                     </p>
@@ -485,18 +504,23 @@ export default function ProductStudio() {
                       <button
                          onClick={() => handleSelectPreview(product.id)}
                          aria-pressed={selectedProductId === product.id}
-                         className={cn("min-h-9 rounded border transition-colors text-[11px] font-medium flex items-center justify-center gap-1", selectedProductId === product.id ? "bg-primary text-white border-primary" : "bg-primary/5 hover:bg-primary text-primary hover:text-white border-primary/20 hover:border-primary")}
+                         className={cn(
+                           "min-h-8 rounded-lg border transition-all text-[11px] font-serif font-bold flex items-center justify-center gap-1 cursor-pointer",
+                           selectedProductId === product.id 
+                             ? "bg-primary text-white border-primary shadow-xs" 
+                             : "bg-white hover:bg-primary/5 text-ink/75 hover:text-primary border-gold/30 hover:border-primary/40"
+                         )}
                       >
-                        {selectedProductId === product.id ? <><Check className="w-3 h-3"/> 已选择</> : <>查看效果</>}
+                        {selectedProductId === product.id ? <><Check className="w-3 h-3"/> 已选择</> : <>预览</>}
                       </button>
                       <button
                         onClick={() => void handleDownloadProduct(product.id)}
                         disabled={!sourceData || sourceImageError || downloadingProductId !== null}
-                        className="min-h-9 rounded border border-primary/20 bg-white text-[11px] font-medium text-primary flex items-center justify-center gap-1 transition-colors hover:bg-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                        className="min-h-8 rounded-lg border border-gold/40 bg-white/90 text-[11px] font-serif font-bold text-primary flex items-center justify-center gap-1 transition-all hover:bg-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-40 shadow-xs cursor-pointer"
                         aria-label={`下载${product.name}效果图`}
                       >
                         {downloadingProductId === product.id ? <LoaderCircle className="h-3 w-3 animate-spin" /> : <Download className="h-3 w-3" />}
-                        {downloadingProductId === product.id ? '导出中' : '下载效果图'}
+                        {downloadingProductId === product.id ? '导出中' : '导出打样'}
                       </button>
                     </div>
                   </div>
