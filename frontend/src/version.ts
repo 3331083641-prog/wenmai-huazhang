@@ -4,11 +4,11 @@
  */
 
 export const APP_VERSION = {
-  version: '2.3.0-visual-integrated',
-  buildTag: '2026.11-gpt-image2-integrated',
+  version: '2.4.0-mastery-refined',
+  buildTag: '2026.11-mastery-refined',
   edition: '传统文化视觉智能创作与沉浸式文创应用平台',
-  releaseName: '纹脉华章 VNext GPT Image 2 高级艺术素材全量集成版',
-  updatedAt: '2026-11-15',
+  releaseName: '纹脉华章 VNext P0/P1 视觉减法与交互深度精修版',
+  updatedAt: '2026-11-16',
 };
 
 if (typeof window !== 'undefined') {

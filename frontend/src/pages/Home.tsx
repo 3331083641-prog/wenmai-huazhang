@@ -1,24 +1,16 @@
-import { useState } from 'react';
 import { projectBrand } from '../data/projectBrand';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   Sparkles,
-  BookOpen,
-  PenTool,
   Layout,
   Palette,
   Eye,
   Boxes,
   Compass,
-  Layers,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
   Cpu,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-import { cn } from '../lib/utils';
+import { motion } from 'motion/react';
 import { experienceById } from '../data/experiences';
 import { uiPreviews } from '../data/uiPreviews';
 
@@ -33,7 +25,7 @@ const INTERACTIVE_ENTRIES = [
     tag: '画中有话',
     styleBadge: '朱仙镇木版年画',
     title: '瑞猫迎春',
-    desc: '在年画上点开六处线索，看粗黑墨线与矿物套色如何勾勒吉祥瑞兽与传统门神构图。',
+    desc: '在年画上点开六处微观工艺线索，看粗黑墨线与矿物套色如何勾勒吉祥瑞兽。',
     dynasty: '中原民间非遗',
   },
   {
@@ -42,7 +34,7 @@ const INTERACTIVE_ENTRIES = [
     tag: '一图一境',
     styleBadge: '汴绣纹样',
     title: '绣兔牡丹',
-    desc: '顺着三折叙事品读汴绣：看丝线如何当笔、色阶如何自然晕染，感悟宋绣典雅温润之美的传承。',
+    desc: '顺着三折长卷叙事品读汴绣：看丝线如何当笔、色阶如何自然晕染，感悟宋绣温润之美。',
     dynasty: '宋韵宫廷名绣',
   },
   {
@@ -51,103 +43,63 @@ const INTERACTIVE_ENTRIES = [
     tag: '画境漫游',
     styleBadge: '宋画青绿山水',
     title: '云鹤临水楼',
-    desc: '推进镜头沉浸入画：近景苍松翠石掠过、远峦重重退开，自由环顾漫游，探寻画中隐秘细节。',
+    desc: '推进镜头沉浸入画：近景苍松翠石掠过、远峦重重退开，体验 2.5D 深度视差漫游。',
     dynasty: '千里江山意境',
   },
 ];
 
 /**
- * 平台核心能力矩阵（短标题 + 诗意摘要 + 展开工法机理）
+ * 平台核心数智能力（轻量索引版，详细技术见 About 页面）
  */
-const CORE_CAPABILITIES = [
+const PLATFORM_PILLARS = [
   {
     icon: Palette,
-    title: '五大传统视觉风格库',
-    poeticSummary: '以五大传统文化门类为引，凝练东方设色与纹样脉络。',
-    detailedDesc: '严选朱仙镇木版年画、汴绣纹样、宋画青绿山水、青花瓷纹样与中国剪纸，系统提炼设色谱系、构图法则与纹样肌理，为 AI 创作提供精确的文化先验约束。',
-    highlights: ['五大门类经典母题系统解构', '设色特征谱系量化定义', '非遗纹样骨骼语义约束'],
-    tag: '风格体系',
-    badge: '典藏传承',
+    title: '五大传统视觉风格',
+    desc: '解构朱仙镇木版年画、汴绣、宋画青绿、青花瓷与剪纸设色构图体系。',
+    tag: '风格基因',
     to: '/styles',
-    actionText: '浏览风格基因',
   },
   {
     icon: Sparkles,
-    title: 'Qwen Image 3.0 可控创作',
-    poeticSummary: '双驱多模态视觉生成，真实回报参考图置信状态。',
-    detailedDesc: '支持「输入文本主题 + 传统文化参考图 + 风格强度约束」，实现可控的多模态视觉生成，服务端精准校验并真实返回 referenceImageUsed 凭据，杜绝伪概念伪生成。',
-    highlights: ['文本主题与参考图双向约束', '0%~100% 风格强调细粒度调节', '百炼云端官方生成凭据校验'],
+    title: 'Qwen Image 3.0 创作',
+    desc: '文本主题与参考图双驱动创作，真实回报参考图置信凭据。',
     tag: '智能生成',
-    badge: '百炼大模型',
     to: '/creator',
-    actionText: '开始智能创作',
-  },
-  {
-    icon: Cpu,
-    title: 'Qwen3-VL 视觉理解与文化卡',
-    poeticSummary: '端侧多模态深度解析，自动提炼文化意涵与工艺特征。',
-    detailedDesc: '接入端侧轻量化多模态大模型，成图后自动分析构图元素、色彩象征意涵与文创转化建议，一键导出精致排版的双语 CultureCard 说明卡。',
-    highlights: ['端侧视觉模型自动化推理', '非遗工艺特征与色彩象征解读', '一键导出高清文创说明卡'],
-    tag: '文化解读',
-    badge: '端侧推理',
-    to: '/creator',
-    actionText: '探索文化解读',
   },
   {
     icon: Eye,
-    title: '作品展厅与多维互动',
-    poeticSummary: '成图落盘防伪追溯，流水线构建多重深度交互。',
-    detailedDesc: '作品生成即通过 Case Store 本地持久化入库，自动生成 SHA-256 审计记录；后台流水线自动构建画中有话、一图一境与 2.5D 画境漫游，无需重启即可多维度深度赏析。',
-    highlights: ['Case Store 本地持久化存储', 'SHA-256 全生命周期防伪审计', '微观线索热点与画境视差漫游'],
+    title: '多维交互与画境漫游',
+    desc: '成图自动构建热点、长卷叙事与 2.5D 深度分层视差漫游。',
     tag: '互动赏析',
-    badge: '沉浸共创',
     to: '/gallery',
-    actionText: '进入作品展厅',
   },
   {
     icon: Boxes,
-    title: '三维纹脉展馆与自由策展',
-    poeticSummary: '五馆水院古建漫游，30处画框换画与器物陈设。',
-    detailedDesc: '五馆水院虚拟艺术展馆，支持自由漫游、30 处自定义画框换画、传统器物陈设布置、昼夜光影切换与开关门、楼梯通行与水中游动。',
-    highlights: ['Three.js 60FPS 虚拟实体空间', '30 处自定义画框换画与陈设', '昼夜晨昏光影与物理环境交互'],
+    title: '五馆水院三维展馆',
+    desc: 'Three.js 渲染古建水院空间，支持 30 处自定义策展换画与器物陈列。',
     tag: '虚拟空间',
-    badge: '空间展陈',
     to: '/heritage-gallery',
-    actionText: '漫游虚拟展馆',
-  },
-  {
-    icon: Layout,
-    title: '文创转化与多载体打样',
-    poeticSummary: '作品即时映射八大文创实物，按比例导出高清图。',
-    detailedDesc: '将作品一键映射到文旅明信片、数字海报、帆布袋、书签、青瓷杯垫等 8 类预设载体，支持按真实工艺比例预览并导出 1600x1200 高清应用图。',
-    highlights: ['8 类国潮文创载体预设', '按真实工艺比例实时预览', '1600x1200 高清 PNG 导出渲染'],
-    tag: '文创应用',
-    badge: '即时打样',
-    to: '/products',
-    actionText: '体验文创工坊',
   },
 ];
 
 export default function Home() {
-  const [expandedCap, setExpandedCap] = useState<number | null>(null);
-
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-16 lg:py-20">
-      {/* ── 1. Hero 首屏：Scrolltide / Supahero 级文化殿堂叙事 ── */}
-      <section className="relative grid lg:grid-cols-12 gap-12 lg:gap-8 items-center mb-24 md:mb-32">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-14 lg:py-16">
+      {/* ── 1. Hero 首屏：东方气韵主叙事 ── */}
+      <section className="relative grid lg:grid-cols-12 gap-10 lg:gap-8 items-center mb-20 md:mb-28">
         {/* 背景柔光晕染 */}
         <div className="absolute -top-12 -left-12 w-96 h-96 bg-primary/6 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-1/3 right-10 w-80 h-80 bg-gold/8 rounded-full blur-3xl pointer-events-none" />
 
         {/* 左侧：东方气韵大标题与排版 */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="lg:col-span-6 relative z-10"
         >
           {/* 文化标识胶囊 */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/40 bg-white/70 shadow-xs mb-6 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gold/40 bg-white/80 shadow-xs mb-6 backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-xs font-serif font-medium text-ink/80 tracking-wider">
               传统文化视觉智能创作 · 沉浸展陈 · 文创应用
@@ -157,7 +109,7 @@ export default function Home() {
           {/* 巨幅主标题 */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-black tracking-tight leading-[1.18] mb-6 text-ink">
             {projectBrand.name}
-            <div className="mt-3 flex items-center gap-3">
+            <div className="mt-3 flex items-center gap-3 flex-wrap">
               <span className="text-xl sm:text-2xl lg:text-3xl font-medium text-primary tracking-wide">
                 以纹为引 · 入画成境
               </span>
@@ -165,7 +117,7 @@ export default function Home() {
             </div>
           </h1>
 
-          {/* 核心阐释（精简、文学化、去模板化） */}
+          {/* 核心阐释 */}
           <p className="text-base sm:text-lg text-ink/75 mb-8 leading-relaxed font-sans max-w-xl">
             一纹一脉，溯源东方。融汇五大传统文化经典视觉基因，借助多模态智能创作与三维虚拟展馆，让沉淀千载的华夏美学在数字空间自成气象。
           </p>
@@ -174,7 +126,7 @@ export default function Home() {
           <div className="flex flex-wrap items-center gap-4">
             <Link
               to="/creator"
-              className="group relative inline-flex items-center gap-2 px-8 py-3.5 btn-chinese text-base font-serif shadow-[0_8px_24px_rgba(158,36,27,0.25)] hover:shadow-[0_12px_32px_rgba(158,36,27,0.35)] transition-all"
+              className="group relative inline-flex items-center gap-2 px-7 py-3.5 btn-chinese text-base font-serif shadow-[0_8px_24px_rgba(158,36,27,0.22)] hover:shadow-[0_12px_32px_rgba(158,36,27,0.32)] transition-all"
             >
               <Sparkles className="w-4 h-4 text-gold animate-pulse" />
               <span>立即体验创作</span>
@@ -201,10 +153,10 @@ export default function Home() {
 
         {/* 右侧：五大传统风格展陈画幅（3D 浮动层叠与细金宣纸微框） */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.94 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-6 relative w-full h-[520px] sm:h-[560px]"
+          transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-6 relative w-full h-[480px] sm:h-[540px]"
         >
           <div className="relative w-full h-full">
             {/* 风格 1：中央主体立轴大图 - 朱仙镇木版年画 */}
@@ -273,27 +225,42 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 悬浮美学标签与东方三维文脉灵笔（GPT Image 2 真实资产） */}
-            <motion.div
-              className="absolute -top-12 -right-8 w-36 h-36 z-50 pointer-events-auto cursor-pointer hidden sm:block"
-              animate={{
-                y: [-6, 6],
-                rotate: [-2, 4],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              whileHover={{ scale: 1.15, rotate: 8 }}
-              title="文脉神韵灵笔 · 笔墨生辉"
+            {/* 东方三维文脉灵笔 · 真实功能入口（点击进入创作工坊提笔） */}
+            <Link
+              to="/creator"
+              className="absolute -top-12 -right-6 w-36 h-36 z-50 pointer-events-auto hidden sm:block group"
+              title="提笔创作 · 前往智能创作工坊"
+              aria-label="提笔创作 · 前往智能创作工坊"
             >
-              <img
-                src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-01-cultural-brush.png"}
-                alt="东方数字艺术灵笔"
-                className="w-full h-full object-contain drop-shadow-[0_16px_36px_rgba(210,161,74,0.45)]"
-              />
-            </motion.div>
+              <motion.div
+                animate={{
+                  y: [-6, 6],
+                  rotate: [-2, 4],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+                whileHover={{ scale: 1.15, rotate: 6 }}
+                className="w-full h-full relative"
+              >
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-01-cultural-brush.webp"}
+                  />
+                  <img
+                    src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-01-cultural-brush.png"}
+                    alt="东方数字艺术灵笔"
+                    className="w-full h-full object-contain drop-shadow-[0_16px_36px_rgba(210,161,74,0.45)]"
+                  />
+                </picture>
+                <div className="absolute bottom-1 right-2 bg-white/95 border border-gold/40 shadow-xs px-2.5 py-0.5 rounded-full text-[10px] font-serif text-primary opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  提笔创作 →
+                </div>
+              </motion.div>
+            </Link>
 
             <div className="absolute top-1/2 -right-4 -translate-y-1/2 bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-[0_12px_36px_rgba(158,36,27,0.18)] flex items-center gap-3 z-40 border border-gold/40">
               <div className="w-10 h-10 rounded-full bg-gold/15 flex items-center justify-center shrink-0">
@@ -308,9 +275,9 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── 2. 印鉴珍赏 · 五大传统风格快捷条幅 ───────────────────── */}
-      <section className="mb-24 rounded-2xl border border-gold/35 bg-white/60 p-5 sm:p-6 shadow-[0_8px_30px_rgba(63,43,31,0.04)] backdrop-blur-sm">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+      {/* ── 2. 印鉴珍赏 · 五大传统风格快捷入口 ───────────────────── */}
+      <section className="mb-20 md:mb-24 rounded-2xl border border-gold/35 bg-white/60 p-5 sm:p-6 shadow-[0_8px_30px_rgba(63,43,31,0.04)] backdrop-blur-sm">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-5">
           <div className="flex items-center gap-2.5">
             <span className="chinese-seal text-[10px]">印鉴</span>
             <span className="text-sm font-serif font-bold text-ink tracking-wide">
@@ -347,7 +314,7 @@ export default function Home() {
       </section>
 
       {/* ── 3. 进入画里，再看一遍（美术馆展签级互动赏析） ───────── */}
-      <section className="mb-24 md:mb-32">
+      <section className="mb-20 md:mb-28">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
@@ -428,7 +395,7 @@ export default function Home() {
       </section>
 
       {/* ── 4. 纹脉展馆 · 沉浸三维数字空间 ───────────────────────── */}
-      <section className="mb-24 md:mb-32 relative overflow-hidden rounded-3xl border border-gold/45 bg-gradient-to-br from-[#FCFBF8] via-[#FAF6F0] to-[#EFE4D2] p-8 md:p-12 shadow-[0_16px_50px_rgba(63,43,31,0.08)]">
+      <section className="mb-20 md:mb-28 relative overflow-hidden rounded-3xl border border-gold/45 bg-gradient-to-br from-[#FCFBF8] via-[#FAF6F0] to-[#EFE4D2] p-8 md:p-12 shadow-[0_16px_50px_rgba(63,43,31,0.08)]">
         <div className="absolute -top-16 -right-16 w-96 h-96 bg-gold/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-16 -left-16 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -454,7 +421,7 @@ export default function Home() {
                   实景渲染 · 纹脉数字化艺术展馆
                 </span>
                 <span className="text-xs opacity-90 font-mono hidden sm:inline">
-                  Three.js 60FPS 虚拟实体空间
+                  Three.js 沉浸式三维漫游空间
                 </span>
               </div>
             </motion.div>
@@ -463,19 +430,34 @@ export default function Home() {
           {/* 右侧：文化韵味与功能介绍 */}
           <div className="lg:col-span-5 flex flex-col justify-center">
             <div className="flex items-center gap-4 mb-3">
-              <motion.div
-                className="w-20 h-20 shrink-0 cursor-pointer"
-                animate={{ y: [-4, 4] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-                whileHover={{ scale: 1.12, rotate: 2 }}
-                title="三维虚实交融玉璧楼阁展馆印徽"
+              <Link
+                to="/heritage-gallery"
+                className="w-20 h-20 shrink-0 group block"
+                title="漫游三维虚拟展馆"
+                aria-label="漫游三维虚拟展馆"
               >
-                <img
-                  src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-02-heritage-pavilion.png"}
-                  alt="三维虚实交融玉璧楼阁展馆印徽"
-                  className="w-full h-full object-contain drop-shadow-[0_12px_28px_rgba(66,108,98,0.35)]"
-                />
-              </motion.div>
+                <motion.div
+                  animate={{ y: [-4, 4] }}
+                  transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                  whileHover={{ scale: 1.12, rotate: 2 }}
+                  className="w-full h-full relative"
+                >
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-02-heritage-pavilion.webp"}
+                    />
+                    <img
+                      src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-02-heritage-pavilion.png"}
+                      alt="三维虚实交融玉璧楼阁展馆印徽"
+                      className="w-full h-full object-contain drop-shadow-[0_12px_28px_rgba(66,108,98,0.35)]"
+                    />
+                  </picture>
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white/95 border border-emerald-700/30 shadow-xs px-2 py-0.5 rounded-full text-[9px] font-serif text-emerald-800 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    入馆漫游 →
+                  </div>
+                </motion.div>
+              </Link>
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/40 bg-white/70 text-primary text-xs font-serif font-medium w-fit mb-1.5">
                   <Compass className="w-3.5 h-3.5 text-gold" />
@@ -523,164 +505,64 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 5. 平台核心能力（东方微质感交互能力矩阵） ─────────────────── */}
-      <section className="mb-24 md:mb-32">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="w-1.5 h-3.5 bg-primary rounded-full" />
-            <span className="text-xs font-serif tracking-[0.25em] text-primary">CAPABILITIES</span>
+      {/* ── 5. 核心数智能力轻量索引（去繁就简，指引深度解读） ───────────── */}
+      <section className="mb-20 md:mb-28">
+        <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="w-1.5 h-3.5 bg-primary rounded-full" />
+              <p className="text-xs font-serif tracking-[0.25em] text-primary">CAPABILITIES</p>
+            </div>
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-ink">
+              平台核心数智能力
+            </h2>
           </div>
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-ink mb-3">
-            平台核心数智能力
-          </h2>
-          <p className="text-sm md:text-base text-ink/65 max-w-xl mx-auto">
-            以传统文脉为审美先验，点击展开详细工法机理与技术闭环
-          </p>
+          <Link
+            to="/about#capabilities"
+            className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-serif font-medium text-primary hover:text-primary-dark transition-all"
+          >
+            <span>查看完整技术架构与工法机理</span>
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {CORE_CAPABILITIES.map((feature, i) => {
-            const Icon = feature.icon;
-            const isExpanded = expandedCap === i;
-            return (
-              <motion.div
-                layout
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: i * 0.06 }}
-                className={cn(
-                  "oriental-gallery-card p-6 sm:p-7 rounded-2xl transition-all duration-300 flex flex-col group",
-                  isExpanded
-                    ? "border-primary/50 shadow-[0_20px_50px_rgba(158,36,27,0.15)] bg-white"
-                    : "hover:border-primary/40 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(158,36,27,0.1)]"
-                )}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 rounded-xl bg-white shadow-xs flex items-center justify-center text-primary border border-gold/30 group-hover:bg-primary group-hover:text-white transition-all">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-[11px] font-serif text-primary/80 bg-primary/5 px-2.5 py-0.5 rounded-full border border-primary/15">
-                    {feature.tag}
-                  </span>
-                </div>
-
-                <h3 className="font-serif font-bold text-lg mb-1.5 text-ink group-hover:text-primary transition-colors">
-                  {feature.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-ink/75 leading-relaxed font-sans mb-3">
-                  {feature.poeticSummary}
-                </p>
-
-                {/* 交互展开详细工法机理（按需展开，避免长期文字堆叠） */}
-                <button
-                  type="button"
-                  onClick={() => setExpandedCap(isExpanded ? null : i)}
-                  className="flex items-center gap-1.5 text-xs font-serif text-primary hover:text-primary-dark transition-colors py-1 cursor-pointer w-fit mt-auto"
-                >
-                  <span>{isExpanded ? '收起工法机理' : '展开工法机理'}</span>
-                  {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                </button>
-
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden pt-3 border-t border-gold/25 mt-3"
-                    >
-                      <p className="text-xs text-ink/70 leading-relaxed font-sans mb-3">
-                        {feature.detailedDesc}
-                      </p>
-                      <div className="space-y-1.5 mb-4">
-                        {feature.highlights.map((item, idx) => (
-                          <div key={idx} className="flex items-center gap-2 text-[11px] text-ink/80 font-sans">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                            <span>{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                      <Link
-                        to={feature.to}
-                        className="inline-flex items-center gap-1.5 text-xs font-serif font-bold text-primary hover:gap-2.5 transition-all"
-                      >
-                        <span>{feature.actionText}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <div className="mt-3 pt-3 border-t border-gold/15 flex items-center justify-between text-[11px] text-ink/50 font-serif">
-                  <span>{feature.badge}</span>
-                  <span className="text-gold font-mono">0{i + 1}</span>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ── 6. 创作与应用全生命周期工作流 ─────────────────────────── */}
-      <section className="bg-white/60 border border-gold/35 rounded-3xl p-8 md:p-12 relative overflow-hidden mb-24 md:mb-32 shadow-[0_12px_40px_rgba(63,43,31,0.05)]">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary/8 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="text-center mb-12 relative z-10">
-          <span className="chinese-seal text-[10px] mb-2">闭环</span>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-primary font-bold mb-2">
-            创作与应用全生命周期工作流
-          </h2>
-          <p className="text-xs md:text-sm text-ink/65 max-w-xl mx-auto">
-            从用户创意灵感到最终文创打样与空间展示，每一步透明可控、环环相扣
-          </p>
-        </div>
-
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-6 relative z-10 w-full max-w-5xl mx-auto">
-          {[
-            { step: '01', title: '创作主题与参考图', icon: PenTool },
-            { step: '02', title: '传统视觉风格选择', icon: Palette },
-            { step: '03', title: 'Qwen Image 智能生成', icon: Sparkles },
-            { step: '04', title: '自动解读与文化卡', icon: BookOpen },
-            { step: '05', title: '展厅入库与三维布展', icon: Boxes },
-            { step: '06', title: '文创载体衍生应用', icon: Layout },
-          ].map((item, i, arr) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {PLATFORM_PILLARS.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div
-                key={i}
-                className="flex flex-col lg:flex-row items-center gap-3 flex-1 w-full lg:w-auto group"
+              <Link
+                key={idx}
+                to={item.to}
+                className="group p-5 rounded-2xl border border-gold/30 bg-white/70 shadow-xs hover:border-primary/40 hover:bg-white hover:shadow-md transition-all flex flex-col justify-between"
               >
-                <div className="flex flex-col items-center text-center w-full">
-                  <div className="w-14 h-14 rounded-2xl bg-white shadow-xs border border-gold/40 flex items-center justify-center text-primary mb-3 relative z-10 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <Icon className="w-6 h-6" />
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span className="text-[10px] font-serif text-primary/75 bg-primary/5 px-2 py-0.5 rounded-full border border-primary/10">
+                      {item.tag}
+                    </span>
                   </div>
-                  <span className="text-[10px] font-mono text-gold font-bold tracking-wider mb-0.5">
-                    STEP {item.step}
-                  </span>
-                  <span className="text-xs font-serif font-medium text-ink/85 leading-tight">
+                  <h3 className="font-serif font-bold text-base text-ink mb-1.5 group-hover:text-primary transition-colors">
                     {item.title}
-                  </span>
+                  </h3>
+                  <p className="text-xs text-ink/70 leading-relaxed font-sans">
+                    {item.desc}
+                  </p>
                 </div>
-                {i < arr.length - 1 && (
-                  <div className="hidden lg:block flex-1 h-[1.5px] bg-gold/40 w-full relative -top-5">
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary" />
-                  </div>
-                )}
-                {i < arr.length - 1 && (
-                  <ChevronRight className="lg:hidden text-primary/40 my-1 h-4 w-4" />
-                )}
-              </div>
+                <div className="mt-4 pt-3 border-t border-gold/20 flex items-center justify-between text-xs font-serif text-primary">
+                  <span>体验入口</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
             );
           })}
         </div>
       </section>
 
-      {/* ── 7. 文创衍生与空间展陈美学 ───────────────────────────── */}
-      <section className="mb-24 md:mb-32">
+      {/* ── 6. 文创衍生与空间展陈美学 ───────────────────────────── */}
+      <section className="mb-20 md:mb-28">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -703,7 +585,7 @@ export default function Home() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <Link
             to="/products"
-            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-gold/30 bg-[#FAF7F2]"
+            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative border border-gold/30 bg-[#FAF7F2]"
           >
             <img
               src={import.meta.env.BASE_URL + "scenarios/product-package-concept.jpg"}
@@ -721,7 +603,7 @@ export default function Home() {
 
           <Link
             to="/products"
-            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-gold/30 bg-[#FAF7F2]"
+            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative border border-gold/30 bg-[#FAF7F2]"
           >
             <img
               src={import.meta.env.BASE_URL + "scenarios/product-coaster-lifestyle.jpg"}
@@ -739,7 +621,7 @@ export default function Home() {
 
           <Link
             to="/products"
-            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-gold/30 bg-[#FAF7F2]"
+            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative border border-gold/30 bg-[#FAF7F2]"
           >
             <img
               src={import.meta.env.BASE_URL + "scenarios/product-embroidery-lifestyle.jpg"}
@@ -757,7 +639,7 @@ export default function Home() {
 
           <Link
             to="/scenarios"
-            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative cursor-pointer border border-gold/30 bg-black"
+            className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xs hover:shadow-xl transition-all group relative border border-gold/30 bg-black"
           >
             <img
               src={import.meta.env.BASE_URL + "scenarios/museum-screen-concept.jpg"}
@@ -775,15 +657,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 8. 底部金石落款数据横幅 ───────────────────────────────── */}
-      <section className="bg-gradient-to-r from-primary-dark via-primary to-primary-dark text-white rounded-2xl py-12 px-6 flex justify-around flex-wrap gap-8 items-center relative overflow-hidden shadow-[0_16px_40px_rgba(158,36,27,0.28)] border border-gold/40">
+      {/* ── 7. 底部金石落款数据横幅 ───────────────────────────────── */}
+      <section className="bg-gradient-to-r from-primary-dark via-primary to-primary-dark text-white rounded-2xl py-10 px-6 flex justify-around flex-wrap gap-8 items-center relative overflow-hidden shadow-[0_16px_40px_rgba(158,36,27,0.25)] border border-gold/40">
         <div className="absolute inset-0 paper-noise pointer-events-none" />
         {[
-          { v: '5 门类', l: '传统视觉风格条目' },
+          { v: '5 门类', l: '传统视觉风格体系' },
           { v: '8 载体', l: '文创实景打样模板' },
           { v: '3 维度', l: '多维交互深度赏析' },
           { v: '2 楼层', l: '实体感三维虚拟展馆' },
-          { v: '100%', l: '多模态闭环生成与落盘' },
+          { v: '全链路', l: '端到端创作与本地入库' },
         ].map((stat, i) => (
           <div key={i} className="text-center relative z-10 flex flex-col items-center">
             <div className="text-3xl md:text-4xl font-serif font-bold text-gold drop-shadow-sm mb-1.5">

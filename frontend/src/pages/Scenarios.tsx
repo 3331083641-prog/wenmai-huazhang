@@ -66,7 +66,7 @@ const SCENARIOS: Scenario[] = [
     summary:
       '构筑可自由漫游、虚实布展的五馆水院中式虚拟美术馆。支持第一/第三人称自由穿行与昼夜光影流转，开放 30 处画框支持一键策展换画，让典藏艺术从展柜走向三维时空。',
     badges: [
-      { label: 'Three.js 60FPS 实时渲染', detail: '中式水院木构梁架昼夜晨昏光影' },
+      { label: 'Three.js 沉浸式三维渲染', detail: '中式水院木构梁架昼夜晨昏光影' },
       { label: '30 处画框自由布展', detail: '从器物展柜到立轴画框随心策展' },
       { label: '沉浸环幕空间映射', detail: '适配大型曲面大屏与数字展厅构想' },
     ],
@@ -166,7 +166,7 @@ const SCENARIOS: Scenario[] = [
     badges: [
       { label: 'Qwen 3.0 美学底座', detail: '阿里百炼多模态模型调优东方造型语法' },
       { label: '0%~100% 细粒度控制', detail: '自由调节风格影响度，平衡创新与传统' },
-      { label: 'SHA-256 全链路存证', detail: '元数据与成图哈希实时落盘防伪追溯' },
+      { label: 'SHA-256 数据完整性校验', detail: '元数据与成图哈希本地安全归档' },
     ],
     to: '/creator',
     cta: '打开生成工作台',

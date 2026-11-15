@@ -416,11 +416,17 @@ export default function AICreator() {
                    }}
                    title="东方数字艺术灵笔 · 点击注入意境灵感"
                  >
-                   <img
-                     src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-01-cultural-brush.png"}
-                     alt="东方数字艺术灵笔"
-                     className="w-full h-full object-contain drop-shadow-[0_8px_18px_rgba(210,161,74,0.4)]"
-                   />
+                   <picture>
+                      <source
+                        type="image/webp"
+                        srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-01-cultural-brush.webp"}
+                      />
+                      <img
+                        src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-01-cultural-brush.png"}
+                        alt="东方数字艺术灵笔"
+                        className="w-full h-full object-contain drop-shadow-[0_8px_18px_rgba(210,161,74,0.4)]"
+                      />
+                    </picture>
                  </motion.div>
                  <div>
                    <h2 className="text-lg font-serif font-bold text-ink flex items-center gap-2">
@@ -725,7 +731,7 @@ export default function AICreator() {
 
          {/* Right Result Area (展陈画境) */}
          <div className="lg:w-[50%] bg-[#FAF4E8] flex flex-col relative z-0">
-           {!hasResult ? (
+           {(!hasResult || isGenerating || (hasResult && imageLoadState === 'loading')) ? (
              <div className="flex-1 flex flex-col items-center justify-center p-8 sm:p-12 relative">
                 <OrientalInkWaiting
                   isGenerating={isGenerating}

@@ -94,6 +94,16 @@ export default function Gallery() {
   const [deletingCase, setDeletingCase] = useState<string | null>(null);
   const [showArchiveCert, setShowArchiveCert] = useState(false);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowArchiveCert(false);
+    };
+    if (showArchiveCert) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showArchiveCert]);
+
   const load = useCallback(async (): Promise<GalleryCase[]> => {
     try {
       const list = await fetchRuntimeCases({ timeoutMs: 3500 });
@@ -259,16 +269,28 @@ export default function Gallery() {
           transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
           whileHover={{ scale: 1.08 }}
           onClick={() => setShowArchiveCert(true)}
-          title="点击查验金石印匣 · SHA-256 典藏溯源凭证"
+          title="点击查看数字典藏与数据完整性机制说明"
         >
-          <img
-            src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.png"}
-            alt="古籍卷轴式立体书香金石印匣"
-            className="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(63,43,31,0.25)]"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.webp"}
+            />
+            <picture>
+                  <source
+                    type="image/webp"
+                    srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.webp"}
+                  />
+                  <img
+                    src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.png"}
+                    alt="古籍卷轴式立体书香金石印匣"
+                    className="w-20 h-14 object-contain shrink-0"
+                  />
+                </picture>
+          </picture>
           <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white/95 border border-gold/40 shadow-xs px-2.5 py-0.5 rounded-full text-[10px] font-serif text-primary whitespace-nowrap opacity-90 group-hover:opacity-100 flex items-center gap-1">
             <ShieldCheck size={11} className="text-gold" />
-            <span>典藏金石印鉴</span>
+            <span>数字典藏机制</span>
           </div>
         </motion.div>
       </header>
@@ -289,12 +311,12 @@ export default function Gallery() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.3 }}
-              className="relative w-full max-w-lg bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-7 shadow-2xl z-10 font-serif"
+              role="dialog" aria-modal="true" aria-labelledby="archive-cert-title" className="relative w-full max-w-lg bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-7 shadow-2xl z-10 font-serif"
             >
               <div className="flex items-center justify-between pb-3 border-b border-gold/30 mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="chinese-seal text-[10px]">存证</span>
-                  <span className="text-base font-bold text-ink">数字非遗典藏与溯源凭据</span>
+                  <span className="chinese-seal text-[10px]">典藏</span>
+                  <span id="archive-cert-title" className="text-base font-bold text-ink">作品归档与数据完整性机制说明</span>
                 </div>
                 <button
                   onClick={() => setShowArchiveCert(false)}
@@ -311,22 +333,22 @@ export default function Gallery() {
                   className="w-20 h-14 object-contain shrink-0"
                 />
                 <div className="text-xs text-ink/75 leading-relaxed font-sans">
-                  本展厅所有入展作品均挂接本地持久化 Case Store。具备 SHA-256 证据链防伪追溯与真实生成参数记录，无需依赖外部商业数据库，离线永存。
+                  本展厅作品遵循本地持久化存储规范（Case Store），记录作品参考图、生成参数与文化说明卡。通过 SHA-256 计算作品元数据哈希摘要，用于本地文件防篡改完整性校验与版本追溯。
                 </div>
               </div>
 
               <div className="space-y-2 text-xs font-sans text-ink/80 mb-5">
                 <div className="p-2.5 rounded-lg bg-paper border border-gold/25 flex items-center justify-between">
-                  <span className="font-serif">防伪审计机制</span>
-                  <span className="font-mono text-emerald-800 font-bold">SHA-256 Digest 校验</span>
+                  <span className="font-serif">数据校验机制</span>
+                  <span className="font-mono text-emerald-800 font-bold">SHA-256 数据完整性摘要</span>
                 </div>
                 <div className="p-2.5 rounded-lg bg-paper border border-gold/25 flex items-center justify-between">
-                  <span className="font-serif">存储持久化方式</span>
-                  <span className="font-mono text-ink/70">Local Case Store 沙箱落盘</span>
+                  <span className="font-serif">作品归档存储</span>
+                  <span className="font-mono text-ink/70">Local Case Store 持久化规范</span>
                 </div>
                 <div className="p-2.5 rounded-lg bg-paper border border-gold/25 flex items-center justify-between">
-                  <span className="font-serif">离线可用状态</span>
-                  <span className="text-primary font-bold">完整支持 100% 离线赏析</span>
+                  <span className="font-serif">离线运行状态</span>
+                  <span className="text-ink/80">内置 5 件精选支持离线浏览，新作品需本地服务</span>
                 </div>
               </div>
 
@@ -335,7 +357,7 @@ export default function Gallery() {
                   onClick={() => setShowArchiveCert(false)}
                   className="px-5 py-2 rounded-xl btn-chinese text-xs font-serif"
                 >
-                  确认识别
+                  我知道了
                 </button>
               </div>
             </motion.div>

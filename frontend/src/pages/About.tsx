@@ -352,7 +352,7 @@ const ARCH_LAYERS: ArchItem[] = [
       { name: 'GLB 3D Assets', role: 'Blender 烘焙并优化的中式两层展馆及 传统器物道具', badge: '本地资产' },
       { name: 'WebP Multi-layer Maps', role: '互动赏析的分层剪影、前景切片与深度预览纹理', badge: '本地资产' },
       { name: 'Vite Glob & Assets', role: '静态资源指纹打包与统一相对路径分发', badge: '构建规范' },
-      { name: 'SHA-256 Evidence Tracking', role: '作品与参考图哈希校验与真实生成证据追溯', badge: '防伪审计' },
+      { name: 'SHA-256 Evidence Tracking', role: '作品与参考图哈希校验与真实生成证据追溯', badge: '数据完整性' },
     ],
     boundaryNote:
       '演示作品均为项目真实流水线在 2026 年生成并归档的真实输出，未用非真实概念图冒充生成结果，各项素材遵循开源与用户授权合规边界。',

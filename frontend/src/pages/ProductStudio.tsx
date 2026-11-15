@@ -350,6 +350,17 @@ export default function ProductStudio() {
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [downloadingProductId, setDownloadingProductId] = useState<string | null>(null);
+  const [showVesselModal, setShowVesselModal] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowVesselModal(false);
+    };
+    if (showVesselModal) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showVesselModal]);
 
   useEffect(() => {
     const saved = localStorage.getItem('wenmai_latest_result');
@@ -459,34 +470,44 @@ export default function ProductStudio() {
               )}
             </div>
 
-            {/* 高定文创实物灵感载体（GPT Image 2 真实视觉资产） */}
+            {/* 东方器物灵感 · 概念器物展陈 */}
             <div className="oriental-gallery-card p-5 rounded-2xl shadow-sm border border-gold/35 mt-5 relative overflow-hidden group">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-serif font-bold text-primary flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  高定器物灵感母体 · 汝窑贯耳瓶
+                  东方器物灵感 · 天青贯耳尊
                 </span>
-                <span className="chinese-seal text-[9px] bg-primary">器道</span>
+                <span className="chinese-seal text-[9px] bg-primary">概念展陈</span>
               </div>
-              <div className="aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-b from-[#EBF2F4] to-[#F5F9FA] border border-gold/25 p-2 flex items-center justify-center relative">
+              <div
+                onClick={() => setShowVesselModal(true)}
+                className="aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-b from-[#EBF2F4] to-[#F5F9FA] border border-gold/25 p-2 flex items-center justify-center relative cursor-pointer group/vessel"
+                title="点击查阅天青贯耳尊器物设计细节"
+              >
                 <motion.div
-                  className="w-full h-full flex items-center justify-center cursor-pointer"
+                  className="w-full h-full flex items-center justify-center"
                   animate={{ y: [-3, 3] }}
                   transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                  whileHover={{ scale: 1.08, rotate: 2 }}
+                  whileHover={{ scale: 1.08 }}
                 >
-                  <img
-                    src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-03-celadon-vessel.png"}
-                    alt="五大流派东方意象青瓷天球瓶"
-                    className="h-full object-contain drop-shadow-[0_12px_24px_rgba(43,95,117,0.3)]"
-                  />
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-03-celadon-vessel.webp"}
+                    />
+                    <img
+                      src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-03-celadon-vessel.png"}
+                      alt="东方器物灵感 · 天青贯耳尊（概念展陈）"
+                      className="h-full object-contain drop-shadow-[0_12px_24px_rgba(43,95,117,0.3)]"
+                    />
+                  </picture>
                 </motion.div>
-                <div className="absolute bottom-2 left-2 right-2 text-center bg-black/40 backdrop-blur-md text-white text-[10px] font-serif py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                  金丝铁线开片 · 盘金蟠龙绣带
+                <div className="absolute bottom-2 left-2 right-2 text-center bg-black/60 backdrop-blur-md text-white text-[10px] font-serif py-1 rounded opacity-0 group-hover/vessel:opacity-100 transition-opacity">
+                  点击查看器物细节与设计说明
                 </div>
               </div>
               <p className="text-[11px] text-ink/70 leading-relaxed font-sans mt-3 text-center">
-                以天青汝窑为器骨，融汇非遗刺绣蟠龙云纹，探索传统纹样由平入立的高定文创范式。
+                以天青贯耳尊为造型灵感，探索传统纹样由平入立的概念衍生（非标准打样模板）。
               </p>
             </div>
           </div>
@@ -654,6 +675,85 @@ export default function ProductStudio() {
             </motion.div>
          )}
       </AnimatePresence>
+          {/* 天青贯耳尊概念器物细节说明弹窗 */}
+      <AnimatePresence>
+        {showVesselModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowVesselModal(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ duration: 0.3 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="vessel-modal-title"
+              className="relative w-full max-w-lg bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-7 shadow-2xl z-10 font-serif"
+            >
+              <div className="flex items-center justify-between pb-3 border-b border-gold/30 mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="chinese-seal text-[10px]">器道</span>
+                  <span id="vessel-modal-title" className="text-base font-bold text-ink">
+                    东方器物灵感 · 天青贯耳尊说明
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowVesselModal(false)}
+                  className="w-8 h-8 rounded-full border border-gold/30 bg-white flex items-center justify-center text-ink/60 hover:text-primary transition-all cursor-pointer"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-5 p-4 rounded-xl bg-white/80 border border-gold/30 mb-4">
+                <div className="w-28 sm:w-32 aspect-[3/4] shrink-0 flex items-center justify-center">
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-03-celadon-vessel.webp"}
+                    />
+                    <img
+                      src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-03-celadon-vessel.png"}
+                      alt="天青贯耳尊"
+                      className="h-full object-contain drop-shadow-[0_10px_20px_rgba(43,95,117,0.35)]"
+                    />
+                  </picture>
+                </div>
+                <div className="text-xs text-ink/75 leading-relaxed font-sans space-y-2">
+                  <p>
+                    <strong className="font-serif text-ink">器形制式：</strong>
+                    宋代天青釉贯耳尊，直口对称贯耳，造型凝重洗练。
+                  </p>
+                  <p>
+                    <strong className="font-serif text-ink">装饰语言：</strong>
+                    器身浮雕金丝龙纹披帛与祥云水浪，再现非遗刺绣盘金工艺。
+                  </p>
+                  <p>
+                    <strong className="font-serif text-ink">概念定位：</strong>
+                    此件为高定器物概念推演，用于探索文化母题向立体文创的转化；实际导出可使用下方 8 类标准打样模板。
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setShowVesselModal(false)}
+                  className="px-5 py-2 rounded-xl btn-chinese text-xs font-serif cursor-pointer"
+                >
+                  关闭说明
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
+
   );
 }

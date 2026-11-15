@@ -14,8 +14,8 @@
   --color-ink-subtle: #8A7263;
   --color-border-red: #B8422E;
 
-  --font-sans: "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Noto Serif SC", ui-serif, Georgia, serif;
+  --font-sans: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Segoe UI", system-ui, sans-serif;
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", "STSong", Georgia, serif;
 }
 
 body {
@@ -211,14 +211,14 @@ html {
   transform: rotate(25deg) translate(20%, 20%);
 }
 
-/* 减少动态效果：系统级偏好优先，避免任何位移与淡入 */
+/* 减少动态效果：系统级偏好优先，全面尊重用户无障碍配置 */
 @media (prefers-reduced-motion: reduce) {
-  .hotspot-chip,
-  .exp-no-motion {
-    transition: none !important;
-    animation: none !important;
-  }
-  * {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }

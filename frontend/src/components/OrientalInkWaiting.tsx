@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ImagePlus, AlertCircle, RefreshCw, Sparkles } from 'lucide-react';
-import { cn } from '../lib/utils';
 
 interface OrientalInkWaitingProps {
   isGenerating: boolean;
@@ -79,7 +78,7 @@ export default function OrientalInkWaiting({
         {onRetry && (
           <button
             onClick={onRetry}
-            className="px-4 py-2 rounded-xl btn-chinese text-xs font-serif flex items-center gap-1.5 shadow-xs hover:shadow-md transition-all"
+            className="px-4 py-2 rounded-xl btn-chinese text-xs font-serif flex items-center gap-1.5 shadow-xs hover:shadow-md transition-all cursor-pointer"
           >
             <RefreshCw className="w-3.5 h-3.5 text-gold" />
             <span>重新尝试</span>
@@ -132,7 +131,7 @@ export default function OrientalInkWaiting({
             }}
           />
 
-          {/* 真实敦煌飞天与水墨流云绽放精灵（GPT Image 2 高级视觉资产） */}
+          {/* 真实敦煌飞天与水墨流云绽放精灵（GPT Image 2 无损透明素材） */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center pointer-events-none z-0"
             animate={{ rotate: 360, scale: [0.94, 1.05, 0.94] }}
@@ -141,11 +140,17 @@ export default function OrientalInkWaiting({
               scale: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
             }}
           >
-            <img
-              src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-05-ink-bloom-sprite.png"}
-              alt="水墨流云绽放"
-              className="w-48 h-48 object-contain drop-shadow-[0_10px_25px_rgba(210,161,74,0.35)]"
-            />
+            <picture>
+              <source
+                type="image/webp"
+                srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-05-ink-bloom-sprite.webp"}
+              />
+              <img
+                src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-05-ink-bloom-sprite.png"}
+                alt="水墨流云绽放"
+                className="w-48 h-48 object-contain drop-shadow-[0_10px_25px_rgba(210,161,74,0.35)]"
+              />
+            </picture>
           </motion.div>
 
           {/* SVG 传统祥云回纹环，带有顺时针漫步与虚线描边呼吸 */}
@@ -219,6 +224,9 @@ export default function OrientalInkWaiting({
               </p>
             </motion.div>
           </AnimatePresence>
+          <p className="text-[9px] text-ink/40 font-serif mt-2 tracking-wider">
+            画面为创作等待动效，非实时生成进度
+          </p>
         </div>
       </div>
     );
@@ -250,11 +258,17 @@ export default function OrientalInkWaiting({
   return (
     <div className="w-full max-w-sm aspect-[3/4] border-2 border-dashed border-gold/45 rounded-2xl bg-white/60 flex flex-col items-center justify-center p-8 text-center relative overflow-hidden group shadow-sm">
       <div className="absolute inset-0 bg-gradient-to-t from-gold/10 via-transparent to-transparent pointer-events-none" />
-      <img
-        src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-05-ink-bloom-sprite.png"}
-        alt=""
-        className="absolute w-64 h-64 object-contain opacity-15 pointer-events-none group-hover:scale-105 group-hover:opacity-25 transition-all duration-700"
-      />
+      <picture>
+        <source
+          type="image/webp"
+          srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-05-ink-bloom-sprite.webp"}
+        />
+        <img
+          src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-05-ink-bloom-sprite.png"}
+          alt=""
+          className="absolute w-64 h-64 object-contain opacity-15 pointer-events-none group-hover:scale-105 group-hover:opacity-25 transition-all duration-700"
+        />
+      </picture>
       <div className="w-16 h-16 rounded-2xl bg-white shadow-xs border border-gold/40 flex items-center justify-center mb-4 text-gold group-hover:scale-105 group-hover:text-primary transition-all relative z-10">
         <ImagePlus className="w-8 h-8 text-primary/60" />
       </div>
