@@ -1,7 +1,7 @@
 import { projectBrand } from '../data/projectBrand';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Download, LoaderCircle, ShoppingBag, Frame, Smartphone, MonitorPlay, Ticket } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { STYLES } from '../data/styleLibrary';
@@ -351,6 +351,8 @@ export default function ProductStudio() {
   const [toast, setToast] = useState<string | null>(null);
   const [downloadingProductId, setDownloadingProductId] = useState<string | null>(null);
   const [showVesselModal, setShowVesselModal] = useState(false);
+  const vesselTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const prevShowVesselModal = useRef(showVesselModal);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -360,6 +362,13 @@ export default function ProductStudio() {
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showVesselModal]);
+
+  useEffect(() => {
+    if (prevShowVesselModal.current && !showVesselModal) {
+      vesselTriggerRef.current?.focus();
+    }
+    prevShowVesselModal.current = showVesselModal;
   }, [showVesselModal]);
 
   useEffect(() => {
@@ -479,13 +488,17 @@ export default function ProductStudio() {
                 </span>
                 <span className="chinese-seal text-[9px] bg-primary">概念展陈</span>
               </div>
-              <div
+              <button
+                ref={vesselTriggerRef}
+                type="button"
                 onClick={() => setShowVesselModal(true)}
-                className="aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-b from-[#EBF2F4] to-[#F5F9FA] border border-gold/25 p-2 flex items-center justify-center relative cursor-pointer group/vessel"
+                className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-b from-[#EBF2F4] to-[#F5F9FA] border border-gold/25 p-2 flex items-center justify-center relative cursor-pointer group/vessel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold text-left"
                 title="点击查阅天青贯耳尊器物设计细节"
+                aria-haspopup="dialog"
+                aria-expanded={showVesselModal}
               >
                 <motion.div
-                  className="w-full h-full flex items-center justify-center"
+                  className="w-full h-full flex items-center justify-center pointer-events-none"
                   animate={{ y: [-3, 3] }}
                   transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                   whileHover={{ scale: 1.08 }}
@@ -502,10 +515,10 @@ export default function ProductStudio() {
                     />
                   </picture>
                 </motion.div>
-                <div className="absolute bottom-2 left-2 right-2 text-center bg-black/60 backdrop-blur-md text-white text-[10px] font-serif py-1 rounded opacity-0 group-hover/vessel:opacity-100 transition-opacity">
+                <div className="absolute bottom-2 left-2 right-2 text-center bg-black/60 backdrop-blur-md text-white text-[10px] font-serif py-1 rounded opacity-0 group-hover/vessel:opacity-100 transition-opacity pointer-events-none">
                   点击查看器物细节与设计说明
                 </div>
-              </div>
+              </button>
               <p className="text-[11px] text-ink/70 leading-relaxed font-sans mt-3 text-center">
                 以天青贯耳尊为造型灵感，探索传统纹样由平入立的概念衍生（非标准打样模板）。
               </p>
@@ -694,7 +707,7 @@ export default function ProductStudio() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="vessel-modal-title"
-              className="relative w-full max-w-lg bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-7 shadow-2xl z-10 font-serif"
+              className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto scrollbar-thin bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-7 shadow-2xl z-10 font-serif"
             >
               <div className="flex items-center justify-between pb-3 border-b border-gold/30 mb-4">
                 <div className="flex items-center gap-2">
@@ -704,8 +717,10 @@ export default function ProductStudio() {
                   </span>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setShowVesselModal(false)}
-                  className="w-8 h-8 rounded-full border border-gold/30 bg-white flex items-center justify-center text-ink/60 hover:text-primary transition-all cursor-pointer"
+                  aria-label="关闭天青贯耳尊器物说明"
+                  className="w-8 h-8 rounded-full border border-gold/30 bg-white flex items-center justify-center text-ink/60 hover:text-primary transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                 >
                   ✕
                 </button>
@@ -743,8 +758,9 @@ export default function ProductStudio() {
 
               <div className="flex justify-end">
                 <button
+                  type="button"
                   onClick={() => setShowVesselModal(false)}
-                  className="px-5 py-2 rounded-xl btn-chinese text-xs font-serif cursor-pointer"
+                  className="px-5 py-2 rounded-xl btn-chinese text-xs font-serif cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                 >
                   关闭说明
                 </button>

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ArrowRight, Info, Filter, Palette, Sparkles, BookOpen, X, Check, Copy } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { ArrowRight, Info, Filter, Palette, Sparkles, BookOpen, X, Check, Copy, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
@@ -29,15 +29,50 @@ export default function StyleLibrary() {
   const [activeCategory, setActiveCategory] = useState('全部');
   const [inspectingStyle, setInspectingStyle] = useState<StyleData | null>(null);
   const [copiedPrompt, setCopiedPrompt] = useState(false);
+  const [copyError, setCopyError] = useState(false);
+  const triggerRefMap = useRef<Map<string, HTMLButtonElement>>(new Map());
+  const lastInspectedId = useRef<string | null>(null);
 
   const filteredStyles = activeCategory === '全部'
     ? STYLES
     : STYLES.filter(s => s.tag === activeCategory);
 
-  const handleCopyPrompt = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedPrompt(true);
-    setTimeout(() => setCopiedPrompt(false), 2000);
+  const handleOpenInspect = (style: StyleData) => {
+    lastInspectedId.current = style.id;
+    setInspectingStyle(style);
+  };
+
+  const handleCloseInspect = () => {
+    setInspectingStyle(null);
+    if (lastInspectedId.current) {
+      const el = triggerRefMap.current.get(lastInspectedId.current);
+      el?.focus();
+    }
+  };
+
+  useEffect(() => {
+    if (!inspectingStyle) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseInspect();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [inspectingStyle]);
+
+  const handleCopyPrompt = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedPrompt(true);
+      setCopyError(false);
+      setTimeout(() => setCopiedPrompt(false), 2000);
+    } catch (err) {
+      console.warn('Clipboard write failed:', err);
+      setCopyError(true);
+      setCopiedPrompt(false);
+      setTimeout(() => setCopyError(false), 3000);
+    }
   };
 
   return (
@@ -175,9 +210,15 @@ export default function StyleLibrary() {
 
                       <button
                         type="button"
-                        onClick={() => setInspectingStyle(style)}
-                        className="inline-flex items-center justify-center gap-1 py-2.5 px-3 rounded-xl border border-gold/40 bg-white/80 hover:bg-white text-xs font-serif text-ink/80 hover:text-primary transition-all cursor-pointer"
+                        ref={(el) => {
+                          if (el) triggerRefMap.current.set(style.id, el);
+                          else triggerRefMap.current.delete(style.id);
+                        }}
+                        onClick={() => handleOpenInspect(style)}
+                        className="inline-flex items-center justify-center gap-1 py-2.5 px-3 rounded-xl border border-gold/40 bg-white/80 hover:bg-white text-xs font-serif text-ink/80 hover:text-primary transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                         title="查看文化基因考据"
+                        aria-haspopup="dialog"
+                        aria-expanded={inspectingStyle?.id === style.id}
                       >
                         <BookOpen className="w-3.5 h-3.5 text-gold" />
                         <span>考据</span>
@@ -206,7 +247,7 @@ export default function StyleLibrary() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setInspectingStyle(null)}
+              onClick={handleCloseInspect}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             />
             <motion.div
@@ -214,20 +255,24 @@ export default function StyleLibrary() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.3 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="style-inspect-title"
               className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 scrollbar-thin"
             >
               {/* 弹窗顶部标牌 */}
               <div className="flex items-center justify-between pb-4 border-b border-gold/30 mb-6">
                 <div className="flex items-center gap-2">
                   <span className="chinese-seal text-[10px]">考据</span>
-                  <span className="text-sm font-serif font-bold text-ink tracking-wide">
-                    {inspectingStyle.categoryLabel}
+                  <span id="style-inspect-title" className="text-sm font-serif font-bold text-ink tracking-wide">
+                    {inspectingStyle.categoryLabel} · {inspectingStyle.name} 文化考据
                   </span>
                 </div>
                 <button
                   type="button"
-                  onClick={() => setInspectingStyle(null)}
-                  className="w-8 h-8 rounded-full border border-gold/30 bg-white/80 flex items-center justify-center text-ink/60 hover:text-primary hover:bg-white transition-all cursor-pointer"
+                  onClick={handleCloseInspect}
+                  aria-label="关闭风格文化考据详情"
+                  className="w-8 h-8 rounded-full border border-gold/30 bg-white/80 flex items-center justify-center text-ink/60 hover:text-primary hover:bg-white transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -283,13 +328,27 @@ export default function StyleLibrary() {
                     <button
                       type="button"
                       onClick={() => handleCopyPrompt(inspectingStyle.promptVisualFeatures)}
-                      className="text-[10px] font-serif text-primary hover:underline flex items-center gap-1 cursor-pointer"
+                      className="text-[10px] font-serif text-primary hover:underline flex items-center gap-1 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded px-1.5 py-0.5"
                     >
-                      {copiedPrompt ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                      <span>{copiedPrompt ? '已复制' : '复制提示词'}</span>
+                      {copiedPrompt ? (
+                        <>
+                          <Check className="w-3 h-3 text-emerald-600" />
+                          <span className="text-emerald-700 font-bold">已复制</span>
+                        </>
+                      ) : copyError ? (
+                        <>
+                          <AlertCircle className="w-3 h-3 text-primary" />
+                          <span className="text-primary">复制受阻，请手动复制</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3" />
+                          <span>复制提示词</span>
+                        </>
+                      )}
                     </button>
                   </div>
-                  <p className="text-xs font-mono text-ink/75 bg-paper/60 p-2.5 rounded-lg border border-gold/20 leading-relaxed">
+                  <p className="text-xs font-mono text-ink/75 bg-paper/60 p-2.5 rounded-lg border border-gold/20 leading-relaxed select-all">
                     {inspectingStyle.promptVisualFeatures}
                   </p>
                 </div>
@@ -309,8 +368,8 @@ export default function StyleLibrary() {
               <div className="pt-4 border-t border-gold/30 flex items-center justify-end gap-3">
                 <button
                   type="button"
-                  onClick={() => setInspectingStyle(null)}
-                  className="px-4 py-2.5 rounded-xl border border-gold/40 bg-white text-xs font-serif text-ink/70 hover:bg-gold/10 transition-all cursor-pointer"
+                  onClick={handleCloseInspect}
+                  className="px-4 py-2.5 rounded-xl border border-gold/40 bg-white text-xs font-serif text-ink/70 hover:bg-gold/10 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                 >
                   关闭考据
                 </button>

@@ -5,6 +5,7 @@
 
 import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom';
 import './version';
+import ScrollToTop from './components/ScrollToTop';
 import Gallery from './pages/Gallery';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
@@ -22,6 +23,7 @@ export default function App() {
   const Router = import.meta.env.VITE_STATIC_SHOWCASE === 'true' ? HashRouter : BrowserRouter;
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         {/*
           纹脉展馆放在 MainLayout 之外：

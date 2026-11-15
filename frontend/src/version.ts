@@ -4,10 +4,10 @@
  */
 
 export const APP_VERSION = {
-  version: '2.4.0-mastery-refined',
-  buildTag: '2026.11-mastery-refined',
+  version: '2.4.1-reliable-convergence',
+  buildTag: '2026.11-reliable-convergence',
   edition: '传统文化视觉智能创作与沉浸式文创应用平台',
-  releaseName: '纹脉华章 VNext P0/P1 视觉减法与交互深度精修版',
+  releaseName: '纹脉华章 VNext 交互可靠性与全站质量收敛版',
   updatedAt: '2026-11-16',
 };
 

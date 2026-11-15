@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -93,6 +93,8 @@ export default function Gallery() {
   const [deletedIds, setDeletedIds] = useState(deletedCaseIds);
   const [deletingCase, setDeletingCase] = useState<string | null>(null);
   const [showArchiveCert, setShowArchiveCert] = useState(false);
+  const casketTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const prevShowArchiveCert = useRef(showArchiveCert);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -102,6 +104,13 @@ export default function Gallery() {
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showArchiveCert]);
+
+  useEffect(() => {
+    if (prevShowArchiveCert.current && !showArchiveCert) {
+      casketTriggerRef.current?.focus();
+    }
+    prevShowArchiveCert.current = showArchiveCert;
   }, [showArchiveCert]);
 
   const load = useCallback(async (): Promise<GalleryCase[]> => {
@@ -263,36 +272,35 @@ export default function Gallery() {
         </div>
 
         {/* 金石百宝匣 · 数字存证徽章 (GPT Image 2 真实视觉资产) */}
-        <motion.div
-          className="relative w-40 sm:w-48 aspect-[3/2] cursor-pointer shrink-0 self-center md:self-auto group"
+        <motion.button
+          ref={casketTriggerRef}
+          type="button"
+          className="relative w-40 sm:w-48 aspect-[3/2] cursor-pointer shrink-0 self-center md:self-auto group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-2xl bg-transparent border-0 p-0 text-left"
           animate={{ y: [-3, 3] }}
           transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
-          whileHover={{ scale: 1.08 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => setShowArchiveCert(true)}
           title="点击查看数字典藏与数据完整性机制说明"
+          aria-haspopup="dialog"
+          aria-expanded={showArchiveCert}
         >
           <picture>
             <source
               type="image/webp"
               srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.webp"}
             />
-            <picture>
-                  <source
-                    type="image/webp"
-                    srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.webp"}
-                  />
-                  <img
-                    src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.png"}
-                    alt="古籍卷轴式立体书香金石印匣"
-                    className="w-20 h-14 object-contain shrink-0"
-                  />
-                </picture>
+            <img
+              src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.png"}
+              alt="古籍卷轴式立体书香金石印匣"
+              className="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(70,42,30,0.18)]"
+            />
           </picture>
-          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white/95 border border-gold/40 shadow-xs px-2.5 py-0.5 rounded-full text-[10px] font-serif text-primary whitespace-nowrap opacity-90 group-hover:opacity-100 flex items-center gap-1">
+          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white/95 border border-gold/40 shadow-xs px-2.5 py-0.5 rounded-full text-[10px] font-serif text-primary whitespace-nowrap opacity-90 group-hover:opacity-100 flex items-center gap-1 pointer-events-none">
             <ShieldCheck size={11} className="text-gold" />
             <span>数字典藏机制</span>
           </div>
-        </motion.div>
+        </motion.button>
       </header>
 
       {/* 典藏印匣弹窗 */}
@@ -311,7 +319,10 @@ export default function Gallery() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.3 }}
-              role="dialog" aria-modal="true" aria-labelledby="archive-cert-title" className="relative w-full max-w-lg bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-7 shadow-2xl z-10 font-serif"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="archive-cert-title"
+              className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto scrollbar-thin bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-7 shadow-2xl z-10 font-serif"
             >
               <div className="flex items-center justify-between pb-3 border-b border-gold/30 mb-4">
                 <div className="flex items-center gap-2">
@@ -319,8 +330,10 @@ export default function Gallery() {
                   <span id="archive-cert-title" className="text-base font-bold text-ink">作品归档与数据完整性机制说明</span>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setShowArchiveCert(false)}
-                  className="w-8 h-8 rounded-full border border-gold/30 bg-white flex items-center justify-center text-ink/60 hover:text-primary transition-all cursor-pointer"
+                  aria-label="关闭数字典藏机制说明"
+                  className="w-8 h-8 rounded-full border border-gold/30 bg-white flex items-center justify-center text-ink/60 hover:text-primary transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                 >
                   <X size={15} />
                 </button>
@@ -354,8 +367,9 @@ export default function Gallery() {
 
               <div className="flex justify-end">
                 <button
+                  type="button"
                   onClick={() => setShowArchiveCert(false)}
-                  className="px-5 py-2 rounded-xl btn-chinese text-xs font-serif"
+                  className="px-5 py-2 rounded-xl btn-chinese text-xs font-serif cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                 >
                   我知道了
                 </button>

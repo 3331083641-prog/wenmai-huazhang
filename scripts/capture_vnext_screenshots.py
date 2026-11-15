@@ -57,6 +57,19 @@ def run():
         page.wait_for_timeout(1200)
         page.screenshot(path=str(OUT_DIR / 'culture-styles.jpg'), quality=90, timeout=10000, animations='disabled')
 
+        # 3b. 风格文化基因考据弹窗 style-inspect-modal.jpg
+        print("Capturing style-inspect-modal.jpg...")
+        try:
+            inspect_btn = page.locator('button:has-text("考据")').first
+            if inspect_btn.is_visible():
+                inspect_btn.click(force=True)
+                page.wait_for_timeout(600)
+                page.screenshot(path=str(OUT_DIR / 'style-inspect-modal.jpg'), quality=90, timeout=10000, animations='disabled')
+                page.keyboard.press("Escape")
+                page.wait_for_timeout(300)
+        except Exception as e:
+            print(f"Warning capturing style modal: {e}")
+
         # 4. 智能生成工作台 AICreator
         print("Capturing creation-workspace.jpg...")
         page.goto(f"{BASE_URL}/creator", wait_until='domcontentloaded')

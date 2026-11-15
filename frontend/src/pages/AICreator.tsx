@@ -173,6 +173,45 @@ export default function AICreator() {
     };
   }, [previewUrl]);
 
+  useEffect(() => {
+    if (!resultImage) {
+      setImageLoadState('idle');
+      setImageLoadError(null);
+      return;
+    }
+    let cancelled = false;
+    setImageLoadState('loading');
+    setImageLoadError(null);
+    const img = new Image();
+    img.onload = () => {
+      if (!cancelled) {
+        setImageLoadState('loaded');
+        setImageLoadError(null);
+      }
+    };
+    img.onerror = () => {
+      if (!cancelled) {
+        setImageLoadState('error');
+        setImageLoadError('生成图片暂时无法加载，请确认后端图片服务仍在运行或地址有效。');
+      }
+    };
+    img.src = resultImage;
+    return () => {
+      cancelled = true;
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [resultImage]);
+
+  const handleSelectHistoryImage = (imgUrl: string) => {
+    if (imgUrl === resultImage) return;
+    setResultImage(imgUrl);
+    setHasResult(true);
+    setRotation(0);
+    setScale(1);
+    setIsCropping(false);
+  };
+
   const handleRotate = () => setRotation(r => r + 90);
   const handleZoomIn = () => setScale(s => Math.min(s + 0.2, 3));
   const handleZoomOut = () => setScale(s => Math.max(s - 0.2, 0.5));
@@ -249,7 +288,7 @@ export default function AICreator() {
     setMode(nextResult.mode);
     setResultData(nextResult);
     setHasResult(true);
-    setHistoryImages(prev => [nextResult.imageUrl, ...prev].slice(0, 3));
+    setHistoryImages(prev => [nextResult.imageUrl, ...prev.filter(u => u !== nextResult.imageUrl)].slice(0, 6));
 
     const resultToSave = {
        theme: payload.theme,
@@ -738,7 +777,7 @@ export default function AICreator() {
                   hasResult={hasResult}
                   imageLoadState={imageLoadState}
                   connectionNotice={connectionNotice}
-                  errorMessage={null}
+                  errorMessage={imageLoadError}
                   onRetry={handleGenerate}
                   selectedStyleName={currentStyleData?.name || selectedStyle}
                 />
@@ -752,9 +791,18 @@ export default function AICreator() {
                      </div>
                      <div className="flex gap-3 justify-center">
                         {historyImages.map((img, i) => (
-                           <div key={i} className="w-12 h-16 rounded-lg shadow-xs border-2 border-white p-0.5 bg-paper overflow-hidden opacity-70 hover:opacity-100 cursor-pointer transition-all hover:scale-105">
+                           <button
+                             key={i}
+                             type="button"
+                             onClick={() => handleSelectHistoryImage(img)}
+                             aria-label={`切换到历史作品 ${i + 1}`}
+                             className={cn(
+                               "w-12 h-16 rounded-lg shadow-xs border-2 p-0.5 bg-paper overflow-hidden cursor-pointer transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold",
+                               resultImage === img ? "border-gold opacity-100 ring-2 ring-gold/40 scale-105" : "border-white opacity-70 hover:opacity-100"
+                             )}
+                           >
                               <img src={img} className="w-full h-full object-cover" alt="" />
-                           </div>
+                           </button>
                         ))}
                      </div>
                   </div>
@@ -822,7 +870,7 @@ export default function AICreator() {
                         <div className="absolute right-3 top-3 z-20 flex flex-col gap-1.5 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
                           {[
                             { icon: RotateCw, title: '旋转', act: handleRotate },
-                            { icon: Crop, title: '裁剪预览', act: () => setIsCropping(true) },
+                            { icon: Crop, title: '构图取景标尺', act: () => setIsCropping((prev) => !prev) },
                             { icon: ZoomIn, title: '放大', act: handleZoomIn },
                             { icon: ZoomOut, title: '缩小', act: handleZoomOut },
                           ].map((tool) => (
@@ -838,13 +886,38 @@ export default function AICreator() {
                           ))}
                         </div>
                         {isCropping && (
-                          <div className="absolute inset-0 z-30 flex flex-col bg-black/60">
-                            <div className="relative flex-1 p-6">
-                              <div className="relative h-full w-full border border-dashed border-white shadow-[0_0_0_99rem_rgba(0,0,0,0.4)]" />
+                          <div className="absolute inset-0 z-30 flex flex-col bg-black/70 backdrop-blur-[2px]">
+                            {/* 顶部取景说明 */}
+                            <div className="px-3.5 py-2.5 bg-black/50 border-b border-white/15 flex items-center justify-between text-white text-xs font-serif">
+                              <div className="flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+                                <span className="font-bold tracking-wide">构图取景参考标尺</span>
+                              </div>
+                              <span className="text-[10px] text-white/70">黄金比例辅线 · 原图保持完整导出</span>
                             </div>
-                            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
-                              <button type="button" onClick={() => setIsCropping(false)} className="rounded-lg bg-white px-3 py-1.5 text-xs font-serif shadow">取消</button>
-                              <button type="button" onClick={() => setIsCropping(false)} className="rounded-lg bg-primary px-3 py-1.5 text-xs font-serif text-white shadow">完成</button>
+                            {/* 取景九宫格与画框 */}
+                            <div className="relative flex-1 p-5 flex items-center justify-center">
+                              <div className="relative h-full w-full border border-dashed border-gold/80 shadow-[0_0_0_99rem_rgba(0,0,0,0.45)]">
+                                {/* 九宫格黄金分割辅线 */}
+                                <div className="absolute inset-x-0 top-1/3 border-b border-gold/30 pointer-events-none" />
+                                <div className="absolute inset-x-0 top-2/3 border-b border-gold/30 pointer-events-none" />
+                                <div className="absolute inset-y-0 left-1/3 border-r border-gold/30 pointer-events-none" />
+                                <div className="absolute inset-y-0 left-2/3 border-r border-gold/30 pointer-events-none" />
+                                {/* 中心十字准心 */}
+                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                  <div className="w-3.5 h-3.5 border border-white/70 rounded-full" />
+                                </div>
+                              </div>
+                            </div>
+                            {/* 底部退出控制 */}
+                            <div className="p-2.5 bg-black/50 border-t border-white/15 flex items-center justify-center">
+                              <button
+                                type="button"
+                                onClick={() => setIsCropping(false)}
+                                className="rounded-xl btn-chinese px-4 py-1.5 text-xs font-serif text-white shadow-md cursor-pointer hover:shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                              >
+                                退出取景参考
+                              </button>
                             </div>
                           </div>
                         )}
@@ -872,6 +945,33 @@ export default function AICreator() {
                       </button>
                     </div>
                     {downloadStatus && <p role="status" aria-live="polite" className="mt-2 w-full max-w-[520px] text-center text-xs font-serif text-ink/70">{downloadStatus}</p>}
+
+                    {/* 历史作品切换条 (多于1件时展示) */}
+                    {historyImages.length > 1 && (
+                      <div className="mt-4 flex flex-col items-center w-full max-w-[520px]">
+                        <div className="text-[11px] text-ink/60 mb-2 flex items-center gap-2 font-serif w-full">
+                          <div className="h-px bg-gold/30 flex-1" />
+                          <span className="tracking-wider">切换历史创作画幅 ({historyImages.length})</span>
+                          <div className="h-px bg-gold/30 flex-1" />
+                        </div>
+                        <div className="flex gap-2.5 justify-center">
+                          {historyImages.map((img, i) => (
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => handleSelectHistoryImage(img)}
+                              aria-label={`切换到历史作品 ${i + 1}`}
+                              className={cn(
+                                "w-12 h-16 rounded-lg shadow-xs border-2 p-0.5 bg-paper overflow-hidden cursor-pointer transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold",
+                                resultImage === img ? "border-gold opacity-100 ring-2 ring-gold/40 scale-105" : "border-white opacity-70 hover:opacity-100"
+                              )}
+                            >
+                              <img src={img} className="w-full h-full object-cover" alt="" />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     {savedCase && (
                       <div
