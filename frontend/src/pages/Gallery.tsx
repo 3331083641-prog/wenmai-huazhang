@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   AlertTriangle,
@@ -11,6 +12,8 @@ import {
   RefreshCw,
   Sparkles,
   Trash2,
+  ShieldCheck,
+  X,
 } from 'lucide-react';
 import { autoSavedCases, savedCases, loadSavedCase } from '../data/savedCases';
 import { experienceById, experienceByStyle, cultureSourcesVersion } from '../data/experiences';
@@ -89,6 +92,7 @@ export default function Gallery() {
   const [actionError, setActionError] = useState<string>('');
   const [deletedIds, setDeletedIds] = useState(deletedCaseIds);
   const [deletingCase, setDeletingCase] = useState<string | null>(null);
+  const [showArchiveCert, setShowArchiveCert] = useState(false);
 
   const load = useCallback(async (): Promise<GalleryCase[]> => {
     try {
@@ -217,35 +221,127 @@ export default function Gallery() {
 
   return (
     <main className="mx-auto max-w-[1240px] px-4 pb-20 pt-24 sm:px-6">
-      <header className="mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[color:var(--color-gold)]/40 bg-white/70 shadow-xs mb-3">
-          <Sparkles size={13} className="text-gold" />
-          <span className="text-xs font-serif font-medium text-[color:var(--color-primary)] tracking-widest">
-            观其形 · 知其意 · 入其境
-          </span>
-        </div>
-        <h1 className="font-serif text-[clamp(2.1rem,4.5vw,3rem)] font-bold leading-tight text-[color:var(--color-ink)]">
-          数字非遗典藏展厅
-        </h1>
-        <p className="mt-3 max-w-2xl text-sm sm:text-base leading-relaxed text-[color:var(--color-ink)]/75 font-sans">
-          成图即自动落盘入展，并由后台流水线自动化构建多维互动体验，亦可一键通往三维展馆进行空间策展。
-        </p>
+      <header className="mb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[color:var(--color-gold)]/40 bg-white/70 shadow-xs mb-3">
+            <Sparkles size={13} className="text-gold" />
+            <span className="text-xs font-serif font-medium text-[color:var(--color-primary)] tracking-widest">
+              观其形 · 知其意 · 入其境
+            </span>
+          </div>
+          <h1 className="font-serif text-[clamp(2.1rem,4.5vw,3rem)] font-bold leading-tight text-[color:var(--color-ink)]">
+            数字非遗典藏展厅
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm sm:text-base leading-relaxed text-[color:var(--color-ink)]/75 font-sans">
+            成图即自动落盘入展，并由后台流水线自动化构建多维互动体验，亦可一键通往三维展馆进行空间策展。
+          </p>
 
-        <div className="mt-5 flex flex-wrap gap-2.5 text-xs text-[color:var(--color-ink)]/65 font-serif">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/70 px-3 py-1 shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
-            精选典藏已逐项核验
-          </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/70 px-3 py-1 shadow-xs">
-            文化考据体系 {cultureSourcesVersion}
-          </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/70 px-3 py-1 shadow-xs">
-            已展出 {cases.length} 件作品
-            {runtimeCount > 0 && ` · 新生成 ${runtimeCount} 件`}
-            {runtimeState === 'offline' && ' · 离线模式'}
-          </span>
+          <div className="mt-5 flex flex-wrap gap-2.5 text-xs text-[color:var(--color-ink)]/65 font-serif">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/70 px-3 py-1 shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+              精选典藏已逐项核验
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/70 px-3 py-1 shadow-xs">
+              文化考据体系 {cultureSourcesVersion}
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/70 px-3 py-1 shadow-xs">
+              已展出 {cases.length} 件作品
+              {runtimeCount > 0 && ` · 新生成 ${runtimeCount} 件`}
+              {runtimeState === 'offline' && ' · 离线模式'}
+            </span>
+          </div>
         </div>
+
+        {/* 金石百宝匣 · 数字存证徽章 (GPT Image 2 真实视觉资产) */}
+        <motion.div
+          className="relative w-40 sm:w-48 aspect-[3/2] cursor-pointer shrink-0 self-center md:self-auto group"
+          animate={{ y: [-3, 3] }}
+          transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
+          whileHover={{ scale: 1.08 }}
+          onClick={() => setShowArchiveCert(true)}
+          title="点击查验金石印匣 · SHA-256 典藏溯源凭证"
+        >
+          <img
+            src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.png"}
+            alt="古籍卷轴式立体书香金石印匣"
+            className="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(63,43,31,0.25)]"
+          />
+          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white/95 border border-gold/40 shadow-xs px-2.5 py-0.5 rounded-full text-[10px] font-serif text-primary whitespace-nowrap opacity-90 group-hover:opacity-100 flex items-center gap-1">
+            <ShieldCheck size={11} className="text-gold" />
+            <span>典藏金石印鉴</span>
+          </div>
+        </motion.div>
       </header>
+
+      {/* 典藏印匣弹窗 */}
+      <AnimatePresence>
+        {showArchiveCert && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowArchiveCert(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-full max-w-lg bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-7 shadow-2xl z-10 font-serif"
+            >
+              <div className="flex items-center justify-between pb-3 border-b border-gold/30 mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="chinese-seal text-[10px]">存证</span>
+                  <span className="text-base font-bold text-ink">数字非遗典藏与溯源凭据</span>
+                </div>
+                <button
+                  onClick={() => setShowArchiveCert(false)}
+                  className="w-8 h-8 rounded-full border border-gold/30 bg-white flex items-center justify-center text-ink/60 hover:text-primary transition-all cursor-pointer"
+                >
+                  <X size={15} />
+                </button>
+              </div>
+
+              <div className="flex items-center gap-4 p-3.5 rounded-xl bg-white/80 border border-gold/30 mb-4">
+                <img
+                  src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-04-archive-casket.png"}
+                  alt=""
+                  className="w-20 h-14 object-contain shrink-0"
+                />
+                <div className="text-xs text-ink/75 leading-relaxed font-sans">
+                  本展厅所有入展作品均挂接本地持久化 Case Store。具备 SHA-256 证据链防伪追溯与真实生成参数记录，无需依赖外部商业数据库，离线永存。
+                </div>
+              </div>
+
+              <div className="space-y-2 text-xs font-sans text-ink/80 mb-5">
+                <div className="p-2.5 rounded-lg bg-paper border border-gold/25 flex items-center justify-between">
+                  <span className="font-serif">防伪审计机制</span>
+                  <span className="font-mono text-emerald-800 font-bold">SHA-256 Digest 校验</span>
+                </div>
+                <div className="p-2.5 rounded-lg bg-paper border border-gold/25 flex items-center justify-between">
+                  <span className="font-serif">存储持久化方式</span>
+                  <span className="font-mono text-ink/70">Local Case Store 沙箱落盘</span>
+                </div>
+                <div className="p-2.5 rounded-lg bg-paper border border-gold/25 flex items-center justify-between">
+                  <span className="font-serif">离线可用状态</span>
+                  <span className="text-primary font-bold">完整支持 100% 离线赏析</span>
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setShowArchiveCert(false)}
+                  className="px-5 py-2 rounded-xl btn-chinese text-xs font-serif"
+                >
+                  确认识别
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {runtimeState === 'offline' && (
         <p className="mb-6 rounded-xl border border-[color:var(--color-gold)]/40 bg-white/70 px-4 py-2.5 text-xs text-[color:var(--color-ink)]/70">

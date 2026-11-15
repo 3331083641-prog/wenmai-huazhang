@@ -273,8 +273,29 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 悬浮美学标签 */}
-            <div className="absolute top-1/2 -right-4 -translate-y-1/2 bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-[0_12px_36px_rgba(158,36,27,0.18)] flex items-center gap-3 z-50 border border-gold/40">
+            {/* 悬浮美学标签与东方三维文脉灵笔（GPT Image 2 真实资产） */}
+            <motion.div
+              className="absolute -top-12 -right-8 w-36 h-36 z-50 pointer-events-auto cursor-pointer hidden sm:block"
+              animate={{
+                y: [-6, 6],
+                rotate: [-2, 4],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+              whileHover={{ scale: 1.15, rotate: 8 }}
+              title="文脉神韵灵笔 · 笔墨生辉"
+            >
+              <img
+                src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-01-cultural-brush.png"}
+                alt="东方数字艺术灵笔"
+                className="w-full h-full object-contain drop-shadow-[0_16px_36px_rgba(210,161,74,0.45)]"
+              />
+            </motion.div>
+
+            <div className="absolute top-1/2 -right-4 -translate-y-1/2 bg-white/95 backdrop-blur-md px-4 py-3 rounded-xl shadow-[0_12px_36px_rgba(158,36,27,0.18)] flex items-center gap-3 z-40 border border-gold/40">
               <div className="w-10 h-10 rounded-full bg-gold/15 flex items-center justify-center shrink-0">
                 <Sparkles className="text-gold w-5 h-5" />
               </div>
@@ -441,16 +462,33 @@ export default function Home() {
 
           {/* 右侧：文化韵味与功能介绍 */}
           <div className="lg:col-span-5 flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/40 bg-white/70 text-primary text-xs font-serif font-medium w-fit mb-4">
-              <Compass className="w-3.5 h-3.5 text-gold" />
-              沉浸式三维虚拟艺术展馆
+            <div className="flex items-center gap-4 mb-3">
+              <motion.div
+                className="w-20 h-20 shrink-0 cursor-pointer"
+                animate={{ y: [-4, 4] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                whileHover={{ scale: 1.12, rotate: 2 }}
+                title="三维虚实交融玉璧楼阁展馆印徽"
+              >
+                <img
+                  src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-02-heritage-pavilion.png"}
+                  alt="三维虚实交融玉璧楼阁展馆印徽"
+                  className="w-full h-full object-contain drop-shadow-[0_12px_28px_rgba(66,108,98,0.35)]"
+                />
+              </motion.div>
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/40 bg-white/70 text-primary text-xs font-serif font-medium w-fit mb-1.5">
+                  <Compass className="w-3.5 h-3.5 text-gold" />
+                  沉浸式三维虚拟艺术展馆
+                </div>
+                <h2 className="text-2xl md:text-3xl font-serif font-bold text-ink leading-tight">
+                  纹脉展馆
+                  <span className="block text-sm sm:text-base font-normal text-primary mt-1">
+                    虚拟漫游 · 自由布展 · 交互策展
+                  </span>
+                </h2>
+              </div>
             </div>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-ink mb-4 leading-snug">
-              纹脉展馆 <br />
-              <span className="text-lg md:text-xl font-normal text-primary">
-                虚拟漫游 · 自由布展 · 交互策展
-              </span>
-            </h2>
             <p className="text-sm md:text-base text-ink/75 leading-relaxed mb-6 font-sans">
               纹脉展馆是{projectBrand.name}的沉浸式三维文化展示空间。漫游水院中式古建、近距离赏析传统文化主题作品，并通过 30 处画框自由换画、器物陈设打造个人专属策展空间。
             </p>

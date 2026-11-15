@@ -4,10 +4,10 @@
  */
 
 export const APP_VERSION = {
-  version: '2.2.0-art-vnext',
-  buildTag: '2026.11-artistic-vnext',
+  version: '2.3.0-visual-integrated',
+  buildTag: '2026.11-gpt-image2-integrated',
   edition: '传统文化视觉智能创作与沉浸式文创应用平台',
-  releaseName: '纹脉华章 VNext 艺术化深度优化与高级交互版',
+  releaseName: '纹脉华章 VNext GPT Image 2 高级艺术素材全量集成版',
   updatedAt: '2026-11-15',
 };
 

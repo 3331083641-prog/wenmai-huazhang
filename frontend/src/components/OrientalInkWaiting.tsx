@@ -105,7 +105,7 @@ export default function OrientalInkWaiting({
         </div>
 
         {/* 核心动效：传统云纹印圈与水墨晕染绽放 */}
-        <div className="relative w-48 h-48 flex items-center justify-center my-auto">
+        <div className="relative w-56 h-56 flex items-center justify-center my-auto">
           {/* 外层多重水墨晕染扩散脉冲 */}
           <motion.div
             className="absolute inset-0 rounded-full bg-primary/10 blur-xl"
@@ -132,16 +132,32 @@ export default function OrientalInkWaiting({
             }}
           />
 
+          {/* 真实敦煌飞天与水墨流云绽放精灵（GPT Image 2 高级视觉资产） */}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center pointer-events-none z-0"
+            animate={{ rotate: 360, scale: [0.94, 1.05, 0.94] }}
+            transition={{
+              rotate: { duration: 36, repeat: Infinity, ease: 'linear' },
+              scale: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+            }}
+          >
+            <img
+              src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-05-ink-bloom-sprite.png"}
+              alt="水墨流云绽放"
+              className="w-48 h-48 object-contain drop-shadow-[0_10px_25px_rgba(210,161,74,0.35)]"
+            />
+          </motion.div>
+
           {/* SVG 传统祥云回纹环，带有顺时针漫步与虚线描边呼吸 */}
-          <svg className="w-44 h-44 absolute" viewBox="0 0 100 100">
+          <svg className="w-52 h-52 absolute z-10 pointer-events-none" viewBox="0 0 100 100">
             {/* 外圈金丝回纹 */}
             <motion.circle
               cx="50"
               cy="50"
-              r="44"
+              r="46"
               fill="none"
               stroke="#D2A14A"
-              strokeWidth="1.2"
+              strokeWidth="1"
               strokeDasharray="4 6"
               animate={{ rotate: 360 }}
               transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
@@ -154,31 +170,17 @@ export default function OrientalInkWaiting({
               r="34"
               fill="none"
               stroke="#9E241B"
-              strokeWidth="1"
+              strokeWidth="0.8"
               strokeDasharray="8 4 2 4"
               animate={{ rotate: -360 }}
               transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-              style={{ originX: '50px', originY: '50px' }}
-            />
-            {/* 内圈天青水纹 */}
-            <motion.circle
-              cx="50"
-              cy="50"
-              r="24"
-              fill="none"
-              stroke="#2B5F75"
-              strokeWidth="0.8"
-              opacity="0.6"
-              strokeDasharray="2 3"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
               style={{ originX: '50px', originY: '50px' }}
             />
           </svg>
 
           {/* 中央文房笔锋与朱砂印徽 */}
           <motion.div
-            className="relative z-10 w-16 h-16 rounded-2xl bg-white/90 border border-gold/50 shadow-md flex flex-col items-center justify-center p-2 backdrop-blur-sm"
+            className="relative z-20 w-16 h-16 rounded-2xl bg-white/95 border border-gold/50 shadow-md flex flex-col items-center justify-center p-2 backdrop-blur-md"
             animate={{
               scale: [0.96, 1.04, 0.96],
             }}
@@ -248,13 +250,18 @@ export default function OrientalInkWaiting({
   return (
     <div className="w-full max-w-sm aspect-[3/4] border-2 border-dashed border-gold/45 rounded-2xl bg-white/60 flex flex-col items-center justify-center p-8 text-center relative overflow-hidden group shadow-sm">
       <div className="absolute inset-0 bg-gradient-to-t from-gold/10 via-transparent to-transparent pointer-events-none" />
-      <div className="w-16 h-16 rounded-2xl bg-white shadow-xs border border-gold/40 flex items-center justify-center mb-4 text-gold group-hover:scale-105 group-hover:text-primary transition-all">
+      <img
+        src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-05-ink-bloom-sprite.png"}
+        alt=""
+        className="absolute w-64 h-64 object-contain opacity-15 pointer-events-none group-hover:scale-105 group-hover:opacity-25 transition-all duration-700"
+      />
+      <div className="w-16 h-16 rounded-2xl bg-white shadow-xs border border-gold/40 flex items-center justify-center mb-4 text-gold group-hover:scale-105 group-hover:text-primary transition-all relative z-10">
         <ImagePlus className="w-8 h-8 text-primary/60" />
       </div>
-      <h3 className="font-serif text-lg font-bold text-ink mb-2">
+      <h3 className="font-serif text-lg font-bold text-ink mb-2 relative z-10">
         画案待题 · 视觉呈现
       </h3>
-      <p className="text-xs leading-relaxed max-w-[240px] font-sans text-ink/60">
+      <p className="text-xs leading-relaxed max-w-[240px] font-sans text-ink/60 relative z-10">
         在左侧输入创作主题并选择文化风格约束后，点击开始创作。成图将在此处以数字画轴形式展开。
       </p>
     </div>

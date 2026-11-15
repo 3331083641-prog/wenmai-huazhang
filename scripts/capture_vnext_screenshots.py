@@ -35,54 +35,57 @@ def run():
         )
         page = context.new_page()
         page.set_default_timeout(30000)
+        # Prevent Google Font network timeout in headless session
+        page.route("https://fonts.googleapis.com/**", lambda route: route.abort())
+        page.route("https://fonts.gstatic.com/**", lambda route: route.abort())
 
         # 1. 首页 Home
         print("Capturing home-overview.jpg...")
         page.goto(f"{BASE_URL}/", wait_until='domcontentloaded')
-        page.wait_for_timeout(2000)
-        page.screenshot(path=str(OUT_DIR / 'home-overview.jpg'), quality=90)
+        page.wait_for_timeout(1500)
+        page.screenshot(path=str(OUT_DIR / 'home-overview.jpg'), quality=90, timeout=10000, animations='disabled')
 
         # 2. 首页展馆区域 home-gallery.jpg
         print("Capturing home-gallery.jpg...")
         page.evaluate('window.scrollTo(0, 1150)')
         page.wait_for_timeout(1000)
-        page.screenshot(path=str(OUT_DIR / 'home-gallery.jpg'), quality=90)
+        page.screenshot(path=str(OUT_DIR / 'home-gallery.jpg'), quality=90, timeout=10000, animations='disabled')
 
         # 3. 风格库 StyleLibrary
         print("Capturing culture-styles.jpg...")
         page.goto(f"{BASE_URL}/styles", wait_until='domcontentloaded')
         page.wait_for_timeout(1500)
-        page.screenshot(path=str(OUT_DIR / 'culture-styles.jpg'), quality=90)
+        page.screenshot(path=str(OUT_DIR / 'culture-styles.jpg'), quality=90, timeout=10000, animations='disabled')
 
         # 4. 智能生成工作台 AICreator
         print("Capturing creation-workspace.jpg...")
         page.goto(f"{BASE_URL}/creator", wait_until='domcontentloaded')
         page.wait_for_timeout(1500)
-        page.screenshot(path=str(OUT_DIR / 'creation-workspace.jpg'), quality=90)
+        page.screenshot(path=str(OUT_DIR / 'creation-workspace.jpg'), quality=90, timeout=10000, animations='disabled')
 
         # 5. 作品展厅 Gallery
         print("Capturing gallery.jpg...")
         page.goto(f"{BASE_URL}/gallery", wait_until='domcontentloaded')
         page.wait_for_timeout(1500)
-        page.screenshot(path=str(OUT_DIR / 'gallery.jpg'), quality=90)
+        page.screenshot(path=str(OUT_DIR / 'gallery.jpg'), quality=90, timeout=10000, animations='disabled')
 
         # 6. 文创衍生效果工坊 ProductStudio
         print("Capturing creative-products.jpg...")
         page.goto(f"{BASE_URL}/products", wait_until='domcontentloaded')
         page.wait_for_timeout(1500)
-        page.screenshot(path=str(OUT_DIR / 'creative-products.jpg'), quality=90)
+        page.screenshot(path=str(OUT_DIR / 'creative-products.jpg'), quality=90, timeout=10000, animations='disabled')
 
         # 7. 多维应用场景 Scenarios
         print("Capturing scenarios.jpg...")
         page.goto(f"{BASE_URL}/scenarios", wait_until='domcontentloaded')
         page.wait_for_timeout(1500)
-        page.screenshot(path=str(OUT_DIR / 'scenarios.jpg'), quality=90)
+        page.screenshot(path=str(OUT_DIR / 'scenarios.jpg'), quality=90, timeout=10000, animations='disabled')
 
         # 8. 关于项目 About
         print("Capturing about.jpg...")
         page.goto(f"{BASE_URL}/about", wait_until='domcontentloaded')
         page.wait_for_timeout(1500)
-        page.screenshot(path=str(OUT_DIR / 'about.jpg'), quality=90)
+        page.screenshot(path=str(OUT_DIR / 'about.jpg'), quality=90, timeout=10000, animations='disabled')
 
         browser.close()
         print("All target screenshots captured successfully!")

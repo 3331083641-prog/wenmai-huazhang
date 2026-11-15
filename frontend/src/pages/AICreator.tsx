@@ -402,16 +402,32 @@ export default function AICreator() {
          <div className="lg:w-[50%] flex flex-col border-r border-gold/25 bg-white/70 backdrop-blur-sm">
             <div className="h-20 bg-gradient-to-r from-[#FAF3E6] via-[#FCF8F0] to-[#FAF3E6] relative overflow-hidden flex items-center px-6 border-b border-gold/30">
                <div className="absolute inset-0 bg-cover bg-center opacity-8 filter sepia pointer-events-none" style={{backgroundImage: `url(${import.meta.env.BASE_URL}songhua.png)`}}></div>
-               <div className="relative z-10 flex items-center gap-2.5">
-                 <div className="w-8 h-8 rounded-lg bg-primary/10 border border-gold/40 flex items-center justify-center text-primary shadow-xs">
-                   <Wand2 className="w-4 h-4 text-gold" />
-                 </div>
+               <div className="relative z-10 flex items-center gap-3">
+                 <motion.div
+                   className="w-14 h-14 shrink-0 cursor-pointer -my-2 group relative"
+                   animate={{ y: [-2, 2], rotate: [-2, 2] }}
+                   transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                   whileHover={{ scale: 1.15, rotate: 6 }}
+                   whileTap={{ scale: 0.95 }}
+                   onClick={() => {
+                     if (!prompt) {
+                       setPrompt("宋画青绿长卷，远岫晴云，江流清澈，舟楫掩映松石间，天然矿物石青石绿");
+                     }
+                   }}
+                   title="东方数字艺术灵笔 · 点击注入意境灵感"
+                 >
+                   <img
+                     src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-01-cultural-brush.png"}
+                     alt="东方数字艺术灵笔"
+                     className="w-full h-full object-contain drop-shadow-[0_8px_18px_rgba(210,161,74,0.4)]"
+                   />
+                 </motion.div>
                  <div>
                    <h2 className="text-lg font-serif font-bold text-ink flex items-center gap-2">
                      国风智能创作工作台
                      <span className="chinese-seal text-[9px]">文房</span>
                    </h2>
-                   <p className="text-[10px] text-ink/50 font-serif">Qwen Image 3.0 多模态创作引擎</p>
+                   <p className="text-[10px] text-ink/50 font-serif">Qwen Image 3.0 多模态创作引擎 · 灵笔在案</p>
                  </div>
                </div>
                <div className="ml-auto text-xs font-mono text-right relative z-10">

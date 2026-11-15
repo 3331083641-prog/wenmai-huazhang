@@ -458,6 +458,37 @@ export default function ProductStudio() {
                  </div>
               )}
             </div>
+
+            {/* 高定文创实物灵感载体（GPT Image 2 真实视觉资产） */}
+            <div className="oriental-gallery-card p-5 rounded-2xl shadow-sm border border-gold/35 mt-5 relative overflow-hidden group">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-serif font-bold text-primary flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  高定器物灵感母体 · 汝窑贯耳瓶
+                </span>
+                <span className="chinese-seal text-[9px] bg-primary">器道</span>
+              </div>
+              <div className="aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-b from-[#EBF2F4] to-[#F5F9FA] border border-gold/25 p-2 flex items-center justify-center relative">
+                <motion.div
+                  className="w-full h-full flex items-center justify-center cursor-pointer"
+                  animate={{ y: [-3, 3] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                  whileHover={{ scale: 1.08, rotate: 2 }}
+                >
+                  <img
+                    src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-03-celadon-vessel.png"}
+                    alt="五大流派东方意象青瓷天球瓶"
+                    className="h-full object-contain drop-shadow-[0_12px_24px_rgba(43,95,117,0.3)]"
+                  />
+                </motion.div>
+                <div className="absolute bottom-2 left-2 right-2 text-center bg-black/40 backdrop-blur-md text-white text-[10px] font-serif py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                  金丝铁线开片 · 盘金蟠龙绣带
+                </div>
+              </div>
+              <p className="text-[11px] text-ink/70 leading-relaxed font-sans mt-3 text-center">
+                以天青汝窑为器骨，融汇非遗刺绣蟠龙云纹，探索传统纹样由平入立的高定文创范式。
+              </p>
+            </div>
           </div>
         </div>
 
