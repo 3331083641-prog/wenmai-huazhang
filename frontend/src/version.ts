@@ -4,10 +4,10 @@
  */
 
 export const APP_VERSION = {
-  version: '2.1.0-vNext',
-  buildTag: '2026.11-visual-vnext',
+  version: '2.2.0-art-vnext',
+  buildTag: '2026.11-artistic-vnext',
   edition: '传统文化视觉智能创作与沉浸式文创应用平台',
-  releaseName: '纹脉华章 VNext 视觉体验升级版',
+  releaseName: '纹脉华章 VNext 艺术化深度优化与高级交互版',
   updatedAt: '2026-11-15',
 };
 

@@ -218,28 +218,29 @@ export default function Gallery() {
   return (
     <main className="mx-auto max-w-[1240px] px-4 pb-20 pt-24 sm:px-6">
       <header className="mb-10">
-        <p className="text-xs font-medium tracking-[0.3em] text-[color:var(--color-primary)]">
-          生成即入展 · 互动自动构建 · 可进入三维展馆
-        </p>
-        <h1 className="mt-3 font-serif text-[clamp(2.1rem,4.5vw,3rem)] font-bold leading-tight text-[color:var(--color-ink)]">
-          作品展厅
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[color:var(--color-gold)]/40 bg-white/70 shadow-xs mb-3">
+          <Sparkles size={13} className="text-gold" />
+          <span className="text-xs font-serif font-medium text-[color:var(--color-primary)] tracking-widest">
+            观其形 · 知其意 · 入其境
+          </span>
+        </div>
+        <h1 className="font-serif text-[clamp(2.1rem,4.5vw,3rem)] font-bold leading-tight text-[color:var(--color-ink)]">
+          数字非遗典藏展厅
         </h1>
-        <p className="mt-3 max-w-3xl text-sm sm:text-base leading-relaxed text-[color:var(--color-ink)]/75 font-sans">
-          内置 {savedCases.length} 件精选作品，来自项目真实 Qwen Image 3.0 生成链路，互动内容经逐点复核。
-          此后每次在创作台成功生成的作品都会自动保存到这里，并自动构建画中有话、一图一境与画境漫游；
-          构建完成后无需重启前端，刷新或稍候即可进入。浏览与多维深度互动不会调用付费模型。
+        <p className="mt-3 max-w-2xl text-sm sm:text-base leading-relaxed text-[color:var(--color-ink)]/75 font-sans">
+          成图即自动落盘入展，并由后台流水线自动化构建多维互动体验，亦可一键通往三维展馆进行空间策展。
         </p>
 
         <div className="mt-5 flex flex-wrap gap-2.5 text-xs text-[color:var(--color-ink)]/65 font-serif">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/70 px-3 py-1 shadow-xs">
-            <Sparkles size={13} className="text-gold" />
-            精选作品已逐项核验
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+            精选典藏已逐项核验
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/70 px-3 py-1 shadow-xs">
-            文化来源 {cultureSourcesVersion}
+            文化考据体系 {cultureSourcesVersion}
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--color-gold)]/50 bg-white/70 px-3 py-1 shadow-xs">
-            共 {cases.length} 件作品
+            已展出 {cases.length} 件作品
             {runtimeCount > 0 && ` · 新生成 ${runtimeCount} 件`}
             {runtimeState === 'offline' && ' · 离线模式'}
           </span>

@@ -1,6 +1,8 @@
-# 纹脉华章 · 最新正式界面截图与视觉说明 (VNext 升级版)
+# 纹脉华章 · 最新正式界面截图与视觉说明 (VNext 深度艺术版 v2.2.0)
 
-全部采集自实际运行的 React 19 / Vite 6 / Tailwind CSS v4 / Three.js 真实项目，采用 Playwright 无头浏览器环境于 1440×1000 标准视口无损截取。真实反映全站 VNext 最新东方数字艺术视觉系统、浮动玉屏导航、印鉴风格条幅与文房工作台质感。
+全部采集自实际运行的 React 19 / Vite 6 / Tailwind CSS v4 / Three.js 真实项目，采用 Playwright 自动化环境于 1440×1000 标准视口无损截取。真实反映全站 VNext 最新东方数字艺术视觉系统、浮动玉屏导航、六大数智能力互动抽屉、文化基因深度考据抽屉与文房四宝创作工坊的墨韵等待动效。
+
+> 📖 **配套视觉资产规范**：全站 GPT Image 2 高质量视觉资产提示词库与协作规范请参阅 [docs/design/GPT_IMAGE2_UI_ASSET_PROMPTS.md](../../design/GPT_IMAGE2_UI_ASSET_PROMPTS.md)。
 
 ---
 

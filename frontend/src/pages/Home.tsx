@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { projectBrand } from '../data/projectBrand';
 import { Link } from 'react-router-dom';
 import {
@@ -12,9 +13,12 @@ import {
   Compass,
   Layers,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   Cpu,
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
+import { cn } from '../lib/utils';
 import { experienceById } from '../data/experiences';
 import { uiPreviews } from '../data/uiPreviews';
 
@@ -53,54 +57,80 @@ const INTERACTIVE_ENTRIES = [
 ];
 
 /**
- * 平台核心能力矩阵
+ * 平台核心能力矩阵（短标题 + 诗意摘要 + 展开工法机理）
  */
 const CORE_CAPABILITIES = [
   {
     icon: Palette,
     title: '五大传统视觉风格库',
-    desc: '严选朱仙镇木版年画、汴绣纹样、宋画青绿山水、青花瓷纹样与中国剪纸，提炼色彩、构图、纹样与笔法特征，为 AI 创作提供结构化文化约束。',
+    poeticSummary: '以五大传统文化门类为引，凝练东方设色与纹样脉络。',
+    detailedDesc: '严选朱仙镇木版年画、汴绣纹样、宋画青绿山水、青花瓷纹样与中国剪纸，系统提炼设色谱系、构图法则与纹样肌理，为 AI 创作提供精确的文化先验约束。',
+    highlights: ['五大门类经典母题系统解构', '设色特征谱系量化定义', '非遗纹样骨骼语义约束'],
     tag: '风格体系',
     badge: '典藏传承',
+    to: '/styles',
+    actionText: '浏览风格基因',
   },
   {
     icon: Sparkles,
-    title: 'Qwen Image 3.0 多模态创作',
-    desc: '支持「输入文本主题 + 传统文化参考图 + 风格强度约束」，实现可控的多模态视觉生成，真实回报参考图参与推理的置信状态。',
+    title: 'Qwen Image 3.0 可控创作',
+    poeticSummary: '双驱多模态视觉生成，真实回报参考图置信状态。',
+    detailedDesc: '支持「输入文本主题 + 传统文化参考图 + 风格强度约束」，实现可控的多模态视觉生成，服务端精准校验并真实返回 referenceImageUsed 凭据，杜绝伪概念伪生成。',
+    highlights: ['文本主题与参考图双向约束', '0%~100% 风格强调细粒度调节', '百炼云端官方生成凭据校验'],
     tag: '智能生成',
     badge: '百炼大模型',
+    to: '/creator',
+    actionText: '开始智能创作',
   },
   {
     icon: Cpu,
     title: 'Qwen3-VL 视觉理解与文化卡',
-    desc: '接入本地多模态大模型，对生成作品进行自动视觉特征提取、文化意涵解读与应用建议，一键导出精致排版的双语 CultureCard。',
+    poeticSummary: '端侧多模态深度解析，自动提炼文化意涵与工艺特征。',
+    detailedDesc: '接入端侧轻量化多模态大模型，成图后自动分析构图元素、色彩象征意涵与文创转化建议，一键导出精致排版的双语 CultureCard 说明卡。',
+    highlights: ['端侧视觉模型自动化推理', '非遗工艺特征与色彩象征解读', '一键导出高清文创说明卡'],
     tag: '文化解读',
     badge: '端侧推理',
+    to: '/creator',
+    actionText: '探索文化解读',
   },
   {
     icon: Eye,
     title: '作品展厅与多维互动',
-    desc: '作品生成即落盘，自动加入作品展厅；后台流水线自动构建画中有话、一图一境与 2.5D 画境漫游，无需重启即可多维度深度赏析。',
+    poeticSummary: '成图落盘防伪追溯，流水线构建多重深度交互。',
+    detailedDesc: '作品生成即通过 Case Store 本地持久化入库，自动生成 SHA-256 审计记录；后台流水线自动构建画中有话、一图一境与 2.5D 画境漫游，无需重启即可多维度深度赏析。',
+    highlights: ['Case Store 本地持久化存储', 'SHA-256 全生命周期防伪审计', '微观线索热点与画境视差漫游'],
     tag: '互动赏析',
     badge: '沉浸共创',
+    to: '/gallery',
+    actionText: '进入作品展厅',
   },
   {
     icon: Boxes,
-    title: '三维纹脉展馆与布展 DIY',
-    desc: '五馆水院虚拟艺术展馆，支持自由漫游、30 处自定义画框换画、传统器物陈设布置、昼夜光影切换与开关门、楼梯通行与水中游动。',
+    title: '三维纹脉展馆与自由策展',
+    poeticSummary: '五馆水院古建漫游，30处画框换画与器物陈设。',
+    detailedDesc: '五馆水院虚拟艺术展馆，支持自由漫游、30 处自定义画框换画、传统器物陈设布置、昼夜光影切换与开关门、楼梯通行与水中游动。',
+    highlights: ['Three.js 60FPS 虚拟实体空间', '30 处自定义画框换画与陈设', '昼夜晨昏光影与物理环境交互'],
     tag: '虚拟空间',
-    badge: 'Three.js 60FPS',
+    badge: '空间展陈',
+    to: '/heritage-gallery',
+    actionText: '漫游虚拟展馆',
   },
   {
     icon: Layout,
     title: '文创转化与多载体打样',
-    desc: '将作品一键映射到文旅明信片、数字海报、帆布袋、书签、杯垫、手机壁纸等 8 类预设载体，支持按比例预览并导出高清应用图。',
+    poeticSummary: '作品即时映射八大文创实物，按比例导出高清图。',
+    detailedDesc: '将作品一键映射到文旅明信片、数字海报、帆布袋、书签、青瓷杯垫等 8 类预设载体，支持按真实工艺比例预览并导出 1600x1200 高清应用图。',
+    highlights: ['8 类国潮文创载体预设', '按真实工艺比例实时预览', '1600x1200 高清 PNG 导出渲染'],
     tag: '文创应用',
     badge: '即时打样',
+    to: '/products',
+    actionText: '体验文创工坊',
   },
 ];
 
 export default function Home() {
+  const [expandedCap, setExpandedCap] = useState<number | null>(null);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-16 lg:py-20">
       {/* ── 1. Hero 首屏：Scrolltide / Supahero 级文化殿堂叙事 ── */}
@@ -128,18 +158,16 @@ export default function Home() {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-black tracking-tight leading-[1.18] mb-6 text-ink">
             {projectBrand.name}
             <div className="mt-3 flex items-center gap-3">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-medium text-primary">
-                {projectBrand.subtitle}
+              <span className="text-xl sm:text-2xl lg:text-3xl font-medium text-primary tracking-wide">
+                以纹为引 · 入画成境
               </span>
               <span className="chinese-seal text-[11px]">数字非遗</span>
             </div>
           </h1>
 
-          {/* 核心阐释 */}
+          {/* 核心阐释（精简、文学化、去模板化） */}
           <p className="text-base sm:text-lg text-ink/75 mb-8 leading-relaxed font-sans max-w-xl">
-            以人工智能图像生成与多模态视觉理解为技术底座，融汇传统文化经典视觉风格与现代数字艺术。让千载华夏文脉从
-            <span className="font-semibold text-primary">“被观看”走向“被共创”</span>
-            ，打通灵感创作、深度赏析、三维展陈与文创落地的完整链路。
+            一纹一脉，溯源东方。融汇五大传统文化经典视觉基因，借助多模态智能创作与三维虚拟展馆，让沉淀千载的华夏美学在数字空间自成气象。
           </p>
 
           {/* 行动按钮群 */}
@@ -457,7 +485,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 5. 平台核心能力（东方微质感能力矩阵） ─────────────────── */}
+      {/* ── 5. 平台核心能力（东方微质感交互能力矩阵） ─────────────────── */}
       <section className="mb-24 md:mb-32">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-2 mb-2">
@@ -465,40 +493,90 @@ export default function Home() {
             <span className="text-xs font-serif tracking-[0.25em] text-primary">CAPABILITIES</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-ink mb-3">
-            平台核心能力
+            平台核心数智能力
           </h2>
-          <p className="text-sm md:text-base text-ink/65 max-w-2xl mx-auto">
-            围绕传统文化视觉数字化创作，打通从创意输入、可控生成、自动解读到空间展陈与文创转化的全景闭环。
+          <p className="text-sm md:text-base text-ink/65 max-w-xl mx-auto">
+            以传统文脉为审美先验，点击展开详细工法机理与技术闭环
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {CORE_CAPABILITIES.map((feature, i) => {
             const Icon = feature.icon;
+            const isExpanded = expandedCap === i;
             return (
               <motion.div
+                layout
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="oriental-gallery-card p-7 rounded-2xl transition-all duration-300 hover:shadow-[0_16px_40px_rgba(158,36,27,0.12)] hover:-translate-y-1.5 hover:border-primary/40 flex flex-col group"
+                transition={{ duration: 0.45, delay: i * 0.06 }}
+                className={cn(
+                  "oriental-gallery-card p-6 sm:p-7 rounded-2xl transition-all duration-300 flex flex-col group",
+                  isExpanded
+                    ? "border-primary/50 shadow-[0_20px_50px_rgba(158,36,27,0.15)] bg-white"
+                    : "hover:border-primary/40 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(158,36,27,0.1)]"
+                )}
               >
-                <div className="flex items-center justify-between mb-5">
-                  <div className="w-12 h-12 rounded-xl bg-white shadow-xs flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all text-primary border border-gold/30">
-                    <Icon className="w-6 h-6" />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-11 h-11 rounded-xl bg-white shadow-xs flex items-center justify-center text-primary border border-gold/30 group-hover:bg-primary group-hover:text-white transition-all">
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-[11px] font-serif text-primary/80 bg-primary/5 px-2.5 py-1 rounded-full border border-primary/15">
+                  <span className="text-[11px] font-serif text-primary/80 bg-primary/5 px-2.5 py-0.5 rounded-full border border-primary/15">
                     {feature.tag}
                   </span>
                 </div>
-                <h3 className="font-serif font-bold text-lg mb-2 text-ink group-hover:text-primary transition-colors">
+
+                <h3 className="font-serif font-bold text-lg mb-1.5 text-ink group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-xs md:text-sm text-ink/70 leading-relaxed font-sans flex-1">
-                  {feature.desc}
+                <p className="text-xs sm:text-sm text-ink/75 leading-relaxed font-sans mb-3">
+                  {feature.poeticSummary}
                 </p>
-                <div className="mt-4 pt-3 border-t border-gold/20 flex items-center justify-between text-[11px] text-ink/50 font-serif">
+
+                {/* 交互展开详细工法机理（按需展开，避免长期文字堆叠） */}
+                <button
+                  type="button"
+                  onClick={() => setExpandedCap(isExpanded ? null : i)}
+                  className="flex items-center gap-1.5 text-xs font-serif text-primary hover:text-primary-dark transition-colors py-1 cursor-pointer w-fit mt-auto"
+                >
+                  <span>{isExpanded ? '收起工法机理' : '展开工法机理'}</span>
+                  {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                </button>
+
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden pt-3 border-t border-gold/25 mt-3"
+                    >
+                      <p className="text-xs text-ink/70 leading-relaxed font-sans mb-3">
+                        {feature.detailedDesc}
+                      </p>
+                      <div className="space-y-1.5 mb-4">
+                        {feature.highlights.map((item, idx) => (
+                          <div key={idx} className="flex items-center gap-2 text-[11px] text-ink/80 font-sans">
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <Link
+                        to={feature.to}
+                        className="inline-flex items-center gap-1.5 text-xs font-serif font-bold text-primary hover:gap-2.5 transition-all"
+                      >
+                        <span>{feature.actionText}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <div className="mt-3 pt-3 border-t border-gold/15 flex items-center justify-between text-[11px] text-ink/50 font-serif">
                   <span>{feature.badge}</span>
                   <span className="text-gold font-mono">0{i + 1}</span>
                 </div>

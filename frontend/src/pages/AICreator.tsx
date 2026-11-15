@@ -7,6 +7,7 @@ import { STYLES } from '../data/styleLibrary';
 import { projectBrand } from '../data/projectBrand';
 import { BackendHealth, buildLocalCultureCard, checkBackendHealth, generateImage, GeneratePayload, GenerateResponse } from '../services/generationService';
 import CultureCard from '../components/creator/CultureCard';
+import OrientalInkWaiting from '../components/OrientalInkWaiting';
 
 const GENERATION_STEPS = [
   "正在整理主题与参考图...",
@@ -680,21 +681,20 @@ export default function AICreator() {
               <button
                 onClick={handleGenerate}
                 disabled={isGenerating}
-                className="w-full py-4 btn-chinese disabled:opacity-80 disabled:cursor-not-allowed group relative overflow-hidden rounded-xl shadow-[0_8px_24px_rgba(158,36,27,0.25)] hover:shadow-[0_12px_32px_rgba(158,36,27,0.35)] transition-all"
+                className="w-full py-4 btn-chinese disabled:opacity-90 disabled:cursor-not-allowed group relative overflow-hidden rounded-xl shadow-[0_8px_24px_rgba(158,36,27,0.25)] hover:shadow-[0_12px_32px_rgba(158,36,27,0.35)] transition-all"
               >
                 {isGenerating && (
                   <motion.div
-                    className="absolute inset-y-0 left-0 bg-gold/35"
-                    initial={{ width: "0%" }}
-                    animate={{ width: `${(generationStep / (GENERATION_STEPS.length - 1)) * 100}%` }}
-                    transition={{ ease: "linear" }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/30 to-transparent pointer-events-none"
+                    animate={{ x: ['-100%', '100%'] }}
+                    transition={{ repeat: Infinity, duration: 1.8, ease: "linear" }}
                   />
                 )}
                 <div className="relative flex items-center justify-center gap-2 text-white font-serif font-bold text-base z-10 tracking-wider">
                   {isGenerating ? (
                     <>
                       <RefreshCw className="w-4 h-4 animate-spin text-gold" />
-                      <span>{GENERATION_STEPS[generationStep]}</span>
+                      <span>正在丹青运笔 · 笔墨生辉中...</span>
                     </>
                   ) : (
                     <>
@@ -711,18 +711,15 @@ export default function AICreator() {
          <div className="lg:w-[50%] bg-[#FAF4E8] flex flex-col relative z-0">
            {!hasResult ? (
              <div className="flex-1 flex flex-col items-center justify-center p-8 sm:p-12 relative">
-                <div className="w-full max-w-sm aspect-[3/4] border-2 border-dashed border-gold/45 rounded-2xl bg-white/60 flex flex-col items-center justify-center p-8 text-center relative overflow-hidden group shadow-sm">
-                   <div className="absolute inset-0 bg-gradient-to-t from-gold/10 via-transparent to-transparent pointer-events-none"></div>
-                   <div className="w-16 h-16 rounded-2xl bg-white shadow-xs border border-gold/40 flex items-center justify-center mb-4 text-gold group-hover:scale-105 group-hover:text-primary transition-all">
-                      <ImagePlus className="w-8 h-8 text-primary/60" />
-                   </div>
-                   <h3 className="font-serif text-lg font-bold text-ink mb-2">
-                     {connectionNotice ? '创作服务提示' : isGenerating ? '正在笔墨生辉生成中' : '画案待题 · 视觉呈现'}
-                   </h3>
-                   <p className={cn("text-xs leading-relaxed max-w-[240px] font-sans", connectionNotice ? "text-primary" : "text-ink/60")}>
-                     {connectionNotice || (isGenerating ? GENERATION_STEPS[generationStep] : '在左侧输入创作主题并选择文化风格约束后，点击开始创作。')}
-                   </p>
-                </div>
+                <OrientalInkWaiting
+                  isGenerating={isGenerating}
+                  hasResult={hasResult}
+                  imageLoadState={imageLoadState}
+                  connectionNotice={connectionNotice}
+                  errorMessage={null}
+                  onRetry={handleGenerate}
+                  selectedStyleName={currentStyleData?.name || selectedStyle}
+                />
                 
                 {historyImages.length > 0 && (
                   <div className="absolute bottom-6 left-6 right-6">

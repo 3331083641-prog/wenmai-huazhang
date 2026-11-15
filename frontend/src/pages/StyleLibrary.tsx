@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { ArrowRight, Info, Filter, Palette, Sparkles, BookOpen } from 'lucide-react';
+import { ArrowRight, Info, Filter, Palette, Sparkles, BookOpen, X, Check, Copy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
-import { STYLES } from '../data/styleLibrary';
+import { STYLES, StyleData } from '../data/styleLibrary';
 
 const CATEGORIES = [
   { id: '全部', label: '全部风格', count: STYLES.length },
@@ -27,10 +27,18 @@ const STYLE_PALETTES: Record<string, string[]> = {
 
 export default function StyleLibrary() {
   const [activeCategory, setActiveCategory] = useState('全部');
+  const [inspectingStyle, setInspectingStyle] = useState<StyleData | null>(null);
+  const [copiedPrompt, setCopiedPrompt] = useState(false);
 
   const filteredStyles = activeCategory === '全部'
     ? STYLES
     : STYLES.filter(s => s.tag === activeCategory);
+
+  const handleCopyPrompt = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedPrompt(true);
+    setTimeout(() => setCopiedPrompt(false), 2000);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-16">
@@ -46,7 +54,7 @@ export default function StyleLibrary() {
           五大传统文化视觉风格库
         </h1>
         <p className="text-sm sm:text-base text-ink/75 leading-relaxed font-sans">
-          平台深入民间工艺、传统绘画与器物装饰等五大核心视觉门类，系统提炼设色谱系、构图法则与纹样肌理，为 AI 创作工作台提供精确的文化语义先验约束。
+          一纹一脉，溯源东方。系统解构设色谱系、构图法则与纹样肌理，为当代数字创作注入精确的文化语义先验。
         </p>
       </div>
 
@@ -156,20 +164,30 @@ export default function StyleLibrary() {
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-gold/20 flex items-center justify-between gap-3">
+                    <div className="pt-3 border-t border-gold/20 flex items-center justify-between gap-2.5">
                       <Link
                         to={`/creator?style=${style.id}`}
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl btn-chinese text-xs font-serif shadow-xs hover:shadow-md transition-all"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl btn-chinese text-xs font-serif shadow-xs hover:shadow-md transition-all"
                       >
                         <Sparkles className="w-3.5 h-3.5 text-gold" />
-                        <span>选用此风格共创</span>
+                        <span>选用共创</span>
                       </Link>
+
+                      <button
+                        type="button"
+                        onClick={() => setInspectingStyle(style)}
+                        className="inline-flex items-center justify-center gap-1 py-2.5 px-3 rounded-xl border border-gold/40 bg-white/80 hover:bg-white text-xs font-serif text-ink/80 hover:text-primary transition-all cursor-pointer"
+                        title="查看文化基因考据"
+                      >
+                        <BookOpen className="w-3.5 h-3.5 text-gold" />
+                        <span>考据</span>
+                      </button>
 
                       <Link
                         to="/gallery"
                         className="inline-flex items-center justify-center py-2.5 px-3 rounded-xl border border-gold/40 bg-white/80 hover:bg-white text-xs font-serif text-ink/75 hover:text-primary transition-all"
                       >
-                        <span>赏析成图</span>
+                        <span>成图</span>
                       </Link>
                     </div>
                   </div>
@@ -179,6 +197,135 @@ export default function StyleLibrary() {
           })}
         </AnimatePresence>
       </div>
+
+      {/* ── 文化基因深度考据抽屉 / 展板（按需展示，避免平铺冗余） ── */}
+      <AnimatePresence>
+        {inspectingStyle && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setInspectingStyle(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto bg-[#FCF8F2] border-2 border-gold/50 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 scrollbar-thin"
+            >
+              {/* 弹窗顶部标牌 */}
+              <div className="flex items-center justify-between pb-4 border-b border-gold/30 mb-6">
+                <div className="flex items-center gap-2">
+                  <span className="chinese-seal text-[10px]">考据</span>
+                  <span className="text-sm font-serif font-bold text-ink tracking-wide">
+                    {inspectingStyle.categoryLabel}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setInspectingStyle(null)}
+                  className="w-8 h-8 rounded-full border border-gold/30 bg-white/80 flex items-center justify-center text-ink/60 hover:text-primary hover:bg-white transition-all cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* 风格主体与大图 */}
+              <div className="flex flex-col sm:flex-row gap-5 mb-6">
+                <div className="w-full sm:w-40 aspect-square rounded-2xl overflow-hidden border border-gold/40 shadow-xs shrink-0">
+                  <img
+                    src={inspectingStyle.img}
+                    alt={inspectingStyle.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1 flex flex-col justify-center">
+                  <div className="text-[11px] font-mono text-gold font-bold mb-1">
+                    GENETIC CODES · CULTURAL ROOTS
+                  </div>
+                  <h3 className="text-2xl font-serif font-bold text-ink mb-2">
+                    {inspectingStyle.name}
+                  </h3>
+                  <p className="text-xs text-ink/75 leading-relaxed font-sans">
+                    {inspectingStyle.desc}
+                  </p>
+                </div>
+              </div>
+
+              {/* 视觉特征细分 */}
+              <div className="space-y-4 mb-6">
+                <div className="p-4 rounded-xl bg-white/70 border border-gold/25">
+                  <h4 className="text-xs font-serif font-bold text-primary mb-2 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    典型构图与视觉特征
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {inspectingStyle.visualFeatures.map((feat) => (
+                      <span
+                        key={feat}
+                        className="text-xs font-serif px-2.5 py-1 rounded-md bg-paper border border-gold/30 text-ink/80"
+                      >
+                        {feat}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/70 border border-gold/25">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-xs font-serif font-bold text-primary flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      Qwen Image 提示词结构化先验
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={() => handleCopyPrompt(inspectingStyle.promptVisualFeatures)}
+                      className="text-[10px] font-serif text-primary hover:underline flex items-center gap-1 cursor-pointer"
+                    >
+                      {copiedPrompt ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                      <span>{copiedPrompt ? '已复制' : '复制提示词'}</span>
+                    </button>
+                  </div>
+                  <p className="text-xs font-mono text-ink/75 bg-paper/60 p-2.5 rounded-lg border border-gold/20 leading-relaxed">
+                    {inspectingStyle.promptVisualFeatures}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white/70 border border-gold/25">
+                  <h4 className="text-xs font-serif font-bold text-primary mb-1.5 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    文化源流与象征意涵
+                  </h4>
+                  <p className="text-xs text-ink/70 leading-relaxed font-sans">
+                    {inspectingStyle.symbolicMeaning}
+                  </p>
+                </div>
+              </div>
+
+              {/* 弹窗底部操作 */}
+              <div className="pt-4 border-t border-gold/30 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setInspectingStyle(null)}
+                  className="px-4 py-2.5 rounded-xl border border-gold/40 bg-white text-xs font-serif text-ink/70 hover:bg-gold/10 transition-all cursor-pointer"
+                >
+                  关闭考据
+                </button>
+                <Link
+                  to={`/creator?style=${inspectingStyle.id}`}
+                  className="px-6 py-2.5 rounded-xl btn-chinese text-xs font-serif flex items-center gap-1.5 shadow-md hover:shadow-lg transition-all"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-gold" />
+                  <span>以此风格开始创作</span>
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

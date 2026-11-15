@@ -507,9 +507,9 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-ink mb-5 leading-tight tracking-tight"
         >
-          以数字智能活化千年文脉
+          笔墨生辉 · 万象成章
           <span className="block text-xl sm:text-3xl lg:text-4xl text-primary font-medium mt-3">
-            让传统东方审美自然融入当代生活
+            以数字智能活化千年文脉 · 让东方审美自然融入当代生活
           </span>
         </motion.h1>
 
@@ -520,15 +520,7 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-sm sm:text-base md:text-lg text-ink/75 leading-relaxed font-sans max-w-3xl mx-auto mb-8"
         >
-          {projectBrand.name}融合
-          <strong className="text-primary font-serif font-semibold"> Qwen Image 3.0 </strong>
-          云端可控多模态生成、
-          <strong className="text-primary font-serif font-semibold">本地 Qwen3-VL </strong>
-          视觉理解、
-          <strong className="text-primary font-serif font-semibold">Three.js </strong>
-          五馆水院虚拟展馆与
-          <strong className="text-primary font-serif font-semibold"> 8 类文创转化打样</strong>
-          ，构筑从灵感触发、多维赏析到虚拟布展的完整闭环。
+          一纹一脉，溯源东方。{projectBrand.name}融汇五大传统文化视觉基因，借助多模态图像生成、端侧视觉理解、三维虚拟展馆与高定文创转化，打通传统文化从“被观看”走向“被共创”的数字全生命周期链路。
         </motion.p>
 
         {/* 关键特性轻量徽章 */}
