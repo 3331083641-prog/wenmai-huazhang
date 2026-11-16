@@ -123,10 +123,10 @@ export default function Home() {
           </p>
 
           {/* 行动按钮群 */}
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
             <Link
               to="/creator"
-              className="group relative inline-flex items-center gap-2 px-7 py-3.5 btn-chinese text-base font-serif shadow-[0_8px_24px_rgba(158,36,27,0.22)] hover:shadow-[0_12px_32px_rgba(158,36,27,0.32)] transition-all"
+              className="group relative inline-flex items-center justify-center gap-2 px-7 py-3.5 btn-chinese text-base font-serif shadow-[0_8px_24px_rgba(158,36,27,0.22)] hover:shadow-[0_12px_32px_rgba(158,36,27,0.32)] transition-all"
             >
               <Sparkles className="w-4 h-4 text-gold animate-pulse" />
               <span>立即体验创作</span>
@@ -135,7 +135,7 @@ export default function Home() {
 
             <Link
               to="/styles"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg border border-gold/50 bg-white/80 hover:bg-white hover:border-primary/50 text-ink/85 font-serif text-base shadow-xs hover:text-primary transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg border border-gold/50 bg-white/80 hover:bg-white hover:border-primary/50 text-ink/85 font-serif text-base shadow-xs hover:text-primary transition-all"
             >
               <Palette className="w-4 h-4 text-primary" />
               <span>浏览五大风格库</span>
@@ -143,7 +143,7 @@ export default function Home() {
 
             <Link
               to="/heritage-gallery"
-              className="inline-flex items-center gap-1.5 text-xs font-serif text-ink/65 hover:text-primary transition-colors py-2 px-3 rounded-md hover:bg-black/5"
+              className="inline-flex items-center justify-center sm:justify-start gap-1.5 text-xs font-serif text-ink/65 hover:text-primary transition-colors py-2 px-3 rounded-md hover:bg-black/5"
             >
               <Compass className="w-4 h-4 text-gold" />
               <span>进入三维虚拟展馆</span>
@@ -156,7 +156,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-6 relative w-full h-[480px] sm:h-[540px]"
+          className="lg:col-span-6 relative w-full h-[400px] sm:h-[480px] lg:h-[540px]"
         >
           <div className="relative w-full h-full">
             {/* 风格 1：中央主体立轴大图 - 朱仙镇木版年画 */}
@@ -171,7 +171,7 @@ export default function Home() {
                   <span className="text-[10px] tracking-widest text-gold uppercase font-serif">WOODBLOCK PRINT</span>
                   <div className="text-sm font-serif font-bold">朱仙镇木版年画</div>
                 </div>
-                <span className="chinese-seal text-[9px] bg-primary">非遗</span>
+                <span className="text-[10px] font-serif text-white/80 px-2 py-0.5 rounded bg-black/40 border border-white/20">中原典藏</span>
               </div>
             </div>
 

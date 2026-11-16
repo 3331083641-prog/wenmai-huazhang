@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { ArrowRight, Info, Filter, Palette, Sparkles, BookOpen, X, Check, Copy, AlertCircle } from 'lucide-react';
+import { ArrowRight, Filter, Palette, Sparkles, BookOpen, X, Check, Copy, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
 import { STYLES, StyleData } from '../data/styleLibrary';
+import { useDialogFocusTrap } from '../hooks/useDialogFocusTrap';
 
 const CATEGORIES = [
   { id: '全部', label: '全部风格', count: STYLES.length },
@@ -31,35 +32,26 @@ export default function StyleLibrary() {
   const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [copyError, setCopyError] = useState(false);
   const triggerRefMap = useRef<Map<string, HTMLButtonElement>>(new Map());
-  const lastInspectedId = useRef<string | null>(null);
+  const currentTriggerRef = useRef<HTMLElement | null>(null);
 
   const filteredStyles = activeCategory === '全部'
     ? STYLES
     : STYLES.filter(s => s.tag === activeCategory);
 
   const handleOpenInspect = (style: StyleData) => {
-    lastInspectedId.current = style.id;
+    currentTriggerRef.current = triggerRefMap.current.get(style.id) || null;
     setInspectingStyle(style);
   };
 
   const handleCloseInspect = () => {
     setInspectingStyle(null);
-    if (lastInspectedId.current) {
-      const el = triggerRefMap.current.get(lastInspectedId.current);
-      el?.focus();
-    }
   };
 
-  useEffect(() => {
-    if (!inspectingStyle) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        handleCloseInspect();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [inspectingStyle]);
+  const { dialogRef } = useDialogFocusTrap({
+    isOpen: !!inspectingStyle,
+    onClose: handleCloseInspect,
+    triggerRef: currentTriggerRef,
+  });
 
   const handleCopyPrompt = async (text: string) => {
     try {
@@ -185,20 +177,22 @@ export default function StyleLibrary() {
                       {style.name}
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-ink/70 leading-relaxed line-clamp-3 mb-4 font-sans">
+                    <p className="text-xs sm:text-sm text-ink/70 leading-relaxed line-clamp-3 mb-3.5 font-sans">
                       {style.desc}
                     </p>
+
+                    {/* 风格视觉基因提炼微标签 */}
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {style.visualFeatures.slice(0, 3).map((feat) => (
+                        <span key={feat} className="text-[10px] font-serif px-2 py-0.5 rounded-md bg-paper border border-gold/30 text-ink/75 shadow-xs">
+                          {feat}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
-                  {/* 特征说明与直观行动按钮（不再隐藏在悬停里） */}
+                  {/* 直观行动按钮群 */}
                   <div>
-                    <div className="p-3 rounded-xl bg-white/70 border border-gold/20 flex items-start gap-2 mb-4">
-                      <Info className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                      <p className="text-[11px] text-ink/65 leading-relaxed font-sans line-clamp-2">
-                        {style.shortDescription || style.visualFeatures.join(' · ')}
-                      </p>
-                    </div>
-
                     <div className="pt-3 border-t border-gold/20 flex items-center justify-between gap-2.5">
                       <Link
                         to={`/creator?style=${style.id}`}
@@ -251,6 +245,7 @@ export default function StyleLibrary() {
               className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             />
             <motion.div
+              ref={dialogRef}
               initial={{ opacity: 0, scale: 0.95, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}

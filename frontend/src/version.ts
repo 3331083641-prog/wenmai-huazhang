@@ -4,10 +4,10 @@
  */
 
 export const APP_VERSION = {
-  version: '2.4.1-reliable-convergence',
-  buildTag: '2026.11-reliable-convergence',
+  version: '2.4.2-competition-ready',
+  buildTag: '2026.11-competition-ready',
   edition: '传统文化视觉智能创作与沉浸式文创应用平台',
-  releaseName: '纹脉华章 VNext 交互可靠性与全站质量收敛版',
+  releaseName: '纹脉华章 VNext 历史作品一致性与竞赛级品质验收版',
   updatedAt: '2026-11-16',
 };
 

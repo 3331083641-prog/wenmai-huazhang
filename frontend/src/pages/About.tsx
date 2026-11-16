@@ -592,7 +592,7 @@ export default function About() {
                 }`}
               >
                 <span
-                  className={`text-[10px] font-mono font-bold ${
+                  className={`text-xs font-mono font-bold ${
                     isCurrent ? 'text-gold' : 'text-primary'
                   }`}
                 >
@@ -648,7 +648,7 @@ export default function About() {
                     >
                       PIPELINE {activeCap.number} · {activeCap.tag}
                     </span>
-                    <span className="text-[11px] font-mono text-ink/50 uppercase tracking-widest hidden sm:inline">
+                    <span className="text-xs font-mono text-ink/50 uppercase tracking-widest hidden sm:inline">
                       CURRENT FOCUS
                     </span>
                   </div>
@@ -705,7 +705,7 @@ export default function About() {
                           key={idx}
                           type="button"
                           onClick={() => setSelectedSubShot(sub.img)}
-                          className={`text-[11px] px-2.5 py-1 rounded-lg font-serif transition-all ${
+                          className={`text-xs px-2.5 py-1 rounded-lg font-serif transition-all ${
                             (selectedSubShot || activeCap.image) === sub.img
                               ? 'bg-ink text-white shadow-xs'
                               : 'bg-rice-paper text-ink/70 hover:bg-white border border-gold/30'
@@ -742,7 +742,7 @@ export default function About() {
                     {activeCap.badges.map((b, idx) => (
                       <span
                         key={idx}
-                        className="text-[11px] px-2.5 py-1 rounded-md bg-rice-paper border border-primary/15 text-ink/70 font-mono"
+                        className="text-xs px-2.5 py-1 rounded-md bg-rice-paper border border-primary/15 text-ink/70 font-mono"
                       >
                         {b}
                       </span>
@@ -944,9 +944,9 @@ export default function About() {
                         className="w-4 h-4 rounded-full border border-black/10 shrink-0 shadow-2xs"
                         style={{ backgroundColor: c.hex }}
                       />
-                      <div className="text-[11px] leading-tight">
+                      <div className="text-xs leading-tight">
                         <div className="font-serif text-ink font-medium">{c.name}</div>
-                        <div className="text-ink/40 font-mono text-[9px]">{c.role}</div>
+                        <div className="text-ink/60 font-mono text-xs">{c.role}</div>
                       </div>
                     </div>
                   ))}
@@ -974,9 +974,9 @@ export default function About() {
               <div className="p-3.5 rounded-xl bg-white/60 border border-gold/25 text-xs">
                 <div className="flex items-center justify-between mb-1">
                   <span className="font-bold text-ink/80 font-serif">Prompt 视觉语法约束公式：</span>
-                  <span className="text-[10px] font-mono text-ink/40">WEIGHT: 1.0</span>
+                  <span className="text-xs font-mono text-ink/50">WEIGHT: 1.0</span>
                 </div>
-                <code className="block p-2 rounded bg-rice-paper text-ink/85 font-mono text-[11px] leading-relaxed border border-gold/20 break-all">
+                <code className="block p-2 rounded bg-rice-paper text-ink/85 font-mono text-xs leading-relaxed border border-gold/20 break-all">
                   {activeStyleData.promptVisualFeatures}
                 </code>
               </div>
@@ -1018,8 +1018,8 @@ export default function About() {
                 <div className="flex items-center justify-between mb-2">
                   <Icon className={`w-5 h-5 ${isSelected ? 'text-gold' : 'text-primary'}`} />
                   <span
-                    className={`text-[10px] font-mono uppercase ${
-                      isSelected ? 'text-white/80' : 'text-ink/40'
+                    className={`text-xs font-mono uppercase ${
+                      isSelected ? 'text-white/80' : 'text-ink/50'
                     }`}
                   >
                     STAGE 0{idx + 1}

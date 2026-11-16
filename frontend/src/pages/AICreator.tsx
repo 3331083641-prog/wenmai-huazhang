@@ -6,8 +6,20 @@ import { ImagePlus, Download, ArrowRight, Wand2, RefreshCw, RotateCw, Crop, Zoom
 import { STYLES } from '../data/styleLibrary';
 import { projectBrand } from '../data/projectBrand';
 import { BackendHealth, buildLocalCultureCard, checkBackendHealth, generateImage, GeneratePayload, GenerateResponse } from '../services/generationService';
+import { savedCases } from '../data/savedCases';
 import CultureCard from '../components/creator/CultureCard';
 import OrientalInkWaiting from '../components/OrientalInkWaiting';
+
+export interface HistoryArtworkSnapshot {
+  id: string;
+  imageUrl: string;
+  payload: GeneratePayload;
+  response: GenerateResponse;
+  createdAt: string;
+  enhancedPrompt?: string;
+  mode: string;
+  savedCase?: GenerateResponse['savedCase'];
+}
 
 const GENERATION_STEPS = [
   "正在整理主题与参考图...",
@@ -66,6 +78,7 @@ export default function AICreator() {
   const [resultPayload, setResultPayload] = useState<GeneratePayload | null>(null);
   const [resultCreatedAt, setResultCreatedAt] = useState('');
   const [connectionNotice, setConnectionNotice] = useState<string | null>(null);
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [downloadStatus, setDownloadStatus] = useState<string | null>(null);
   const [backendHealth, setBackendHealth] = useState<BackendHealth | null>(null);
   const [backendStatus, setBackendStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
@@ -85,16 +98,28 @@ export default function AICreator() {
   const [scale, setScale] = useState(1);
   const [isCropping, setIsCropping] = useState(false);
 
-  // For history
-  const [historyImages, setHistoryImages] = useState<string[]>([]);
+  // For atomic artwork history snapshots (成图、参数、文化卡、导出目标完全一致)
+  const [historySnapshots, setHistorySnapshots] = useState<HistoryArtworkSnapshot[]>([]);
+  const [selectedArtworkId, setSelectedArtworkId] = useState<string | null>(null);
   
   useEffect(() => {
+     let initialSnapshots: HistoryArtworkSnapshot[] = [];
+     try {
+       const savedList = localStorage.getItem('wenmai_history_snapshots');
+       if (savedList) {
+         const parsedList = JSON.parse(savedList);
+         if (Array.isArray(parsedList) && parsedList.length > 0) {
+           initialSnapshots = parsedList;
+           setHistorySnapshots(parsedList);
+         }
+       }
+     } catch (e) {}
+
      const saved = localStorage.getItem('wenmai_latest_result');
      if (saved) {
         try {
            const parsed = JSON.parse(saved);
            if (parsed && parsed.imageUrl) {
-              setHistoryImages([parsed.imageUrl]);
               setSavedExample(parsed.savedExample === true);
               if (parsed.referencePreviewUrl) setPreviewUrl(parsed.referencePreviewUrl);
               const restoredPayload: GeneratePayload = {
@@ -120,12 +145,7 @@ export default function AICreator() {
               setStyleStrength(Math.round(restoredPayload.styleStrength * 100));
               const restoredMode = parsed.mode || (parsed.referenceImageUsed ? 'image_to_image' : 'text_to_image');
               const restoredCard = parsed.cultureCard || buildLocalCultureCard(restoredPayload, parsed.imageAnalysis || null);
-              setResultPayload(restoredPayload);
-              setResultImage(parsed.imageUrl);
-              setResultCreatedAt(parsed.createdAt || new Date().toISOString());
-              setEnhancedPrompt(parsed.enhancedPrompt || '');
-              setMode(restoredMode);
-              setResultData({
+              const restoredResponse: GenerateResponse = {
                 success: true,
                 imageUrl: parsed.imageUrl,
                 enhancedPrompt: parsed.enhancedPrompt || '',
@@ -138,9 +158,33 @@ export default function AICreator() {
                 cultureCard: restoredCard,
                 imageAnalysis: parsed.imageAnalysis || null,
                 engine: parsed.engine || null,
-              });
+                savedCase: parsed.savedCase || null,
+              };
+
+              setResultPayload(restoredPayload);
+              setResultImage(parsed.imageUrl);
+              setResultCreatedAt(parsed.createdAt || new Date().toISOString());
+              setEnhancedPrompt(parsed.enhancedPrompt || '');
+              setMode(restoredMode);
+              setResultData(restoredResponse);
+              setSavedCase(parsed.savedCase || null);
+              setSelectedArtworkId(parsed.id || 'initial_restored');
               setImageLoadState('loading');
               setHasResult(true);
+
+              if (initialSnapshots.length === 0) {
+                const singleSnapshot: HistoryArtworkSnapshot = {
+                  id: parsed.id || `hist_${Date.now()}`,
+                  imageUrl: parsed.imageUrl,
+                  payload: restoredPayload,
+                  response: restoredResponse,
+                  createdAt: parsed.createdAt || new Date().toISOString(),
+                  enhancedPrompt: parsed.enhancedPrompt || '',
+                  mode: restoredMode,
+                  savedCase: parsed.savedCase || null,
+                };
+                setHistorySnapshots([singleSnapshot]);
+              }
            }
         } catch(e) {}
      }
@@ -203,13 +247,137 @@ export default function AICreator() {
     };
   }, [resultImage]);
 
-  const handleSelectHistoryImage = (imgUrl: string) => {
-    if (imgUrl === resultImage) return;
-    setResultImage(imgUrl);
+  /**
+   * 原子化历史作品切换：
+   * 成图、文化卡、生成参数、下载目标与文创跳转数据完全保持原子一致性。
+   */
+  const handleSelectHistoryArtwork = (snapshot: HistoryArtworkSnapshot) => {
+    if (isGenerating) return;
+    setSelectedArtworkId(snapshot.id);
+    setResultImage(snapshot.imageUrl);
+    setResultPayload(snapshot.payload);
+    setResultData(snapshot.response);
+    setResultCreatedAt(snapshot.createdAt);
+    setEnhancedPrompt(snapshot.enhancedPrompt || snapshot.response.enhancedPrompt || '');
+    setMode(snapshot.mode || snapshot.response.mode || 'text_to_image');
+    setSavedCase(snapshot.savedCase || snapshot.response.savedCase || null);
     setHasResult(true);
     setRotation(0);
     setScale(1);
     setIsCropping(false);
+    setImageLoadState('loading');
+    setImageLoadError(null);
+
+    // 同步左侧参数表单，保证界面所见即所选
+    setPrompt(snapshot.payload.theme);
+    setSelectedStyle(snapshot.payload.style);
+    setOutputType(snapshot.payload.outputType);
+    setComposition(snapshot.payload.compositionMode);
+    setStyleStrength(Math.round(snapshot.payload.styleStrength * 100));
+    setNegativePrompt(snapshot.payload.negativePrompt || '');
+    setSubjectLock(snapshot.payload.subjectLock || '');
+
+    // 更新持久化最新作品，使跨页面跳转与刷新严格一致
+    const resultToSave = {
+      id: snapshot.id,
+      theme: snapshot.payload.theme,
+      style: snapshot.payload.style,
+      styleName: snapshot.payload.styleName,
+      outputType: snapshot.payload.outputType,
+      styleStrength: snapshot.payload.styleStrength,
+      compositionMode: snapshot.payload.compositionMode,
+      imageUrl: snapshot.imageUrl,
+      enhancedPrompt: snapshot.enhancedPrompt || snapshot.response.enhancedPrompt || '',
+      mode: snapshot.mode,
+      provider: snapshot.response.provider || snapshot.mode,
+      generationProvider: snapshot.payload.generationProvider || 'dashscope_qwen_image',
+      engine: snapshot.response.engine || null,
+      model: snapshot.response.model || null,
+      referenceImageUsed: snapshot.response.referenceImageUsed === true,
+      styleReferenceUsed: snapshot.response.styleReferenceUsed === true,
+      analysisSource: snapshot.response.analysisSource || 'template_fallback',
+      visionAnalysis: snapshot.response.visionAnalysis || null,
+      cultureCard: snapshot.response.cultureCard || null,
+      imageAnalysis: snapshot.response.imageAnalysis || null,
+      realProviderError: snapshot.response.realProviderError || null,
+      createdAt: snapshot.createdAt,
+      negativePrompt: snapshot.payload.negativePrompt,
+      subjectLock: snapshot.payload.subjectLock || null,
+      savedCase: snapshot.savedCase || null,
+    };
+    try {
+      localStorage.setItem('wenmai_latest_result', JSON.stringify(resultToSave));
+    } catch (e) {}
+  };
+
+  /**
+   * 纯图片重新装裱（不重新发起模型推理，不消耗 API 额度）
+   */
+  const handleReloadImage = () => {
+    if (!resultImage) return;
+    setImageLoadState('loading');
+    setImageLoadError(null);
+    const img = new Image();
+    img.onload = () => {
+      setImageLoadState('loaded');
+      setImageLoadError(null);
+    };
+    img.onerror = () => {
+      setImageLoadState('error');
+      setImageLoadError('图片重新装裱受阻，请确认后端图片服务地址有效。');
+    };
+    const reloadUrl = resultImage.startsWith('http')
+      ? (resultImage.includes('?') ? `${resultImage}&_r=${Date.now()}` : `${resultImage}?_r=${Date.now()}`)
+      : resultImage;
+    img.src = reloadUrl;
+  };
+
+  /**
+   * 离线/静态展陈快捷体验：评委与用户无需配置 API Key，直接装裱典藏范例
+   */
+  const handleLoadCuratedExample = (caseIndex = 0) => {
+    const c = savedCases[caseIndex] || savedCases[0];
+    if (!c) return;
+    const payload: GeneratePayload = {
+      theme: c.theme || c.artworkTitle,
+      style: c.styleId,
+      styleName: c.styleName,
+      outputType: 'poster',
+      styleStrength: typeof c.styleStrength === 'number' ? c.styleStrength : 0.65,
+      compositionMode: 'portrait',
+      negativePrompt: null,
+      subjectLock: null,
+      uploadedImage: null,
+      generationProvider: 'dashscope_qwen_image',
+    };
+    const response: GenerateResponse = {
+      success: true,
+      imageUrl: c.imageUrl,
+      enhancedPrompt: `传统${c.styleName}文化数字化再创作，展现${c.artworkTitle}的经典纹样与华夏美学`,
+      mode: 'text_to_image',
+      provider: c.provider || 'curated_showcase',
+      model: c.model || 'Qwen Image 3.0',
+      referenceImageUsed: !!c.referenceUrl,
+      analysisSource: c.analysisSource || 'template_fallback',
+      visionAnalysis: c.visionAnalysis || null,
+      cultureCard: buildLocalCultureCard(payload, null),
+      imageAnalysis: null,
+      engine: null,
+      savedCase: {
+        caseId: c.caseId,
+        artworkTitle: c.artworkTitle,
+        styleId: c.styleId,
+        styleName: c.styleName,
+        generatedAt: c.generatedAt || new Date().toISOString(),
+        images: {
+          generated: c.imageUrl,
+          reference: c.referenceUrl || '',
+          cultureCard: c.cardUrl || '',
+        },
+      },
+    };
+    setSavedExample(true);
+    commitGenerationResult(payload, response);
   };
 
   const handleRotate = () => setRotation(r => r + 90);
@@ -279,6 +447,7 @@ export default function AICreator() {
     };
 
     const createdAt = new Date().toISOString();
+    const snapshotId = `art_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
     setResultPayload(payload);
     setResultCreatedAt(createdAt);
     setResultImage(nextResult.imageUrl);
@@ -288,9 +457,29 @@ export default function AICreator() {
     setMode(nextResult.mode);
     setResultData(nextResult);
     setHasResult(true);
-    setHistoryImages(prev => [nextResult.imageUrl, ...prev.filter(u => u !== nextResult.imageUrl)].slice(0, 6));
+    setSelectedArtworkId(snapshotId);
+
+    const newSnapshot: HistoryArtworkSnapshot = {
+      id: snapshotId,
+      imageUrl: nextResult.imageUrl,
+      payload,
+      response: nextResult,
+      createdAt,
+      enhancedPrompt: nextResult.enhancedPrompt,
+      mode: nextResult.mode,
+      savedCase: nextResult.savedCase ?? null,
+    };
+    setHistorySnapshots(prev => {
+      const filtered = prev.filter(s => s.imageUrl !== nextResult.imageUrl);
+      const nextList = [newSnapshot, ...filtered].slice(0, 8);
+      try {
+        localStorage.setItem('wenmai_history_snapshots', JSON.stringify(nextList));
+      } catch (e) {}
+      return nextList;
+    });
 
     const resultToSave = {
+       id: snapshotId,
        theme: payload.theme,
        style: payload.style,
        styleName: payload.styleName,
@@ -314,6 +503,7 @@ export default function AICreator() {
        createdAt,
        negativePrompt: payload.negativePrompt,
        subjectLock: payload.subjectLock || null,
+       savedCase: nextResult.savedCase ?? null,
     };
     localStorage.setItem('wenmai_latest_result', JSON.stringify(resultToSave));
 
@@ -336,6 +526,7 @@ export default function AICreator() {
     setScale(1);
     setIsCropping(false);
     setConnectionNotice(null);
+    setGenerationError(null);
     setImageLoadState('idle');
     setImageLoadError(null);
     setSavedCase(null);
@@ -373,8 +564,9 @@ export default function AICreator() {
         setGenerationStep(GENERATION_STEPS.length - 1); // Finished
 
         if (!res.success) {
-          setConnectionNotice(res.error || '真实生成失败，请检查后端配置。');
-          alert(res.error || '真实生成失败，请检查后端配置。');
+          const err = res.error || '真实生成失败，请检查后端配置。';
+          setGenerationError(err);
+          setConnectionNotice(err);
           return;
         }
         
@@ -385,8 +577,8 @@ export default function AICreator() {
         if (/FastAPI|health|后端/.test(message)) {
           setBackendStatus('disconnected');
         }
+        setGenerationError(message);
         setConnectionNotice(message);
-        alert(message);
     } finally {
         if (stepInterval !== null) {
           window.clearInterval(stepInterval);
@@ -777,31 +969,63 @@ export default function AICreator() {
                   hasResult={hasResult}
                   imageLoadState={imageLoadState}
                   connectionNotice={connectionNotice}
-                  errorMessage={imageLoadError}
-                  onRetry={handleGenerate}
+                  generationError={generationError}
+                  imageLoadError={imageLoadError}
+                  onRetryGeneration={handleGenerate}
+                  onReloadImage={handleReloadImage}
                   selectedStyleName={currentStyleData?.name || selectedStyle}
                 />
+
+                {!hasResult && !isGenerating && (
+                  <div className="mt-5 w-full max-w-sm rounded-xl border border-gold/40 bg-white/90 p-4 shadow-xs text-center z-10">
+                    <div className="flex items-center justify-center gap-1.5 mb-1.5">
+                      <span className="chinese-seal text-[9px]">典藏示范</span>
+                      <span className="text-xs font-serif font-bold text-ink">免配置 · 离线展陈快速体验</span>
+                    </div>
+                    <p className="text-[11px] text-ink/65 leading-relaxed font-sans mb-3">
+                      评委与体验者无需配置 API Key，可直接装裱精选典藏范例《朱仙镇木版年画·瑞猫》，即刻检阅完整的双模态文化解读卡与文创衍生功能。
+                    </p>
+                    <div className="flex items-center justify-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleLoadCuratedExample(0)}
+                        className="btn-chinese px-3.5 py-1.5 text-xs font-serif shadow-xs hover:shadow-md transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-gold" />
+                        <span>装裱查看典藏范例</span>
+                      </button>
+                      <Link
+                        to="/gallery"
+                        className="px-3 py-1.5 rounded-lg border border-gold/40 bg-paper/50 hover:bg-white text-xs font-serif text-ink/80 hover:text-primary transition-all"
+                      >
+                        前往作品展厅
+                      </Link>
+                    </div>
+                  </div>
+                )}
                 
-                {historyImages.length > 0 && (
-                  <div className="absolute bottom-6 left-6 right-6">
+                {historySnapshots.length > 0 && (
+                  <div className="absolute bottom-6 left-6 right-6 z-10">
                      <div className="text-xs text-ink/50 mb-2 flex items-center gap-2 font-serif">
                         <div className="h-px bg-gold/30 flex-1"></div>
-                        <span className="tracking-wider">最近生成记录 · 浏览器本地沙箱</span>
+                        <span className="tracking-wider">最近创作画幅 ({historySnapshots.length})</span>
                         <div className="h-px bg-gold/30 flex-1"></div>
                      </div>
-                     <div className="flex gap-3 justify-center">
-                        {historyImages.map((img, i) => (
+                     <div className="flex gap-2.5 justify-center flex-wrap">
+                        {historySnapshots.map((snapshot) => (
                            <button
-                             key={i}
+                             key={snapshot.id}
                              type="button"
-                             onClick={() => handleSelectHistoryImage(img)}
-                             aria-label={`切换到历史作品 ${i + 1}`}
+                             disabled={isGenerating}
+                             onClick={() => handleSelectHistoryArtwork(snapshot)}
+                             aria-label={`切换到历史作品: ${snapshot.payload.theme || '作品'}`}
+                             title={snapshot.payload.theme}
                              className={cn(
-                               "w-12 h-16 rounded-lg shadow-xs border-2 p-0.5 bg-paper overflow-hidden cursor-pointer transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold",
-                               resultImage === img ? "border-gold opacity-100 ring-2 ring-gold/40 scale-105" : "border-white opacity-70 hover:opacity-100"
+                               "w-12 h-16 rounded-lg shadow-xs border-2 p-0.5 bg-paper overflow-hidden cursor-pointer transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold disabled:opacity-40 disabled:cursor-not-allowed",
+                               resultImage === snapshot.imageUrl ? "border-gold opacity-100 ring-2 ring-gold/40 scale-105" : "border-white opacity-70 hover:opacity-100"
                              )}
                            >
-                              <img src={img} className="w-full h-full object-cover" alt="" />
+                              <img src={snapshot.imageUrl} className="w-full h-full object-cover" alt="" />
                            </button>
                         ))}
                      </div>
@@ -947,26 +1171,28 @@ export default function AICreator() {
                     {downloadStatus && <p role="status" aria-live="polite" className="mt-2 w-full max-w-[520px] text-center text-xs font-serif text-ink/70">{downloadStatus}</p>}
 
                     {/* 历史作品切换条 (多于1件时展示) */}
-                    {historyImages.length > 1 && (
+                    {historySnapshots.length > 1 && (
                       <div className="mt-4 flex flex-col items-center w-full max-w-[520px]">
                         <div className="text-[11px] text-ink/60 mb-2 flex items-center gap-2 font-serif w-full">
                           <div className="h-px bg-gold/30 flex-1" />
-                          <span className="tracking-wider">切换历史创作画幅 ({historyImages.length})</span>
+                          <span className="tracking-wider">切换历史创作画幅 ({historySnapshots.length})</span>
                           <div className="h-px bg-gold/30 flex-1" />
                         </div>
-                        <div className="flex gap-2.5 justify-center">
-                          {historyImages.map((img, i) => (
+                        <div className="flex gap-2.5 justify-center flex-wrap">
+                          {historySnapshots.map((snapshot) => (
                             <button
-                              key={i}
+                              key={snapshot.id}
                               type="button"
-                              onClick={() => handleSelectHistoryImage(img)}
-                              aria-label={`切换到历史作品 ${i + 1}`}
+                              disabled={isGenerating}
+                              onClick={() => handleSelectHistoryArtwork(snapshot)}
+                              aria-label={`切换到历史作品: ${snapshot.payload.theme || '作品'}`}
+                              title={snapshot.payload.theme}
                               className={cn(
-                                "w-12 h-16 rounded-lg shadow-xs border-2 p-0.5 bg-paper overflow-hidden cursor-pointer transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold",
-                                resultImage === img ? "border-gold opacity-100 ring-2 ring-gold/40 scale-105" : "border-white opacity-70 hover:opacity-100"
+                                "w-12 h-16 rounded-lg shadow-xs border-2 p-0.5 bg-paper overflow-hidden cursor-pointer transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold disabled:opacity-40 disabled:cursor-not-allowed",
+                                resultImage === snapshot.imageUrl ? "border-gold opacity-100 ring-2 ring-gold/40 scale-105" : "border-white opacity-70 hover:opacity-100"
                               )}
                             >
-                              <img src={img} className="w-full h-full object-cover" alt="" />
+                              <img src={snapshot.imageUrl} className="w-full h-full object-cover" alt="" />
                             </button>
                           ))}
                         </div>

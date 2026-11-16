@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { autoSavedCases, savedCases, loadSavedCase } from '../data/savedCases';
 import { experienceById, experienceByStyle, cultureSourcesVersion } from '../data/experiences';
+import { useDialogFocusTrap } from '../hooks/useDialogFocusTrap';
 import {
   fetchRuntimeCases,
   mergeCases,
@@ -94,24 +95,11 @@ export default function Gallery() {
   const [deletingCase, setDeletingCase] = useState<string | null>(null);
   const [showArchiveCert, setShowArchiveCert] = useState(false);
   const casketTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const prevShowArchiveCert = useRef(showArchiveCert);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setShowArchiveCert(false);
-    };
-    if (showArchiveCert) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showArchiveCert]);
-
-  useEffect(() => {
-    if (prevShowArchiveCert.current && !showArchiveCert) {
-      casketTriggerRef.current?.focus();
-    }
-    prevShowArchiveCert.current = showArchiveCert;
-  }, [showArchiveCert]);
+  const { dialogRef: casketDialogRef } = useDialogFocusTrap({
+    isOpen: showArchiveCert,
+    onClose: () => setShowArchiveCert(false),
+    triggerRef: casketTriggerRef,
+  });
 
   const load = useCallback(async (): Promise<GalleryCase[]> => {
     try {
@@ -315,6 +303,7 @@ export default function Gallery() {
               className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             />
             <motion.div
+              ref={casketDialogRef}
               initial={{ opacity: 0, scale: 0.95, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}

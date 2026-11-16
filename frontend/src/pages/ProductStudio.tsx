@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { STYLES } from '../data/styleLibrary';
 import { resolveGeneratedImageUrl } from '../services/generationService';
+import { useDialogFocusTrap } from '../hooks/useDialogFocusTrap';
 
 const PRODUCTS = [
   { id: 'postcard', name: '文旅明信片', icon: Frame },
@@ -352,24 +353,11 @@ export default function ProductStudio() {
   const [downloadingProductId, setDownloadingProductId] = useState<string | null>(null);
   const [showVesselModal, setShowVesselModal] = useState(false);
   const vesselTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const prevShowVesselModal = useRef(showVesselModal);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setShowVesselModal(false);
-    };
-    if (showVesselModal) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showVesselModal]);
-
-  useEffect(() => {
-    if (prevShowVesselModal.current && !showVesselModal) {
-      vesselTriggerRef.current?.focus();
-    }
-    prevShowVesselModal.current = showVesselModal;
-  }, [showVesselModal]);
+  const { dialogRef: vesselDialogRef } = useDialogFocusTrap({
+    isOpen: showVesselModal,
+    onClose: () => setShowVesselModal(false),
+    triggerRef: vesselTriggerRef,
+  });
 
   useEffect(() => {
     const saved = localStorage.getItem('wenmai_latest_result');
@@ -700,6 +688,7 @@ export default function ProductStudio() {
               className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             />
             <motion.div
+              ref={vesselDialogRef}
               initial={{ opacity: 0, scale: 0.95, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}

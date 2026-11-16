@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ImagePlus, AlertCircle, RefreshCw, Sparkles } from 'lucide-react';
 
-interface OrientalInkWaitingProps {
+export interface OrientalInkWaitingProps {
   isGenerating: boolean;
   hasResult: boolean;
   imageLoadState: 'idle' | 'loading' | 'loaded' | 'error';
-  connectionNotice: string | null;
-  errorMessage?: string | null;
-  onRetry?: () => void;
+  connectionNotice?: string | null;
+  generationError?: string | null;
+  imageLoadError?: string | null;
+  errorMessage?: string | null; // 兼容旧属性
+  onRetryGeneration?: () => void;
+  onReloadImage?: () => void;
+  onRetry?: () => void; // 兼容旧回调
   selectedStyleName?: string;
 }
 
@@ -41,7 +45,11 @@ export default function OrientalInkWaiting({
   hasResult,
   imageLoadState,
   connectionNotice,
+  generationError,
+  imageLoadError,
   errorMessage,
+  onRetryGeneration,
+  onReloadImage,
   onRetry,
   selectedStyleName = '传统文化风格',
 }: OrientalInkWaitingProps) {
@@ -61,27 +69,63 @@ export default function OrientalInkWaiting({
 
   const currentPhase = POETIC_PHASES[phaseIndex];
 
-  // 1. 错误或服务异常状态
-  if (connectionNotice || errorMessage) {
+  // 1. 严格区分错误类型：
+  // 情况 A：作品数据生成成功，但图片加载/装裱失败（网络抖动或本地静态服务波动）
+  // 此时仅提供「重新加载图片」，绝不发起新的 AI 付费模型请求
+  const activeImageError = imageLoadError || (imageLoadState === 'error' ? errorMessage : null);
+  if (!isGenerating && hasResult && activeImageError) {
+    const reloadHandler = onReloadImage || onRetry;
+    return (
+      <div className="w-full max-w-sm aspect-[3/4] border-2 border-amber-300 rounded-2xl bg-[#FFFDF7] p-8 text-center flex flex-col items-center justify-center shadow-sm relative overflow-hidden">
+        <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-700 mb-4 shadow-xs">
+          <ImagePlus className="w-7 h-7" />
+        </div>
+        <span className="chinese-seal text-[10px] mb-2 bg-amber-700 text-white">装裱提示</span>
+        <h4 className="font-serif font-bold text-base text-ink mb-2">
+          作品数据完好 · 图片装裱受阻
+        </h4>
+        <p className="text-xs text-ink/70 leading-relaxed max-w-[260px] font-sans mb-5">
+          {activeImageError || '作品生成数据已完整保存，但图片资源拉取暂时中断。重新加载仅重新获取图片，无需再次调用生图模型。'}
+        </p>
+        {reloadHandler && (
+          <button
+            type="button"
+            onClick={reloadHandler}
+            className="px-5 py-2.5 rounded-xl btn-chinese text-xs font-serif flex items-center gap-1.5 shadow-xs hover:shadow-md transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+          >
+            <RefreshCw className="w-3.5 h-3.5 text-gold" />
+            <span>重新加载图片（不消耗生图）</span>
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  // 情况 B：AI 模型生成请求失败或服务端离线断开
+  // 此时若用户重试，会发起真正的 AI 模型推理并消耗额度，在界面上予以明确提示
+  const activeGenError = generationError || connectionNotice || (!hasResult ? errorMessage : null);
+  if (!isGenerating && activeGenError) {
+    const retryGenHandler = onRetryGeneration || onRetry;
     return (
       <div className="w-full max-w-sm aspect-[3/4] border-2 border-primary/30 rounded-2xl bg-[#FFF9F7] p-8 text-center flex flex-col items-center justify-center shadow-sm relative overflow-hidden">
         <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/25 flex items-center justify-center text-primary mb-4 shadow-xs">
           <AlertCircle className="w-7 h-7" />
         </div>
-        <span className="chinese-seal text-[10px] mb-2">服务提示</span>
+        <span className="chinese-seal text-[10px] mb-2 bg-primary text-white">生成提示</span>
         <h4 className="font-serif font-bold text-base text-ink mb-2">
-          {connectionNotice ? '创作服务连接提示' : '作品生成遇到阻碍'}
+          {connectionNotice ? '创作服务连接提示' : 'AI 创作引擎调用受阻'}
         </h4>
         <p className="text-xs text-ink/70 leading-relaxed max-w-[260px] font-sans mb-5">
-          {connectionNotice || errorMessage || '服务暂未响应，请检查网络配置或重试。'}
+          {activeGenError}
         </p>
-        {onRetry && (
+        {retryGenHandler && (
           <button
-            onClick={onRetry}
-            className="px-4 py-2 rounded-xl btn-chinese text-xs font-serif flex items-center gap-1.5 shadow-xs hover:shadow-md transition-all cursor-pointer"
+            type="button"
+            onClick={retryGenHandler}
+            className="px-5 py-2.5 rounded-xl btn-chinese text-xs font-serif flex items-center gap-1.5 shadow-xs hover:shadow-md transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
           >
-            <RefreshCw className="w-3.5 h-3.5 text-gold" />
-            <span>重新尝试</span>
+            <Sparkles className="w-3.5 h-3.5 text-gold" />
+            <span>重新发起生成（调用 AI 模型）</span>
           </button>
         )}
       </div>
