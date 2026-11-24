@@ -1,5 +1,6 @@
 {
   "version": "v15-gallery-access",
+  "gatePlaque": "gate-plaque.glb",
   "bytes": 360051900,
   "sha256": "084cfdb1fceb831addd880c0940248ae9626e0be357b51f0b452583a7fc183f3",
   "parts": [

@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { STYLES } from '../data/styleLibrary';
 import { uiPreviews } from '../data/uiPreviews';
+import { publicUrl } from '../features/culture-experience/utils/assets';
 
 const {
   creator: creatorShot,
@@ -685,7 +686,7 @@ export default function About() {
                   >
                     <motion.img
                       layoutId={`card-img-${activeCap.id}`}
-                      src={selectedSubShot || activeCap.image}
+                      src={publicUrl(selectedSubShot || activeCap.image)}
                       alt={activeCap.alt}
                       className={`w-full h-full ${
                         activeCap.id === 2 ? 'object-contain' : 'object-cover object-top'
@@ -828,7 +829,7 @@ export default function About() {
                   <div className="w-16 h-11 rounded-lg overflow-hidden border border-black/10 shrink-0 bg-black/5">
                     <motion.img
                       layoutId={`card-img-${card.id}`}
-                      src={card.image}
+                      src={publicUrl(card.image)}
                       alt={card.alt}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />

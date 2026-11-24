@@ -41,6 +41,7 @@ Z_CAP = 0.26                      # 柱础方座高
 Z_PAI = 6.55                      # 5 道短枋底
 Z_PAI_N = 5
 Z_BIAN0, Z_BIAN1 = 7.34, 8.14     # 金匾 0.80
+PLAQUE_NAME = "华境天工"
 Z_DG0, Z_DG1 = 8.25, 9.41         # 明间斗拱带
 Z_EAVE_M = 9.55                   # 主楼檐口
 # 次间 stack
@@ -591,10 +592,8 @@ def build(C):
                 _collar(bm_br,xc,zz,.035,zt)
 
     # ---- 额枋 / 花板 / 斗拱 / 金匾
-    # 明间金匾：汉白玉匾心正面加「文脉华章」四字鎏金匾额（匾心前面 y = GY-0.155）
-    bm_tx = mu.new_bm()
-    _plaque_text(bm_tx, "文脉华章", 0.46, GY - 0.163,
-                 (Z_BIAN0 + Z_BIAN1) * 0.5, step=0.56)
+    # 明间金匾：汉白玉匾心正面加四字鎏金匾额（匾心前面 y = GY-0.155）
+    bm_tx = plaque_mesh()
     openings=[]
     sockets=[]
 
@@ -669,6 +668,15 @@ def build(C):
           "stone_lite", flat=True)
     _emit(C, bm_tx, M, "gate_bianzi", "detail", coll, cn + "·鎏金匾字",
           "bronze", flat=True)
+
+
+def plaque_mesh():
+    bm = mu.new_bm()
+    _plaque_text(bm, PLAQUE_NAME, 0.46, GY - 0.163,
+                 (Z_BIAN0 + Z_BIAN1) * 0.5, step=0.56)
+    return bm
+
+
 def _plaque_text(bm, text, size, yface, cz, step=0.56):
     """在 y=yface 的竖直面上排一行居中宋体字（匾额用）。
 

@@ -109,12 +109,12 @@ export default function Home() {
           {/* 巨幅主标题 */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-black tracking-tight leading-[1.18] mb-6 text-ink">
             {projectBrand.name}
-            <div className="mt-3 flex items-center gap-3 flex-wrap">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-medium text-primary tracking-wide">
-                以纹为引 · 入画成境
+            <span className="mt-3 flex items-center gap-3 flex-wrap">
+              <span className="text-xl sm:text-2xl font-medium text-primary tracking-wide">
+                {projectBrand.subtitle}
               </span>
               <span className="chinese-seal text-[11px]">数字非遗</span>
-            </div>
+            </span>
           </h1>
 
           {/* 核心阐释 */}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { FileText, Palette, Scissors, ArrowRight, CheckCircle2, ZoomIn } from 'lucide-react';
+import { publicUrl } from '../../features/culture-experience/utils/assets';
 
 interface CardOption {
   id: string;
@@ -95,7 +96,7 @@ export function CultureCardDeck() {
             }`}
           >
             <img
-              src={selectedCard.src}
+              src={publicUrl(selectedCard.src)}
               alt={selectedCard.alt}
               className="w-full h-full object-cover select-none group-hover:scale-105 transition-transform duration-700"
             />

@@ -1,4 +1,5 @@
 import { projectBrand } from '../data/projectBrand';
+import { publicUrl } from '../features/culture-experience/utils/assets';
 import { Link } from 'react-router-dom';
 import { APP_VERSION } from '../version';
 import { Sparkles, Compass, Palette, Layout, ShieldCheck, Cpu } from 'lucide-react';
@@ -18,7 +19,7 @@ export default function Footer() {
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-gold/50 bg-white/80 shadow-xs">
-                  <img src="/leaf-logo.png" alt="" className="h-6 w-6 object-contain" />
+                  <img src={publicUrl('/leaf-logo.png')} alt="" className="h-6 w-6 object-contain" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -149,7 +150,7 @@ export default function Footer() {
         <div className="pt-8 border-t border-gold/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink/60">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-primary/70" />
-            <span>© 2026 {projectBrand.name}项目团队 · 传统文化视觉智能创作与文创应用平台</span>
+            <span>© 2026 {projectBrand.name}项目团队 · {projectBrand.subtitle}</span>
           </div>
           <div className="flex items-center gap-3 font-mono text-[11px] text-ink/50">
             <span className="px-2 py-0.5 rounded bg-white/60 border border-gold/20">

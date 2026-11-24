@@ -1,4 +1,5 @@
 import { projectBrand } from '../data/projectBrand';
+import { publicUrl } from '../features/culture-experience/utils/assets';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../lib/utils';
@@ -59,7 +60,7 @@ export default function Navbar() {
         >
           <div className="relative flex h-8 w-8 items-center justify-center rounded-lg border border-gold/40 bg-white/70 shadow-xs transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105">
             <img
-              src="/leaf-logo.png"
+              src={publicUrl('/leaf-logo.png')}
               alt=""
               aria-hidden="true"
               className="h-5 w-5 object-contain"
@@ -70,10 +71,10 @@ export default function Navbar() {
               <span className="font-serif text-lg font-bold tracking-[0.14em] text-ink sm:text-xl transition-colors group-hover:text-primary">
                 {projectBrand.name}
               </span>
-              <span className="chinese-seal text-[10px] hidden sm:inline-flex">华章</span>
+              <span className="chinese-seal text-[10px] hidden sm:inline-flex">{projectBrand.seal}</span>
             </div>
             <span className="text-[10px] tracking-[0.2em] font-serif text-primary/70 uppercase scale-90 origin-left hidden md:inline">
-              Wenmai Huazhang
+              {projectBrand.englishName}
             </span>
           </div>
         </Link>

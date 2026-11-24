@@ -1,15 +1,17 @@
 {
-  "name": "纹脉华章",
+  "name": "华境天工",
   "brandProfiles": {
     "华境天工": {
       "subtitle": "AI驱动的传统文化视觉创作与沉浸式文创应用平台",
       "englishName": "HUAJING TIANGONG",
+      "seal": "天工",
       "filePrefix": "huajing_tiangong",
       "previewFolder": "competition"
     },
     "纹脉华章": {
       "subtitle": "传统文化视觉智能创作与文创应用平台",
       "englishName": "WENMAI HUAZHANG",
+      "seal": "华章",
       "filePrefix": "wenmai",
       "previewFolder": "current"
     }
