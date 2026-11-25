@@ -11,6 +11,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { frameSlots, frameById, wallById, clampToWall } from '../../../data/heritageGalleryConfig';
 import { findArtwork } from '../../../data/artworkRegistry';
+import { CONTEST_CURATION_KEY, getContestGalleryStorage } from './legacyGalleryStorage';
 
 export interface CurationStore {
   /** frameId -> artworkId */
@@ -114,8 +115,8 @@ export const useCurationStore = create<CurationStore>()(
       openDetail: (artworkId) => set({ detailArtworkId: artworkId }),
     }),
     {
-      name: 'wenmai-heritage-gallery-v1',
-      storage: createJSONStorage(() => localStorage),
+      name: CONTEST_CURATION_KEY,
+      storage: createJSONStorage(getContestGalleryStorage),
       // 只持久化布展数据；选中态是瞬时的，刷新后应清空
       partialize: (state) => ({
         assignments: state.assignments,

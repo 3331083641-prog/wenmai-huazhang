@@ -14,7 +14,7 @@
 
 [查看当前界面截图与采集说明](docs/screenshots/current/README.md)。
 
-> 在线入口为静态演示，可浏览已保存作品、互动、五馆水院展馆与文创模板。实时生图、自动保存和新作品互动构建需要在本机运行后端与模型；在线页面不提供作者的 API 密钥。
+> 在线入口为静态演示，可浏览已保存作品、互动、纹脉展馆与文创模板。实时生图、自动保存和新作品互动构建需要在本机运行后端与模型；在线页面不提供作者的 API 密钥。
 
 ## 从文化风格到自己的展览
 
@@ -26,7 +26,7 @@ flowchart LR
   B --> C[作品展厅 / 自动保存]
   C --> D[互动赏析]
   D --> H[画中有话 / 一图一境 / 画境漫游]
-  C --> E[五馆水院展馆 / DIY]
+  C --> E[纹脉展馆 / DIY]
   C --> F[文创转化 / PNG 预览]
 ```
 
@@ -64,19 +64,19 @@ flowchart LR
 
 图为 2026 年 10 月 25 日生图验收中的自动画境。三种互动可用，视觉复审结果为“待完善”。[查看实际结果、接缝修复对照与限制](docs/verification/20261025-deepseek/README.md)。
 
-### 在五馆水院里漫游与布展
+### 在纹脉展馆漫游与布展
 
-![首页中的最新展馆入口](docs/screenshots/current/home-gallery.jpg)
+国赛展示采用正式成果包中的 v5 双层中式展馆，模型与成果包一致，对应 4K 演示视频的 02:48–03:49。展馆支持白天、黄昏和夜晚切换，提供 15 处换画、器物布展、多种视角及灵宠「纹纹」伴游。一层室内匾额显示「华境天工」。
 
-「纹脉展馆」采用 v15 五馆水院模型，入口门匾显示「华境天工」。展馆配有昼夜切换、DIY 器物库和多种视角，支持 30 处换画、六处近距离开关门、墙体碰撞、空格跳跃、两馆二层楼梯及前后水池游泳与下潜。
+从左下角的「探索模式」「布展模式」和「视角」切换操作。可点击画框打开图库，从器物库拖入器物进行布展，或从「探索模式」唤出灵宠。右上角的「环境」切换时段，「帮助」列出对应操作。
 
-模型采用无损压缩分包（约 101.6 MiB），浏览器逐包校验后还原原始 GLB，全部几何与贴图保留。首次打开需下载模型；建议桌面浏览器使用。操作：WASD 行走、Shift 疾行、空格跳跃；水中空格上浮、C/Ctrl 下潜；靠近门点击提示或按 E 开关。
+[查看「华境天工」室内匾额](docs/screenshots/current/gate-plaque.jpg) · [查看本次界面截图](docs/screenshots/current/README.md)
 
-[查看「华境天工」三维门匾](docs/screenshots/current/gate-plaque.jpg) · [查看展馆集成与验收记录](docs/pavilion-v15-integration.md)
-
-| 五馆水院展馆 | 换画与布展 |
+| 双层纹脉展馆 | 换画与布展 |
 |:---:|:---:|
-| [![五馆水院展馆外观](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![纹脉展馆布展模式与器物图库](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
+| [![双层纹脉展馆外观](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![纹脉展馆布展模式与器物图库](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
+
+后续恢复五馆水院 v15 时，可以在 Git 中使用 `git revert` 撤销本次国赛展馆回退提交。回退前的基准是 [`5268531`](https://github.com/3331083641-prog/wenmai-huazhang/commit/52685310061a5c5989e01cca9255b2a6e3b8d27d)。[v15 集成与验收记录](docs/pavilion-v15-integration.md)
 
 ### 从作品到文创预览
 
@@ -124,7 +124,7 @@ flowchart TD
   VL --> CASES
   CASES --> UI
   WORLD --> UI
-  UI --> HALL[Three.js / Blender GLB / 五馆水院展馆]
+  UI --> HALL[Three.js / Blender GLB / 纹脉展馆]
   UI --> PNG[Canvas 文创预览与导出]
 ```
 
@@ -166,13 +166,13 @@ ollama pull qwen3-vl:4b-instruct-q4_K_M
 
 视觉复审是可选功能，另安装 `backend/requirements-review.txt`，按 [官方配置说明](docs/configuration/DEEPSEEK_OFFICIAL.md) 填写独立 `DEEPSEEK_API_KEY` 并明确启用；需要本机浏览器和正在运行的前端，可能产生 API 费用。未配置时继续使用原有本地互动构建。
 
-Ollama 已运行时不用重复启动，模型已安装时不用重下。启动器打印实际前后端端口，默认打开展厅；停止脚本核对进程身份并保留 Ollama。已保存作品、五馆水院展馆和文创预览无需调用付费生图服务。[完整运行说明与故障处理](docs/running.md)。
+Ollama 已运行时不用重复启动，模型已安装时不用重下。启动器打印实际前后端端口，默认打开展厅；停止脚本核对进程身份并保留 Ollama。已保存作品、纹脉展馆和文创预览无需调用付费生图服务。[完整运行说明与故障处理](docs/running.md)。
 
 ## 项目结构
 
 ```text
-frontend/src/           页面、案例读取、互动体验、2.5D 与五馆水院展馆
-frontend/public/       风格图、v15 模型分包、已构建画境及场景素材
+frontend/src/           页面、案例读取、互动体验、2.5D 与纹脉展馆
+frontend/public/       风格图、展馆模型、已构建画境及场景素材
 backend/               FastAPI、模型调用、文化卡、案例与后台任务
 scripts/interactive/   本图解析接入、深度估计与画境构建
 models/                模型来源、固定版本、许可与校验说明

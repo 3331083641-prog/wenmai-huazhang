@@ -9,6 +9,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { getPropDef } from '../props/assets/assetProps';
+import { CONTEST_DIY_KEY, getContestGalleryStorage } from './legacyGalleryStorage';
 
 export interface DiyItem {
   key: string;
@@ -200,8 +201,8 @@ export const useDiyStore = create<DiyState>()(
       setPlaceHint: (text) => set({ placeHint: text }),
     }),
     {
-      name: 'wenmai-gallery-diy-v1',
-      storage: createJSONStorage(() => localStorage),
+      name: CONTEST_DIY_KEY,
+      storage: createJSONStorage(getContestGalleryStorage),
       partialize: (state) => ({ items: state.items, roofTint: state.roofTint }),
       version: 1,
     },

@@ -1,6 +1,6 @@
 # 五馆水院 v15 · 主项目集成
 
-2026-11-14。主项目 `/heritage-gallery` 使用 D:\Design 已交付的 v15 模型。原项目的天空渐变、昼夜环境、右侧 DIY 库、左下角视角菜单保留；灵宠入口、运行组件及公开模型移除，旧文件已在本机 `.work/pavilion-integration-backup` 备份。
+2026 年 11 月 14 日，主项目 `/heritage-gallery` 集成了 D:\Design 交付的 v15 模型，沿用天空渐变、昼夜环境、右侧 DIY 库和左下角视角菜单。本文记录该版本的集成与验收。展馆启用国赛成果包的 v5 前，v15 图像和运行基准已存于提交 [`5268531`](https://github.com/3331083641-prog/wenmai-huazhang/commit/52685310061a5c5989e01cca9255b2a6e3b8d27d)。
 
 ## 模型与加载
 
@@ -27,8 +27,8 @@
 
 首次模型下载约 101.6 MiB，保留完整细节有显存和加载成本。实测与截图：
 
-![五馆水院](screenshots/current/heritage-gallery.jpg)
+![五馆水院](https://raw.githubusercontent.com/3331083641-prog/wenmai-huazhang/52685310061a5c5989e01cca9255b2a6e3b8d27d/docs/screenshots/current/heritage-gallery.jpg)
 
-![配殿与楼梯](screenshots/current/heritage-interior.jpg)
+![配殿与楼梯](https://raw.githubusercontent.com/3331083641-prog/wenmai-huazhang/52685310061a5c5989e01cca9255b2a6e3b8d27d/docs/screenshots/current/heritage-interior.jpg)
 
-![原有 DIY 器物库](screenshots/current/heritage-diy.jpg)
+![原有 DIY 器物库](https://raw.githubusercontent.com/3331083641-prog/wenmai-huazhang/52685310061a5c5989e01cca9255b2a6e3b8d27d/docs/screenshots/current/heritage-diy.jpg)
