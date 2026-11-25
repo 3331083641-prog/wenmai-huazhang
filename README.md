@@ -74,9 +74,9 @@ flowchart LR
 
 | 双层纹脉展馆 | 换画与布展 |
 |:---:|:---:|
-| [![双层纹脉展馆外观](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![纹脉展馆布展模式与器物图库](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
+| [![双层纹脉展馆右前方日景](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![纹脉展馆布展模式与器物图库](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
 
-恢复五馆水院 v15 时，按顺序用 `git revert` 撤销标题为 `Restore gallery icon and default ring-screen preview` 的预览调整提交、`9e8b35d` 的导览图与文案同步提交、`1bc0284` 的国赛展馆切换提交。恢复基准为 `5268531`。[v15 集成与验收记录](docs/pavilion-v15-integration.md) · [恢复基准](https://github.com/3331083641-prog/wenmai-huazhang/commit/52685310061a5c5989e01cca9255b2a6e3b8d27d)
+恢复五馆水院 v15 时，按顺序用 `git revert` 撤销标题为 `Use front-right views for gallery previews` 的外观视角调整提交、`56059e5` 的图标与默认预览调整提交、`9e8b35d` 的导览图与文案同步提交、`1bc0284` 的国赛展馆切换提交。恢复基准为 `5268531`。[v15 集成与验收记录](docs/pavilion-v15-integration.md) · [恢复基准](https://github.com/3331083641-prog/wenmai-huazhang/commit/52685310061a5c5989e01cca9255b2a6e3b8d27d)
 
 ### 从作品到文创预览
 
