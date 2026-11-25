@@ -76,7 +76,7 @@ flowchart LR
 |:---:|:---:|
 | [![双层纹脉展馆外观](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![纹脉展馆布展模式与器物图库](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
 
-恢复五馆水院 v15 时，先用 `git revert` 撤销标题为 `Align gallery previews and descriptions with competition v5` 的导览图与文案更新提交，再撤销启用国赛展馆的提交 `1bc0284`。恢复基准为 `5268531`。[v15 集成与验收记录](docs/pavilion-v15-integration.md) · [恢复基准](https://github.com/3331083641-prog/wenmai-huazhang/commit/52685310061a5c5989e01cca9255b2a6e3b8d27d)
+恢复五馆水院 v15 时，按顺序用 `git revert` 撤销标题为 `Restore gallery icon and default ring-screen preview` 的预览调整提交、`9e8b35d` 的导览图与文案同步提交、`1bc0284` 的国赛展馆切换提交。恢复基准为 `5268531`。[v15 集成与验收记录](docs/pavilion-v15-integration.md) · [恢复基准](https://github.com/3331083641-prog/wenmai-huazhang/commit/52685310061a5c5989e01cca9255b2a6e3b8d27d)
 
 ### 从作品到文创预览
 
@@ -89,9 +89,9 @@ flowchart LR
 <details>
 <summary>六组应用场景与六大动态能力矩阵</summary>
 
-| 应用场景（纹脉展馆日景与空间展陈） | 关于项目（Qwen3-VL 视觉理解与纯净文化卡） |
+| 应用场景（数字环幕与纹脉展馆） | 关于项目（Qwen3-VL 视觉理解与纯净文化卡） |
 |:---:|:---:|
-| [![空间展陈板块中的 v5 双层纹脉展馆](docs/screenshots/current/scenarios.jpg)](docs/screenshots/current/scenarios.jpg) | [![关于项目与工程链路](docs/screenshots/current/about.jpg)](docs/screenshots/current/about.jpg) |
+| [![空间展陈区默认展示的数字环幕沉浸空间概念图](docs/screenshots/current/scenarios.jpg)](docs/screenshots/current/scenarios.jpg) | [![关于项目与工程链路](docs/screenshots/current/about.jpg)](docs/screenshots/current/about.jpg) |
 
 应用场景包括数字展馆、美育研学、文创器物、创作工坊、互动导览和线上传播。场景页部分配图是 AI 概念素材，表示应用构想，不是已部署的实体场馆或商品照片。界面排版与动态交互继续沿用 Antigravity 成果。
 

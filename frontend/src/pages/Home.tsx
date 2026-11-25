@@ -442,12 +442,17 @@ export default function Home() {
                   whileHover={{ scale: 1.12, rotate: 2 }}
                   className="w-full h-full relative"
                 >
-                  <img
-                    src={uiPreviews.heritageExterior}
-                    alt="双层纹脉展馆入口预览"
-                    className="w-full h-full rounded-xl border border-gold/30 object-cover drop-shadow-[0_12px_28px_rgba(66,108,98,0.35)]"
-                    loading="lazy"
-                  />
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={import.meta.env.BASE_URL + 'visuals/vnext/ui-img-02-heritage-pavilion.webp'}
+                    />
+                    <img
+                      src={import.meta.env.BASE_URL + 'visuals/vnext/ui-img-02-heritage-pavilion.png'}
+                      alt="玉璧楼阁展馆入口图标"
+                      className="w-full h-full object-contain drop-shadow-[0_12px_28px_rgba(66,108,98,0.35)]"
+                    />
+                  </picture>
                   <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white/95 border border-emerald-700/30 shadow-xs px-2 py-0.5 rounded-full text-[9px] font-serif text-emerald-800 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                     入馆漫游 →
                   </div>

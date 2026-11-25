@@ -76,6 +76,13 @@ const SCENARIOS: Scenario[] = [
     cta: '漫游三维展馆',
     tabs: [
       {
+        id: 'screen-concept',
+        label: '数字环幕展陈构想',
+        shot: import.meta.env.BASE_URL + 'scenarios/museum-screen-concept.jpg',
+        alt: '宋画青绿山水的曲面环幕展陈概念图',
+        badge: '曲面大屏空间展陈构想',
+      },
+      {
         id: '3d-gallery',
         label: '3D 展馆白天外景',
         shot: heritageExterior,
@@ -88,13 +95,6 @@ const SCENARIOS: Scenario[] = [
         shot: heritageDusk,
         alt: '纹脉展馆双层重檐木构建筑的黄昏外景',
         badge: '展馆黄昏界面实拍',
-      },
-      {
-        id: 'screen-concept',
-        label: '数字环幕展陈构想',
-        shot: import.meta.env.BASE_URL + 'scenarios/museum-screen-concept.jpg',
-        alt: '宋画青绿山水的曲面环幕展陈概念图',
-        badge: '曲面大屏空间展陈构想',
       },
     ],
   },
