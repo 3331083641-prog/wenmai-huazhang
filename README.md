@@ -1,8 +1,6 @@
 <div align="center">
 
-# 纹脉华章
-
-### 传统文化视觉智能创作与沉浸式文创应用平台
+# 华境天工——AI驱动的传统文化视觉创作与沉浸式文创应用平台
 
 从五种传统视觉风格出发，将参考图与主题转为 AI 作品，再连接文化赏析、互动叙事、三维布展和文创预览。
 
@@ -12,13 +10,15 @@
 
 </div>
 
-![纹脉华章最新首页](docs/screenshots/current/home-overview.jpg)
+![华境天工首页](docs/screenshots/current/home-overview.jpg)
+
+[查看当前界面截图与采集说明](docs/screenshots/current/README.md)。
 
 > 在线入口为静态演示，可浏览已保存作品、互动、五馆水院展馆与文创模板。实时生图、自动保存和新作品互动构建需要在本机运行后端与模型；在线页面不提供作者的 API 密钥。
 
 ## 从文化风格到自己的展览
 
-纹脉华章面向传统文化创作、美育研学与文创设计探索。用户选择视觉风格，输入主题或参考图，获得作品与文化说明，再以热点、章节、画境和虚拟展馆继续阅读、展示与应用。
+华境天工面向传统文化创作、美育研学与文创设计探索。用户选择视觉风格，输入主题或参考图，获得作品与文化说明，再以热点、章节、画境和虚拟展馆继续阅读、展示与应用。
 
 ```mermaid
 flowchart LR
@@ -47,7 +47,7 @@ flowchart LR
 
 新生成作品的图片下方提供删除按钮；确认后移除本件作品与对应互动，更新展馆作品池。五件原始精选案例受保护。本机私有回收副本用于恢复，不进入公开仓库。
 
-[![作品展厅：真实作品、互动入口与删除按钮](docs/screenshots/current/gallery.jpg)](docs/screenshots/current/gallery.jpg)
+[![作品展厅的精选作品与互动入口](docs/screenshots/current/gallery.jpg)](docs/screenshots/current/gallery.jpg)
 
 ### 同一件作品，三种阅读方式
 
@@ -62,21 +62,21 @@ flowchart LR
 
 [![新生成青花牡丹的真实画境](docs/verification/20261025-deepseek/fresh-world-front.jpg)](docs/verification/20261025-deepseek/README.md)
 
-图为最新一次真实生图后的自动画境。三种互动可用，视觉复审为“待完善”；[查看实际结果、接缝修复对照与限制](docs/verification/20261025-deepseek/README.md)。
+图为 2026 年 10 月 25 日生图验收中的自动画境。三种互动可用，视觉复审结果为“待完善”。[查看实际结果、接缝修复对照与限制](docs/verification/20261025-deepseek/README.md)。
 
 ### 在五馆水院里漫游与布展
 
 ![首页中的最新展馆入口](docs/screenshots/current/home-gallery.jpg)
 
-展馆已更新为 D:\Design 的 v15 五馆水院：保留项目原有天空背景、昼夜切换、右侧 DIY 器物库和左下角视角入口，移除灵宠，并为主殿、五馆和二层回廊补充暖色灯光。支持 30 处换画、六处近距离开关门、墙体碰撞、空格跳跃、两馆二层楼梯及前后水池游泳与下潜。
+「纹脉展馆」采用 v15 五馆水院模型，入口门匾显示「华境天工」。展馆配有昼夜切换、DIY 器物库和多种视角，支持 30 处换画、六处近距离开关门、墙体碰撞、空格跳跃、两馆二层楼梯及前后水池游泳与下潜。
 
 模型采用无损压缩分包（约 101.6 MiB），浏览器逐包校验后还原原始 GLB，全部几何与贴图保留。首次打开需下载模型；建议桌面浏览器使用。操作：WASD 行走、Shift 疾行、空格跳跃；水中空格上浮、C/Ctrl 下潜；靠近门点击提示或按 E 开关。
 
-[查看集成与验收记录](docs/pavilion-v15-integration.md)。
+[查看「华境天工」三维门匾](docs/screenshots/current/gate-plaque.jpg) · [查看展馆集成与验收记录](docs/pavilion-v15-integration.md)
 
 | 五馆水院展馆 | 换画与布展 |
 |:---:|:---:|
-| [![五馆水院展馆外观](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![新生成作品进入画框作品池](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
+| [![五馆水院展馆外观](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![纹脉展馆布展模式与器物图库](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
 
 ### 从作品到文创预览
 
@@ -187,7 +187,7 @@ tests/                 后端与流水线回归测试
 
 ## 功能状态与限制
 
-本轮真实验证涵盖五种白底参考图生成、自动保存、本地整图与局部解析、三个互动入口及画境操作。TypeScript、前端测试、后端测试和构建结果详见 [正式审计记录](docs/RELEASE_AUDIT_20261025.md)，不沿用历史测试数字作为本轮结果。
+2026 年 10 月 25 日的验收涵盖五种白底参考图生成、自动保存、本地整图与局部解析、三个互动入口及画境操作。TypeScript、前端测试、后端测试和构建结果见该次验收记录。[正式审计记录](docs/RELEASE_AUDIT_20261025.md)
 
 - 云端生成需要合法服务与额度；没有密钥时仍可浏览已保存作品。
 - 新图自动互动需要本地 Qwen3-VL 与已安装的深度环境。构建异步完成，失败可重试，不撤销成图。
