@@ -11,7 +11,7 @@
 | 截图文件 | 对应路由 / 页面模块 | 实际像素 | 界面功能与视觉设计说明 |
 |---|---|---|---|
 | [home-overview.jpg](home-overview.jpg) | `/`（首页首屏） | 1440×1000 | 华境天工主标题、项目副标题、五种传统视觉风格与创作入口。 |
-| [home-gallery.jpg](home-gallery.jpg) | `/`（首页展馆区块） | 1440×1000 | 首页展馆入口的既有界面记录。国赛展馆实景见下方 `/heritage-gallery` 截图。 |
+| [home-gallery.jpg](home-gallery.jpg) | `/`（首页展馆区块） | 1440×1000 | v5 双层纹脉展馆的外观预览与漫游入口。 |
 | [culture-styles.jpg](culture-styles.jpg) | `/styles`（风格库） | 1440×1000 | **五大传统文化视觉风格库**：Refero 灵感画廊美学卡片，外露设色谱系圆点、门类签条筛选栏与一键创作入口。 |
 | [style-inspect-modal.jpg](style-inspect-modal.jpg) | `/styles`（风格考据弹窗） | 1440×1000 | **风格文化基因考据抽屉**：点击风格「考据」展开，解构设色哲学、构图法则、Qwen Image 结构化 Prompt 与文化源流象征。 |
 | [creation-workspace.jpg](creation-workspace.jpg) | `/creator`（智能生成） | 1440×1000 | 工作台载入已保存作品，展示生成主题、风格参数、成图和文化说明。 |
@@ -19,10 +19,10 @@
 | [gallery-archive-modal.jpg](gallery-archive-modal.jpg) | `/gallery`（作品归档机制） | 1440×1000 | **数字典藏与数据完整性机制弹窗**：点击金石印匣展开，真实展示 SHA-256 完整性摘要与 Case Store 本地持久化归档说明。 |
 | [creative-products.jpg](creative-products.jpg) | `/products`（文创工坊） | 1440×1000 | 明信片、帆布袋等八类文创载体预览，可导出 1600×1200 PNG。 |
 | [product-vessel-modal.jpg](product-vessel-modal.jpg) | `/products`（器物展陈弹窗） | 1440×1000 | **东方器物灵感 · 天青贯耳尊解构弹窗**：点击贯耳尊展开，详细解构器形制式、掐丝龙纹工艺与概念美学定位。 |
-| [scenarios.jpg](scenarios.jpg) | `/scenarios`（多维应用场景） | 1440×1000 | **多维应用场景长卷**：杂志化图文交错排版，Scrolltide 级场景快速导览条与 3D 鼠标透视倾侧互动沙盒。 |
+| [scenarios.jpg](scenarios.jpg) | `/scenarios`（多维应用场景） | 1440×1000 | 空间展陈区默认展示 v5 双层纹脉展馆日景，可切换至黄昏预览或环幕展陈概念图。 |
 | [about.jpg](about.jpg) | `/about`（关于项目） | 1440×1000 | **技术架构与定位**：六大核心技术体系、真实多模态推理证据链、宣纸装裱文化卡展陈与古风印章落款。 |
 | [about-architecture.jpg](about-architecture.jpg) | `/about`（技术架构） | 1440×1000 | 前端交互、生成服务和本地模型的技术分层。 |
-| [about-gallery-capability.jpg](about-gallery-capability.jpg) | `/about`（展馆能力） | 1440×1000 | 关于页展馆能力卡片的既有界面记录。 |
+| [about-gallery-capability.jpg](about-gallery-capability.jpg) | `/about`（展馆能力） | 1440×1000 | v5 双层展馆预览、15 处可换画画框与器物布展能力。 |
 | [mobile-home.jpg](mobile-home.jpg) | `/`（移动端 390×844 视口） | 780×1688 | 窄屏下的项目标题、导航菜单和创作入口。 |
 | [culture-card.jpg](culture-card.jpg) | `/gallery`（文化说明卡） | 1080×1440 | **纯净版 CultureCard 说明卡**：木版年画文化解读卡，涵盖版刻设色、矿物颜料谱系、工艺要点与古籍考证印章。 |
 | [interactive-artwork.jpg](interactive-artwork.jpg) | `/experience/zhuxianzhen-ruimao` | 1440×1000 | **画中有话 · 微观热点探索**：年画原作微观脉冲热点（额顶云冠、金鲤墨线、矿物设色），即时滑出文化解读面板。 |

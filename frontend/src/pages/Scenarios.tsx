@@ -20,6 +20,8 @@ import { LiveCreatorSandbox } from '../components/scenarios/LiveCreatorSandbox';
 import { CultureCardDeck } from '../components/scenarios/CultureCardDeck';
 
 const {
+  heritageExterior,
+  heritageDusk,
   experience: experienceShot,
   story: storyShot,
   paintingWorld: wanderShot,
@@ -62,37 +64,37 @@ const SCENARIOS: Scenario[] = [
     icon: MonitorPlay,
     tag: '空间展陈',
     title: '三维数字展馆与空间展陈',
-    subtitle: 'SPATIAL EXHIBITION · 虚拟水院与环幕映射',
+    subtitle: 'SPATIAL EXHIBITION · 双层纹脉展馆与环幕展陈构想',
     summary:
-      '构筑可自由漫游、虚实布展的五馆水院中式虚拟美术馆。支持第一/第三人称自由穿行与昼夜光影流转，开放 30 处画框支持一键策展换画，让典藏艺术从展柜走向三维时空。',
+      '纹脉展馆以双层重檐木构建筑呈现。观众可切换第一、第三人称视角，体验白天、黄昏和夜晚的光影，使用 15 处画框换画和传统器物布展。',
     badges: [
-      { label: 'Three.js 沉浸式三维渲染', detail: '中式水院木构梁架昼夜晨昏光影' },
-      { label: '30 处画框自由布展', detail: '从器物展柜到立轴画框随心策展' },
-      { label: '沉浸环幕空间映射', detail: '适配大型曲面大屏与数字展厅构想' },
+      { label: 'Three.js 沉浸式三维渲染', detail: '双层重檐木构建筑与三种时段光照' },
+      { label: '15 处画框自由布展', detail: '更换展出作品并摆放传统器物' },
+      { label: '沉浸环幕展陈构想', detail: '大型曲面大屏与数字展厅概念展示' },
     ],
     to: '/heritage-gallery',
     cta: '漫游三维展馆',
     tabs: [
       {
-        id: 'screen-concept',
-        label: '数字环幕沉浸空间',
-        shot: import.meta.env.BASE_URL + 'scenarios/museum-screen-concept.jpg',
-        alt: '现代顶级美术馆沉浸式数字艺术展厅全景（宋画青绿山水）',
-        badge: '曲面大屏空间展陈构想',
+        id: '3d-gallery',
+        label: '3D 展馆白天外景',
+        shot: heritageExterior,
+        alt: '纹脉展馆双层重檐木构建筑的白天外景',
+        badge: '展馆白天界面实拍',
       },
       {
         id: '3d-dusk',
-        label: '3D 展馆暮色水院',
-        shot: import.meta.env.BASE_URL + 'scenarios/heritage-dusk.jpg',
-        alt: '纹脉展馆暮色光影：五馆水院倒影与中式暖阳夜景',
-        badge: 'Three.js 暮色光影实景',
+        label: '3D 展馆黄昏外景',
+        shot: heritageDusk,
+        alt: '纹脉展馆双层重檐木构建筑的黄昏外景',
+        badge: '展馆黄昏界面实拍',
       },
       {
-        id: '3d-gallery',
-        label: '3D 展馆全景昼光',
-        shot: import.meta.env.BASE_URL + 'scenarios/heritage-gallery.jpg',
-        alt: '纹脉展馆外景：湖畔水院与中式大木梁架建筑全景',
-        badge: '昼光水院建筑全景',
+        id: 'screen-concept',
+        label: '数字环幕展陈构想',
+        shot: import.meta.env.BASE_URL + 'scenarios/museum-screen-concept.jpg',
+        alt: '宋画青绿山水的曲面环幕展陈概念图',
+        badge: '曲面大屏空间展陈构想',
       },
     ],
   },
@@ -243,7 +245,6 @@ const SCENARIOS: Scenario[] = [
 export default function Scenarios() {
   const shouldReduceMotion = useReducedMotion();
   const [activeTabs, setActiveTabs] = useState<Record<string, string>>({
-    'museum-exhibition': 'screen-concept',
     'creative-products': 'box-concept',
     'interactive-guide': 'hotspot-view',
     'social-dissemination': 'mobile-sky',

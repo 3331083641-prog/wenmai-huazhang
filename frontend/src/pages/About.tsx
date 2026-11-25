@@ -65,7 +65,7 @@ interface CapabilityItem {
   accentBorder: string;
   icon: LucideIcon;
   previewNote: string;
-  subShots?: { label: string; img: string }[];
+  subShots?: { label: string; img: string; alt?: string }[];
 }
 
 const CAPABILITIES: CapabilityItem[] = [
@@ -185,17 +185,17 @@ const CAPABILITIES: CapabilityItem[] = [
     tag: '空间展陈',
     title: '纹脉展馆与 DIY 沉浸式布展',
     shortTitle: '三维展馆与布展',
-    subtitle: 'Three.js 五馆水院虚拟展厅 · 自由换画布展 · 交互漫游',
+    subtitle: 'Three.js 双层中式木构展馆 · 自由换画布展 · 交互漫游',
     summary:
-      '基于 Three.js 渲染预制的五馆水院虚拟展馆。创作者可自由漫游、将作品挂入 30 处画框、自由陈列传统道具，并支持昼夜光影切换与开关门、跳跃与游泳。',
+      'Three.js 实时渲染双层重檐木构展馆。创作者可在 15 处画框更换作品、摆放传统器物，并与灵宠「纹纹」探索展厅。',
     highlights: [
-      'WebGL / Three.js 独立渲染五馆水院中式木构建筑，支持第一/第三人称视角',
-      '自由策展模式：30 处画框一键陈列生成作品，传统器物库随心摆放',
-      '昼夜真实光影切换与门扇开合、跳跃与水中游动',
+      'WebGL / Three.js 渲染双层中式木构建筑，支持第一、第三人称漫游',
+      '15 处画框可更换作品，传统器物可拖拽摆放',
+      '可切换白天、黄昏和夜晚，并操作门扇开合',
     ],
-    badges: ['Three.js / WebGL', '30 处画框策展', '传统器物库', '昼夜光影系统'],
+    badges: ['Three.js / WebGL', '15 处可换画画框', '传统器物库', '三种时段光照'],
     image: heritageInterior,
-    alt: '纹脉展馆内景与布展模式',
+    alt: '纹脉展馆一层展厅的木梁、挂画、展柜和「华境天工」匾额',
     to: '/heritage-gallery',
     cta: '漫游三维展馆',
     accentColor: '#8B3A2B',
@@ -204,8 +204,12 @@ const CAPABILITIES: CapabilityItem[] = [
     icon: Compass,
     previewNote: '双层木构虚拟展馆',
     subShots: [
-      { label: '展馆内景 · 画框布展', img: heritageInterior },
-      { label: '建筑外景 · 中式重檐', img: heritageExterior },
+      { label: '一层展厅 · 挂画与陈设', img: heritageInterior },
+      {
+        label: '建筑外景 · 双层重檐',
+        img: heritageExterior,
+        alt: '纹脉展馆双层重檐木构建筑的白天外景',
+      },
     ],
   },
   {
@@ -421,7 +425,7 @@ const CAPABILITY_MATRIX: CapabilityRow[] = [
     feature: '两层三维虚拟展馆漫游与器物 DIY 布展',
     status: 'ready_offline',
     statusLabel: '已就绪 · 离线可用',
-    implementationDetail: 'Three.js 实体渲染，支持 30 个画框自由换画、传统器物拖拽摆放、昼夜光影切换与交互漫游。',
+    implementationDetail: 'Three.js 实时渲染双层中式木构展馆，支持 15 处画框换画、器物拖拽布展、三种时段光照和灵宠「纹纹」探索。',
   },
   {
     module: '文创转化',
@@ -456,6 +460,7 @@ export default function About() {
 
   // 当前主卡数据
   const activeCap = CAPABILITIES.find((c) => c.id === activeCapId) || CAPABILITIES[0];
+  const activeSubShot = activeCap.subShots?.find((shot) => shot.img === selectedSubShot);
   // 辅助卡片列表（保持自然序号排列，避免乱序）
   const auxiliaryCaps = CAPABILITIES.filter((c) => c.id !== activeCapId);
 
@@ -687,7 +692,7 @@ export default function About() {
                     <motion.img
                       layoutId={`card-img-${activeCap.id}`}
                       src={publicUrl(selectedSubShot || activeCap.image)}
-                      alt={activeCap.alt}
+                      alt={activeSubShot?.alt ?? activeCap.alt}
                       className={`w-full h-full ${
                         activeCap.id === 2 ? 'object-contain' : 'object-cover object-top'
                       } transition-transform duration-500 hover:scale-[1.03]`}

@@ -75,8 +75,8 @@ const PLATFORM_PILLARS = [
   },
   {
     icon: Boxes,
-    title: '五馆水院三维展馆',
-    desc: 'Three.js 渲染古建水院空间，支持 30 处自定义策展换画与器物陈列。',
+    title: '双层中式纹脉展馆',
+    desc: 'Three.js 渲染双层重檐木构展馆，支持 15 处画框换画与传统器物陈设。',
     tag: '虚拟空间',
     to: '/heritage-gallery',
   },
@@ -411,14 +411,14 @@ export default function Home() {
             >
               <img
                 src={uiPreviews.heritageExterior}
-                alt="纹脉展馆建筑外观"
+                alt="纹脉展馆双层重檐木构建筑的白天外景"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
                 <span className="text-xs font-serif tracking-widest bg-black/45 backdrop-blur-md px-3 py-1 rounded border border-white/20">
-                  实景渲染 · 纹脉数字化艺术展馆
+                  界面实拍 · 纹脉展馆
                 </span>
                 <span className="text-xs opacity-90 font-mono hidden sm:inline">
                   Three.js 沉浸式三维漫游空间
@@ -442,17 +442,12 @@ export default function Home() {
                   whileHover={{ scale: 1.12, rotate: 2 }}
                   className="w-full h-full relative"
                 >
-                  <picture>
-                    <source
-                      type="image/webp"
-                      srcSet={import.meta.env.BASE_URL + "visuals/vnext/ui-img-02-heritage-pavilion.webp"}
-                    />
-                    <img
-                      src={import.meta.env.BASE_URL + "visuals/vnext/ui-img-02-heritage-pavilion.png"}
-                      alt="三维虚实交融玉璧楼阁展馆印徽"
-                      className="w-full h-full object-contain drop-shadow-[0_12px_28px_rgba(66,108,98,0.35)]"
-                    />
-                  </picture>
+                  <img
+                    src={uiPreviews.heritageExterior}
+                    alt="双层纹脉展馆入口预览"
+                    className="w-full h-full rounded-xl border border-gold/30 object-cover drop-shadow-[0_12px_28px_rgba(66,108,98,0.35)]"
+                    loading="lazy"
+                  />
                   <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white/95 border border-emerald-700/30 shadow-xs px-2 py-0.5 rounded-full text-[9px] font-serif text-emerald-800 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                     入馆漫游 →
                   </div>
@@ -472,17 +467,17 @@ export default function Home() {
               </div>
             </div>
             <p className="text-sm md:text-base text-ink/75 leading-relaxed mb-6 font-sans">
-              纹脉展馆是{projectBrand.name}的沉浸式三维文化展示空间。漫游水院中式古建、近距离赏析传统文化主题作品，并通过 30 处画框自由换画、器物陈设打造个人专属策展空间。
+              纹脉展馆是{projectBrand.name}的沉浸式三维文化展示空间。双层重檐木构建筑内设 15 处可换画画框，可陈设传统器物，也可与灵宠「纹纹」一起探索展厅。
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8 text-xs text-ink/80 font-serif">
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/80 border border-gold/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                五馆水院古建格局
+                双层重檐中式展馆
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/80 border border-gold/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                30 处自定义策展画框
+                15 处可换画画框
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/80 border border-gold/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold" />
@@ -490,7 +485,7 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/80 border border-gold/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                昼夜晨昏光影流转
+                白天、黄昏和夜晚
               </div>
             </div>
 
