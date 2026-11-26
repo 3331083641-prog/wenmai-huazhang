@@ -1,6 +1,6 @@
 # 五馆水院 v15 · 主项目集成
 
-2026 年 11 月 14 日，主项目 `/heritage-gallery` 集成了 D:\Design 交付的 v15 模型，沿用天空渐变、昼夜环境、右侧 DIY 库和左下角视角菜单。本文记录该版本的集成与验收。展馆启用国赛成果包的 v5 前，v15 图像和运行基准已存于提交 [`5268531`](https://github.com/3331083641-prog/wenmai-huazhang/commit/52685310061a5c5989e01cca9255b2a6e3b8d27d)。
+2026 年 11 月 14 日，主项目 `/heritage-gallery` 集成了五馆水院 v15，沿用天空渐变、昼夜环境、右侧 DIY 库和左下角视角菜单。2026 年 11 月 26 日恢复此展馆，并同步更新首页、关于项目、应用场景和截图索引。原 v15 图像和运行基准见 [`5268531`](https://github.com/3331083641-prog/wenmai-huazhang/commit/52685310061a5c5989e01cca9255b2a6e3b8d27d)。
 
 ## 模型与加载
 
@@ -19,16 +19,20 @@
 - 前后水池可游动、下沉，空格上浮，C/Ctrl 下潜，岸边按空格向岸移动可上岸。
 - DIY 保留器物库、台面与梁下吸附、地面落位、屋顶配色；地面落位按真实模型检查，拒绝无承载面的落点。
 
-## 验证
+## v15 基准验收
 
 后端 `/health` HTTP 200；`/generate` 空请求 HTTP 422（请求校验检查，未调用付费生图）。TypeScript 校验、生产构建通过；现有 52 项前端测试通过。
 
 真实浏览器 69 项检查通过，覆盖六处门、主殿墙体、跳跃落地、前后池游泳/下潜/上岸、两馆上下楼路径、30 画框、原天空、DIY 面板、390 像素无横向溢出与无控制台错误。DIY 实际点击落位、黄昏切换另行复验。该检查证明已测路线，不是任意位置零缺陷证明。
 
-首次模型下载约 101.6 MiB，保留完整细节有显存和加载成本。实测与截图：
+## 本次恢复核验
 
-![五馆水院](https://raw.githubusercontent.com/3331083641-prog/wenmai-huazhang/52685310061a5c5989e01cca9255b2a6e3b8d27d/docs/screenshots/current/heritage-gallery.jpg)
+2026 年 11 月 26 日，本地浏览器收到清单、五个模型分包和匾额资源的 HTTP 200 响应，渲染场景识别到 62 个网格、30 处画框和「华境天工」匾额。复验一层与二层机位，以及主殿关门时阻挡行走、点击开门后能实际走入。首页、关于项目和应用场景的日景、内景和黄昏图与本次浏览器实拍核对一致。
 
-![配殿与楼梯](https://raw.githubusercontent.com/3331083641-prog/wenmai-huazhang/52685310061a5c5989e01cca9255b2a6e3b8d27d/docs/screenshots/current/heritage-interior.jpg)
+首次模型下载约 101.6 MiB，浏览器需支持 WebGL 与分包解压。当前运行截图见下方及 [界面截图索引](screenshots/current/README.md)。
 
-![原有 DIY 器物库](https://raw.githubusercontent.com/3331083641-prog/wenmai-huazhang/52685310061a5c5989e01cca9255b2a6e3b8d27d/docs/screenshots/current/heritage-diy.jpg)
+![五馆水院](screenshots/current/heritage-gallery.jpg)
+
+![配殿与楼梯](screenshots/current/heritage-interior.jpg)
+
+![原有 DIY 器物库](screenshots/current/heritage-diy.jpg)

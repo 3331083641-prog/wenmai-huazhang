@@ -1,6 +1,6 @@
 # 架构与接口
 
-本文对应当前源码与 2026-10-25 的真实运行验证。
+本文对应当前架构。生成和交互流水线的运行验收见 2026 年 10 月的记录，三维展馆的模型和交互见 [五馆水院集成](pavilion-v15-integration.md)。
 
 ```mermaid
 flowchart TD
@@ -21,7 +21,7 @@ flowchart TD
   CASES --> UI
   ASSETS --> UI
   UI --> READ[画中有话 / 一图一境 / 画境漫游]
-  UI --> HALL[Three.js / 经典预制 GLB 展馆]
+  UI --> HALL[Three.js / 五馆水院 v15 / 预制 GLB 分包]
   UI --> PRODUCT[Canvas 文创预览 / PNG]
 ```
 
@@ -54,11 +54,11 @@ flowchart TD
 | `/experience/:id` | 独立作品的文化热点 |
 | `/story/:id` | 同一作品的三章阅读 |
 | `/wander/:id` | 同图有限视角 2.5D 画境 |
-| `/heritage-gallery` | 经典展馆、机位、换画、器物及灵宠 |
+| `/heritage-gallery` | 五馆水院漫游、30 处画框、器物布展、开关门、上下楼与游泳 |
 | `/products` | 八类载体预览与 PNG 导出 |
 | `/scenarios`、`/about` | 六组场景、六大动态能力矩阵 |
 
-三维展馆使用 React Three Fiber / Drei / Three.js 与预制 Blender / GLB，不是图片自动重建建筑。取消的新馆和双建筑切换不参与正式版。布展、器物及部分创作偏好保存在浏览器 LocalStorage。
+三维展馆使用 React Three Fiber、Drei 和 Three.js 渲染 Blender 预制五馆水院。浏览器下载并校验 5 个 gzip 分包后，将其还原为原始 GLB。布展、器物及部分创作偏好保存在浏览器 LocalStorage。
 
 ## 接口
 

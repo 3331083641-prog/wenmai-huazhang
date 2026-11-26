@@ -1,804 +1,1257 @@
 {
- "schema": 2,
- "generatedBy": "assets/gallery3d/scripts/v5/build_v5.py",
- "units": "metre",
- "up": "Y (three.js), converted from Blender Z-up",
- "envelope": {
-  "min": [
-   -7.99,
-   -0.4,
-   -7.99
+  "envelope": {
+    "min": [
+      -41,
+      -3.15,
+      -48.5
+    ],
+    "max": [
+      41,
+      19,
+      48.5
+    ],
+    "baseSize": 96,
+    "baseThickness": 1.2,
+    "floor1Height": 0.2,
+    "floor2Height": 4.26,
+    "topZ": 19,
+    "footprintX": 80,
+    "footprintZ": 96
+  },
+  "walls": [
+    {
+      "id": "WALL_FRAME_bianxiu_01",
+      "floor": 1,
+      "center": [
+        37.76500183105469,
+        1.899999976158142,
+        31.60000039158497
+      ],
+      "rotationY": -1.5707964953822935,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "针经阁 · 1"
+    },
+    {
+      "id": "WALL_FRAME_bianxiu_02",
+      "floor": 1,
+      "center": [
+        37.76500183105469,
+        1.899999976158142,
+        28.399999628645517
+      ],
+      "rotationY": -1.5707964953822935,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "针经阁 · 2"
+    },
+    {
+      "id": "WALL_FRAME_bianxiu_03",
+      "floor": 1,
+      "center": [
+        32.00000000905975,
+        1.75,
+        35.76500183105469
+      ],
+      "rotationY": -3.1415925025939906,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "针经阁 · 3"
+    },
+    {
+      "id": "WALL_FRAME_bianxiu_04",
+      "floor": 1,
+      "center": [
+        32.0,
+        1.75,
+        24.235000076293947
+      ],
+      "rotationY": 0.0,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "针经阁 · 4"
+    },
+    {
+      "id": "WALL_FRAME_bianxiu_05",
+      "floor": 1,
+      "center": [
+        37.76500183105469,
+        1.75,
+        30.000000010115244
+      ],
+      "rotationY": -1.5707964953822935,
+      "size": [
+        0.9,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "针经阁 · 5"
+    },
+    {
+      "id": "WALL_FRAME_bianxiu_05.001",
+      "floor": 1,
+      "center": [
+        26.235000076293947,
+        1.75,
+        27.10000039158497
+      ],
+      "rotationY": 1.5707964953822935,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "针经阁 · 6"
+    },
+    {
+      "id": "WALL_FRAME_jianzhi_01",
+      "floor": 1,
+      "center": [
+        -21.600000381469727,
+        1.850000023841858,
+        38.69500106811523
+      ],
+      "rotationY": 0.0,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "镂金坊 · 1"
+    },
+    {
+      "id": "WALL_FRAME_jianzhi_02",
+      "floor": 1,
+      "center": [
+        -18.399999618530273,
+        1.850000023841858,
+        38.69500106811523
+      ],
+      "rotationY": 0.0,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "镂金坊 · 2"
+    },
+    {
+      "id": "WALL_FRAME_jianzhi_03",
+      "floor": 1,
+      "center": [
+        -25.805000839233397,
+        1.7000000476837158,
+        42.000000010115244
+      ],
+      "rotationY": 1.5707964953822935,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "镂金坊 · 3"
+    },
+    {
+      "id": "WALL_FRAME_jianzhi_04",
+      "floor": 1,
+      "center": [
+        -14.19500011444092,
+        1.7000000476837158,
+        42.000000010115244
+      ],
+      "rotationY": -1.5707964953822935,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "镂金坊 · 4"
+    },
+    {
+      "id": "WALL_FRAME_jianzhi_05",
+      "floor": 1,
+      "center": [
+        -20.0,
+        1.7000000476837158,
+        38.69500106811523
+      ],
+      "rotationY": 0.0,
+      "size": [
+        0.9,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "镂金坊 · 5"
+    },
+    {
+      "id": "WALL_FRAME_jianzhi_05.001",
+      "floor": 1,
+      "center": [
+        -17.2999992280008,
+        1.7000000476837158,
+        45.30499893188477
+      ],
+      "rotationY": -3.1415925025939906,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "镂金坊 · 6"
+    },
+    {
+      "id": "WALL_FRAME_qinghua_01",
+      "floor": 1,
+      "center": [
+        37.76500183105469,
+        1.899999976158142,
+        13.60000039158497
+      ],
+      "rotationY": -1.5707964953822935,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "素肌堂 · 1"
+    },
+    {
+      "id": "WALL_FRAME_qinghua_02",
+      "floor": 1,
+      "center": [
+        37.76500183105469,
+        1.899999976158142,
+        10.399999628645517
+      ],
+      "rotationY": -1.5707964953822935,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "素肌堂 · 2"
+    },
+    {
+      "id": "WALL_FRAME_qinghua_03",
+      "floor": 1,
+      "center": [
+        32.00000000905975,
+        1.75,
+        17.764999923706053
+      ],
+      "rotationY": -3.1415925025939906,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "素肌堂 · 3"
+    },
+    {
+      "id": "WALL_FRAME_qinghua_04",
+      "floor": 1,
+      "center": [
+        32.0,
+        1.75,
+        6.235000076293946
+      ],
+      "rotationY": 0.0,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "素肌堂 · 4"
+    },
+    {
+      "id": "WALL_FRAME_qinghua_05",
+      "floor": 1,
+      "center": [
+        37.76500183105469,
+        1.75,
+        12.000000010115244
+      ],
+      "rotationY": -1.5707964953822935,
+      "size": [
+        0.9,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "素肌堂 · 5"
+    },
+    {
+      "id": "WALL_FRAME_qinghua_05.001",
+      "floor": 1,
+      "center": [
+        26.235000076293947,
+        1.75,
+        9.10000039158497
+      ],
+      "rotationY": 1.5707964953822935,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "素肌堂 · 6"
+    },
+    {
+      "id": "WALL_FRAME_songhua_01",
+      "floor": 1,
+      "center": [
+        -37.76500183105469,
+        1.899999976158142,
+        13.60000039158497
+      ],
+      "rotationY": 1.5707964953822935,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "澄怀轩 · 1"
+    },
+    {
+      "id": "WALL_FRAME_songhua_02",
+      "floor": 1,
+      "center": [
+        -37.76500183105469,
+        1.899999976158142,
+        10.399999628645517
+      ],
+      "rotationY": 1.5707964953822935,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "澄怀轩 · 2"
+    },
+    {
+      "id": "WALL_FRAME_songhua_03",
+      "floor": 1,
+      "center": [
+        -31.999999990940253,
+        1.75,
+        17.764999923706053
+      ],
+      "rotationY": -3.1415925025939906,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "澄怀轩 · 3"
+    },
+    {
+      "id": "WALL_FRAME_songhua_04",
+      "floor": 1,
+      "center": [
+        -32.0,
+        1.75,
+        6.235000076293946
+      ],
+      "rotationY": 0.0,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "澄怀轩 · 4"
+    },
+    {
+      "id": "WALL_FRAME_songhua_05",
+      "floor": 1,
+      "center": [
+        -37.76500183105469,
+        1.75,
+        12.000000010115244
+      ],
+      "rotationY": 1.5707964953822935,
+      "size": [
+        0.9,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "澄怀轩 · 5"
+    },
+    {
+      "id": "WALL_FRAME_songhua_05.001",
+      "floor": 1,
+      "center": [
+        -26.235000076293947,
+        1.75,
+        9.10000039158497
+      ],
+      "rotationY": -1.5707964953822935,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "澄怀轩 · 6"
+    },
+    {
+      "id": "WALL_FRAME_zhuxianzhen_01",
+      "floor": 1,
+      "center": [
+        -37.76500183105469,
+        1.899999976158142,
+        31.60000039158497
+      ],
+      "rotationY": 1.5707964953822935,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "刊木堂 · 1"
+    },
+    {
+      "id": "WALL_FRAME_zhuxianzhen_02",
+      "floor": 1,
+      "center": [
+        -37.76500183105469,
+        1.899999976158142,
+        28.399999628645517
+      ],
+      "rotationY": 1.5707964953822935,
+      "size": [
+        1.2,
+        1.6
+      ],
+      "capacity": 1,
+      "label": "刊木堂 · 2"
+    },
+    {
+      "id": "WALL_FRAME_zhuxianzhen_03",
+      "floor": 1,
+      "center": [
+        -31.999999990940253,
+        1.75,
+        35.76500183105469
+      ],
+      "rotationY": -3.1415925025939906,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "刊木堂 · 3"
+    },
+    {
+      "id": "WALL_FRAME_zhuxianzhen_04",
+      "floor": 1,
+      "center": [
+        -32.0,
+        1.75,
+        24.235000076293947
+      ],
+      "rotationY": 0.0,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "刊木堂 · 4"
+    },
+    {
+      "id": "WALL_FRAME_zhuxianzhen_05",
+      "floor": 1,
+      "center": [
+        -37.76500183105469,
+        1.75,
+        30.000000010115244
+      ],
+      "rotationY": 1.5707964953822935,
+      "size": [
+        0.9,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "刊木堂 · 5"
+    },
+    {
+      "id": "WALL_FRAME_zhuxianzhen_05.001",
+      "floor": 1,
+      "center": [
+        -26.235000076293947,
+        1.75,
+        27.10000039158497
+      ],
+      "rotationY": -1.5707964953822935,
+      "size": [
+        1.5,
+        0.9
+      ],
+      "capacity": 1,
+      "label": "刊木堂 · 6"
+    }
   ],
-  "max": [
-   7.99,
-   12.3,
-   7.99
+  "frames": [
+    {
+      "id": "FRAME_bianxiu_01",
+      "floor": 1,
+      "index": 0,
+      "position": [
+        37.70500183105469,
+        1.899999976158142,
+        31.600000381469727
+      ],
+      "rotationY": -1.5707964953822935,
+      "group": "bianxiu",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_bianxiu_01",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "针经阁 · 1"
+    },
+    {
+      "id": "FRAME_bianxiu_02",
+      "floor": 1,
+      "index": 1,
+      "position": [
+        37.70500183105469,
+        1.899999976158142,
+        28.399999618530273
+      ],
+      "rotationY": -1.5707964953822935,
+      "group": "bianxiu",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_bianxiu_02",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "针经阁 · 2"
+    },
+    {
+      "id": "FRAME_bianxiu_03",
+      "floor": 1,
+      "index": 2,
+      "position": [
+        32,
+        1.75,
+        35.70500183105469
+      ],
+      "rotationY": -3.1415925025939906,
+      "group": "bianxiu",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_bianxiu_03",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "针经阁 · 3"
+    },
+    {
+      "id": "FRAME_bianxiu_04",
+      "floor": 1,
+      "index": 3,
+      "position": [
+        32,
+        1.75,
+        24.295000076293945
+      ],
+      "rotationY": 0.0,
+      "group": "bianxiu",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_bianxiu_04",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "针经阁 · 4"
+    },
+    {
+      "id": "FRAME_bianxiu_05",
+      "floor": 1,
+      "index": 4,
+      "position": [
+        37.70500183105469,
+        1.75,
+        30
+      ],
+      "rotationY": -1.5707964953822935,
+      "group": "bianxiu",
+      "size": [
+        0.9,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_bianxiu_05",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "针经阁 · 5"
+    },
+    {
+      "id": "FRAME_bianxiu_05.001",
+      "floor": 1,
+      "index": 5,
+      "position": [
+        26.295000076293945,
+        1.75,
+        27.100000381469727
+      ],
+      "rotationY": 1.5707964953822935,
+      "group": "bianxiu",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_bianxiu_05.001",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "针经阁 · 6"
+    },
+    {
+      "id": "FRAME_jianzhi_01",
+      "floor": 1,
+      "index": 6,
+      "position": [
+        -21.600000381469727,
+        1.850000023841858,
+        38.755001068115234
+      ],
+      "rotationY": 0.0,
+      "group": "jianzhi",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_jianzhi_01",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "镂金坊 · 1"
+    },
+    {
+      "id": "FRAME_jianzhi_02",
+      "floor": 1,
+      "index": 7,
+      "position": [
+        -18.399999618530273,
+        1.850000023841858,
+        38.755001068115234
+      ],
+      "rotationY": 0.0,
+      "group": "jianzhi",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_jianzhi_02",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "镂金坊 · 2"
+    },
+    {
+      "id": "FRAME_jianzhi_03",
+      "floor": 1,
+      "index": 8,
+      "position": [
+        -25.7450008392334,
+        1.7000000476837158,
+        42
+      ],
+      "rotationY": 1.5707964953822935,
+      "group": "jianzhi",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_jianzhi_03",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "镂金坊 · 3"
+    },
+    {
+      "id": "FRAME_jianzhi_04",
+      "floor": 1,
+      "index": 9,
+      "position": [
+        -14.255000114440918,
+        1.7000000476837158,
+        42
+      ],
+      "rotationY": -1.5707964953822935,
+      "group": "jianzhi",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_jianzhi_04",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "镂金坊 · 4"
+    },
+    {
+      "id": "FRAME_jianzhi_05",
+      "floor": 1,
+      "index": 10,
+      "position": [
+        -20,
+        1.7000000476837158,
+        38.755001068115234
+      ],
+      "rotationY": 0.0,
+      "group": "jianzhi",
+      "size": [
+        0.9,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_jianzhi_05",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "镂金坊 · 5"
+    },
+    {
+      "id": "FRAME_jianzhi_05.001",
+      "floor": 1,
+      "index": 11,
+      "position": [
+        -17.299999237060547,
+        1.7000000476837158,
+        45.244998931884766
+      ],
+      "rotationY": -3.1415925025939906,
+      "group": "jianzhi",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_jianzhi_05.001",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "镂金坊 · 6"
+    },
+    {
+      "id": "FRAME_qinghua_01",
+      "floor": 1,
+      "index": 12,
+      "position": [
+        37.70500183105469,
+        1.899999976158142,
+        13.600000381469727
+      ],
+      "rotationY": -1.5707964953822935,
+      "group": "qinghua",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_qinghua_01",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "素肌堂 · 1"
+    },
+    {
+      "id": "FRAME_qinghua_02",
+      "floor": 1,
+      "index": 13,
+      "position": [
+        37.70500183105469,
+        1.899999976158142,
+        10.399999618530273
+      ],
+      "rotationY": -1.5707964953822935,
+      "group": "qinghua",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_qinghua_02",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "素肌堂 · 2"
+    },
+    {
+      "id": "FRAME_qinghua_03",
+      "floor": 1,
+      "index": 14,
+      "position": [
+        32,
+        1.75,
+        17.704999923706055
+      ],
+      "rotationY": -3.1415925025939906,
+      "group": "qinghua",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_qinghua_03",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "素肌堂 · 3"
+    },
+    {
+      "id": "FRAME_qinghua_04",
+      "floor": 1,
+      "index": 15,
+      "position": [
+        32,
+        1.75,
+        6.295000076293945
+      ],
+      "rotationY": 0.0,
+      "group": "qinghua",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_qinghua_04",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "素肌堂 · 4"
+    },
+    {
+      "id": "FRAME_qinghua_05",
+      "floor": 1,
+      "index": 16,
+      "position": [
+        37.70500183105469,
+        1.75,
+        12
+      ],
+      "rotationY": -1.5707964953822935,
+      "group": "qinghua",
+      "size": [
+        0.9,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_qinghua_05",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "素肌堂 · 5"
+    },
+    {
+      "id": "FRAME_qinghua_05.001",
+      "floor": 1,
+      "index": 17,
+      "position": [
+        26.295000076293945,
+        1.75,
+        9.100000381469727
+      ],
+      "rotationY": 1.5707964953822935,
+      "group": "qinghua",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_qinghua_05.001",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "素肌堂 · 6"
+    },
+    {
+      "id": "FRAME_songhua_01",
+      "floor": 1,
+      "index": 18,
+      "position": [
+        -37.70500183105469,
+        1.899999976158142,
+        13.600000381469727
+      ],
+      "rotationY": 1.5707964953822935,
+      "group": "songhua",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_songhua_01",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "澄怀轩 · 1"
+    },
+    {
+      "id": "FRAME_songhua_02",
+      "floor": 1,
+      "index": 19,
+      "position": [
+        -37.70500183105469,
+        1.899999976158142,
+        10.399999618530273
+      ],
+      "rotationY": 1.5707964953822935,
+      "group": "songhua",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_songhua_02",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "澄怀轩 · 2"
+    },
+    {
+      "id": "FRAME_songhua_03",
+      "floor": 1,
+      "index": 20,
+      "position": [
+        -32,
+        1.75,
+        17.704999923706055
+      ],
+      "rotationY": -3.1415925025939906,
+      "group": "songhua",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_songhua_03",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "澄怀轩 · 3"
+    },
+    {
+      "id": "FRAME_songhua_04",
+      "floor": 1,
+      "index": 21,
+      "position": [
+        -32,
+        1.75,
+        6.295000076293945
+      ],
+      "rotationY": 0.0,
+      "group": "songhua",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_songhua_04",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "澄怀轩 · 4"
+    },
+    {
+      "id": "FRAME_songhua_05",
+      "floor": 1,
+      "index": 22,
+      "position": [
+        -37.70500183105469,
+        1.75,
+        12
+      ],
+      "rotationY": 1.5707964953822935,
+      "group": "songhua",
+      "size": [
+        0.9,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_songhua_05",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "澄怀轩 · 5"
+    },
+    {
+      "id": "FRAME_songhua_05.001",
+      "floor": 1,
+      "index": 23,
+      "position": [
+        -26.295000076293945,
+        1.75,
+        9.100000381469727
+      ],
+      "rotationY": -1.5707964953822935,
+      "group": "songhua",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_songhua_05.001",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "澄怀轩 · 6"
+    },
+    {
+      "id": "FRAME_zhuxianzhen_01",
+      "floor": 1,
+      "index": 24,
+      "position": [
+        -37.70500183105469,
+        1.899999976158142,
+        31.600000381469727
+      ],
+      "rotationY": 1.5707964953822935,
+      "group": "zhuxianzhen",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_zhuxianzhen_01",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "刊木堂 · 1"
+    },
+    {
+      "id": "FRAME_zhuxianzhen_02",
+      "floor": 1,
+      "index": 25,
+      "position": [
+        -37.70500183105469,
+        1.899999976158142,
+        28.399999618530273
+      ],
+      "rotationY": 1.5707964953822935,
+      "group": "zhuxianzhen",
+      "size": [
+        1.2,
+        1.6
+      ],
+      "wallId": "WALL_FRAME_zhuxianzhen_02",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "刊木堂 · 2"
+    },
+    {
+      "id": "FRAME_zhuxianzhen_03",
+      "floor": 1,
+      "index": 26,
+      "position": [
+        -32,
+        1.75,
+        35.70500183105469
+      ],
+      "rotationY": -3.1415925025939906,
+      "group": "zhuxianzhen",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_zhuxianzhen_03",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "刊木堂 · 3"
+    },
+    {
+      "id": "FRAME_zhuxianzhen_04",
+      "floor": 1,
+      "index": 27,
+      "position": [
+        -32,
+        1.75,
+        24.295000076293945
+      ],
+      "rotationY": 0.0,
+      "group": "zhuxianzhen",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_zhuxianzhen_04",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "刊木堂 · 4"
+    },
+    {
+      "id": "FRAME_zhuxianzhen_05",
+      "floor": 1,
+      "index": 28,
+      "position": [
+        -37.70500183105469,
+        1.75,
+        30
+      ],
+      "rotationY": 1.5707964953822935,
+      "group": "zhuxianzhen",
+      "size": [
+        0.9,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_zhuxianzhen_05",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "刊木堂 · 5"
+    },
+    {
+      "id": "FRAME_zhuxianzhen_05.001",
+      "floor": 1,
+      "index": 29,
+      "position": [
+        -26.295000076293945,
+        1.75,
+        27.100000381469727
+      ],
+      "rotationY": -1.5707964953822935,
+      "group": "zhuxianzhen",
+      "size": [
+        1.5,
+        0.9
+      ],
+      "wallId": "WALL_FRAME_zhuxianzhen_05.001",
+      "u": 0.5,
+      "v": 0.5,
+      "label": "刊木堂 · 6"
+    }
   ],
-  "baseSize": 16.0,
-  "baseThickness": 0.65,
-  "floor1Z": 0.25,
-  "floor2Z": 3.6,
-  "floor1Height": 3.35,
-  "floor2Height": 2.95,
-  "topZ": 6.55,
-  "eaveZ": 6.15,
-  "ridgeZ": 11.3,
-  "footprintX": 8.4,
-  "footprintZ": 7.5,
-  "hallOffsetZ": 0.55,
-  "triangles": 194434
- },
- "walls": [
-  {
-   "id": "f1-back",
-   "floor": 1,
-   "center": [
-    -0.5025,
-    1.925,
-    4.14
-   ],
-   "rotationY": 3.1416,
-   "size": [
-    2.885,
-    3.35
-   ],
-   "label": "一层 · 后墙"
-  },
-  {
-   "id": "f1-front-right",
-   "floor": 1,
-   "center": [
-    1.4725,
-    1.925,
-    -3.04
-   ],
-   "rotationY": 0.0,
-   "size": [
-    0.945,
-    3.35
-   ],
-   "label": "一层 · 前墙右段"
-  },
-  {
-   "id": "f1-left-mid",
-   "floor": 1,
-   "center": [
-    -4.04,
-    1.925,
-    0.55
-   ],
-   "rotationY": 1.5708,
-   "size": [
-    1.75,
-    3.35
-   ],
-   "label": "一层 · 左墙中段"
-  },
-  {
-   "id": "f1-left-rear",
-   "floor": 1,
-   "center": [
-    -4.04,
-    1.925,
-    3.4575
-   ],
-   "rotationY": 1.5708,
-   "size": [
-    1.365,
-    3.35
-   ],
-   "label": "一层 · 左墙后段"
-  },
-  {
-   "id": "f1-right-front",
-   "floor": 1,
-   "center": [
-    4.04,
-    1.925,
-    -2.3575
-   ],
-   "rotationY": -1.5708,
-   "size": [
-    1.365,
-    3.35
-   ],
-   "label": "一层 · 右墙前段"
-  },
-  {
-   "id": "f1-right-mid",
-   "floor": 1,
-   "center": [
-    4.04,
-    1.925,
-    0.55
-   ],
-   "rotationY": -1.5708,
-   "size": [
-    1.75,
-    3.35
-   ],
-   "label": "一层 · 右墙中段"
-  },
-  {
-   "id": "f2-back",
-   "floor": 2,
-   "center": [
-    0.0,
-    5.075,
-    4.14
-   ],
-   "rotationY": 3.1416,
-   "size": [
-    3.89,
-    2.95
-   ],
-   "label": "二层 · 后墙"
-  },
-  {
-   "id": "f2-left-front",
-   "floor": 2,
-   "center": [
-    -4.04,
-    5.075,
-    -2.3575
-   ],
-   "rotationY": 1.5708,
-   "size": [
-    1.365,
-    2.95
-   ],
-   "label": "二层 · 左墙前段"
-  },
-  {
-   "id": "f2-left-mid",
-   "floor": 2,
-   "center": [
-    -4.04,
-    5.075,
-    0.55
-   ],
-   "rotationY": 1.5708,
-   "size": [
-    1.75,
-    2.95
-   ],
-   "label": "二层 · 左墙中段"
-  },
-  {
-   "id": "f2-left-rear",
-   "floor": 2,
-   "center": [
-    -4.04,
-    5.075,
-    3.4575
-   ],
-   "rotationY": 1.5708,
-   "size": [
-    1.365,
-    2.95
-   ],
-   "label": "二层 · 左墙后段"
-  },
-  {
-   "id": "f2-right-front",
-   "floor": 2,
-   "center": [
-    4.04,
-    5.075,
-    -2.3575
-   ],
-   "rotationY": -1.5708,
-   "size": [
-    1.365,
-    2.95
-   ],
-   "label": "二层 · 右墙前段"
-  },
-  {
-   "id": "f2-right-mid",
-   "floor": 2,
-   "center": [
-    4.04,
-    5.075,
-    0.3375
-   ],
-   "rotationY": -1.5708,
-   "size": [
-    1.325,
-    2.95
-   ],
-   "label": "二层 · 右墙中段"
-  }
- ],
- "frames": [
-  {
-   "id": "FRAME_F1_001",
-   "floor": 1,
-   "index": 1,
-   "position": [
-    -1.3025,
-    1.75,
-    4.14
-   ],
-   "rotationY": 3.1416,
-   "wallId": "f1-back",
-   "group": "back",
-   "size": [
-    1.0,
-    0.8
-   ],
-   "u": 0.2227,
-   "v": 0.4478,
-   "label": "一层 · 后墙 · 左",
-   "rotZ": 0.0,
-   "wallSize": [
-    2.885,
-    3.35
-   ]
-  },
-  {
-   "id": "FRAME_F1_002",
-   "floor": 1,
-   "index": 2,
-   "position": [
-    -0.0525,
-    1.75,
-    4.14
-   ],
-   "rotationY": 3.1416,
-   "wallId": "f1-back",
-   "group": "back",
-   "size": [
-    1.0,
-    0.8
-   ],
-   "u": 0.656,
-   "v": 0.4478,
-   "label": "一层 · 后墙 · 右",
-   "rotZ": 0.0,
-   "wallSize": [
-    2.885,
-    3.35
-   ]
-  },
-  {
-   "id": "FRAME_F1_003",
-   "floor": 1,
-   "index": 3,
-   "position": [
-    -4.04,
-    1.75,
-    0.55
-   ],
-   "rotationY": 1.5708,
-   "wallId": "f1-left-mid",
-   "group": "left-mid",
-   "size": [
-    0.86,
-    1.14
-   ],
-   "u": 0.5,
-   "v": 0.4478,
-   "label": "一层 · 左墙 · 中",
-   "rotZ": -1.5708,
-   "wallSize": [
-    1.75,
-    3.35
-   ]
-  },
-  {
-   "id": "FRAME_F1_004",
-   "floor": 1,
-   "index": 4,
-   "position": [
-    -4.04,
-    1.75,
-    3.3475
-   ],
-   "rotationY": 1.5708,
-   "wallId": "f1-left-rear",
-   "group": "left-rear",
-   "size": [
-    0.86,
-    1.14
-   ],
-   "u": 0.4194,
-   "v": 0.4478,
-   "label": "一层 · 左墙 · 后",
-   "rotZ": -1.5708,
-   "wallSize": [
-    1.365,
-    3.35
-   ]
-  },
-  {
-   "id": "FRAME_F1_005",
-   "floor": 1,
-   "index": 5,
-   "position": [
-    4.04,
-    1.75,
-    0.55
-   ],
-   "rotationY": -1.5708,
-   "wallId": "f1-right-mid",
-   "group": "right-mid",
-   "size": [
-    0.86,
-    1.14
-   ],
-   "u": 0.5,
-   "v": 0.4478,
-   "label": "一层 · 右墙 · 中",
-   "rotZ": 1.5708,
-   "wallSize": [
-    1.75,
-    3.35
-   ]
-  },
-  {
-   "id": "FRAME_F1_006",
-   "floor": 1,
-   "index": 6,
-   "position": [
-    4.04,
-    1.75,
-    -2.4675
-   ],
-   "rotationY": -1.5708,
-   "wallId": "f1-right-front",
-   "group": "right-front",
-   "size": [
-    0.86,
-    1.14
-   ],
-   "u": 0.5806,
-   "v": 0.4478,
-   "label": "一层 · 右墙 · 前",
-   "rotZ": 1.5708,
-   "wallSize": [
-    1.365,
-    3.35
-   ]
-  },
-  {
-   "id": "FRAME_F1_007",
-   "floor": 1,
-   "index": 7,
-   "position": [
-    1.4725,
-    1.72,
-    -3.04
-   ],
-   "rotationY": 0.0,
-   "wallId": "f1-front-right",
-   "group": "front-right",
-   "size": [
-    0.84,
-    0.68
-   ],
-   "u": 0.5,
-   "v": 0.4388,
-   "label": "一层 · 前墙 · 入口",
-   "rotZ": 3.1416,
-   "wallSize": [
-    0.945,
-    3.35
-   ]
-  },
-  {
-   "id": "FRAME_F2_001",
-   "floor": 2,
-   "index": 1,
-   "position": [
-    -1.32,
-    5.15,
-    4.14
-   ],
-   "rotationY": 3.1416,
-   "wallId": "f2-back",
-   "group": "back",
-   "size": [
-    0.82,
-    0.66
-   ],
-   "u": 0.1607,
-   "v": 0.4915,
-   "label": "二层 · 后墙 · 左",
-   "rotZ": 0.0,
-   "wallSize": [
-    3.89,
-    2.95
-   ]
-  },
-  {
-   "id": "FRAME_F2_002",
-   "floor": 2,
-   "index": 2,
-   "position": [
-    0.0,
-    5.15,
-    4.14
-   ],
-   "rotationY": 3.1416,
-   "wallId": "f2-back",
-   "group": "back",
-   "size": [
-    1.25,
-    0.92
-   ],
-   "u": 0.5,
-   "v": 0.4915,
-   "label": "二层 · 后墙 · 中",
-   "rotZ": 0.0,
-   "wallSize": [
-    3.89,
-    2.95
-   ]
-  },
-  {
-   "id": "FRAME_F2_003",
-   "floor": 2,
-   "index": 3,
-   "position": [
-    1.32,
-    5.15,
-    4.14
-   ],
-   "rotationY": 3.1416,
-   "wallId": "f2-back",
-   "group": "back",
-   "size": [
-    0.82,
-    0.66
-   ],
-   "u": 0.8393,
-   "v": 0.4915,
-   "label": "二层 · 后墙 · 右",
-   "rotZ": 0.0,
-   "wallSize": [
-    3.89,
-    2.95
-   ]
-  },
-  {
-   "id": "FRAME_F2_004",
-   "floor": 2,
-   "index": 4,
-   "position": [
-    -4.04,
-    5.15,
-    0.55
-   ],
-   "rotationY": 1.5708,
-   "wallId": "f2-left-mid",
-   "group": "left-mid",
-   "size": [
-    0.85,
-    1.1
-   ],
-   "u": 0.5,
-   "v": 0.4915,
-   "label": "二层 · 左墙 · 中",
-   "rotZ": -1.5708,
-   "wallSize": [
-    1.75,
-    2.95
-   ]
-  },
-  {
-   "id": "FRAME_F2_005",
-   "floor": 2,
-   "index": 5,
-   "position": [
-    -4.04,
-    5.15,
-    3.3475
-   ],
-   "rotationY": 1.5708,
-   "wallId": "f2-left-rear",
-   "group": "left-rear",
-   "size": [
-    0.85,
-    1.1
-   ],
-   "u": 0.4194,
-   "v": 0.4915,
-   "label": "二层 · 左墙 · 后",
-   "rotZ": -1.5708,
-   "wallSize": [
-    1.365,
-    2.95
-   ]
-  },
-  {
-   "id": "FRAME_F2_006",
-   "floor": 2,
-   "index": 6,
-   "position": [
-    -4.04,
-    5.15,
-    -2.2475
-   ],
-   "rotationY": 1.5708,
-   "wallId": "f2-left-front",
-   "group": "left-front",
-   "size": [
-    0.85,
-    1.1
-   ],
-   "u": 0.5806,
-   "v": 0.4915,
-   "label": "二层 · 左墙 · 前",
-   "rotZ": -1.5708,
-   "wallSize": [
-    1.365,
-    2.95
-   ]
-  },
-  {
-   "id": "FRAME_F2_007",
-   "floor": 2,
-   "index": 7,
-   "position": [
-    4.04,
-    5.15,
-    0.4975
-   ],
-   "rotationY": -1.5708,
-   "wallId": "f2-right-mid",
-   "group": "right-mid",
-   "size": [
-    0.85,
-    1.1
-   ],
-   "u": 0.3792,
-   "v": 0.4915,
-   "label": "二层 · 右墙 · 中",
-   "rotZ": 1.5708,
-   "wallSize": [
-    1.325,
-    2.95
-   ]
-  },
-  {
-   "id": "FRAME_F2_008",
-   "floor": 2,
-   "index": 8,
-   "position": [
-    4.04,
-    5.15,
-    -2.4675
-   ],
-   "rotationY": -1.5708,
-   "wallId": "f2-right-front",
-   "group": "right-front",
-   "size": [
-    0.85,
-    1.1
-   ],
-   "u": 0.5806,
-   "v": 0.4915,
-   "label": "二层 · 右墙 · 前",
-   "rotZ": 1.5708,
-   "wallSize": [
-    1.365,
-    2.95
-   ]
-  }
- ],
- "cameras": [
-  {
-   "id": "back",
-   "position": [
-    12.5,
-    9.6,
-    32.55
-   ],
-   "target": [
-    0.0,
-    4.4,
-    0.95
-   ],
-   "lens": 42.0,
-   "sensor": 36.0,
-   "fov": 46.4
-  },
-  {
-   "id": "baselow",
-   "position": [
-    6.6,
-    -1.35,
-    -14.4
-   ],
-   "target": [
-    0.6,
-    0.55,
-    -1.2
-   ],
-   "lens": 40.0,
-   "sensor": 36.0,
-   "fov": 48.46
-  },
-  {
-   "id": "ceiling",
-   "position": [
-    2.2,
-    5.22,
-    -0.45
-   ],
-   "target": [
-    0.0,
-    9.95,
-    0.85
-   ],
-   "lens": 20.0,
-   "sensor": 36.0,
-   "fov": 83.97
-  },
-  {
-   "id": "corner",
-   "position": [
-    9.8,
-    3.6,
-    -8.85
-   ],
-   "target": [
-    4.4,
-    2.4,
-    -0.05
-   ],
-   "lens": 44.0,
-   "sensor": 36.0,
-   "fov": 44.5
-  },
-  {
-   "id": "eave",
-   "position": [
-    9.4,
-    6.8,
-    -10.4
-   ],
-   "target": [
-    3.348,
-    7.65,
-    -3.65
-   ],
-   "lens": 52.0,
-   "sensor": 36.0,
-   "fov": 38.19
-  },
-  {
-   "id": "f1",
-   "position": [
-    0.0,
-    1.87,
-    -2.5
-   ],
-   "target": [
-    0.0,
-    1.97,
-    3.15
-   ],
-   "lens": 17.0,
-   "sensor": 36.0,
-   "fov": 93.27
-  },
-  {
-   "id": "f2",
-   "position": [
-    -0.9,
-    5.18,
-    -2.2
-   ],
-   "target": [
-    0.9,
-    4.65,
-    3.55
-   ],
-   "lens": 18.0,
-   "sensor": 36.0,
-   "fov": 90.0
-  },
-  {
-   "id": "front",
-   "position": [
-    0.0,
-    7.6,
-    -36.0
-   ],
-   "target": [
-    0.0,
-    4.7,
-    0.15
-   ],
-   "lens": 42.0,
-   "sensor": 36.0,
-   "fov": 46.4
-  },
-  {
-   "id": "front34",
-   "position": [
-    20.6,
-    9.4,
-    -22.8
-   ],
-   "target": [
-    0.0,
-    4.0,
-    -0.15
-   ],
-   "lens": 42.0,
-   "sensor": 36.0,
-   "fov": 46.4
-  },
-  {
-   "id": "left",
-   "position": [
-    -33.5,
-    8.6,
-    -7.95
-   ],
-   "target": [
-    0.0,
-    4.6,
-    -0.0
-   ],
-   "lens": 42.0,
-   "sensor": 36.0,
-   "fov": 46.4
-  },
-  {
-   "id": "low34",
-   "position": [
-    15.2,
-    3.1,
-    -17.0
-   ],
-   "target": [
-    0.0,
-    4.4,
-    -0.25
-   ],
-   "lens": 46.0,
-   "sensor": 36.0,
-   "fov": 42.74
-  },
-  {
-   "id": "right",
-   "position": [
-    33.5,
-    8.6,
-    -7.95
-   ],
-   "target": [
-    0.0,
-    4.6,
-    -0.0
-   ],
-   "lens": 42.0,
-   "sensor": 36.0,
-   "fov": 46.4
-  },
-  {
-   "id": "top",
-   "position": [
-    13.0,
-    34.0,
-    -13.45
-   ],
-   "target": [
-    0.0,
-    1.4,
-    0.55
-   ],
-   "lens": 40.0,
-   "sensor": 36.0,
-   "fov": 48.46
-  }
- ],
- "counts": {
-  "floor1": 7,
-  "floor2": 8
- }
+  "cameras": [
+    {
+      "id": "front34",
+      "position": [
+        84,
+        71,
+        106
+      ],
+      "target": [
+        0,
+        4,
+        0
+      ],
+      "fov": 53,
+      "lens": 35
+    },
+    {
+      "id": "front",
+      "position": [
+        0,
+        44,
+        160
+      ],
+      "target": [
+        0,
+        3,
+        0
+      ],
+      "fov": 53,
+      "lens": 35
+    },
+    {
+      "id": "back",
+      "position": [
+        -80,
+        55,
+        -130
+      ],
+      "target": [
+        0,
+        3,
+        0
+      ],
+      "fov": 53,
+      "lens": 35
+    },
+    {
+      "id": "left",
+      "position": [
+        -155,
+        65,
+        20
+      ],
+      "target": [
+        0,
+        3,
+        0
+      ],
+      "fov": 53,
+      "lens": 35
+    },
+    {
+      "id": "right",
+      "position": [
+        155,
+        65,
+        20
+      ],
+      "target": [
+        0,
+        3,
+        0
+      ],
+      "fov": 53,
+      "lens": 35
+    },
+    {
+      "id": "top",
+      "position": [
+        0,
+        170,
+        0.1
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "fov": 60,
+      "lens": 35
+    },
+    {
+      "id": "f1",
+      "position": [
+        -28.4,
+        2.2,
+        12
+      ],
+      "target": [
+        -36,
+        1.7,
+        12
+      ],
+      "fov": 78,
+      "lens": 35
+    },
+    {
+      "id": "f2",
+      "position": [
+        -33,
+        5.9,
+        11.5
+      ],
+      "target": [
+        -28,
+        5.3,
+        14
+      ],
+      "fov": 78,
+      "lens": 35
+    },
+    {
+      "id": "ceiling",
+      "position": [
+        0,
+        3,
+        -8
+      ],
+      "target": [
+        0,
+        11,
+        -9
+      ],
+      "fov": 82,
+      "lens": 35
+    },
+    {
+      "id": "eave",
+      "position": [
+        5,
+        2.2,
+        5
+      ],
+      "target": [
+        3,
+        8,
+        0
+      ],
+      "fov": 78,
+      "lens": 35
+    }
+  ]
 }

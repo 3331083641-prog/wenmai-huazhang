@@ -187,7 +187,7 @@ export const INTERIOR_PRESETS = new Set(['floor1', 'floor2', 'ceiling']);
  * 需要临时收起屋顶的机位。
  * 只有「在房间里看」的一层/二层要收屋顶；梁架与檐下看的正是屋顶本身。
  */
-export const HIDE_ROOF_PRESETS = new Set(['floor1', 'floor2']);
+export const HIDE_ROOF_PRESETS = new Set<string>();
 
 /* ------------------------------------------------------------------ 换算 */
 

@@ -14,7 +14,7 @@
 
 [查看当前界面截图与采集说明](docs/screenshots/current/README.md)。
 
-> 在线入口为静态演示，可浏览已保存作品、互动、纹脉展馆与文创模板。实时生图、自动保存和新作品互动构建需要在本机运行后端与模型；在线页面不提供作者的 API 密钥。
+> 在线入口为静态演示，可浏览已保存作品、互动、五馆水院纹脉展馆与文创模板。实时生图、自动保存和新作品互动构建需要在本机运行后端与模型；在线页面不提供作者的 API 密钥。
 
 ## 从文化风格到自己的展览
 
@@ -26,7 +26,7 @@ flowchart LR
   B --> C[作品展厅 / 自动保存]
   C --> D[互动赏析]
   D --> H[画中有话 / 一图一境 / 画境漫游]
-  C --> E[纹脉展馆 / DIY]
+  C --> E[五馆水院纹脉展馆 / DIY]
   C --> F[文创转化 / PNG 预览]
 ```
 
@@ -64,19 +64,21 @@ flowchart LR
 
 图为 2026 年 10 月 25 日生图验收中的自动画境。三种互动可用，视觉复审结果为“待完善”。[查看实际结果、接缝修复对照与限制](docs/verification/20261025-deepseek/README.md)。
 
-### 在纹脉展馆漫游与布展
+### 在五馆水院里漫游与布展
 
-国赛展示采用正式成果包中的 v5 双层中式展馆，模型与成果包一致，对应 4K 演示视频的 02:48–03:49。展馆支持白天、黄昏和夜晚切换，提供 15 处换画、器物布展、多种视角及灵宠「纹纹」伴游。一层室内匾额显示「华境天工」。
+![首页中的五馆水院入口](docs/screenshots/current/home-gallery.jpg)
 
-从左下角的「探索模式」「布展模式」和「视角」切换操作。可点击画框打开图库，从器物库拖入器物进行布展，或从「探索模式」唤出灵宠。右上角的「环境」切换时段，「帮助」列出对应操作。
+纹脉展馆采用 v15 五馆水院模型，入口门匾显示「华境天工」。水院包含主殿、五馆和前后水池。展馆支持白天、黄昏和夜晚切换、多种视角、30 处画框换画、器物布展、六处近距离开关门、两馆二层楼梯和水池游泳下潜。
 
-[查看「华境天工」室内匾额](docs/screenshots/current/gate-plaque.jpg) · [查看本次界面截图](docs/screenshots/current/README.md)
+从左下角切换探索、布展和视角。点击画框打开图库，从器物库选取器物进行布展。第一人称中可用 WASD 行走、Shift 疾行、空格跳跃，近门点击提示或按 E 开关。水中用空格上浮，按 C 或 Ctrl 下潜。「环境」可切换昼夜和黄昏，「帮助」可查看操作。首次加载需下载约 101.6 MiB 模型分包，浏览器逐包校验并还原原始 GLB。
 
-| 双层纹脉展馆 | 换画与布展 |
+[查看「华境天工」入口门匾](docs/screenshots/current/gate-plaque.jpg) · [查看当前界面截图](docs/screenshots/current/README.md) · [查看模型集成与验收](docs/pavilion-v15-integration.md)
+
+| 五馆水院展馆 | 换画与布展 |
 |:---:|:---:|
-| [![双层纹脉展馆右前方日景](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![纹脉展馆布展模式与器物图库](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
+| [![五馆水院展馆日景](docs/screenshots/current/heritage-gallery.jpg)](docs/screenshots/current/heritage-gallery.jpg) | [![纹脉展馆布展模式与器物图库](docs/screenshots/current/heritage-diy.jpg)](docs/screenshots/current/heritage-diy.jpg) |
 
-恢复五馆水院 v15 时，按顺序用 `git revert` 撤销标题为 `Use front-right views for gallery previews` 的外观视角调整提交、`56059e5` 的图标与默认预览调整提交、`9e8b35d` 的导览图与文案同步提交、`1bc0284` 的国赛展馆切换提交。恢复基准为 `5268531`。[v15 集成与验收记录](docs/pavilion-v15-integration.md) · [恢复基准](https://github.com/3331083641-prog/wenmai-huazhang/commit/52685310061a5c5989e01cca9255b2a6e3b8d27d)
+v5 双层展馆对应正式成果包和 4K 演示视频的 02:48–03:49，记录见 [v5 参赛截图](https://github.com/3331083641-prog/wenmai-huazhang/tree/de33259c787f48021308b5d70f2687e2d90667cb/docs/screenshots/competition)。如需切回该版本，可先核对 [v5 基准提交 de33259](https://github.com/3331083641-prog/wenmai-huazhang/commit/de33259c787f48021308b5d70f2687e2d90667cb)，再用 `git revert` 撤销本次 `Restore five-pavilion gallery and update showcase previews` 提交。
 
 ### 从作品到文创预览
 
@@ -89,11 +91,11 @@ flowchart LR
 <details>
 <summary>六组应用场景与六大动态能力矩阵</summary>
 
-| 应用场景（数字环幕与纹脉展馆） | 关于项目（Qwen3-VL 视觉理解与纯净文化卡） |
+| 应用场景（五馆水院与数字环幕构想） | 关于项目（Qwen3-VL 视觉理解与纯净文化卡） |
 |:---:|:---:|
-| [![空间展陈区默认展示的数字环幕沉浸空间概念图](docs/screenshots/current/scenarios.jpg)](docs/screenshots/current/scenarios.jpg) | [![关于项目与工程链路](docs/screenshots/current/about.jpg)](docs/screenshots/current/about.jpg) |
+| [![空间展陈区切换到五馆水院日景](docs/screenshots/current/scenarios.jpg)](docs/screenshots/current/scenarios.jpg) | [![关于项目与工程链路](docs/screenshots/current/about.jpg)](docs/screenshots/current/about.jpg) |
 
-应用场景包括数字展馆、美育研学、文创器物、创作工坊、互动导览和线上传播。场景页部分配图是 AI 概念素材，表示应用构想，不是已部署的实体场馆或商品照片。界面排版与动态交互继续沿用 Antigravity 成果。
+应用场景包括数字展馆、美育研学、文创器物、创作工坊、互动导览和线上传播。空间展陈默认展示数字环幕构想，可切换到五馆水院日景或黄昏实拍。场景页部分配图是 AI 概念素材，表示应用构想，不是已部署的实体场馆或商品照片。界面排版与动态交互继续沿用 Antigravity 成果。
 
 </details>
 
@@ -124,7 +126,7 @@ flowchart TD
   VL --> CASES
   CASES --> UI
   WORLD --> UI
-  UI --> HALL[Three.js / Blender GLB / 纹脉展馆]
+  UI --> HALL[Three.js / Blender GLB / 五馆水院纹脉展馆]
   UI --> PNG[Canvas 文创预览与导出]
 ```
 
@@ -172,7 +174,7 @@ Ollama 已运行时不用重复启动，模型已安装时不用重下。启动�
 
 ```text
 frontend/src/           页面、案例读取、互动体验、2.5D 与纹脉展馆
-frontend/public/       风格图、展馆模型、已构建画境及场景素材
+frontend/public/       风格图、v15 展馆模型分包、已构建画境及场景素材
 backend/               FastAPI、模型调用、文化卡、案例与后台任务
 scripts/interactive/   本图解析接入、深度估计与画境构建
 models/                模型来源、固定版本、许可与校验说明

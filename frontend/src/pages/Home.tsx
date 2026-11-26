@@ -75,8 +75,8 @@ const PLATFORM_PILLARS = [
   },
   {
     icon: Boxes,
-    title: '双层中式纹脉展馆',
-    desc: 'Three.js 渲染双层重檐木构展馆，支持 15 处画框换画与传统器物陈设。',
+    title: '五馆水院三维展馆',
+    desc: 'Three.js 渲染主殿、五馆与水院，支持 30 处画框换画与传统器物陈设。',
     tag: '虚拟空间',
     to: '/heritage-gallery',
   },
@@ -411,7 +411,7 @@ export default function Home() {
             >
               <img
                 src={uiPreviews.heritageExterior}
-                alt="纹脉展馆双层重檐木构建筑的白天外景"
+                alt="纹脉展馆五馆水院与中式建筑的白天外景"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 loading="lazy"
               />
@@ -472,17 +472,17 @@ export default function Home() {
               </div>
             </div>
             <p className="text-sm md:text-base text-ink/75 leading-relaxed mb-6 font-sans">
-              纹脉展馆是{projectBrand.name}的沉浸式三维文化展示空间。双层重檐木构建筑内设 15 处可换画画框，可陈设传统器物，也可与灵宠「纹纹」一起探索展厅。
+              纹脉展馆是{projectBrand.name}的沉浸式三维文化展示空间。观众可穿行于主殿、五馆和水院，体验开门、登楼与入水游动。馆内设有 30 处画框，可换画并陈设传统器物。
             </p>
 
             <div className="grid grid-cols-2 gap-3 mb-8 text-xs text-ink/80 font-serif">
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/80 border border-gold/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                双层重檐中式展馆
+                主殿与五馆水院
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/80 border border-gold/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                15 处可换画画框
+                30 处画框可换画
               </div>
               <div className="flex items-center gap-2 p-2.5 rounded-lg bg-white/80 border border-gold/30">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold" />
@@ -664,7 +664,7 @@ export default function Home() {
           { v: '5 门类', l: '传统视觉风格体系' },
           { v: '8 载体', l: '文创实景打样模板' },
           { v: '3 维度', l: '多维交互深度赏析' },
-          { v: '2 楼层', l: '实体感三维虚拟展馆' },
+          { v: '5 座展馆', l: '可漫游的中式水院' },
           { v: '全链路', l: '端到端创作与本地入库' },
         ].map((stat, i) => (
           <div key={i} className="text-center relative z-10 flex flex-col items-center">
