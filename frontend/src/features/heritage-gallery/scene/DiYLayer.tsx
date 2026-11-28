@@ -29,9 +29,9 @@ import {
   type SurfaceTarget,
 } from './placement';
 
-const BASE_TOP = 0.2;
-const FLOOR2 = 4.26;
-const LIMIT = 39;
+const BASE_TOP = 0.25;
+const FLOOR2 = 3.6;
+const LIMIT = 7.4;
 /** 台面吸附的最大抬升：一层布展不会吸到二层楼板（3.6 m） */
 const SURFACE_MAX_ABOVE = 2.6;
 /** 屏幕近邻吸附阈值（px）：点在器物上方一点点也算放它顶上 */
@@ -91,7 +91,6 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, onDragStateCh
   const roofSet = useMemo(() => new Set<THREE.Object3D>(roofMeshes), [roofMeshes]);
 
   /* ---------------------------------------------------------- 屋顶瓦色 */
-  const roofBaseColors = useRef(new Map<string, THREE.Color>());
   const tintedRef = useRef(new Map<string, THREE.MeshStandardMaterial>());
   useEffect(() => {
     const tint = ROOF_TINTS.find((entry) => entry.id === roofTint)?.color ?? '#3D4B51';
@@ -103,16 +102,14 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, onDragStateCh
       const list = Array.isArray(raw) ? raw : [raw];
       const next = list.map((material) => {
         const name = material?.name ?? '';
-        if (!/tile|roof/i.test(name)) return material;
+        if (!/tile/i.test(name)) return material;
         const cache = tintedRef.current;
-        const key = mesh.uuid + name;
-        if (!roofBaseColors.current.has(key)) roofBaseColors.current.set(key, (material as THREE.MeshStandardMaterial).color.clone());
-        let clone = cache.get(key);
+        let clone = cache.get(material.uuid);
         if (!clone) {
           clone = (material as THREE.MeshStandardMaterial).clone();
-          cache.set(key, clone);
+          cache.set(material.uuid, clone);
         }
-        clone.color.copy(roofTint === 'dai' ? roofBaseColors.current.get(key)! : /tile_d/i.test(name) ? dark : base);
+        clone.color.copy(/tile_d/i.test(name) ? dark : base);
         clone.needsUpdate = true;
         return clone;
       });
@@ -132,7 +129,7 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, onDragStateCh
         .applyNormalMatrix(new THREE.Matrix3().getNormalMatrix(hit.object.matrixWorld))
         .normalize();
       if (Math.abs(normal.y) > 0.55) continue;
-      if (hit.distance > 240) continue;
+      if (hit.distance > 30) continue;
       return { point: hit.point.clone(), normal };
     }
     return null;
@@ -160,7 +157,7 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, onDragStateCh
   );
 
   /* ---------------------------------------------------------- 落位求解 */
-  const clamp = (value: number, limit = LIMIT) => Math.max(-limit, Math.min(limit, value));
+  const clamp = (value: number) => Math.max(-LIMIT, Math.min(LIMIT, value));
 
   const solve = useCallback(
     (
@@ -172,14 +169,14 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, onDragStateCh
     ): Placed | null => {
       const kind = placementOf(propId);
       const fallbackX = floorPoint ? clamp(floorPoint.x) : 0;
-      const fallbackZ = floorPoint ? clamp(floorPoint.z, 47) : 0;
+      const fallbackZ = floorPoint ? clamp(floorPoint.z) : 0;
       if (kind === 'hang') {
         const target = findHangTarget({ structural: wallMeshes, ray, floorPoint });
         if (!target) return null;
         return {
           x: clamp(target.point.x),
           y: target.y - hangHeightOf(propId),
-          z: clamp(target.point.z, 47),
+          z: clamp(target.point.z),
           carrier: target.carrier,
           surfaceId: 'hang',
         };
@@ -209,25 +206,19 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, onDragStateCh
         }
         if (!target) {
           if (!floorPoint) return null;
-          const probe = new THREE.Raycaster(new THREE.Vector3(fallbackX, planeY + .3, fallbackZ), new THREE.Vector3(0,-1,0), 0, .65);
-      const hit = probe.intersectObjects(wallMeshes, false).find(h => h.face && h.face.normal.y > .75 && !/water|foliage/.test((h.object as THREE.Mesh).material['name'] ?? ''));
-      if (!hit) return null;
-      return { x: fallbackX, y: hit.point.y, z: fallbackZ, surfaceId: 'floor' };
+          return { x: fallbackX, y: planeY, z: fallbackZ, surfaceId: 'floor' };
         }
         return {
           x: clamp(target.point.x),
           y: target.y,
-          z: clamp(target.point.z, 47),
+          z: clamp(target.point.z),
           parentInstanceId: target.parentKey,
           carrier: target.carrier,
           surfaceId: target.source === 'prop' ? 'prop-top' : 'model-top',
         };
       }
       if (!floorPoint) return null;
-      const probe = new THREE.Raycaster(new THREE.Vector3(fallbackX, planeY + .3, fallbackZ), new THREE.Vector3(0,-1,0), 0, .65);
-      const hit = probe.intersectObjects(wallMeshes, false).find(h => h.face && h.face.normal.y > .75 && !/water|foliage/.test((h.object as THREE.Mesh).material['name'] ?? ''));
-      if (!hit) return null;
-      return { x: fallbackX, y: hit.point.y, z: fallbackZ, surfaceId: 'floor' };
+      return { x: fallbackX, y: planeY, z: fallbackZ, surfaceId: 'floor' };
     },
     [wallMeshes, roofSet, planeY, camera, size],
   );
@@ -418,7 +409,7 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, onDragStateCh
       const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -drag.planeY);
       const point = new THREE.Vector3();
       if (!raycaster.ray.intersectPlane(plane, point)) return;
-      updateItem(drag.key, { x: clamp(point.x + drag.dx), z: clamp(point.z + drag.dz, 47) });
+      updateItem(drag.key, { x: clamp(point.x + drag.dx), z: clamp(point.z + drag.dz) });
     };
     window.addEventListener('pointermove', move);
     return () => window.removeEventListener('pointermove', move);
@@ -465,7 +456,7 @@ export function DiYLayer({ enabled, level, wallMeshes, roofMeshes, onDragStateCh
           onPointerMove={onPlaneMove as never}
           onPointerLeave={() => setGhost(null)}
         >
-          <planeGeometry args={[80, 96]} />
+          <planeGeometry args={[18, 18]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         </mesh>
       )}
