@@ -29,12 +29,10 @@ import { useGalleryAssets } from './GalleryModel';
 import { GalleryFrame } from './GalleryFrame';
 import { DayNightRig, useTimeExposure, type TimeOfDay } from './DayNightRig';
 import { GalleryEnvironment } from './GalleryEnvironment';
-import { CinemaRig, FirstPersonRig } from './CameraModes';
+import { CinemaRig } from './CameraModes';
+import { PavilionRuntime } from './PavilionRuntime';
 import { DiYLayer } from './DiYLayer';
 import { findHangTarget } from './placement';
-import { StairwellRailing } from './StairwellRailing';
-import { DoorInteraction } from './DoorInteraction';
-import { MascotCompanion, type MascotView } from '../mascot/MascotCompanion';
 import type { ViewMode } from '../components/ViewModeSwitch';
 import type { GalleryMode } from '../types';
 
@@ -435,7 +433,6 @@ function SceneContent({
   onFrameSelect,
   dragging,
   setDragging,
-  mascot,
 }: {
   presetId: string;
   mode: GalleryMode;
@@ -446,17 +443,12 @@ function SceneContent({
   onFrameSelect: (frameId: string) => void;
   dragging: boolean;
   setDragging: (value: boolean) => void;
-  mascot?: {
-    active: boolean;
-    view: MascotView;
-    onExit: () => void;
-    onViewChange: (view: MascotView) => void;
-    onExhibit: (frameId: string) => void;
-  };
 }) {
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const { root, layers, stats } = useGalleryAssets();
   const { gl } = useThree();
+
+  useEffect(() => {gl.shadowMap.autoUpdate = diy;gl.shadowMap.needsUpdate = true;}, [gl, root, time, diy]);
 
   // 斜视角下地板/瓦面的贴图 anisotropy 拉到硬件的 8 倍以内，避免糊成一条灰带
   useEffect(() => {
@@ -503,7 +495,7 @@ function SceneContent({
       <ExposureRig time={time} />
       <GalleryEnvironment time={time} />
       <primitive object={root} />
-      <DoorInteraction root={root} />
+      <PavilionRuntime root={root} active={viewMode === 'first'} />
 
       {frameSlots.map((frame) => (
         <GalleryFrame
@@ -517,46 +509,15 @@ function SceneContent({
         />
       ))}
 
-      {/* 二层楼梯井护栏：模型里原有的两段栏杆已删除，井口按原木作样式补齐 */}
-      <StairwellRailing floorY={3.6} />
-
-      {mascot ? (
-        <MascotCompanion
-          collisionMeshes={layers.meshes}
-          active={mascot.active}
-          view={mascot.view}
-          onExit={mascot.onExit}
-          onViewChange={mascot.onViewChange}
-          onExhibit={mascot.onExhibit}
-        />
-      ) : null}
-
       <DiYLayer
-        enabled={diy && viewMode !== 'first' && !mascot?.active}
+        enabled={diy && viewMode !== 'first'}
         level={level}
         wallMeshes={layers.meshes}
         roofMeshes={layers.roof}
         onDragStateChange={setDragging}
       />
 
-      <ContactShadows
-        position={[0, -0.67, 0]}
-        // 只有一层「贴地暗部」：不透明度略提高，弥补分辨率下调后的边界变软
-        opacity={0.38}
-        // 底座 14 m：阴影面收到 16 m 就够托住模型，再大就摊成一片灰地
-        scale={16}
-        blur={2.6}
-        far={5.6}
-        // 768² 而不是 1024²：一次性烘焙（frames=1）下省 44% 显存/填充率，
-        // blur 2.6 本来就把边界糊开，肉眼分辨不出差别。
-        resolution={768}
-        color="#2a1d16"
-        // 建筑与展品都是静态的，接触阴影烘一次就够；
-        // 每帧重算会让低端 GPU 直接掉到个位数帧率。
-        frames={1}
-      />
-
-      {!mascot?.active && viewMode === 'third' && (
+      {viewMode === 'third' && (
         <>
           <OrbitControls
             ref={controlsRef}
@@ -567,7 +528,7 @@ function SceneContent({
             panSpeed={0.7}
             zoomSpeed={0.85}
             minDistance={2.4}
-            maxDistance={52}
+            maxDistance={270}
             // 室内机位（尤其「梁架」）要求相机低于视点仰头看，旧的
             // maxPolarAngle = 90° 会把相机强行抬到目标点上方，
             // 结果梁架机位被顶到屋顶外面，只拍到瓦面。
@@ -576,14 +537,13 @@ function SceneContent({
                 ? Math.PI * 0.95
                 : Math.PI / 2 - 0.04
             }
-            target={[0, 3.6, 0]}
+            target={[0, 4, 0]}
             makeDefault
           />
           <CameraRig presetId={presetId} controlsRef={controlsRef} />
         </>
       )}
       {viewMode === 'cinema' && <CinemaRig active />}
-      {viewMode === 'first' && <FirstPersonRig active floorY={0.25} />}
       <FrameProbe />
       <PickingProbe />
       <HangProbe structural={layers.meshes} />
@@ -605,14 +565,6 @@ export interface HeritageSceneProps {
   /** DIY 落位标高：1 = 台面与一层，2 = 二层回廊 */
   level?: number;
   onFrameSelect: (frameId: string) => void;
-  /** 展馆萌宠「纹纹」的探索模式；不传即普通看展 */
-  mascot?: {
-    active: boolean;
-    view: MascotView;
-    onExit: () => void;
-    onViewChange: (view: MascotView) => void;
-    onExhibit: (frameId: string) => void;
-  };
 }
 
 export function HeritageScene({
@@ -623,7 +575,6 @@ export function HeritageScene({
   diy = false,
   level = 1,
   onFrameSelect,
-  mascot,
 }: HeritageSceneProps) {
   const [dragging, setDragging] = useState(false);
   // 页面切到后台/别的标签页时把渲染循环停下（frameloop="never"）：
@@ -670,7 +621,7 @@ export function HeritageScene({
           position: initial.position,
           fov: initialFov,
           near: 0.1,
-          far: 320,
+          far: 700,
         }}
         gl={{
           antialias: true,
@@ -697,7 +648,6 @@ export function HeritageScene({
           onFrameSelect={onFrameSelect}
           dragging={dragging}
           setDragging={handleDragState}
-          mascot={mascot}
       />
       </Canvas>
     </div>
